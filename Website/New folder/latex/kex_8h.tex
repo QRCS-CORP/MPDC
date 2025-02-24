@@ -1,0 +1,322 @@
+\doxysection{C\+:/\+Users/stepp/\+Documents/\+Visual Studio 2022/\+Projects/\+C/\+MPDC/\+Saved/kex.h File Reference}
+\hypertarget{kex_8h}{}\label{kex_8h}\index{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/Saved/kex.h@{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/Saved/kex.h}}
+
+
+MPDC key exchange functions. The MPDC key asymmetric/symmetric exchange.  
+
+
+{\ttfamily \#include "{}common.\+h"{}}\newline
+{\ttfamily \#include "{}mpdc.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmpdc__kex__client__state}{mpdc\+\_\+kex\+\_\+client\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The MPDC simplex client state structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__kex__server__state}{mpdc\+\_\+kex\+\_\+server\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The MPDC simplex server state structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{kex_8h_ad6c8ba009f7b5adf4a1a1edf5597bfb3}\label{kex_8h_ad6c8ba009f7b5adf4a1a1edf5597bfb3} 
+typedef enum \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775}{mpdc\+\_\+kex\+\_\+flags}} {\bfseries mpdc\+\_\+kex\+\_\+flags}
+\item 
+\Hypertarget{kex_8h_ab327623d5eae881790051dec0f60f7dd}\label{kex_8h_ab327623d5eae881790051dec0f60f7dd} 
+typedef struct mpdc\+\_\+kex\+\_\+client\+\_\+state {\bfseries mpdc\+\_\+kex\+\_\+client\+\_\+state}
+\item 
+\Hypertarget{kex_8h_a55ec9a092f174fdd27e19f5cc35b513d}\label{kex_8h_a55ec9a092f174fdd27e19f5cc35b513d} 
+typedef struct mpdc\+\_\+kex\+\_\+server\+\_\+state {\bfseries mpdc\+\_\+kex\+\_\+server\+\_\+state}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775}{mpdc\+\_\+kex\+\_\+flags}} \{ \newline
+\mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775ae556bd193c295b1f7135bd609a2d8e67}{mpdc\+\_\+kex\+\_\+flag\+\_\+none}} = 0x00
+, \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775abfbbb4420054fc9420f1c17dac43f365}{mpdc\+\_\+kex\+\_\+flag\+\_\+connect\+\_\+request}} = 0x01
+, \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775acb1b9e9f1552d6bfaaf20a6454a65d41}{mpdc\+\_\+kex\+\_\+flag\+\_\+connect\+\_\+response}} = 0x02
+, \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a62a224c433ac1565b8403e77d5e5e150}{mpdc\+\_\+kex\+\_\+flag\+\_\+connection\+\_\+terminate}} = 0x03
+, \newline
+\mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775ab9a708c7a2ae347e1f10da46873920d0}{mpdc\+\_\+kex\+\_\+flag\+\_\+encrypted\+\_\+message}} = 0x04
+, \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a425a05672ce59847716a65e7da04dbec}{mpdc\+\_\+kex\+\_\+flag\+\_\+exstart\+\_\+request}} = 0x05
+, \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775aa4312d2643b7156030226c61ed0c22a5}{mpdc\+\_\+kex\+\_\+flag\+\_\+exstart\+\_\+response}} = 0x06
+, \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775af49de8fc95f0da5395a84ac990986b90}{mpdc\+\_\+kex\+\_\+flag\+\_\+exchange\+\_\+request}} = 0x07
+, \newline
+\mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a78004f467717fe8c1eb70976d4bc76b4}{mpdc\+\_\+kex\+\_\+flag\+\_\+exchange\+\_\+response}} = 0x08
+, \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a64504cb5aa74ebaf2d2789cbc82630fa}{mpdc\+\_\+kex\+\_\+flag\+\_\+establish\+\_\+request}} = 0x09
+, \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775aad33f71dc051f7d2c0cf3cbea035dabd}{mpdc\+\_\+kex\+\_\+flag\+\_\+establish\+\_\+response}} = 0x0A
+, \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775ac51fb02125f508764c7fb3d82685a6eb}{mpdc\+\_\+kex\+\_\+flag\+\_\+keep\+\_\+alive\+\_\+request}} = 0x0B
+, \newline
+\mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a26d7f881a9aa1ed4e18ba19103de5127}{mpdc\+\_\+kex\+\_\+flag\+\_\+keep\+\_\+alive\+\_\+response}} = 0x0C
+, \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a605adf6457517f5197daf9ccad6ebf6f}{mpdc\+\_\+kex\+\_\+flag\+\_\+remote\+\_\+connected}} = 0x0D
+, \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a320a0d1ade5ba3080fda125ae77c95c8}{mpdc\+\_\+kex\+\_\+flag\+\_\+remote\+\_\+terminated}} = 0x0E
+, \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a4059559a7e9459273d538db228e36538}{mpdc\+\_\+kex\+\_\+flag\+\_\+session\+\_\+established}} = 0x0F
+, \newline
+\mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775af80d662be430b41a07d76846aa51cad3}{mpdc\+\_\+kex\+\_\+flag\+\_\+session\+\_\+establish\+\_\+verify}} = 0x10
+, \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a14c463e62df4303d065523c7b8063b00}{mpdc\+\_\+kex\+\_\+flag\+\_\+unrecognized\+\_\+protocol}} = 0x11
+, \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a32b8b70d4e65cb8a2b3ea12979f1911b}{mpdc\+\_\+kex\+\_\+flag\+\_\+ratchet\+\_\+request}} = 0x12
+, \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a2c436402472217a528fc709871c89fae}{mpdc\+\_\+kex\+\_\+flag\+\_\+transfer\+\_\+request}} = 0x13
+, \newline
+\mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775af6c3b2ecec4eebdecf6041fb034e75ba}{mpdc\+\_\+kex\+\_\+flag\+\_\+error\+\_\+condition}} = 0x\+FF
+ \}
+\begin{DoxyCompactList}\small\item\em The MPDC packet flags. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\+\_\+\+EXPORT\+\_\+\+API}} void \mbox{\hyperlink{kex_8h_a23b99851e258328869c720ec1b3918c6}{mpdc\+\_\+kex\+\_\+connection\+\_\+close}} (\mbox{\hyperlink{structmpdc__connection__state}{mpdc\+\_\+connection\+\_\+state}} \texorpdfstring{$\ast$}{*}cns, \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022b}{mpdc\+\_\+network\+\_\+errors}} err, bool notify)
+\begin{DoxyCompactList}\small\item\em Close the network connection between hosts. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{kex_8h_ae8076c3a771bfdaffaaff2efed586c2b}{mpdc\+\_\+kex\+\_\+client\+\_\+key\+\_\+exchange}} (\mbox{\hyperlink{structmpdc__kex__client__state}{mpdc\+\_\+kex\+\_\+client\+\_\+state}} \texorpdfstring{$\ast$}{*}kcs, \mbox{\hyperlink{structmpdc__connection__state}{mpdc\+\_\+connection\+\_\+state}} \texorpdfstring{$\ast$}{*}cns)
+\begin{DoxyCompactList}\small\item\em Run the network client version of the key exchange. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\+\_\+\+EXPORT\+\_\+\+API}} void \mbox{\hyperlink{kex_8h_ab6879a08a1d431f74b351f9f345def03}{mpdc\+\_\+kex\+\_\+connection\+\_\+state\+\_\+dispose}} (\mbox{\hyperlink{structmpdc__connection__state}{mpdc\+\_\+connection\+\_\+state}} \texorpdfstring{$\ast$}{*}cns)
+\begin{DoxyCompactList}\small\item\em Reset the connection state. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\+\_\+\+EXPORT\+\_\+\+API}} \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{kex_8h_ab5a6d156e09fd64adc418f0aebf11172}{mpdc\+\_\+kex\+\_\+decrypt\+\_\+packet}} (\mbox{\hyperlink{structmpdc__connection__state}{mpdc\+\_\+connection\+\_\+state}} \texorpdfstring{$\ast$}{*}cns, uint8\+\_\+t \texorpdfstring{$\ast$}{*}message, size\+\_\+t \texorpdfstring{$\ast$}{*}msglen, const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}packetin)
+\begin{DoxyCompactList}\small\item\em Decrypt a message and copy it to the message output. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\+\_\+\+EXPORT\+\_\+\+API}} \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{kex_8h_a9d453cdc5e845b3547e6070bfa2129a6}{mpdc\+\_\+kex\+\_\+encrypt\+\_\+packet}} (\mbox{\hyperlink{structmpdc__connection__state}{mpdc\+\_\+connection\+\_\+state}} \texorpdfstring{$\ast$}{*}cns, \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}packetout, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}message, size\+\_\+t msglen)
+\begin{DoxyCompactList}\small\item\em Encrypt a message and build an output packet. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022b}{mpdc\+\_\+network\+\_\+errors}} \mbox{\hyperlink{kex_8h_a6d152aa1e7874887eeb4da0d9baa50d5}{mpdc\+\_\+kex\+\_\+appserv\+\_\+key\+\_\+exchange}} (\mbox{\hyperlink{structmpdc__kex__server__state}{mpdc\+\_\+kex\+\_\+server\+\_\+state}} \texorpdfstring{$\ast$}{*}kss, \mbox{\hyperlink{structmpdc__connection__state}{mpdc\+\_\+connection\+\_\+state}} \texorpdfstring{$\ast$}{*}cns)
+\begin{DoxyCompactList}\small\item\em Run the network server version of the key exchange. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+MPDC key exchange functions. The MPDC key asymmetric/symmetric exchange. 
+
+\begin{DoxyNote}{Note}
+These are internal non-\/exportable functions.
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+John G. Underhill 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+2a\+: 2022-\/05-\/01 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+December 16, 2022 \textbackslash{}contact\+: \href{mailto:develop@qscs.ca}{\texttt{ develop@qscs.\+ca}} 
+\end{DoxyDate}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775}\index{kex.h@{kex.h}!mpdc\_kex\_flags@{mpdc\_kex\_flags}}
+\index{mpdc\_kex\_flags@{mpdc\_kex\_flags}!kex.h@{kex.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_kex\_flags}{mpdc\_kex\_flags}}
+{\footnotesize\ttfamily \label{kex_8h_a31c07b7b62eb451c01887d2649110775} 
+enum \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775}{mpdc\+\_\+kex\+\_\+flags}}}
+
+
+
+The MPDC packet flags. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_none@{mpdc\_kex\_flag\_none}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_none@{mpdc\_kex\_flag\_none}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775ae556bd193c295b1f7135bd609a2d8e67}\label{kex_8h_a31c07b7b62eb451c01887d2649110775ae556bd193c295b1f7135bd609a2d8e67} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+none&No flag was specified \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_connect\_request@{mpdc\_kex\_flag\_connect\_request}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_connect\_request@{mpdc\_kex\_flag\_connect\_request}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775abfbbb4420054fc9420f1c17dac43f365}\label{kex_8h_a31c07b7b62eb451c01887d2649110775abfbbb4420054fc9420f1c17dac43f365} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+connect\+\_\+request&The MPDC key-\/exchange client connection request flag \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_connect\_response@{mpdc\_kex\_flag\_connect\_response}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_connect\_response@{mpdc\_kex\_flag\_connect\_response}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775acb1b9e9f1552d6bfaaf20a6454a65d41}\label{kex_8h_a31c07b7b62eb451c01887d2649110775acb1b9e9f1552d6bfaaf20a6454a65d41} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+connect\+\_\+response&The MPDC key-\/exchange server connection response flag \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_connection\_terminate@{mpdc\_kex\_flag\_connection\_terminate}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_connection\_terminate@{mpdc\_kex\_flag\_connection\_terminate}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775a62a224c433ac1565b8403e77d5e5e150}\label{kex_8h_a31c07b7b62eb451c01887d2649110775a62a224c433ac1565b8403e77d5e5e150} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+connection\+\_\+terminate&The connection is to be terminated \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_encrypted\_message@{mpdc\_kex\_flag\_encrypted\_message}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_encrypted\_message@{mpdc\_kex\_flag\_encrypted\_message}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775ab9a708c7a2ae347e1f10da46873920d0}\label{kex_8h_a31c07b7b62eb451c01887d2649110775ab9a708c7a2ae347e1f10da46873920d0} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+encrypted\+\_\+message&The message has been encrypted flag \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_exstart\_request@{mpdc\_kex\_flag\_exstart\_request}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_exstart\_request@{mpdc\_kex\_flag\_exstart\_request}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775a425a05672ce59847716a65e7da04dbec}\label{kex_8h_a31c07b7b62eb451c01887d2649110775a425a05672ce59847716a65e7da04dbec} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+exstart\+\_\+request&The MPDC key-\/exchange client exstart request flag \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_exstart\_response@{mpdc\_kex\_flag\_exstart\_response}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_exstart\_response@{mpdc\_kex\_flag\_exstart\_response}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775aa4312d2643b7156030226c61ed0c22a5}\label{kex_8h_a31c07b7b62eb451c01887d2649110775aa4312d2643b7156030226c61ed0c22a5} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+exstart\+\_\+response&The MPDC key-\/exchange server exstart response flag \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_exchange\_request@{mpdc\_kex\_flag\_exchange\_request}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_exchange\_request@{mpdc\_kex\_flag\_exchange\_request}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775af49de8fc95f0da5395a84ac990986b90}\label{kex_8h_a31c07b7b62eb451c01887d2649110775af49de8fc95f0da5395a84ac990986b90} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+exchange\+\_\+request&The MPDC key-\/exchange client exchange request flag \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_exchange\_response@{mpdc\_kex\_flag\_exchange\_response}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_exchange\_response@{mpdc\_kex\_flag\_exchange\_response}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775a78004f467717fe8c1eb70976d4bc76b4}\label{kex_8h_a31c07b7b62eb451c01887d2649110775a78004f467717fe8c1eb70976d4bc76b4} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+exchange\+\_\+response&The MPDC key-\/exchange server exchange response flag \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_establish\_request@{mpdc\_kex\_flag\_establish\_request}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_establish\_request@{mpdc\_kex\_flag\_establish\_request}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775a64504cb5aa74ebaf2d2789cbc82630fa}\label{kex_8h_a31c07b7b62eb451c01887d2649110775a64504cb5aa74ebaf2d2789cbc82630fa} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+establish\+\_\+request&The MPDC key-\/exchange client establish request flag \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_establish\_response@{mpdc\_kex\_flag\_establish\_response}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_establish\_response@{mpdc\_kex\_flag\_establish\_response}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775aad33f71dc051f7d2c0cf3cbea035dabd}\label{kex_8h_a31c07b7b62eb451c01887d2649110775aad33f71dc051f7d2c0cf3cbea035dabd} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+establish\+\_\+response&The MPDC key-\/exchange server establish response flag \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_keep\_alive\_request@{mpdc\_kex\_flag\_keep\_alive\_request}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_keep\_alive\_request@{mpdc\_kex\_flag\_keep\_alive\_request}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775ac51fb02125f508764c7fb3d82685a6eb}\label{kex_8h_a31c07b7b62eb451c01887d2649110775ac51fb02125f508764c7fb3d82685a6eb} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+keep\+\_\+alive\+\_\+request&The packet contains a keep alive request \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_keep\_alive\_response@{mpdc\_kex\_flag\_keep\_alive\_response}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_keep\_alive\_response@{mpdc\_kex\_flag\_keep\_alive\_response}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775a26d7f881a9aa1ed4e18ba19103de5127}\label{kex_8h_a31c07b7b62eb451c01887d2649110775a26d7f881a9aa1ed4e18ba19103de5127} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+keep\+\_\+alive\+\_\+response&The packet contains a keep alive response \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_remote\_connected@{mpdc\_kex\_flag\_remote\_connected}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_remote\_connected@{mpdc\_kex\_flag\_remote\_connected}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775a605adf6457517f5197daf9ccad6ebf6f}\label{kex_8h_a31c07b7b62eb451c01887d2649110775a605adf6457517f5197daf9ccad6ebf6f} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+remote\+\_\+connected&The remote host is connected flag \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_remote\_terminated@{mpdc\_kex\_flag\_remote\_terminated}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_remote\_terminated@{mpdc\_kex\_flag\_remote\_terminated}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775a320a0d1ade5ba3080fda125ae77c95c8}\label{kex_8h_a31c07b7b62eb451c01887d2649110775a320a0d1ade5ba3080fda125ae77c95c8} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+remote\+\_\+terminated&The remote host has terminated the connection \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_session\_established@{mpdc\_kex\_flag\_session\_established}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_session\_established@{mpdc\_kex\_flag\_session\_established}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775a4059559a7e9459273d538db228e36538}\label{kex_8h_a31c07b7b62eb451c01887d2649110775a4059559a7e9459273d538db228e36538} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+session\+\_\+established&The exchange is in the established state \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_session\_establish\_verify@{mpdc\_kex\_flag\_session\_establish\_verify}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_session\_establish\_verify@{mpdc\_kex\_flag\_session\_establish\_verify}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775af80d662be430b41a07d76846aa51cad3}\label{kex_8h_a31c07b7b62eb451c01887d2649110775af80d662be430b41a07d76846aa51cad3} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+session\+\_\+establish\+\_\+verify&The exchange is in the established verify state \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_unrecognized\_protocol@{mpdc\_kex\_flag\_unrecognized\_protocol}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_unrecognized\_protocol@{mpdc\_kex\_flag\_unrecognized\_protocol}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775a14c463e62df4303d065523c7b8063b00}\label{kex_8h_a31c07b7b62eb451c01887d2649110775a14c463e62df4303d065523c7b8063b00} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+unrecognized\+\_\+protocol&The protocol string is not recognized \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_ratchet\_request@{mpdc\_kex\_flag\_ratchet\_request}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_ratchet\_request@{mpdc\_kex\_flag\_ratchet\_request}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775a32b8b70d4e65cb8a2b3ea12979f1911b}\label{kex_8h_a31c07b7b62eb451c01887d2649110775a32b8b70d4e65cb8a2b3ea12979f1911b} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+ratchet\+\_\+request&The host has received a symmetric key ratchet request \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_transfer\_request@{mpdc\_kex\_flag\_transfer\_request}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_transfer\_request@{mpdc\_kex\_flag\_transfer\_request}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775a2c436402472217a528fc709871c89fae}\label{kex_8h_a31c07b7b62eb451c01887d2649110775a2c436402472217a528fc709871c89fae} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+transfer\+\_\+request&Reserved -\/ The host has received a transfer request \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mpdc\_kex\_flag\_error\_condition@{mpdc\_kex\_flag\_error\_condition}!kex.h@{kex.h}}\index{kex.h@{kex.h}!mpdc\_kex\_flag\_error\_condition@{mpdc\_kex\_flag\_error\_condition}}}\Hypertarget{kex_8h_a31c07b7b62eb451c01887d2649110775af6c3b2ecec4eebdecf6041fb034e75ba}\label{kex_8h_a31c07b7b62eb451c01887d2649110775af6c3b2ecec4eebdecf6041fb034e75ba} 
+mpdc\+\_\+kex\+\_\+flag\+\_\+error\+\_\+condition&The connection experienced an error \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{kex_8h_a6d152aa1e7874887eeb4da0d9baa50d5}\index{kex.h@{kex.h}!mpdc\_kex\_appserv\_key\_exchange@{mpdc\_kex\_appserv\_key\_exchange}}
+\index{mpdc\_kex\_appserv\_key\_exchange@{mpdc\_kex\_appserv\_key\_exchange}!kex.h@{kex.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_kex\_appserv\_key\_exchange()}{mpdc\_kex\_appserv\_key\_exchange()}}
+{\footnotesize\ttfamily \label{kex_8h_a6d152aa1e7874887eeb4da0d9baa50d5} 
+\mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022b}{mpdc\+\_\+network\+\_\+errors}} mpdc\+\_\+kex\+\_\+appserv\+\_\+key\+\_\+exchange (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__kex__server__state}{mpdc\+\_\+kex\+\_\+server\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{kss}{, }\item[{\mbox{\hyperlink{structmpdc__connection__state}{mpdc\+\_\+connection\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{cns}{}\end{DoxyParamCaption})}
+
+
+
+Run the network server version of the key exchange. 
+
+\begin{DoxyNote}{Note}
+This is an internal non-\/exportable API.
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em kss} & A pointer to server key exchange state \\
+\hline
+{\em cns} & A pointer to the connection state\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: Returns the function error state 
+\end{DoxyReturn}
+\Hypertarget{kex_8h_ae8076c3a771bfdaffaaff2efed586c2b}\index{kex.h@{kex.h}!mpdc\_kex\_client\_key\_exchange@{mpdc\_kex\_client\_key\_exchange}}
+\index{mpdc\_kex\_client\_key\_exchange@{mpdc\_kex\_client\_key\_exchange}!kex.h@{kex.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_kex\_client\_key\_exchange()}{mpdc\_kex\_client\_key\_exchange()}}
+{\footnotesize\ttfamily \label{kex_8h_ae8076c3a771bfdaffaaff2efed586c2b} 
+\mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+kex\+\_\+client\+\_\+key\+\_\+exchange (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__kex__client__state}{mpdc\+\_\+kex\+\_\+client\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{kcs}{, }\item[{\mbox{\hyperlink{structmpdc__connection__state}{mpdc\+\_\+connection\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{cns}{}\end{DoxyParamCaption})}
+
+
+
+Run the network client version of the key exchange. 
+
+\begin{DoxyNote}{Note}
+This is an internal non-\/exportable API.
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em kcs} & A pointer to client key exchange state \\
+\hline
+{\em cns} & A pointer to the connection state\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: Returns the function error state 
+\end{DoxyReturn}
+\Hypertarget{kex_8h_a23b99851e258328869c720ec1b3918c6}\index{kex.h@{kex.h}!mpdc\_kex\_connection\_close@{mpdc\_kex\_connection\_close}}
+\index{mpdc\_kex\_connection\_close@{mpdc\_kex\_connection\_close}!kex.h@{kex.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_kex\_connection\_close()}{mpdc\_kex\_connection\_close()}}
+{\footnotesize\ttfamily \label{kex_8h_a23b99851e258328869c720ec1b3918c6} 
+\mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\+\_\+\+EXPORT\+\_\+\+API}} void mpdc\+\_\+kex\+\_\+connection\+\_\+close (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__connection__state}{mpdc\+\_\+connection\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{cns}{, }\item[{\mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022b}{mpdc\+\_\+network\+\_\+errors}}}]{err}{, }\item[{bool}]{notify}{}\end{DoxyParamCaption})}
+
+
+
+Close the network connection between hosts. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cns} & A pointer to the connection state structure \\
+\hline
+{\em err} & The error message \\
+\hline
+{\em notify} & Notify the remote host connection is closing \\
+\hline
+\end{DoxyParams}
+\Hypertarget{kex_8h_ab6879a08a1d431f74b351f9f345def03}\index{kex.h@{kex.h}!mpdc\_kex\_connection\_state\_dispose@{mpdc\_kex\_connection\_state\_dispose}}
+\index{mpdc\_kex\_connection\_state\_dispose@{mpdc\_kex\_connection\_state\_dispose}!kex.h@{kex.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_kex\_connection\_state\_dispose()}{mpdc\_kex\_connection\_state\_dispose()}}
+{\footnotesize\ttfamily \label{kex_8h_ab6879a08a1d431f74b351f9f345def03} 
+\mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\+\_\+\+EXPORT\+\_\+\+API}} void mpdc\+\_\+kex\+\_\+connection\+\_\+state\+\_\+dispose (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__connection__state}{mpdc\+\_\+connection\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{cns}{}\end{DoxyParamCaption})}
+
+
+
+Reset the connection state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cns} & A pointer to the connection state structure \\
+\hline
+\end{DoxyParams}
+\Hypertarget{kex_8h_ab5a6d156e09fd64adc418f0aebf11172}\index{kex.h@{kex.h}!mpdc\_kex\_decrypt\_packet@{mpdc\_kex\_decrypt\_packet}}
+\index{mpdc\_kex\_decrypt\_packet@{mpdc\_kex\_decrypt\_packet}!kex.h@{kex.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_kex\_decrypt\_packet()}{mpdc\_kex\_decrypt\_packet()}}
+{\footnotesize\ttfamily \label{kex_8h_ab5a6d156e09fd64adc418f0aebf11172} 
+\mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\+\_\+\+EXPORT\+\_\+\+API}} \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+kex\+\_\+decrypt\+\_\+packet (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__connection__state}{mpdc\+\_\+connection\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{cns}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{message}{, }\item[{size\+\_\+t \texorpdfstring{$\ast$}{*}}]{msglen}{, }\item[{const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}}]{packetin}{}\end{DoxyParamCaption})}
+
+
+
+Decrypt a message and copy it to the message output. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cns} & A pointer to the connection state structure \\
+\hline
+{\em message} & The message output array \\
+\hline
+{\em msglen} & A pointer receiving the message length \\
+\hline
+{\em packetin} & \mbox{[}const\mbox{]} A pointer to the input packet structure\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: Returns the function error state 
+\end{DoxyReturn}
+\Hypertarget{kex_8h_a9d453cdc5e845b3547e6070bfa2129a6}\index{kex.h@{kex.h}!mpdc\_kex\_encrypt\_packet@{mpdc\_kex\_encrypt\_packet}}
+\index{mpdc\_kex\_encrypt\_packet@{mpdc\_kex\_encrypt\_packet}!kex.h@{kex.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_kex\_encrypt\_packet()}{mpdc\_kex\_encrypt\_packet()}}
+{\footnotesize\ttfamily \label{kex_8h_a9d453cdc5e845b3547e6070bfa2129a6} 
+\mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\+\_\+\+EXPORT\+\_\+\+API}} \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+kex\+\_\+encrypt\+\_\+packet (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__connection__state}{mpdc\+\_\+connection\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{cns}{, }\item[{\mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}}]{packetout}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{message}{, }\item[{size\+\_\+t}]{msglen}{}\end{DoxyParamCaption})}
+
+
+
+Encrypt a message and build an output packet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cns} & A pointer to the connection state structure \\
+\hline
+{\em packetout} & A pointer to the output packet structure \\
+\hline
+{\em message} & \mbox{[}const\mbox{]} The input message array \\
+\hline
+{\em msglen} & The length of the message array\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: Returns the function error state 
+\end{DoxyReturn}

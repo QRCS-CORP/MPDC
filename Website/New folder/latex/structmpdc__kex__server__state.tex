@@ -1,0 +1,81 @@
+\doxysection{mpdc\+\_\+kex\+\_\+server\+\_\+state Struct Reference}
+\hypertarget{structmpdc__kex__server__state}{}\label{structmpdc__kex__server__state}\index{mpdc\_kex\_server\_state@{mpdc\_kex\_server\_state}}
+
+
+The MPDC simplex server state structure.  
+
+
+
+
+{\ttfamily \#include $<$kex.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structmpdc__kex__server__state_a528c5158041ad721c29b54efdd81972a}{keyid}} \mbox{[}\mbox{\hyperlink{mpdc_8h_a945d2c8137c447b76ee2619ddc03ad3f}{MPDC\+\_\+\+CERTIFICATE\+\_\+\+SERIAL\+\_\+\+SIZE}}\mbox{]}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structmpdc__kex__server__state_aad3827d7c86ca7c67f882337fa015001}{schash}} \mbox{[}\mbox{\hyperlink{mpdc_8h_a8a86a220ebe0faa467531261b2721d1c}{MPDC\+\_\+\+CERTIFICATE\+\_\+\+HASH\+\_\+\+SIZE}}\mbox{]}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structmpdc__kex__server__state_a29ea28ad409b6c081c71676316d6f9be}{prikey}} \mbox{[}\mbox{\hyperlink{mpdc_8h_a28212f992c3bf4ada55c543e87199233}{MPDC\+\_\+\+ASYMMETRIC\+\_\+\+PRIVATE\+\_\+\+KEY\+\_\+\+SIZE}}\mbox{]}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structmpdc__kex__server__state_ab3c52b3b07b88083c35508f3ead0c6a9}{pubkey}} \mbox{[}\mbox{\hyperlink{mpdc_8h_a8d53851ff6d4d6b4b06ccbb4c2cfb842}{MPDC\+\_\+\+ASYMMETRIC\+\_\+\+PUBLIC\+\_\+\+KEY\+\_\+\+SIZE}}\mbox{]}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structmpdc__kex__server__state_a48aa1a19966b5db6281ef3248b1ba4a1}{sigkey}} \mbox{[}\mbox{\hyperlink{mpdc_8h_aed84fa1849ed574e0c0aec3e38be9aa3}{MPDC\+\_\+\+ASYMMETRIC\+\_\+\+SIGNING\+\_\+\+KEY\+\_\+\+SIZE}}\mbox{]}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structmpdc__kex__server__state_aabf96df62b3e5e86258cdcf9f73b6d67}{verkey}} \mbox{[}\mbox{\hyperlink{mpdc_8h_a3323909111e7aa42bde0523f1b562d8e}{MPDC\+\_\+\+ASYMMETRIC\+\_\+\+VERIFICATION\+\_\+\+KEY\+\_\+\+SIZE}}\mbox{]}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{structmpdc__kex__server__state_a6a7a0453d8c3db46e0a26a17b835700d}{expiration}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The MPDC simplex server state structure. 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structmpdc__kex__server__state_a6a7a0453d8c3db46e0a26a17b835700d}\index{mpdc\_kex\_server\_state@{mpdc\_kex\_server\_state}!expiration@{expiration}}
+\index{expiration@{expiration}!mpdc\_kex\_server\_state@{mpdc\_kex\_server\_state}}
+\doxysubsubsection{\texorpdfstring{expiration}{expiration}}
+{\footnotesize\ttfamily \label{structmpdc__kex__server__state_a6a7a0453d8c3db46e0a26a17b835700d} 
+uint64\+\_\+t mpdc\+\_\+kex\+\_\+server\+\_\+state\+::expiration}
+
+The expiration time, in seconds from epoch \Hypertarget{structmpdc__kex__server__state_a528c5158041ad721c29b54efdd81972a}\index{mpdc\_kex\_server\_state@{mpdc\_kex\_server\_state}!keyid@{keyid}}
+\index{keyid@{keyid}!mpdc\_kex\_server\_state@{mpdc\_kex\_server\_state}}
+\doxysubsubsection{\texorpdfstring{keyid}{keyid}}
+{\footnotesize\ttfamily \label{structmpdc__kex__server__state_a528c5158041ad721c29b54efdd81972a} 
+uint8\+\_\+t mpdc\+\_\+kex\+\_\+server\+\_\+state\+::keyid\mbox{[}\mbox{\hyperlink{mpdc_8h_a945d2c8137c447b76ee2619ddc03ad3f}{MPDC\+\_\+\+CERTIFICATE\+\_\+\+SERIAL\+\_\+\+SIZE}}\mbox{]}}
+
+The key identity string \Hypertarget{structmpdc__kex__server__state_a29ea28ad409b6c081c71676316d6f9be}\index{mpdc\_kex\_server\_state@{mpdc\_kex\_server\_state}!prikey@{prikey}}
+\index{prikey@{prikey}!mpdc\_kex\_server\_state@{mpdc\_kex\_server\_state}}
+\doxysubsubsection{\texorpdfstring{prikey}{prikey}}
+{\footnotesize\ttfamily \label{structmpdc__kex__server__state_a29ea28ad409b6c081c71676316d6f9be} 
+uint8\+\_\+t mpdc\+\_\+kex\+\_\+server\+\_\+state\+::prikey\mbox{[}\mbox{\hyperlink{mpdc_8h_a28212f992c3bf4ada55c543e87199233}{MPDC\+\_\+\+ASYMMETRIC\+\_\+\+PRIVATE\+\_\+\+KEY\+\_\+\+SIZE}}\mbox{]}}
+
+The asymmetric cipher private key \Hypertarget{structmpdc__kex__server__state_ab3c52b3b07b88083c35508f3ead0c6a9}\index{mpdc\_kex\_server\_state@{mpdc\_kex\_server\_state}!pubkey@{pubkey}}
+\index{pubkey@{pubkey}!mpdc\_kex\_server\_state@{mpdc\_kex\_server\_state}}
+\doxysubsubsection{\texorpdfstring{pubkey}{pubkey}}
+{\footnotesize\ttfamily \label{structmpdc__kex__server__state_ab3c52b3b07b88083c35508f3ead0c6a9} 
+uint8\+\_\+t mpdc\+\_\+kex\+\_\+server\+\_\+state\+::pubkey\mbox{[}\mbox{\hyperlink{mpdc_8h_a8d53851ff6d4d6b4b06ccbb4c2cfb842}{MPDC\+\_\+\+ASYMMETRIC\+\_\+\+PUBLIC\+\_\+\+KEY\+\_\+\+SIZE}}\mbox{]}}
+
+The asymmetric cipher public key \Hypertarget{structmpdc__kex__server__state_aad3827d7c86ca7c67f882337fa015001}\index{mpdc\_kex\_server\_state@{mpdc\_kex\_server\_state}!schash@{schash}}
+\index{schash@{schash}!mpdc\_kex\_server\_state@{mpdc\_kex\_server\_state}}
+\doxysubsubsection{\texorpdfstring{schash}{schash}}
+{\footnotesize\ttfamily \label{structmpdc__kex__server__state_aad3827d7c86ca7c67f882337fa015001} 
+uint8\+\_\+t mpdc\+\_\+kex\+\_\+server\+\_\+state\+::schash\mbox{[}\mbox{\hyperlink{mpdc_8h_a8a86a220ebe0faa467531261b2721d1c}{MPDC\+\_\+\+CERTIFICATE\+\_\+\+HASH\+\_\+\+SIZE}}\mbox{]}}
+
+The session token hash \Hypertarget{structmpdc__kex__server__state_a48aa1a19966b5db6281ef3248b1ba4a1}\index{mpdc\_kex\_server\_state@{mpdc\_kex\_server\_state}!sigkey@{sigkey}}
+\index{sigkey@{sigkey}!mpdc\_kex\_server\_state@{mpdc\_kex\_server\_state}}
+\doxysubsubsection{\texorpdfstring{sigkey}{sigkey}}
+{\footnotesize\ttfamily \label{structmpdc__kex__server__state_a48aa1a19966b5db6281ef3248b1ba4a1} 
+uint8\+\_\+t mpdc\+\_\+kex\+\_\+server\+\_\+state\+::sigkey\mbox{[}\mbox{\hyperlink{mpdc_8h_aed84fa1849ed574e0c0aec3e38be9aa3}{MPDC\+\_\+\+ASYMMETRIC\+\_\+\+SIGNING\+\_\+\+KEY\+\_\+\+SIZE}}\mbox{]}}
+
+The asymmetric signature signing-\/key \Hypertarget{structmpdc__kex__server__state_aabf96df62b3e5e86258cdcf9f73b6d67}\index{mpdc\_kex\_server\_state@{mpdc\_kex\_server\_state}!verkey@{verkey}}
+\index{verkey@{verkey}!mpdc\_kex\_server\_state@{mpdc\_kex\_server\_state}}
+\doxysubsubsection{\texorpdfstring{verkey}{verkey}}
+{\footnotesize\ttfamily \label{structmpdc__kex__server__state_aabf96df62b3e5e86258cdcf9f73b6d67} 
+uint8\+\_\+t mpdc\+\_\+kex\+\_\+server\+\_\+state\+::verkey\mbox{[}\mbox{\hyperlink{mpdc_8h_a3323909111e7aa42bde0523f1b562d8e}{MPDC\+\_\+\+ASYMMETRIC\+\_\+\+VERIFICATION\+\_\+\+KEY\+\_\+\+SIZE}}\mbox{]}}
+
+The local asymmetric signature verification-\/key 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/stepp/\+Documents/\+Visual Studio 2022/\+Projects/\+C/\+MPDC/\+Saved/\mbox{\hyperlink{kex_8h}{kex.\+h}}\end{DoxyCompactItemize}

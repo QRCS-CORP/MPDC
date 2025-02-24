@@ -1,0 +1,1085 @@
+\doxysection{C\+:/\+Users/stepp/\+Documents/\+Visual Studio 2022/\+Projects/\+C/\+MPDC/\+MPDC/topology.h File Reference}
+\hypertarget{topology_8h}{}\label{topology_8h}\index{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/topology.h@{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/topology.h}}
+
+
+The MPDC topology functions.  
+
+
+{\ttfamily \#include "{}mpdc.\+h"{}}\newline
+{\ttfamily \#include "{}certificate.\+h"{}}\newline
+{\ttfamily \#include "{}../../\+QSC/\+QSC/ipinfo.\+h"{}}\newline
+{\ttfamily \#include "{}../../\+QSC/\+QSC/list.\+h"{}}\newline
+{\ttfamily \#include "{}../../\+QSC/\+QSC/timestamp.\+h"{}}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The MPDC topology node structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The MPDC topology list structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{topology_8h_a2d343cf31d9f259664f88cb5209a7a8b}{MPDC\+\_\+\+TOPOLOGY\+\_\+\+NODE\+\_\+\+ENCODED\+\_\+\+SIZE}}
+\begin{DoxyCompactList}\small\item\em The size of an encoded node string. \end{DoxyCompactList}\item 
+\Hypertarget{topology_8h_ac11c7f2f852de9ec0c205db3662613e7}\label{topology_8h_ac11c7f2f852de9ec0c205db3662613e7} 
+\#define {\bfseries MPDC\+\_\+\+TOPOLOGY\+\_\+\+NODE\+\_\+\+MINIMUM\+\_\+\+ISSUER\+\_\+\+SIZE}~3
+\begin{DoxyCompactList}\small\item\em The minimum size of an issuer string. \end{DoxyCompactList}\item 
+\Hypertarget{topology_8h_ae04370759b401a9480288e56c811c12a}\label{topology_8h_ae04370759b401a9480288e56c811c12a} 
+\#define {\bfseries MPDC\+\_\+\+TOPOLOGY\+\_\+\+NODE\+\_\+\+NOT\+\_\+\+FOUND}~-\/1
+\begin{DoxyCompactList}\small\item\em The value returned when a node is not found. \end{DoxyCompactList}\item 
+\Hypertarget{topology_8h_ad92c1d10b29222a19ee7838c90e7c99d}\label{topology_8h_ad92c1d10b29222a19ee7838c90e7c99d} 
+\#define {\bfseries MPDC\+\_\+\+NETWORK\+\_\+\+TOPOLOGY\+\_\+\+MAX\+\_\+\+SIZE}~1024
+\begin{DoxyCompactList}\small\item\em The maximum size of the topology. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{topology_8h_ae18c58bcc595d9ddc949a0911e1aa1fd}{MPDC\+\_\+\+NETWORK\+\_\+\+TOPOLOGY\+\_\+\+NODE\+\_\+\+SIZE}}
+\begin{DoxyCompactList}\small\item\em The size in bytes of a serialized topological node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{topology_8h_ab71b0ef4b504f7e3be40f8ab9eec4083}\label{topology_8h_ab71b0ef4b504f7e3be40f8ab9eec4083} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+topology\+\_\+node\+\_\+state {\bfseries mpdc\+\_\+topology\+\_\+node\+\_\+state}
+\item 
+\Hypertarget{topology_8h_a7798c450476f1f770b52367ba51f08dc}\label{topology_8h_a7798c450476f1f770b52367ba51f08dc} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+topology\+\_\+list\+\_\+state {\bfseries mpdc\+\_\+topology\+\_\+list\+\_\+state}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{topology_8h_aadc022da3ac0a83bba2116d9b24425e8}{mpdc\+\_\+topology\+\_\+address\+\_\+from\+\_\+issuer}} (char \texorpdfstring{$\ast$}{*}address, const char \texorpdfstring{$\ast$}{*}issuer, const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list)
+\begin{DoxyCompactList}\small\item\em Returns an IP address from an issuer string. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{topology_8h_aef2133a7a9cb1b91ab1b6eb3a3269ad6}{mpdc\+\_\+topology\+\_\+node\+\_\+add\+\_\+alias}} (\mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}node, const char \texorpdfstring{$\ast$}{*}alias)
+\begin{DoxyCompactList}\small\item\em Add an alias string to an issuer path. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{topology_8h_ae1a386092dff81c307885f16653c183d}{mpdc\+\_\+topology\+\_\+nodes\+\_\+are\+\_\+equal}} (const \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}a, const \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}b)
+\begin{DoxyCompactList}\small\item\em Compare two topological nodes for equality. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API uint8\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{topology_8h_aa040f03d11215e9189ce51ccbac122a2}{mpdc\+\_\+topology\+\_\+child\+\_\+add\+\_\+empty\+\_\+node}} (\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list)
+\begin{DoxyCompactList}\small\item\em Get an empty node pointer from the topology list. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{topology_8h_a0f05b070c9aaa3acdb28b221685c5ffc}{mpdc\+\_\+topology\+\_\+child\+\_\+add\+\_\+item}} (\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, const \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}node)
+\begin{DoxyCompactList}\small\item\em Add a node to the topology list. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{topology_8h_a9e9e56dff342292966ef53206a92b655}{mpdc\+\_\+topology\+\_\+canonical\+\_\+to\+\_\+issuer\+\_\+name}} (char \texorpdfstring{$\ast$}{*}issuer, size\+\_\+t isslen, const char \texorpdfstring{$\ast$}{*}domain, const char \texorpdfstring{$\ast$}{*}cname)
+\begin{DoxyCompactList}\small\item\em Translate a canonical name to an issuer name. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{topology_8h_a4fe7360c82ba97110fbe402dc29c87c4}{mpdc\+\_\+topology\+\_\+issuer\+\_\+to\+\_\+canonical\+\_\+name}} (char \texorpdfstring{$\ast$}{*}cname, size\+\_\+t namelen, const char \texorpdfstring{$\ast$}{*}issuer)
+\begin{DoxyCompactList}\small\item\em Translate an issuer name to a canonical name. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{topology_8h_a5a500bc804d184e1f109c7b2d539fa1d}{mpdc\+\_\+topology\+\_\+child\+\_\+register}} (\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}ccert, const char \texorpdfstring{$\ast$}{*}address)
+\begin{DoxyCompactList}\small\item\em Register a child to a topology list. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{topology_8h_a2b60dfdf80624de9596a83c10c79463e}{mpdc\+\_\+topology\+\_\+list\+\_\+clone}} (const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}tlist, \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}tcopy)
+\begin{DoxyCompactList}\small\item\em Clone a topology list. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{topology_8h_aa3d8dfb5fea4f38453ac4b559c7075b1}{mpdc\+\_\+topology\+\_\+list\+\_\+deserialize}} (\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}input, size\+\_\+t inplen)
+\begin{DoxyCompactList}\small\item\em Deserialize a topology list. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{topology_8h_aba2c5fb620548ea35608bafeef45e6e7}{mpdc\+\_\+topology\+\_\+list\+\_\+dispose}} (\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list)
+\begin{DoxyCompactList}\small\item\em Dispose of the topology list and release memory. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{topology_8h_afd9a44e7fc520309c279d0ac490912f2}{mpdc\+\_\+topology\+\_\+list\+\_\+initialize}} (\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list)
+\begin{DoxyCompactList}\small\item\em Initialize the topology list. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{topology_8h_abf27537eb8425b3ab7bc61821814ac68}{mpdc\+\_\+topology\+\_\+list\+\_\+item}} (const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}node, size\+\_\+t index)
+\begin{DoxyCompactList}\small\item\em Get a node from the index. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{topology_8h_a85294cc552e861a2aa2042721088120b}{mpdc\+\_\+topology\+\_\+list\+\_\+remove\+\_\+duplicates}} (\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list)
+\begin{DoxyCompactList}\small\item\em Remove duplicate nodes from the topology. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{topology_8h_a190316ad6453243ae4e2aad0a0d0deef}{mpdc\+\_\+topology\+\_\+list\+\_\+server\+\_\+count}} (const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}} ntype)
+\begin{DoxyCompactList}\small\item\em Get the count of a type of node in the database. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{topology_8h_a8f4b5b9f4eb35beced48594f394c4b47}{mpdc\+\_\+topology\+\_\+list\+\_\+serialize}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}output, const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list)
+\begin{DoxyCompactList}\small\item\em Serialize a topology list. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{topology_8h_aeb689e26a2385cc92f640a16e890fa4b}{mpdc\+\_\+topology\+\_\+list\+\_\+size}} (const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list)
+\begin{DoxyCompactList}\small\item\em Get the byte size of the serialized list. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{topology_8h_a2e632e31702e3c5a5dba68a7b63d7769}{mpdc\+\_\+topology\+\_\+list\+\_\+to\+\_\+string}} (const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, char \texorpdfstring{$\ast$}{*}output, size\+\_\+t outlen)
+\begin{DoxyCompactList}\small\item\em Convert the topology list to a printable string. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{topology_8h_a3a6f2d0217b7ec4a834830a9439af01c}{mpdc\+\_\+topology\+\_\+list\+\_\+update\+\_\+pack}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}output, const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}} ntype)
+\begin{DoxyCompactList}\small\item\em Pack a node update set to an array. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{topology_8h_a13fddbbc1829e1b205800d1442a708de}{mpdc\+\_\+topology\+\_\+list\+\_\+update\+\_\+unpack}} (\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}input, size\+\_\+t inplen)
+\begin{DoxyCompactList}\small\item\em Unpack a node update set to the topology list. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{topology_8h_a12f5d2c0bfe30403bdf38c0209d582fb}{mpdc\+\_\+topology\+\_\+ordered\+\_\+server\+\_\+list}} (\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}olist, const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}tlist, \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}} ntype)
+\begin{DoxyCompactList}\small\item\em Return a list of nodes of a type, sorted by serial number. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{topology_8h_a72c06958e0931b26538896a399515e94}{mpdc\+\_\+topology\+\_\+node\+\_\+clear}} (\mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}node)
+\begin{DoxyCompactList}\small\item\em Erase a node structure. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{topology_8h_a8d5b286653a6fda26b38ccd4351925ae}{mpdc\+\_\+topology\+\_\+node\+\_\+copy}} (const \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}source, \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}destination)
+\begin{DoxyCompactList}\small\item\em Copy a source node to a destination node structure. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{topology_8h_afe1ed938ecaeb5ba6603c097015940da}{mpdc\+\_\+topology\+\_\+node\+\_\+deserialize}} (\mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}node, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}input)
+\begin{DoxyCompactList}\small\item\em Deserialize a topological node. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{topology_8h_aa85dcdeafecd33a576a7bd3310f6dd83}{mpdc\+\_\+topology\+\_\+node\+\_\+encode}} (const \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}node, char output\mbox{[}\mbox{\hyperlink{topology_8h_a2d343cf31d9f259664f88cb5209a7a8b}{MPDC\+\_\+\+TOPOLOGY\+\_\+\+NODE\+\_\+\+ENCODED\+\_\+\+SIZE}}\mbox{]})
+\begin{DoxyCompactList}\small\item\em Encode a topological node into a printable string. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{topology_8h_a8587435ce239e49269738059142c14d0}{mpdc\+\_\+topology\+\_\+node\+\_\+exists}} (const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}serial)
+\begin{DoxyCompactList}\small\item\em Queries on the serial number if the node is in the database. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API int32\+\_\+t \mbox{\hyperlink{topology_8h_a93d43242392ca0e0a002660b7207bea4}{mpdc\+\_\+topology\+\_\+node\+\_\+get\+\_\+index}} (const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}serial)
+\begin{DoxyCompactList}\small\item\em Find the index number of a node in an array. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{topology_8h_a45a9410dc04e6220e78e2ed69944abfd}{mpdc\+\_\+topology\+\_\+node\+\_\+find}} (const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}node, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}serial)
+\begin{DoxyCompactList}\small\item\em Return the node pointer in the list matching the serial number. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{topology_8h_a96d85de06eb2716759762f63115472a7}{mpdc\+\_\+topology\+\_\+node\+\_\+find\+\_\+address}} (const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}node, const char \texorpdfstring{$\ast$}{*}address)
+\begin{DoxyCompactList}\small\item\em Return the node pointer in the list matching the address string. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{topology_8h_ac0bc00c37bfa75669d2f7257d56d189e}{mpdc\+\_\+topology\+\_\+node\+\_\+find\+\_\+alias}} (const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}node, const char \texorpdfstring{$\ast$}{*}alias)
+\begin{DoxyCompactList}\small\item\em Return the node pointer in the list matching the alias string. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{topology_8h_a1a4b0966ed481bd1ba35226a2da5b169}{mpdc\+\_\+topology\+\_\+node\+\_\+find\+\_\+dla}} (const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}node)
+\begin{DoxyCompactList}\small\item\em Return the DLA node from the list. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{topology_8h_a1de309ec6fb6fc13199c6368e44da2b9}{mpdc\+\_\+topology\+\_\+node\+\_\+find\+\_\+issuer}} (const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}node, const char \texorpdfstring{$\ast$}{*}issuer)
+\begin{DoxyCompactList}\small\item\em Return the node pointer in the list matching the name string. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{topology_8h_a0e28a11fd9b72c4016c54ca5ec202dbb}{mpdc\+\_\+topology\+\_\+node\+\_\+find\+\_\+root}} (const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}node)
+\begin{DoxyCompactList}\small\item\em Return the RDS server node from the list. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{topology_8h_a00411b43b7c645ad7c78f6694905d6bd}{mpdc\+\_\+topology\+\_\+node\+\_\+remove}} (\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}serial)
+\begin{DoxyCompactList}\small\item\em Find and remove a node from the topology. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{topology_8h_af3fd859a719eef83f68e6381c4d00d86}{mpdc\+\_\+topology\+\_\+node\+\_\+remove\+\_\+duplicate}} (\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, const char \texorpdfstring{$\ast$}{*}issuer)
+\begin{DoxyCompactList}\small\item\em Remove a node from the topology with the same issuer name. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{topology_8h_a5259b4e60b7e56680be8a537c1d8d745}{mpdc\+\_\+topology\+\_\+node\+\_\+verify\+\_\+dla}} (const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}ccert)
+\begin{DoxyCompactList}\small\item\em Verify that the DLA certificate matches the hash stored in the topology. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{topology_8h_ae0b64276bfa2141d3914ef1083dbe138}{mpdc\+\_\+topology\+\_\+node\+\_\+verify\+\_\+issuer}} (const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}ccert, const char \texorpdfstring{$\ast$}{*}issuer)
+\begin{DoxyCompactList}\small\item\em Verify that an issuing node\textquotesingle{}s certificate matches the hash stored in the topology. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{topology_8h_ab3b1c20e02cb708483ac2731683222e7}{mpdc\+\_\+topology\+\_\+node\+\_\+verify\+\_\+root}} (const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}rcert)
+\begin{DoxyCompactList}\small\item\em Verify that the root certificate matches the hash stored in the topology. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{topology_8h_af06267e6b750fb81bb3661bc1658212c}{mpdc\+\_\+topology\+\_\+node\+\_\+serialize}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}output, const \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}node)
+\begin{DoxyCompactList}\small\item\em Serialize a topological node structure, including the mfk. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{topology_8h_a1a835565a7134e9e988a147daba69e6a}{mpdc\+\_\+topology\+\_\+root\+\_\+register}} (\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}rcert, const char \texorpdfstring{$\ast$}{*}address)
+\begin{DoxyCompactList}\small\item\em Register a root to a topology list. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{topology_8h_a50f0cade1658bcec61a6db853a5dd1b4}{mpdc\+\_\+topology\+\_\+from\+\_\+file}} (const char \texorpdfstring{$\ast$}{*}fpath, \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list)
+\begin{DoxyCompactList}\small\item\em Copy a topology list from a file. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{topology_8h_ad9361ad7a4d242fc62dd699a100db158}{mpdc\+\_\+topology\+\_\+to\+\_\+file}} (const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, const char \texorpdfstring{$\ast$}{*}fpath)
+\begin{DoxyCompactList}\small\item\em Copy a topology list to a file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The MPDC topology functions. 
+
+Detailed File Description\+: This header file defines the functions, macros, structures, and enumerations used by MPDC for managing the network topology. The topology functions handle the serialization and deserialization of network node information, conversion between canonical and issuer names, registration and removal of nodes from the topology list, and various lookup and verification operations.
+
+Notes\+: The issuer parameter composition; network/host.\+ctype\+:alias The first segment of an issuer string consists of the network path, which is the network name, appended with a forward slash (network/host). A network name can contain subdomains, each ending in a forward slash, ex. domain/subdomain/host. The network portion of the issuer string represents the network and host names as a path string. The second segment is the host name, and an optional extension preceded by a period (host.\+type), ex. xyz/mas.\+ctype. There are three types of devices; root, intra-\/domain, and inter-\/domain, which correspond to MPDC device types of \mbox{[}root server\mbox{]}, \mbox{[}dla, agent, mas, client\mbox{]}, and \mbox{[}idg\mbox{]} inter-\/domain gateways. The third segment of the issuer string is the alias (path\+:alias), a readable domain alias name, always preceded by a colon. The network name and any subdomains are always preceded by a single forward slash (domain/subdomain). ex. network/sub-\/network/host. The host name is the network device name, and it is terminated with a colon (path\+:alias). The alias is a name that represents a compact path or string representation of the network\textbackslash{}node path. Example\+: xyz/mas-\/1\+:www.\+xyz.\+com The entire issuer string cannot exceed 256 bytes. Periods, dashes, and most other symbols are legal with the exception of the reserved symbols\+: period, forward slash, and colon (. / \+:), as well as illegal symbols such as ! @ \$ \% \texorpdfstring{$^\wedge$}{\string^} \& \texorpdfstring{$\ast$}{*} ( ) \{ \} \texorpdfstring{$\vert$}{|} ; "{} \textquotesingle{}. Name to address lookups can be performed by the DLA that can translate a network\textbackslash{}node path, or an alias name, to an IP address (IPv4 or IPv6). Inverse lookups can also be performed, which return the issuer string from an IP address. Issuer network paths are mirrored in the storage subsystem and used as storage path substrings (e.\+g., C\+:\textbackslash{}\+MPDC\textbackslash{}xyz\textbackslash{}mas), enabling file system certificate retrieval based on the issuer\textquotesingle{}s topological path. 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{topology_8h_ae18c58bcc595d9ddc949a0911e1aa1fd}\index{topology.h@{topology.h}!MPDC\_NETWORK\_TOPOLOGY\_NODE\_SIZE@{MPDC\_NETWORK\_TOPOLOGY\_NODE\_SIZE}}
+\index{MPDC\_NETWORK\_TOPOLOGY\_NODE\_SIZE@{MPDC\_NETWORK\_TOPOLOGY\_NODE\_SIZE}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{MPDC\_NETWORK\_TOPOLOGY\_NODE\_SIZE}{MPDC\_NETWORK\_TOPOLOGY\_NODE\_SIZE}}
+{\footnotesize\ttfamily \label{topology_8h_ae18c58bcc595d9ddc949a0911e1aa1fd} 
+\#define MPDC\+\_\+\+NETWORK\+\_\+\+TOPOLOGY\+\_\+\+NODE\+\_\+\+SIZE}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ (\mbox{\hyperlink{mpdc_8h_a2cd49c99cb3c91f7f614a0732fb0824c}{MPDC\_CERTIFICATE\_ADDRESS\_SIZE}}\ +\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{mpdc_8h_a8a86a220ebe0faa467531261b2721d1c}{MPDC\_CERTIFICATE\_HASH\_SIZE}}\ +\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{mpdc_8h_a945d2c8137c447b76ee2619ddc03ad3f}{MPDC\_CERTIFICATE\_SERIAL\_SIZE}}\ +\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{mpdc_8h_a3cfc089905297aadb4230405884cdb6e}{MPDC\_CERTIFICATE\_ISSUER\_SIZE}}\ +\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{mpdc_8h_a0349548a75aa285e7efd9d04807de3ad}{MPDC\_CERTIFICATE\_EXPIRATION\_SIZE}}\ +\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{mpdc_8h_a7266714685725af30546701b0416d4af}{MPDC\_CERTIFICATE\_DESIGNATION\_SIZE}})}
+
+\end{DoxyCode}
+
+
+The size in bytes of a serialized topological node. 
+
+\Hypertarget{topology_8h_a2d343cf31d9f259664f88cb5209a7a8b}\index{topology.h@{topology.h}!MPDC\_TOPOLOGY\_NODE\_ENCODED\_SIZE@{MPDC\_TOPOLOGY\_NODE\_ENCODED\_SIZE}}
+\index{MPDC\_TOPOLOGY\_NODE\_ENCODED\_SIZE@{MPDC\_TOPOLOGY\_NODE\_ENCODED\_SIZE}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{MPDC\_TOPOLOGY\_NODE\_ENCODED\_SIZE}{MPDC\_TOPOLOGY\_NODE\_ENCODED\_SIZE}}
+{\footnotesize\ttfamily \label{topology_8h_a2d343cf31d9f259664f88cb5209a7a8b} 
+\#define MPDC\+\_\+\+TOPOLOGY\+\_\+\+NODE\+\_\+\+ENCODED\+\_\+\+SIZE}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ (MPDC\_CHILD\_CERTIFICATE\_ISSUER\_PREFIX\_SIZE\ +\ \mbox{\hyperlink{mpdc_8h_a3cfc089905297aadb4230405884cdb6e}{MPDC\_CERTIFICATE\_ISSUER\_SIZE}}\ +\ MPDC\_CERTIFICATE\_SEPERATOR\_SIZE\ +\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ MPDC\_CHILD\_CERTIFICATE\_ADDRESS\_PREFIX\_SIZE\ +\ QSC\_IPINFO\_IPV4\_STRNLEN\ +\ MPDC\_CERTIFICATE\_SEPERATOR\_SIZE\ +\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ MPDC\_ROOT\_CERTIFICATE\_HASH\_PREFIX\_SIZE\ +\ (\mbox{\hyperlink{mpdc_8h_a8a86a220ebe0faa467531261b2721d1c}{MPDC\_CERTIFICATE\_HASH\_SIZE}}\ *\ 2)\ +\ MPDC\_CERTIFICATE\_SEPERATOR\_SIZE\ +\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ MPDC\_CHILD\_CERTIFICATE\_SERIAL\_PREFIX\_SIZE\ +\ (\mbox{\hyperlink{mpdc_8h_a945d2c8137c447b76ee2619ddc03ad3f}{MPDC\_CERTIFICATE\_SERIAL\_SIZE}}\ *\ 2)\ +\ MPDC\_CERTIFICATE\_SEPERATOR\_SIZE\ +\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ MPDC\_CHILD\_CERTIFICATE\_DESIGNATION\_PREFIX\_SIZE\ +\ MPDC\_NETWORK\_DESIGNATION\_SIZE\ +\ MPDC\_CERTIFICATE\_SEPERATOR\_SIZE\ +\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ MPDC\_CHILD\_CERTIFICATE\_VALID\_FROM\_PREFIX\_SIZE\ +\ QSC\_TIMESTAMP\_STRING\_SIZE\ +\ MPDC\_CERTIFICATE\_SEPERATOR\_SIZE\ +\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ MPDC\_CHILD\_CERTIFICATE\_EXPIRATION\_TO\_PREFIX\_SIZE\ +\ QSC\_TIMESTAMP\_STRING\_SIZE\ +\ MPDC\_CERTIFICATE\_SEPERATOR\_SIZE)}
+
+\end{DoxyCode}
+
+
+The size of an encoded node string. 
+
+This macro defines the size of a printable, encoded node string. Its value depends on whether the network is IPv6 or IPv4. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{topology_8h_aadc022da3ac0a83bba2116d9b24425e8}\index{topology.h@{topology.h}!mpdc\_topology\_address\_from\_issuer@{mpdc\_topology\_address\_from\_issuer}}
+\index{mpdc\_topology\_address\_from\_issuer@{mpdc\_topology\_address\_from\_issuer}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_address\_from\_issuer()}{mpdc\_topology\_address\_from\_issuer()}}
+{\footnotesize\ttfamily \label{topology_8h_aadc022da3ac0a83bba2116d9b24425e8} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+topology\+\_\+address\+\_\+from\+\_\+issuer (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{address}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{issuer}{, }\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{}\end{DoxyParamCaption})}
+
+
+
+Returns an IP address from an issuer string. 
+
+This function extracts and returns the network address associated with a given issuer string, using the topology list to resolve the address.
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & The output buffer to receive the node\textquotesingle{}s network address (max MPDC\+\_\+\+CERTIFICATE\+\_\+\+ADDRESS\+\_\+\+SIZE). \\
+\hline
+{\em issuer} & \mbox{[}const\mbox{]} The issuer string. \\
+\hline
+{\em list} & \mbox{[}const\mbox{]} A pointer to the topology list. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{topology_8h_a9e9e56dff342292966ef53206a92b655}\index{topology.h@{topology.h}!mpdc\_topology\_canonical\_to\_issuer\_name@{mpdc\_topology\_canonical\_to\_issuer\_name}}
+\index{mpdc\_topology\_canonical\_to\_issuer\_name@{mpdc\_topology\_canonical\_to\_issuer\_name}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_canonical\_to\_issuer\_name()}{mpdc\_topology\_canonical\_to\_issuer\_name()}}
+{\footnotesize\ttfamily \label{topology_8h_a9e9e56dff342292966ef53206a92b655} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+topology\+\_\+canonical\+\_\+to\+\_\+issuer\+\_\+name (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{issuer}{, }\item[{size\+\_\+t}]{isslen}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{domain}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{cname}{}\end{DoxyParamCaption})}
+
+
+
+Translate a canonical name to an issuer name. 
+
+This function converts a device canonical name into its corresponding issuer name based on the domain.
+
+
+\begin{DoxyParams}{Parameters}
+{\em issuer} & The output issuer string. \\
+\hline
+{\em isslen} & The length of the issuer buffer. \\
+\hline
+{\em domain} & The domain name. \\
+\hline
+{\em cname} & The input device canonical name. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns false if the conversion fails. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_aa040f03d11215e9189ce51ccbac122a2}\index{topology.h@{topology.h}!mpdc\_topology\_child\_add\_empty\_node@{mpdc\_topology\_child\_add\_empty\_node}}
+\index{mpdc\_topology\_child\_add\_empty\_node@{mpdc\_topology\_child\_add\_empty\_node}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_child\_add\_empty\_node()}{mpdc\_topology\_child\_add\_empty\_node()}}
+{\footnotesize\ttfamily \label{topology_8h_aa040f03d11215e9189ce51ccbac122a2} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API uint8\+\_\+t \texorpdfstring{$\ast$}{*} mpdc\+\_\+topology\+\_\+child\+\_\+add\+\_\+empty\+\_\+node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{}\end{DoxyParamCaption})}
+
+
+
+Get an empty node pointer from the topology list. 
+
+This function returns a pointer to an empty node entry in the topology list. \begin{DoxyNote}{Note}
+This function is not thread safe.
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em list} & A pointer to the topology list. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a pointer to the empty node entry or NULL if none is available. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_a0f05b070c9aaa3acdb28b221685c5ffc}\index{topology.h@{topology.h}!mpdc\_topology\_child\_add\_item@{mpdc\_topology\_child\_add\_item}}
+\index{mpdc\_topology\_child\_add\_item@{mpdc\_topology\_child\_add\_item}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_child\_add\_item()}{mpdc\_topology\_child\_add\_item()}}
+{\footnotesize\ttfamily \label{topology_8h_a0f05b070c9aaa3acdb28b221685c5ffc} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+topology\+\_\+child\+\_\+add\+\_\+item (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{const \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})}
+
+
+
+Add a node to the topology list. 
+
+This function adds a new node item to the topology list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & A pointer to the topology list. \\
+\hline
+{\em node} & \mbox{[}const\mbox{]} The node to add. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{topology_8h_a5a500bc804d184e1f109c7b2d539fa1d}\index{topology.h@{topology.h}!mpdc\_topology\_child\_register@{mpdc\_topology\_child\_register}}
+\index{mpdc\_topology\_child\_register@{mpdc\_topology\_child\_register}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_child\_register()}{mpdc\_topology\_child\_register()}}
+{\footnotesize\ttfamily \label{topology_8h_a5a500bc804d184e1f109c7b2d539fa1d} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+topology\+\_\+child\+\_\+register (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{ccert}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{address}{}\end{DoxyParamCaption})}
+
+
+
+Register a child to a topology list. 
+
+This function registers a new child node in the topology list based on its certificate.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & A pointer to the topology list. \\
+\hline
+{\em ccert} & \mbox{[}const\mbox{]} The node\textquotesingle{}s child certificate. \\
+\hline
+{\em address} & \mbox{[}const\mbox{]} The node\textquotesingle{}s network address (max MPDC\+\_\+\+CERTIFICATE\+\_\+\+ADDRESS\+\_\+\+SIZE). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{topology_8h_a50f0cade1658bcec61a6db853a5dd1b4}\index{topology.h@{topology.h}!mpdc\_topology\_from\_file@{mpdc\_topology\_from\_file}}
+\index{mpdc\_topology\_from\_file@{mpdc\_topology\_from\_file}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_from\_file()}{mpdc\_topology\_from\_file()}}
+{\footnotesize\ttfamily \label{topology_8h_a50f0cade1658bcec61a6db853a5dd1b4} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+topology\+\_\+from\+\_\+file (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{fpath}{, }\item[{\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{}\end{DoxyParamCaption})}
+
+
+
+Copy a topology list from a file. 
+
+This function loads a topology list from a file.
+
+
+\begin{DoxyParams}{Parameters}
+{\em fpath} & \mbox{[}const\mbox{]} The full path to the topology list file. \\
+\hline
+{\em list} & A pointer to the topology list state to populate. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{topology_8h_a4fe7360c82ba97110fbe402dc29c87c4}\index{topology.h@{topology.h}!mpdc\_topology\_issuer\_to\_canonical\_name@{mpdc\_topology\_issuer\_to\_canonical\_name}}
+\index{mpdc\_topology\_issuer\_to\_canonical\_name@{mpdc\_topology\_issuer\_to\_canonical\_name}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_issuer\_to\_canonical\_name()}{mpdc\_topology\_issuer\_to\_canonical\_name()}}
+{\footnotesize\ttfamily \label{topology_8h_a4fe7360c82ba97110fbe402dc29c87c4} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+topology\+\_\+issuer\+\_\+to\+\_\+canonical\+\_\+name (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{cname}{, }\item[{size\+\_\+t}]{namelen}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{issuer}{}\end{DoxyParamCaption})}
+
+
+
+Translate an issuer name to a canonical name. 
+
+This function converts an issuer name back into its canonical form.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cname} & The output canonical name. \\
+\hline
+{\em namelen} & The length of the canonical name buffer. \\
+\hline
+{\em issuer} & The input issuer name string. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns false if the conversion fails. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_a2b60dfdf80624de9596a83c10c79463e}\index{topology.h@{topology.h}!mpdc\_topology\_list\_clone@{mpdc\_topology\_list\_clone}}
+\index{mpdc\_topology\_list\_clone@{mpdc\_topology\_list\_clone}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_list\_clone()}{mpdc\_topology\_list\_clone()}}
+{\footnotesize\ttfamily \label{topology_8h_a2b60dfdf80624de9596a83c10c79463e} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+topology\+\_\+list\+\_\+clone (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{tlist}{, }\item[{\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{tcopy}{}\end{DoxyParamCaption})}
+
+
+
+Clone a topology list. 
+
+This function creates a clone of the given topology list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em tlist} & \mbox{[}const\mbox{]} A pointer to the source topology list. \\
+\hline
+{\em tcopy} & A pointer to the destination topology list. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{topology_8h_aa3d8dfb5fea4f38453ac4b559c7075b1}\index{topology.h@{topology.h}!mpdc\_topology\_list\_deserialize@{mpdc\_topology\_list\_deserialize}}
+\index{mpdc\_topology\_list\_deserialize@{mpdc\_topology\_list\_deserialize}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_list\_deserialize()}{mpdc\_topology\_list\_deserialize()}}
+{\footnotesize\ttfamily \label{topology_8h_aa3d8dfb5fea4f38453ac4b559c7075b1} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+topology\+\_\+list\+\_\+deserialize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{size\+\_\+t}]{inplen}{}\end{DoxyParamCaption})}
+
+
+
+Deserialize a topology list. 
+
+This function deserializes a topology list from a given input array.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & A pointer to the topology list state to populate. \\
+\hline
+{\em input} & \mbox{[}const\mbox{]} The serialized topology array. \\
+\hline
+{\em inplen} & The size of the input array. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{topology_8h_aba2c5fb620548ea35608bafeef45e6e7}\index{topology.h@{topology.h}!mpdc\_topology\_list\_dispose@{mpdc\_topology\_list\_dispose}}
+\index{mpdc\_topology\_list\_dispose@{mpdc\_topology\_list\_dispose}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_list\_dispose()}{mpdc\_topology\_list\_dispose()}}
+{\footnotesize\ttfamily \label{topology_8h_aba2c5fb620548ea35608bafeef45e6e7} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+topology\+\_\+list\+\_\+dispose (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{}\end{DoxyParamCaption})}
+
+
+
+Dispose of the topology list and release memory. 
+
+This function releases all memory allocated for the topology list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & A pointer to the topology list state. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{topology_8h_afd9a44e7fc520309c279d0ac490912f2}\index{topology.h@{topology.h}!mpdc\_topology\_list\_initialize@{mpdc\_topology\_list\_initialize}}
+\index{mpdc\_topology\_list\_initialize@{mpdc\_topology\_list\_initialize}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_list\_initialize()}{mpdc\_topology\_list\_initialize()}}
+{\footnotesize\ttfamily \label{topology_8h_afd9a44e7fc520309c279d0ac490912f2} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+topology\+\_\+list\+\_\+initialize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{}\end{DoxyParamCaption})}
+
+
+
+Initialize the topology list. 
+
+This function initializes the topology list state.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & The topology list state to initialize. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{topology_8h_abf27537eb8425b3ab7bc61821814ac68}\index{topology.h@{topology.h}!mpdc\_topology\_list\_item@{mpdc\_topology\_list\_item}}
+\index{mpdc\_topology\_list\_item@{mpdc\_topology\_list\_item}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_list\_item()}{mpdc\_topology\_list\_item()}}
+{\footnotesize\ttfamily \label{topology_8h_abf27537eb8425b3ab7bc61821814ac68} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+topology\+\_\+list\+\_\+item (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{\mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{node}{, }\item[{size\+\_\+t}]{index}{}\end{DoxyParamCaption})}
+
+
+
+Get a node from the index. 
+
+This function retrieves the node at the specified index in the topology list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & The topology list state. \\
+\hline
+{\em node} & A pointer to the node structure to populate. \\
+\hline
+{\em index} & The index of the node. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns false if the node was not found. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_a85294cc552e861a2aa2042721088120b}\index{topology.h@{topology.h}!mpdc\_topology\_list\_remove\_duplicates@{mpdc\_topology\_list\_remove\_duplicates}}
+\index{mpdc\_topology\_list\_remove\_duplicates@{mpdc\_topology\_list\_remove\_duplicates}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_list\_remove\_duplicates()}{mpdc\_topology\_list\_remove\_duplicates()}}
+{\footnotesize\ttfamily \label{topology_8h_a85294cc552e861a2aa2042721088120b} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+topology\+\_\+list\+\_\+remove\+\_\+duplicates (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{}\end{DoxyParamCaption})}
+
+
+
+Remove duplicate nodes from the topology. 
+
+This function removes duplicate entries from the topology list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & The topology list state. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the number of items remaining in the list. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_a8f4b5b9f4eb35beced48594f394c4b47}\index{topology.h@{topology.h}!mpdc\_topology\_list\_serialize@{mpdc\_topology\_list\_serialize}}
+\index{mpdc\_topology\_list\_serialize@{mpdc\_topology\_list\_serialize}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_list\_serialize()}{mpdc\_topology\_list\_serialize()}}
+{\footnotesize\ttfamily \label{topology_8h_a8f4b5b9f4eb35beced48594f394c4b47} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+topology\+\_\+list\+\_\+serialize (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{}\end{DoxyParamCaption})}
+
+
+
+Serialize a topology list. 
+
+This function serializes the topology list into a byte array.
+
+
+\begin{DoxyParams}{Parameters}
+{\em output} & The output buffer for the serialized topology. \\
+\hline
+{\em list} & \mbox{[}const\mbox{]} The topology list state. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the size of the serialized topology. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_a190316ad6453243ae4e2aad0a0d0deef}\index{topology.h@{topology.h}!mpdc\_topology\_list\_server\_count@{mpdc\_topology\_list\_server\_count}}
+\index{mpdc\_topology\_list\_server\_count@{mpdc\_topology\_list\_server\_count}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_list\_server\_count()}{mpdc\_topology\_list\_server\_count()}}
+{\footnotesize\ttfamily \label{topology_8h_a190316ad6453243ae4e2aad0a0d0deef} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+topology\+\_\+list\+\_\+server\+\_\+count (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{\mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}}}]{ntype}{}\end{DoxyParamCaption})}
+
+
+
+Get the count of a type of node in the database. 
+
+This function counts the number of nodes of a specific type in the topology list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & \mbox{[}const\mbox{]} The topology list state. \\
+\hline
+{\em ntype} & The type of node entry to count. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the number of nodes matching the given type. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_aeb689e26a2385cc92f640a16e890fa4b}\index{topology.h@{topology.h}!mpdc\_topology\_list\_size@{mpdc\_topology\_list\_size}}
+\index{mpdc\_topology\_list\_size@{mpdc\_topology\_list\_size}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_list\_size()}{mpdc\_topology\_list\_size()}}
+{\footnotesize\ttfamily \label{topology_8h_aeb689e26a2385cc92f640a16e890fa4b} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+topology\+\_\+list\+\_\+size (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{}\end{DoxyParamCaption})}
+
+
+
+Get the byte size of the serialized list. 
+
+This function returns the size in bytes of the serialized topology list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & \mbox{[}const\mbox{]} The topology list state. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the byte size of the serialized topology. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_a2e632e31702e3c5a5dba68a7b63d7769}\index{topology.h@{topology.h}!mpdc\_topology\_list\_to\_string@{mpdc\_topology\_list\_to\_string}}
+\index{mpdc\_topology\_list\_to\_string@{mpdc\_topology\_list\_to\_string}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_list\_to\_string()}{mpdc\_topology\_list\_to\_string()}}
+{\footnotesize\ttfamily \label{topology_8h_a2e632e31702e3c5a5dba68a7b63d7769} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+topology\+\_\+list\+\_\+to\+\_\+string (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{outlen}{}\end{DoxyParamCaption})}
+
+
+
+Convert the topology list to a printable string. 
+
+This function converts the topology list into a human?readable string.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & \mbox{[}const\mbox{]} The topology list state. \\
+\hline
+{\em output} & The output string buffer. \\
+\hline
+{\em outlen} & The length of the output buffer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the size of the resulting string. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_a3a6f2d0217b7ec4a834830a9439af01c}\index{topology.h@{topology.h}!mpdc\_topology\_list\_update\_pack@{mpdc\_topology\_list\_update\_pack}}
+\index{mpdc\_topology\_list\_update\_pack@{mpdc\_topology\_list\_update\_pack}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_list\_update\_pack()}{mpdc\_topology\_list\_update\_pack()}}
+{\footnotesize\ttfamily \label{topology_8h_a3a6f2d0217b7ec4a834830a9439af01c} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+topology\+\_\+list\+\_\+update\+\_\+pack (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{\mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}}}]{ntype}{}\end{DoxyParamCaption})}
+
+
+
+Pack a node update set to an array. 
+
+This function serializes a subset of nodes from the topology list (of a given type) into an array.
+
+
+\begin{DoxyParams}{Parameters}
+{\em output} & The output buffer for the serialized node update set. \\
+\hline
+{\em list} & \mbox{[}const\mbox{]} The topology list state. \\
+\hline
+{\em ntype} & The type of node entry to pack. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the size of the serialized node update set. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_a13fddbbc1829e1b205800d1442a708de}\index{topology.h@{topology.h}!mpdc\_topology\_list\_update\_unpack@{mpdc\_topology\_list\_update\_unpack}}
+\index{mpdc\_topology\_list\_update\_unpack@{mpdc\_topology\_list\_update\_unpack}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_list\_update\_unpack()}{mpdc\_topology\_list\_update\_unpack()}}
+{\footnotesize\ttfamily \label{topology_8h_a13fddbbc1829e1b205800d1442a708de} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+topology\+\_\+list\+\_\+update\+\_\+unpack (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{size\+\_\+t}]{inplen}{}\end{DoxyParamCaption})}
+
+
+
+Unpack a node update set to the topology list. 
+
+This function deserializes an update set and adds the nodes to the topology list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & The topology list state to update. \\
+\hline
+{\em input} & The input serialized node update set. \\
+\hline
+{\em inplen} & The length of the input array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the number of bytes processed. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_aef2133a7a9cb1b91ab1b6eb3a3269ad6}\index{topology.h@{topology.h}!mpdc\_topology\_node\_add\_alias@{mpdc\_topology\_node\_add\_alias}}
+\index{mpdc\_topology\_node\_add\_alias@{mpdc\_topology\_node\_add\_alias}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_node\_add\_alias()}{mpdc\_topology\_node\_add\_alias()}}
+{\footnotesize\ttfamily \label{topology_8h_aef2133a7a9cb1b91ab1b6eb3a3269ad6} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+topology\+\_\+node\+\_\+add\+\_\+alias (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{node}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{alias}{}\end{DoxyParamCaption})}
+
+
+
+Add an alias string to an issuer path. 
+
+This function appends an alias to the issuer string of a node.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & The network node to update. \\
+\hline
+{\em alias} & \mbox{[}const\mbox{]} The host alias to add. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{topology_8h_a72c06958e0931b26538896a399515e94}\index{topology.h@{topology.h}!mpdc\_topology\_node\_clear@{mpdc\_topology\_node\_clear}}
+\index{mpdc\_topology\_node\_clear@{mpdc\_topology\_node\_clear}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_node\_clear()}{mpdc\_topology\_node\_clear()}}
+{\footnotesize\ttfamily \label{topology_8h_a72c06958e0931b26538896a399515e94} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+topology\+\_\+node\+\_\+clear (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})}
+
+
+
+Erase a node structure. 
+
+This function clears all data in a topology node structure.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & A pointer to the topology node structure to erase. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{topology_8h_a8d5b286653a6fda26b38ccd4351925ae}\index{topology.h@{topology.h}!mpdc\_topology\_node\_copy@{mpdc\_topology\_node\_copy}}
+\index{mpdc\_topology\_node\_copy@{mpdc\_topology\_node\_copy}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_node\_copy()}{mpdc\_topology\_node\_copy()}}
+{\footnotesize\ttfamily \label{topology_8h_a8d5b286653a6fda26b38ccd4351925ae} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+topology\+\_\+node\+\_\+copy (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{source}{, }\item[{\mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{destination}{}\end{DoxyParamCaption})}
+
+
+
+Copy a source node to a destination node structure. 
+
+This function copies the contents of one topology node structure to another.
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & \mbox{[}const\mbox{]} A pointer to the source node structure. \\
+\hline
+{\em destination} & A pointer to the destination node structure. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{topology_8h_afe1ed938ecaeb5ba6603c097015940da}\index{topology.h@{topology.h}!mpdc\_topology\_node\_deserialize@{mpdc\_topology\_node\_deserialize}}
+\index{mpdc\_topology\_node\_deserialize@{mpdc\_topology\_node\_deserialize}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_node\_deserialize()}{mpdc\_topology\_node\_deserialize()}}
+{\footnotesize\ttfamily \label{topology_8h_afe1ed938ecaeb5ba6603c097015940da} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+topology\+\_\+node\+\_\+deserialize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{node}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{input}{}\end{DoxyParamCaption})}
+
+
+
+Deserialize a topological node. 
+
+This function converts a serialized topology node array into a topology node structure.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & A pointer to the topology node structure to populate. \\
+\hline
+{\em input} & \mbox{[}const\mbox{]} The input serialized topology node data. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{topology_8h_aa85dcdeafecd33a576a7bd3310f6dd83}\index{topology.h@{topology.h}!mpdc\_topology\_node\_encode@{mpdc\_topology\_node\_encode}}
+\index{mpdc\_topology\_node\_encode@{mpdc\_topology\_node\_encode}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_node\_encode()}{mpdc\_topology\_node\_encode()}}
+{\footnotesize\ttfamily \label{topology_8h_aa85dcdeafecd33a576a7bd3310f6dd83} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+topology\+\_\+node\+\_\+encode (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{node}{, }\item[{char}]{output}{\mbox{[}\+MPDC\+\_\+\+TOPOLOGY\+\_\+\+NODE\+\_\+\+ENCODED\+\_\+\+SIZE\mbox{]}}\end{DoxyParamCaption})}
+
+
+
+Encode a topological node into a printable string. 
+
+This function encodes a topology node into a human?readable string format.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & A pointer to the topology node structure. \\
+\hline
+{\em output} & The output buffer for the encoded node string. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the size of the encoded node string. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_a8587435ce239e49269738059142c14d0}\index{topology.h@{topology.h}!mpdc\_topology\_node\_exists@{mpdc\_topology\_node\_exists}}
+\index{mpdc\_topology\_node\_exists@{mpdc\_topology\_node\_exists}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_node\_exists()}{mpdc\_topology\_node\_exists()}}
+{\footnotesize\ttfamily \label{topology_8h_a8587435ce239e49269738059142c14d0} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+topology\+\_\+node\+\_\+exists (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{serial}{}\end{DoxyParamCaption})}
+
+
+
+Queries on the serial number if the node is in the database. 
+
+This function checks whether a node with the specified serial number exists in the topology list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & \mbox{[}const\mbox{]} The topology list state. \\
+\hline
+{\em serial} & The serial number to search for. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the node exists; false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_a45a9410dc04e6220e78e2ed69944abfd}\index{topology.h@{topology.h}!mpdc\_topology\_node\_find@{mpdc\_topology\_node\_find}}
+\index{mpdc\_topology\_node\_find@{mpdc\_topology\_node\_find}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_node\_find()}{mpdc\_topology\_node\_find()}}
+{\footnotesize\ttfamily \label{topology_8h_a45a9410dc04e6220e78e2ed69944abfd} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+topology\+\_\+node\+\_\+find (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{\mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{node}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{serial}{}\end{DoxyParamCaption})}
+
+
+
+Return the node pointer in the list matching the serial number. 
+
+This function finds a node in the topology list that matches the given serial number.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & \mbox{[}const\mbox{]} The topology list state. \\
+\hline
+{\em node} & A pointer to the destination node structure to populate. \\
+\hline
+{\em serial} & \mbox{[}const\mbox{]} The certificate serial number to search for. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the node was found; false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_a96d85de06eb2716759762f63115472a7}\index{topology.h@{topology.h}!mpdc\_topology\_node\_find\_address@{mpdc\_topology\_node\_find\_address}}
+\index{mpdc\_topology\_node\_find\_address@{mpdc\_topology\_node\_find\_address}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_node\_find\_address()}{mpdc\_topology\_node\_find\_address()}}
+{\footnotesize\ttfamily \label{topology_8h_a96d85de06eb2716759762f63115472a7} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+topology\+\_\+node\+\_\+find\+\_\+address (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{\mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{node}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{address}{}\end{DoxyParamCaption})}
+
+
+
+Return the node pointer in the list matching the address string. 
+
+This function searches the topology list for a node that matches the given network address.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & \mbox{[}const\mbox{]} The topology list state. \\
+\hline
+{\em node} & A pointer to the destination node structure. \\
+\hline
+{\em address} & \mbox{[}const\mbox{]} The network address to search for. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the node was found; false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_ac0bc00c37bfa75669d2f7257d56d189e}\index{topology.h@{topology.h}!mpdc\_topology\_node\_find\_alias@{mpdc\_topology\_node\_find\_alias}}
+\index{mpdc\_topology\_node\_find\_alias@{mpdc\_topology\_node\_find\_alias}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_node\_find\_alias()}{mpdc\_topology\_node\_find\_alias()}}
+{\footnotesize\ttfamily \label{topology_8h_ac0bc00c37bfa75669d2f7257d56d189e} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+topology\+\_\+node\+\_\+find\+\_\+alias (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{\mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{node}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{alias}{}\end{DoxyParamCaption})}
+
+
+
+Return the node pointer in the list matching the alias string. 
+
+This function searches the topology list for a node that matches the given alias.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & \mbox{[}const\mbox{]} The topology list state. \\
+\hline
+{\em node} & A pointer to the destination node structure. \\
+\hline
+{\em alias} & \mbox{[}const\mbox{]} The alias to search for. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the node was found; false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_a1a4b0966ed481bd1ba35226a2da5b169}\index{topology.h@{topology.h}!mpdc\_topology\_node\_find\_dla@{mpdc\_topology\_node\_find\_dla}}
+\index{mpdc\_topology\_node\_find\_dla@{mpdc\_topology\_node\_find\_dla}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_node\_find\_dla()}{mpdc\_topology\_node\_find\_dla()}}
+{\footnotesize\ttfamily \label{topology_8h_a1a4b0966ed481bd1ba35226a2da5b169} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+topology\+\_\+node\+\_\+find\+\_\+dla (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{\mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})}
+
+
+
+Return the DLA node from the list. 
+
+This function finds the DLA node in the topology list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & \mbox{[}const\mbox{]} The topology list state. \\
+\hline
+{\em node} & A pointer to the destination node structure. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the DLA node was found; false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_a1de309ec6fb6fc13199c6368e44da2b9}\index{topology.h@{topology.h}!mpdc\_topology\_node\_find\_issuer@{mpdc\_topology\_node\_find\_issuer}}
+\index{mpdc\_topology\_node\_find\_issuer@{mpdc\_topology\_node\_find\_issuer}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_node\_find\_issuer()}{mpdc\_topology\_node\_find\_issuer()}}
+{\footnotesize\ttfamily \label{topology_8h_a1de309ec6fb6fc13199c6368e44da2b9} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+topology\+\_\+node\+\_\+find\+\_\+issuer (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{\mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{node}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{issuer}{}\end{DoxyParamCaption})}
+
+
+
+Return the node pointer in the list matching the name string. 
+
+This function finds a node in the topology list that matches the given issuer name.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & \mbox{[}const\mbox{]} The topology list state. \\
+\hline
+{\em node} & A pointer to the destination node structure. \\
+\hline
+{\em issuer} & \mbox{[}const\mbox{]} The certificate issuer name. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the node was found; false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_a0e28a11fd9b72c4016c54ca5ec202dbb}\index{topology.h@{topology.h}!mpdc\_topology\_node\_find\_root@{mpdc\_topology\_node\_find\_root}}
+\index{mpdc\_topology\_node\_find\_root@{mpdc\_topology\_node\_find\_root}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_node\_find\_root()}{mpdc\_topology\_node\_find\_root()}}
+{\footnotesize\ttfamily \label{topology_8h_a0e28a11fd9b72c4016c54ca5ec202dbb} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+topology\+\_\+node\+\_\+find\+\_\+root (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{\mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})}
+
+
+
+Return the RDS server node from the list. 
+
+This function retrieves the RDS server node from the topology list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & \mbox{[}const\mbox{]} The topology list state. \\
+\hline
+{\em node} & A pointer to the destination node structure. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the RDS server node was found; false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_a93d43242392ca0e0a002660b7207bea4}\index{topology.h@{topology.h}!mpdc\_topology\_node\_get\_index@{mpdc\_topology\_node\_get\_index}}
+\index{mpdc\_topology\_node\_get\_index@{mpdc\_topology\_node\_get\_index}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_node\_get\_index()}{mpdc\_topology\_node\_get\_index()}}
+{\footnotesize\ttfamily \label{topology_8h_a93d43242392ca0e0a002660b7207bea4} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API int32\+\_\+t mpdc\+\_\+topology\+\_\+node\+\_\+get\+\_\+index (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{serial}{}\end{DoxyParamCaption})}
+
+
+
+Find the index number of a node in an array. 
+
+This function searches for a node by its serial number and returns its index in the topology list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & \mbox{[}const\mbox{]} The topology list state. \\
+\hline
+{\em serial} & The serial number to search for. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the index of the node, or MPDC\+\_\+\+TOPOLOGY\+\_\+\+NODE\+\_\+\+NOT\+\_\+\+FOUND if not found. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_a00411b43b7c645ad7c78f6694905d6bd}\index{topology.h@{topology.h}!mpdc\_topology\_node\_remove@{mpdc\_topology\_node\_remove}}
+\index{mpdc\_topology\_node\_remove@{mpdc\_topology\_node\_remove}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_node\_remove()}{mpdc\_topology\_node\_remove()}}
+{\footnotesize\ttfamily \label{topology_8h_a00411b43b7c645ad7c78f6694905d6bd} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+topology\+\_\+node\+\_\+remove (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{serial}{}\end{DoxyParamCaption})}
+
+
+
+Find and remove a node from the topology. 
+
+This function searches for a node by its serial number and removes it from the topology list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & The topology list state. \\
+\hline
+{\em serial} & The serial number of the node to remove (MPDC\+\_\+\+CERTIFICATE\+\_\+\+SERIAL\+\_\+\+SIZE bytes). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{topology_8h_af3fd859a719eef83f68e6381c4d00d86}\index{topology.h@{topology.h}!mpdc\_topology\_node\_remove\_duplicate@{mpdc\_topology\_node\_remove\_duplicate}}
+\index{mpdc\_topology\_node\_remove\_duplicate@{mpdc\_topology\_node\_remove\_duplicate}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_node\_remove\_duplicate()}{mpdc\_topology\_node\_remove\_duplicate()}}
+{\footnotesize\ttfamily \label{topology_8h_af3fd859a719eef83f68e6381c4d00d86} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+topology\+\_\+node\+\_\+remove\+\_\+duplicate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{issuer}{}\end{DoxyParamCaption})}
+
+
+
+Remove a node from the topology with the same issuer name. 
+
+This function removes duplicate nodes from the topology list that have the same issuer name.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & The topology list state. \\
+\hline
+{\em issuer} & The issuer name to match for removal. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{topology_8h_af06267e6b750fb81bb3661bc1658212c}\index{topology.h@{topology.h}!mpdc\_topology\_node\_serialize@{mpdc\_topology\_node\_serialize}}
+\index{mpdc\_topology\_node\_serialize@{mpdc\_topology\_node\_serialize}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_node\_serialize()}{mpdc\_topology\_node\_serialize()}}
+{\footnotesize\ttfamily \label{topology_8h_af06267e6b750fb81bb3661bc1658212c} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+topology\+\_\+node\+\_\+serialize (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})}
+
+
+
+Serialize a topological node structure, including the mfk. 
+
+This function serializes the topology node structure into a byte array.
+
+
+\begin{DoxyParams}{Parameters}
+{\em output} & The output buffer to receive the serialized node. \\
+\hline
+{\em node} & \mbox{[}const\mbox{]} A pointer to the topology node structure. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the size of the serialized node. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_a5259b4e60b7e56680be8a537c1d8d745}\index{topology.h@{topology.h}!mpdc\_topology\_node\_verify\_dla@{mpdc\_topology\_node\_verify\_dla}}
+\index{mpdc\_topology\_node\_verify\_dla@{mpdc\_topology\_node\_verify\_dla}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_node\_verify\_dla()}{mpdc\_topology\_node\_verify\_dla()}}
+{\footnotesize\ttfamily \label{topology_8h_a5259b4e60b7e56680be8a537c1d8d745} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+topology\+\_\+node\+\_\+verify\+\_\+dla (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{ccert}{}\end{DoxyParamCaption})}
+
+
+
+Verify that the DLA certificate matches the hash stored in the topology. 
+
+This function verifies that the DLA certificate in the topology list matches the certificate hash.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & \mbox{[}const\mbox{]} The topology list state. \\
+\hline
+{\em ccert} & \mbox{[}const\mbox{]} The DLA certificate structure. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the certificate matches the stored hash; false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_ae0b64276bfa2141d3914ef1083dbe138}\index{topology.h@{topology.h}!mpdc\_topology\_node\_verify\_issuer@{mpdc\_topology\_node\_verify\_issuer}}
+\index{mpdc\_topology\_node\_verify\_issuer@{mpdc\_topology\_node\_verify\_issuer}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_node\_verify\_issuer()}{mpdc\_topology\_node\_verify\_issuer()}}
+{\footnotesize\ttfamily \label{topology_8h_ae0b64276bfa2141d3914ef1083dbe138} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+topology\+\_\+node\+\_\+verify\+\_\+issuer (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{ccert}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{issuer}{}\end{DoxyParamCaption})}
+
+
+
+Verify that an issuing node\textquotesingle{}s certificate matches the hash stored in the topology. 
+
+This function verifies that the certificate for a given issuer matches the stored hash in the topology list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & \mbox{[}const\mbox{]} The topology list state. \\
+\hline
+{\em ccert} & \mbox{[}const\mbox{]} The node\textquotesingle{}s certificate structure. \\
+\hline
+{\em issuer} & \mbox{[}const\mbox{]} The certificate issuer name. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the certificate is valid and matches; false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_ab3b1c20e02cb708483ac2731683222e7}\index{topology.h@{topology.h}!mpdc\_topology\_node\_verify\_root@{mpdc\_topology\_node\_verify\_root}}
+\index{mpdc\_topology\_node\_verify\_root@{mpdc\_topology\_node\_verify\_root}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_node\_verify\_root()}{mpdc\_topology\_node\_verify\_root()}}
+{\footnotesize\ttfamily \label{topology_8h_ab3b1c20e02cb708483ac2731683222e7} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+topology\+\_\+node\+\_\+verify\+\_\+root (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{rcert}{}\end{DoxyParamCaption})}
+
+
+
+Verify that the root certificate matches the hash stored in the topology. 
+
+This function verifies that the root certificate matches the hash stored in the topology list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & \mbox{[}const\mbox{]} The topology list state. \\
+\hline
+{\em rcert} & \mbox{[}const\mbox{]} The root certificate structure. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the root certificate is valid; false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_ae1a386092dff81c307885f16653c183d}\index{topology.h@{topology.h}!mpdc\_topology\_nodes\_are\_equal@{mpdc\_topology\_nodes\_are\_equal}}
+\index{mpdc\_topology\_nodes\_are\_equal@{mpdc\_topology\_nodes\_are\_equal}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_nodes\_are\_equal()}{mpdc\_topology\_nodes\_are\_equal()}}
+{\footnotesize\ttfamily \label{topology_8h_ae1a386092dff81c307885f16653c183d} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+topology\+\_\+nodes\+\_\+are\+\_\+equal (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{a}{, }\item[{const \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{b}{}\end{DoxyParamCaption})}
+
+
+
+Compare two topological nodes for equality. 
+
+This function compares two topology node structures and returns true if they are identical.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & \mbox{[}const\mbox{]} The first node. \\
+\hline
+{\em b} & \mbox{[}const\mbox{]} The second node. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the nodes are identical; false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_a12f5d2c0bfe30403bdf38c0209d582fb}\index{topology.h@{topology.h}!mpdc\_topology\_ordered\_server\_list@{mpdc\_topology\_ordered\_server\_list}}
+\index{mpdc\_topology\_ordered\_server\_list@{mpdc\_topology\_ordered\_server\_list}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_ordered\_server\_list()}{mpdc\_topology\_ordered\_server\_list()}}
+{\footnotesize\ttfamily \label{topology_8h_a12f5d2c0bfe30403bdf38c0209d582fb} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+topology\+\_\+ordered\+\_\+server\+\_\+list (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{olist}{, }\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{tlist}{, }\item[{\mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}}}]{ntype}{}\end{DoxyParamCaption})}
+
+
+
+Return a list of nodes of a type, sorted by serial number. 
+
+This function returns a new topology list containing nodes of a specific type, sorted by their serial number. \begin{DoxyNote}{Note}
+The caller is responsible for disposing the output list.
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em olist} & The sorted output topology list. \\
+\hline
+{\em tlist} & The unsorted input topology list. \\
+\hline
+{\em ntype} & The type of node to filter and sort. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the number of nodes in the sorted list. 
+\end{DoxyReturn}
+\Hypertarget{topology_8h_a1a835565a7134e9e988a147daba69e6a}\index{topology.h@{topology.h}!mpdc\_topology\_root\_register@{mpdc\_topology\_root\_register}}
+\index{mpdc\_topology\_root\_register@{mpdc\_topology\_root\_register}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_root\_register()}{mpdc\_topology\_root\_register()}}
+{\footnotesize\ttfamily \label{topology_8h_a1a835565a7134e9e988a147daba69e6a} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+topology\+\_\+root\+\_\+register (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{rcert}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{address}{}\end{DoxyParamCaption})}
+
+
+
+Register a root to a topology list. 
+
+This function registers a root certificate into the topology list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & A pointer to the topology list. \\
+\hline
+{\em rcert} & \mbox{[}const\mbox{]} The root certificate. \\
+\hline
+{\em address} & \mbox{[}const\mbox{]} The network address of the root. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{topology_8h_ad9361ad7a4d242fc62dd699a100db158}\index{topology.h@{topology.h}!mpdc\_topology\_to\_file@{mpdc\_topology\_to\_file}}
+\index{mpdc\_topology\_to\_file@{mpdc\_topology\_to\_file}!topology.h@{topology.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_topology\_to\_file()}{mpdc\_topology\_to\_file()}}
+{\footnotesize\ttfamily \label{topology_8h_ad9361ad7a4d242fc62dd699a100db158} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+topology\+\_\+to\+\_\+file (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{fpath}{}\end{DoxyParamCaption})}
+
+
+
+Copy a topology list to a file. 
+
+This function writes the current topology list to a file.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & \mbox{[}const\mbox{]} The topology list state. \\
+\hline
+{\em fpath} & \mbox{[}const\mbox{]} The destination file path for the topology list. \\
+\hline
+\end{DoxyParams}

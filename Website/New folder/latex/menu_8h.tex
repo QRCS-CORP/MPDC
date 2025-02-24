@@ -1,0 +1,308 @@
+\doxysection{C\+:/\+Users/stepp/\+Documents/\+Visual Studio 2022/\+Projects/\+C/\+MPDC/\+MPDC/menu.h File Reference}
+\hypertarget{menu_8h}{}\label{menu_8h}\index{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/menu.h@{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/menu.h}}
+
+
+The MPDC console menu functions.  
+
+
+{\ttfamily \#include "{}common.\+h"{}}\newline
+{\ttfamily \#include "{}commands.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{menu_8h_a28ada4daa0ed58ebb2d303623b264c0d}{mpdc\+\_\+menu\+\_\+get\+\_\+prompt}} (\mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1a}{mpdc\+\_\+console\+\_\+modes}} mode)
+\begin{DoxyCompactList}\small\item\em Returns the console prompt string. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{menu_8h_aaa9c72fdb25580e95ef2dbfbefb473e6}{mpdc\+\_\+menu\+\_\+print\+\_\+error}} (\mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} error, \mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1a}{mpdc\+\_\+console\+\_\+modes}} mode, const char \texorpdfstring{$\ast$}{*}host)
+\begin{DoxyCompactList}\small\item\em Print an error message to the console. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{menu_8h_a72f4bd32941557509692f3383321ae59}{mpdc\+\_\+menu\+\_\+print\+\_\+message}} (const char \texorpdfstring{$\ast$}{*}message, \mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1a}{mpdc\+\_\+console\+\_\+modes}} mode, const char \texorpdfstring{$\ast$}{*}host)
+\begin{DoxyCompactList}\small\item\em Print a message to the console. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{menu_8h_a040bfc6fcf83aa64c6d629c9954b2cb6}{mpdc\+\_\+menu\+\_\+print\+\_\+message\+\_\+confirm}} (const char \texorpdfstring{$\ast$}{*}message, \mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1a}{mpdc\+\_\+console\+\_\+modes}} mode, const char \texorpdfstring{$\ast$}{*}host)
+\begin{DoxyCompactList}\small\item\em Print a message to the console and wait for confirmation. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{menu_8h_a1858178ba7f67c1b27babb25169e03c1}{mpdc\+\_\+menu\+\_\+print\+\_\+predefined\+\_\+message}} (\mbox{\hyperlink{commands_8h_ab2dbd044cb9d55bda0aa646e3e855e12}{mpdc\+\_\+application\+\_\+messages}} msgnum, \mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1a}{mpdc\+\_\+console\+\_\+modes}} mode, const char \texorpdfstring{$\ast$}{*}host)
+\begin{DoxyCompactList}\small\item\em Print a predefined message to the console. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{menu_8h_a3131b71cecb3f1ad50199b3c3d2d3210}{mpdc\+\_\+menu\+\_\+print\+\_\+predefined\+\_\+message\+\_\+confirm}} (\mbox{\hyperlink{commands_8h_ab2dbd044cb9d55bda0aa646e3e855e12}{mpdc\+\_\+application\+\_\+messages}} msgnum, \mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1a}{mpdc\+\_\+console\+\_\+modes}} mode, const char \texorpdfstring{$\ast$}{*}host)
+\begin{DoxyCompactList}\small\item\em Print a predefined message to the console and wait for confirmation. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{menu_8h_a939320d76150d8b94118ab706f2cdace}{mpdc\+\_\+menu\+\_\+print\+\_\+prompt}} (\mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1a}{mpdc\+\_\+console\+\_\+modes}} mode, const char \texorpdfstring{$\ast$}{*}host)
+\begin{DoxyCompactList}\small\item\em Print the application prompt. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{menu_8h_ae113cdd5bdd4bc6609fe5b1cc4089c9f}{mpdc\+\_\+menu\+\_\+print\+\_\+prompt\+\_\+text}} (const char \texorpdfstring{$\ast$}{*}message, \mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1a}{mpdc\+\_\+console\+\_\+modes}} mode, const char \texorpdfstring{$\ast$}{*}host)
+\begin{DoxyCompactList}\small\item\em Print a prompt and text with no line terminator. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{menu_8h_a60db5213a910562a6b70a58accf22f5f}{mpdc\+\_\+menu\+\_\+print\+\_\+predefined\+\_\+text}} (\mbox{\hyperlink{commands_8h_ab2dbd044cb9d55bda0aa646e3e855e12}{mpdc\+\_\+application\+\_\+messages}} msgnum, \mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1a}{mpdc\+\_\+console\+\_\+modes}} mode, const char \texorpdfstring{$\ast$}{*}host)
+\begin{DoxyCompactList}\small\item\em Print a predefined message with no line terminator. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{menu_8h_aa3a7669ece850ae3b0bd378519bf8bc1}{mpdc\+\_\+menu\+\_\+print\+\_\+text}} (const char \texorpdfstring{$\ast$}{*}message)
+\begin{DoxyCompactList}\small\item\em Print a text string to the console without a newline. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{menu_8h_a2ec087d1a50eb50e1ffa9e774db453ac}{mpdc\+\_\+menu\+\_\+print\+\_\+text\+\_\+line}} (const char \texorpdfstring{$\ast$}{*}message)
+\begin{DoxyCompactList}\small\item\em Print a text string to the console with a newline. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{menu_8h_aa40111e3696612b4706970f7bf5d8758}{mpdc\+\_\+menu\+\_\+print\+\_\+prompt\+\_\+empty}} ()
+\begin{DoxyCompactList}\small\item\em Print the application prompt on an empty line. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The MPDC console menu functions. 
+
+This module provides functions for printing prompts, messages, and errors to the MPDC console. These functions are used to interact with the user by displaying status messages, predefined texts, and user confirmations.
+
+The functions include\+:
+\begin{DoxyItemize}
+\item Retrieving the prompt string for a given console mode.
+\item Printing error messages derived from protocol error codes.
+\item Printing plain text messages and predefined messages.
+\item Printing prompts (with or without text) to the console.
+\end{DoxyItemize}
+
+All messages are printed in plain ASCII. No Unicode characters are used.
+
+Example usage\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ Get\ and\ print\ the\ console\ prompt\ for\ configuration\ mode.}}
+\DoxyCodeLine{\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ prompt\ =\ mpdc\_menu\_get\_prompt(\mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1aa979e7922ea5883fa9c6cdf80d9b7a7bf}{mpdc\_console\_mode\_config}});}
+\DoxyCodeLine{qsc\_consoleutils\_print\_safe(prompt);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Print\ an\ error\ message\ based\ on\ a\ protocol\ error.}}
+\DoxyCodeLine{mpdc\_menu\_print\_error(\mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa1459ce4794d425edc43c5710fd5fd675}{mpdc\_protocol\_error\_invalid\_request}},\ \mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1aa979e7922ea5883fa9c6cdf80d9b7a7bf}{mpdc\_console\_mode\_config}},\ \textcolor{stringliteral}{"{}Host1"{}});}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Print\ a\ predefined\ message\ and\ wait\ for\ confirmation.}}
+\DoxyCodeLine{\textcolor{keywordflow}{if}\ (mpdc\_menu\_print\_predefined\_message\_confirm(mpdc\_application\_log\_backup,\ \mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1aa979e7922ea5883fa9c6cdf80d9b7a7bf}{mpdc\_console\_mode\_config}},\ \textcolor{stringliteral}{"{}Host1"{}}))}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Proceed\ with\ backup...}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{menu_8h_a28ada4daa0ed58ebb2d303623b264c0d}\index{menu.h@{menu.h}!mpdc\_menu\_get\_prompt@{mpdc\_menu\_get\_prompt}}
+\index{mpdc\_menu\_get\_prompt@{mpdc\_menu\_get\_prompt}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_menu\_get\_prompt()}{mpdc\_menu\_get\_prompt()}}
+{\footnotesize\ttfamily \label{menu_8h_a28ada4daa0ed58ebb2d303623b264c0d} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API const char \texorpdfstring{$\ast$}{*} mpdc\+\_\+menu\+\_\+get\+\_\+prompt (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1a}{mpdc\+\_\+console\+\_\+modes}}}]{mode}{}\end{DoxyParamCaption})}
+
+
+
+Returns the console prompt string. 
+
+This function returns the appropriate prompt string based on the specified console mode. The prompt is selected from an internal array of mode strings.
+
+
+\begin{DoxyParams}{Parameters}
+{\em mode} & The current console mode. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pointer to the prompt string. 
+\end{DoxyReturn}
+\Hypertarget{menu_8h_aaa9c72fdb25580e95ef2dbfbefb473e6}\index{menu.h@{menu.h}!mpdc\_menu\_print\_error@{mpdc\_menu\_print\_error}}
+\index{mpdc\_menu\_print\_error@{mpdc\_menu\_print\_error}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_menu\_print\_error()}{mpdc\_menu\_print\_error()}}
+{\footnotesize\ttfamily \label{menu_8h_aaa9c72fdb25580e95ef2dbfbefb473e6} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+menu\+\_\+print\+\_\+error (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}}}]{error}{, }\item[{\mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1a}{mpdc\+\_\+console\+\_\+modes}}}]{mode}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{host}{}\end{DoxyParamCaption})}
+
+
+
+Print an error message to the console. 
+
+This function converts a protocol error code into a descriptive string and prints it to the console. It prints the prompt first (based on the mode and host) and then the error message.
+
+
+\begin{DoxyParams}{Parameters}
+{\em error} & The protocol error enumerator. \\
+\hline
+{\em mode} & The current console mode. \\
+\hline
+{\em host} & The host name. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{menu_8h_a72f4bd32941557509692f3383321ae59}\index{menu.h@{menu.h}!mpdc\_menu\_print\_message@{mpdc\_menu\_print\_message}}
+\index{mpdc\_menu\_print\_message@{mpdc\_menu\_print\_message}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_menu\_print\_message()}{mpdc\_menu\_print\_message()}}
+{\footnotesize\ttfamily \label{menu_8h_a72f4bd32941557509692f3383321ae59} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+menu\+\_\+print\+\_\+message (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{message}{, }\item[{\mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1a}{mpdc\+\_\+console\+\_\+modes}}}]{mode}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{host}{}\end{DoxyParamCaption})}
+
+
+
+Print a message to the console. 
+
+This function prints the given message string to the console. It first prints the prompt (using the current mode and host) and then the message on a new line.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message string to print. \\
+\hline
+{\em mode} & The current console mode. \\
+\hline
+{\em host} & The host name. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{menu_8h_a040bfc6fcf83aa64c6d629c9954b2cb6}\index{menu.h@{menu.h}!mpdc\_menu\_print\_message\_confirm@{mpdc\_menu\_print\_message\_confirm}}
+\index{mpdc\_menu\_print\_message\_confirm@{mpdc\_menu\_print\_message\_confirm}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_menu\_print\_message\_confirm()}{mpdc\_menu\_print\_message\_confirm()}}
+{\footnotesize\ttfamily \label{menu_8h_a040bfc6fcf83aa64c6d629c9954b2cb6} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+menu\+\_\+print\+\_\+message\+\_\+confirm (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{message}{, }\item[{\mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1a}{mpdc\+\_\+console\+\_\+modes}}}]{mode}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{host}{}\end{DoxyParamCaption})}
+
+
+
+Print a message to the console and wait for confirmation. 
+
+This function prints a message and then waits for the user to input a single character. If the user enters \textquotesingle{}y\textquotesingle{} or \textquotesingle{}Y\textquotesingle{}, the function returns true.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message string. \\
+\hline
+{\em mode} & The current console mode. \\
+\hline
+{\em host} & The host name. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the user confirms (answers \textquotesingle{}y\textquotesingle{} or \textquotesingle{}Y\textquotesingle{}); false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{menu_8h_a1858178ba7f67c1b27babb25169e03c1}\index{menu.h@{menu.h}!mpdc\_menu\_print\_predefined\_message@{mpdc\_menu\_print\_predefined\_message}}
+\index{mpdc\_menu\_print\_predefined\_message@{mpdc\_menu\_print\_predefined\_message}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_menu\_print\_predefined\_message()}{mpdc\_menu\_print\_predefined\_message()}}
+{\footnotesize\ttfamily \label{menu_8h_a1858178ba7f67c1b27babb25169e03c1} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+menu\+\_\+print\+\_\+predefined\+\_\+message (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{commands_8h_ab2dbd044cb9d55bda0aa646e3e855e12}{mpdc\+\_\+application\+\_\+messages}}}]{msgnum}{, }\item[{\mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1a}{mpdc\+\_\+console\+\_\+modes}}}]{mode}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{host}{}\end{DoxyParamCaption})}
+
+
+
+Print a predefined message to the console. 
+
+This function prints a message that is predefined in the MPDC application. The message is chosen based on the msgnum parameter.
+
+
+\begin{DoxyParams}{Parameters}
+{\em msgnum} & The predefined message enumerator. \\
+\hline
+{\em mode} & The current console mode. \\
+\hline
+{\em host} & The host name. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{menu_8h_a3131b71cecb3f1ad50199b3c3d2d3210}\index{menu.h@{menu.h}!mpdc\_menu\_print\_predefined\_message\_confirm@{mpdc\_menu\_print\_predefined\_message\_confirm}}
+\index{mpdc\_menu\_print\_predefined\_message\_confirm@{mpdc\_menu\_print\_predefined\_message\_confirm}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_menu\_print\_predefined\_message\_confirm()}{mpdc\_menu\_print\_predefined\_message\_confirm()}}
+{\footnotesize\ttfamily \label{menu_8h_a3131b71cecb3f1ad50199b3c3d2d3210} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+menu\+\_\+print\+\_\+predefined\+\_\+message\+\_\+confirm (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{commands_8h_ab2dbd044cb9d55bda0aa646e3e855e12}{mpdc\+\_\+application\+\_\+messages}}}]{msgnum}{, }\item[{\mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1a}{mpdc\+\_\+console\+\_\+modes}}}]{mode}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{host}{}\end{DoxyParamCaption})}
+
+
+
+Print a predefined message to the console and wait for confirmation. 
+
+This function prints a predefined message and then waits for the user to provide confirmation. A response of \textquotesingle{}y\textquotesingle{} or \textquotesingle{}Y\textquotesingle{} returns true.
+
+
+\begin{DoxyParams}{Parameters}
+{\em msgnum} & The predefined message enumerator. \\
+\hline
+{\em mode} & The current console mode. \\
+\hline
+{\em host} & The host name. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the user confirms; false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{menu_8h_a60db5213a910562a6b70a58accf22f5f}\index{menu.h@{menu.h}!mpdc\_menu\_print\_predefined\_text@{mpdc\_menu\_print\_predefined\_text}}
+\index{mpdc\_menu\_print\_predefined\_text@{mpdc\_menu\_print\_predefined\_text}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_menu\_print\_predefined\_text()}{mpdc\_menu\_print\_predefined\_text()}}
+{\footnotesize\ttfamily \label{menu_8h_a60db5213a910562a6b70a58accf22f5f} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+menu\+\_\+print\+\_\+predefined\+\_\+text (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{commands_8h_ab2dbd044cb9d55bda0aa646e3e855e12}{mpdc\+\_\+application\+\_\+messages}}}]{msgnum}{, }\item[{\mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1a}{mpdc\+\_\+console\+\_\+modes}}}]{mode}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{host}{}\end{DoxyParamCaption})}
+
+
+
+Print a predefined message with no line terminator. 
+
+This function prints a predefined message (as defined in the MPDC application messages) without a newline at the end.
+
+
+\begin{DoxyParams}{Parameters}
+{\em msgnum} & The predefined message enumerator. \\
+\hline
+{\em mode} & The current console mode. \\
+\hline
+{\em host} & The host name. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{menu_8h_a939320d76150d8b94118ab706f2cdace}\index{menu.h@{menu.h}!mpdc\_menu\_print\_prompt@{mpdc\_menu\_print\_prompt}}
+\index{mpdc\_menu\_print\_prompt@{mpdc\_menu\_print\_prompt}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_menu\_print\_prompt()}{mpdc\_menu\_print\_prompt()}}
+{\footnotesize\ttfamily \label{menu_8h_a939320d76150d8b94118ab706f2cdace} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+menu\+\_\+print\+\_\+prompt (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1a}{mpdc\+\_\+console\+\_\+modes}}}]{mode}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{host}{}\end{DoxyParamCaption})}
+
+
+
+Print the application prompt. 
+
+This function prints the application prompt string to the console using the current console mode and host name.
+
+
+\begin{DoxyParams}{Parameters}
+{\em mode} & The current console mode. \\
+\hline
+{\em host} & The host name. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{menu_8h_aa40111e3696612b4706970f7bf5d8758}\index{menu.h@{menu.h}!mpdc\_menu\_print\_prompt\_empty@{mpdc\_menu\_print\_prompt\_empty}}
+\index{mpdc\_menu\_print\_prompt\_empty@{mpdc\_menu\_print\_prompt\_empty}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_menu\_print\_prompt\_empty()}{mpdc\_menu\_print\_prompt\_empty()}}
+{\footnotesize\ttfamily \label{menu_8h_aa40111e3696612b4706970f7bf5d8758} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+menu\+\_\+print\+\_\+prompt\+\_\+empty (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Print the application prompt on an empty line. 
+
+This function prints the default application prompt on a new line. \Hypertarget{menu_8h_ae113cdd5bdd4bc6609fe5b1cc4089c9f}\index{menu.h@{menu.h}!mpdc\_menu\_print\_prompt\_text@{mpdc\_menu\_print\_prompt\_text}}
+\index{mpdc\_menu\_print\_prompt\_text@{mpdc\_menu\_print\_prompt\_text}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_menu\_print\_prompt\_text()}{mpdc\_menu\_print\_prompt\_text()}}
+{\footnotesize\ttfamily \label{menu_8h_ae113cdd5bdd4bc6609fe5b1cc4089c9f} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+menu\+\_\+print\+\_\+prompt\+\_\+text (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{message}{, }\item[{\mbox{\hyperlink{commands_8h_adf7430f4e6e4eee57dddbf31b2185e1a}{mpdc\+\_\+console\+\_\+modes}}}]{mode}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{host}{}\end{DoxyParamCaption})}
+
+
+
+Print a prompt and text with no line terminator. 
+
+This function prints a prompt followed by a message string. The message is printed without appending a newline character.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message string to print. \\
+\hline
+{\em mode} & The current console mode. \\
+\hline
+{\em host} & The host name. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{menu_8h_aa3a7669ece850ae3b0bd378519bf8bc1}\index{menu.h@{menu.h}!mpdc\_menu\_print\_text@{mpdc\_menu\_print\_text}}
+\index{mpdc\_menu\_print\_text@{mpdc\_menu\_print\_text}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_menu\_print\_text()}{mpdc\_menu\_print\_text()}}
+{\footnotesize\ttfamily \label{menu_8h_aa3a7669ece850ae3b0bd378519bf8bc1} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+menu\+\_\+print\+\_\+text (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{message}{}\end{DoxyParamCaption})}
+
+
+
+Print a text string to the console without a newline. 
+
+This function prints the specified text string using a safe console print, without appending a newline.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message string to print. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{menu_8h_a2ec087d1a50eb50e1ffa9e774db453ac}\index{menu.h@{menu.h}!mpdc\_menu\_print\_text\_line@{mpdc\_menu\_print\_text\_line}}
+\index{mpdc\_menu\_print\_text\_line@{mpdc\_menu\_print\_text\_line}!menu.h@{menu.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_menu\_print\_text\_line()}{mpdc\_menu\_print\_text\_line()}}
+{\footnotesize\ttfamily \label{menu_8h_a2ec087d1a50eb50e1ffa9e774db453ac} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+menu\+\_\+print\+\_\+text\+\_\+line (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{message}{}\end{DoxyParamCaption})}
+
+
+
+Print a text string to the console with a newline. 
+
+This function prints the specified text string and then appends a newline.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message string to print. \\
+\hline
+\end{DoxyParams}

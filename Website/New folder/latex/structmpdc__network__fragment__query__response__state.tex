@@ -1,0 +1,65 @@
+\doxysection{mpdc\+\_\+network\+\_\+fragment\+\_\+query\+\_\+response\+\_\+state Struct Reference}
+\hypertarget{structmpdc__network__fragment__query__response__state}{}\label{structmpdc__network__fragment__query__response__state}\index{mpdc\_network\_fragment\_query\_response\_state@{mpdc\_network\_fragment\_query\_response\_state}}
+
+
+The fkey query response function state.  
+
+
+
+
+{\ttfamily \#include $<$network.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+const qsc\+\_\+socket \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmpdc__network__fragment__query__response__state_a5a54676e53cc1837094dad7fa95a09bf}{csock}}
+\item 
+const \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmpdc__network__fragment__query__response__state_a12e2a2194f88cd8e2ae293d7c3e36ae7}{lnode}}
+\item 
+const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmpdc__network__fragment__query__response__state_ad09597e087832cafc06e9d86cc7ff245}{list}}
+\item 
+qsc\+\_\+collection\+\_\+state \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmpdc__network__fragment__query__response__state_a19047b61762dd0ff5cfc77ce5617dc13}{lmfk}}
+\item 
+const \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmpdc__network__fragment__query__response__state_a621537eb80ab99ff91d19d94eb5cc00d}{rnode}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The fkey query response function state. 
+
+\doxysubsection{Field Documentation}
+\Hypertarget{structmpdc__network__fragment__query__response__state_a5a54676e53cc1837094dad7fa95a09bf}\index{mpdc\_network\_fragment\_query\_response\_state@{mpdc\_network\_fragment\_query\_response\_state}!csock@{csock}}
+\index{csock@{csock}!mpdc\_network\_fragment\_query\_response\_state@{mpdc\_network\_fragment\_query\_response\_state}}
+\doxysubsubsection{\texorpdfstring{csock}{csock}}
+{\footnotesize\ttfamily \label{structmpdc__network__fragment__query__response__state_a5a54676e53cc1837094dad7fa95a09bf} 
+const qsc\+\_\+socket\texorpdfstring{$\ast$}{*} csock}
+
+The connected socket \Hypertarget{structmpdc__network__fragment__query__response__state_ad09597e087832cafc06e9d86cc7ff245}\index{mpdc\_network\_fragment\_query\_response\_state@{mpdc\_network\_fragment\_query\_response\_state}!list@{list}}
+\index{list@{list}!mpdc\_network\_fragment\_query\_response\_state@{mpdc\_network\_fragment\_query\_response\_state}}
+\doxysubsubsection{\texorpdfstring{list}{list}}
+{\footnotesize\ttfamily \label{structmpdc__network__fragment__query__response__state_ad09597e087832cafc06e9d86cc7ff245} 
+const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}}\texorpdfstring{$\ast$}{*} list}
+
+A pointer to the topology list \Hypertarget{structmpdc__network__fragment__query__response__state_a19047b61762dd0ff5cfc77ce5617dc13}\index{mpdc\_network\_fragment\_query\_response\_state@{mpdc\_network\_fragment\_query\_response\_state}!lmfk@{lmfk}}
+\index{lmfk@{lmfk}!mpdc\_network\_fragment\_query\_response\_state@{mpdc\_network\_fragment\_query\_response\_state}}
+\doxysubsubsection{\texorpdfstring{lmfk}{lmfk}}
+{\footnotesize\ttfamily \label{structmpdc__network__fragment__query__response__state_a19047b61762dd0ff5cfc77ce5617dc13} 
+qsc\+\_\+collection\+\_\+state\texorpdfstring{$\ast$}{*} lmfk}
+
+A pointer to the mfk collection \Hypertarget{structmpdc__network__fragment__query__response__state_a12e2a2194f88cd8e2ae293d7c3e36ae7}\index{mpdc\_network\_fragment\_query\_response\_state@{mpdc\_network\_fragment\_query\_response\_state}!lnode@{lnode}}
+\index{lnode@{lnode}!mpdc\_network\_fragment\_query\_response\_state@{mpdc\_network\_fragment\_query\_response\_state}}
+\doxysubsubsection{\texorpdfstring{lnode}{lnode}}
+{\footnotesize\ttfamily \label{structmpdc__network__fragment__query__response__state_a12e2a2194f88cd8e2ae293d7c3e36ae7} 
+const \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}}\texorpdfstring{$\ast$}{*} lnode}
+
+A pointer to the local node structure \Hypertarget{structmpdc__network__fragment__query__response__state_a621537eb80ab99ff91d19d94eb5cc00d}\index{mpdc\_network\_fragment\_query\_response\_state@{mpdc\_network\_fragment\_query\_response\_state}!rnode@{rnode}}
+\index{rnode@{rnode}!mpdc\_network\_fragment\_query\_response\_state@{mpdc\_network\_fragment\_query\_response\_state}}
+\doxysubsubsection{\texorpdfstring{rnode}{rnode}}
+{\footnotesize\ttfamily \label{structmpdc__network__fragment__query__response__state_a621537eb80ab99ff91d19d94eb5cc00d} 
+const \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}}\texorpdfstring{$\ast$}{*} rnode}
+
+A pointer to the remote node structure 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/stepp/\+Documents/\+Visual Studio 2022/\+Projects/\+C/\+MPDC/\+MPDC/\mbox{\hyperlink{network_8h}{network.\+h}}\end{DoxyCompactItemize}
