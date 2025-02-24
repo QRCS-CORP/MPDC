@@ -1,0 +1,933 @@
+\doxysection{C\+:/\+Users/stepp/\+Documents/\+Visual Studio 2022/\+Projects/\+C/\+MPDC/\+MPDC/certificate.h File Reference}
+\hypertarget{certificate_8h}{}\label{certificate_8h}\index{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/certificate.h@{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/certificate.h}}
+
+
+MPDC Certificate Handling Functions.  
+
+
+{\ttfamily \#include "{}mpdc.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\+\_\+configuration\+\_\+sets}} \mbox{\hyperlink{certificate_8h_a8115c0162e4121f9890b6185e78982c9}{mpdc\+\_\+certificate\+\_\+algorithm\+\_\+decode}} (const char \texorpdfstring{$\ast$}{*}name)
+\begin{DoxyCompactList}\small\item\em Decode the string algorithm-\/set number to the enumerated representation. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{certificate_8h_a30c61d8fd6e171d26fbbab6aa86a8042}{mpdc\+\_\+certificate\+\_\+algorithm\+\_\+enabled}} (\mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\+\_\+configuration\+\_\+sets}} conf)
+\begin{DoxyCompactList}\small\item\em Test if the specified protocol-\/set is enabled on this system. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{certificate_8h_acc1bb4be5d3c36d778872d6e07a0da45}{mpdc\+\_\+certificate\+\_\+algorithm\+\_\+encode}} (char \texorpdfstring{$\ast$}{*}name, \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\+\_\+configuration\+\_\+sets}} conf)
+\begin{DoxyCompactList}\small\item\em Encode the protocol-\/set enumerator into its string form. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{certificate_8h_abf2aeace1464bf525feab67ed0845375}{mpdc\+\_\+certificate\+\_\+child\+\_\+are\+\_\+equal}} (const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}a, const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}b)
+\begin{DoxyCompactList}\small\item\em Compare two child certificates for equivalence. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{certificate_8h_a6e8cfc979a07ef87d58e8b6469950371}{mpdc\+\_\+certificate\+\_\+child\+\_\+copy}} (\mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}output, const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}input)
+\begin{DoxyCompactList}\small\item\em Copy a child certificate structure. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{certificate_8h_a3df9b5ee33417bdbe329278181ce38d7}{mpdc\+\_\+certificate\+\_\+child\+\_\+create}} (\mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}child, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}pubkey, const \mbox{\hyperlink{structmpdc__certificate__expiration}{mpdc\+\_\+certificate\+\_\+expiration}} \texorpdfstring{$\ast$}{*}expiration, const char \texorpdfstring{$\ast$}{*}issuer, \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}} designation)
+\begin{DoxyCompactList}\small\item\em Create a child certificate. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{certificate_8h_ac2f2839a3ef16c91932f2407502866ee}{mpdc\+\_\+certificate\+\_\+child\+\_\+decode}} (\mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}child, const char enck\mbox{[}\mbox{\hyperlink{mpdc_8h_a4a6c611dfe7159ec0cbef57ea09d04dd}{MPDC\+\_\+\+CHILD\+\_\+\+CERTIFICATE\+\_\+\+STRING\+\_\+\+SIZE}}\mbox{]})
+\begin{DoxyCompactList}\small\item\em Decode a child certificate string into a certificate structure. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{certificate_8h_a6ebaf15697e5c41ec64aff4f19bda636}{mpdc\+\_\+certificate\+\_\+child\+\_\+deserialize}} (\mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}child, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}input)
+\begin{DoxyCompactList}\small\item\em Deserialize a child certificate from a byte array. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{certificate_8h_aeb919b7e7b11bb8c9459178ee0e1cac2}{mpdc\+\_\+certificate\+\_\+child\+\_\+encode}} (char enck\mbox{[}\mbox{\hyperlink{mpdc_8h_a4a6c611dfe7159ec0cbef57ea09d04dd}{MPDC\+\_\+\+CHILD\+\_\+\+CERTIFICATE\+\_\+\+STRING\+\_\+\+SIZE}}\mbox{]}, const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}child)
+\begin{DoxyCompactList}\small\item\em Encode a public child certificate into a human-\/readable string. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{certificate_8h_a1c92a4b7047fa435d1d8f14d3c4a6e88}{mpdc\+\_\+certificate\+\_\+child\+\_\+erase}} (\mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}child)
+\begin{DoxyCompactList}\small\item\em Delete (erase) a child certificate. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{certificate_8h_ad8c7cd1673c6575f66ce6ad2cc6f6dd1}{mpdc\+\_\+certificate\+\_\+child\+\_\+file\+\_\+to\+\_\+struct}} (const char \texorpdfstring{$\ast$}{*}fpath, \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}child)
+\begin{DoxyCompactList}\small\item\em Copy a serialized certificate from a file into a child certificate structure. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{certificate_8h_a2eebfe1be97c0dacdb58680a8de69a39}{mpdc\+\_\+certificate\+\_\+child\+\_\+hash}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}output, const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}child)
+\begin{DoxyCompactList}\small\item\em Compute the cryptographic hash of a child certificate. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{certificate_8h_a4848f8e372e122c3876eb99a0280a2ff}{mpdc\+\_\+certificate\+\_\+child\+\_\+is\+\_\+valid}} (const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}child)
+\begin{DoxyCompactList}\small\item\em Test a child certificate for a valid format and expiration. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{certificate_8h_a034ab6ed909a3b8a3c064a69a9469979}{mpdc\+\_\+certificate\+\_\+child\+\_\+message\+\_\+verify}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}message, size\+\_\+t \texorpdfstring{$\ast$}{*}msglen, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}signature, size\+\_\+t siglen, const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}child)
+\begin{DoxyCompactList}\small\item\em Verify a message signature using a child certificate. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{certificate_8h_a7ccb35d12f9b960f711bfc89a5b4b6d4}{mpdc\+\_\+certificate\+\_\+child\+\_\+serialize}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}output, const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}child)
+\begin{DoxyCompactList}\small\item\em Serialize a child certificate into a contiguous byte array. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{certificate_8h_a50cbb4e985b4b9a9c92e47bb97ea6b5a}{mpdc\+\_\+certificate\+\_\+signature\+\_\+hash\+\_\+verify}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}signature, size\+\_\+t siglen, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}message, size\+\_\+t msglen, const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}lcert)
+\begin{DoxyCompactList}\small\item\em Verify that a signature hash matches a computed message hash using a child certificate. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{certificate_8h_ab54a994026f92d603a4dff4ba96443ab}{mpdc\+\_\+certificate\+\_\+child\+\_\+struct\+\_\+to\+\_\+file}} (const char \texorpdfstring{$\ast$}{*}fpath, const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}child)
+\begin{DoxyCompactList}\small\item\em Write a child certificate structure to a file. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}} \mbox{\hyperlink{certificate_8h_adcc290fdc8a6c7ac0f55cd3afe4582a3}{mpdc\+\_\+certificate\+\_\+designation\+\_\+decode}} (const char \texorpdfstring{$\ast$}{*}sdsg)
+\begin{DoxyCompactList}\small\item\em Decode the network-\/designation string to its enumerated representation. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{certificate_8h_a1e8aa988c5bcce2fc561c055091c9feb}{mpdc\+\_\+certificate\+\_\+designation\+\_\+encode}} (char \texorpdfstring{$\ast$}{*}sdsg, \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}} designation)
+\begin{DoxyCompactList}\small\item\em Encode the network-\/designation enumerator into a string. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{certificate_8h_a687e9aab32b30ef4436e1fdd46acd1a2}{mpdc\+\_\+certificate\+\_\+expiration\+\_\+set\+\_\+days}} (\mbox{\hyperlink{structmpdc__certificate__expiration}{mpdc\+\_\+certificate\+\_\+expiration}} \texorpdfstring{$\ast$}{*}expiration, uint16\+\_\+t start, uint16\+\_\+t duration)
+\begin{DoxyCompactList}\small\item\em Set the expiration days on a certificate expiration structure. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{certificate_8h_a52d864abc96f48645ad66d61c2b59ca2}{mpdc\+\_\+certificate\+\_\+expiration\+\_\+set\+\_\+seconds}} (\mbox{\hyperlink{structmpdc__certificate__expiration}{mpdc\+\_\+certificate\+\_\+expiration}} \texorpdfstring{$\ast$}{*}expiration, uint64\+\_\+t start, uint64\+\_\+t period)
+\begin{DoxyCompactList}\small\item\em Set the expiration seconds on a certificate expiration structure. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{certificate_8h_af31e07a251810269da6074ed10af4d87}{mpdc\+\_\+certificate\+\_\+expiration\+\_\+time\+\_\+verify}} (const \mbox{\hyperlink{structmpdc__certificate__expiration}{mpdc\+\_\+certificate\+\_\+expiration}} \texorpdfstring{$\ast$}{*}expiration)
+\begin{DoxyCompactList}\small\item\em Verify the expiration time against the current UTC time. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{certificate_8h_aedb818be2e3ebb0dd7eed2736281e64a}{mpdc\+\_\+certificate\+\_\+message\+\_\+hash\+\_\+sign}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}signature, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}sigkey, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}message, size\+\_\+t msglen)
+\begin{DoxyCompactList}\small\item\em Hash a message and sign the hash. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{certificate_8h_a647ed56ca2aad0f5b31d095ebcd5f02c}{mpdc\+\_\+certificate\+\_\+root\+\_\+compare}} (const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}a, const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}b)
+\begin{DoxyCompactList}\small\item\em Compare two root certificates for equivalence. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{certificate_8h_a6176af2b3528db1a03b5627005be57fc}{mpdc\+\_\+certificate\+\_\+root\+\_\+create}} (\mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}root, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}pubkey, const \mbox{\hyperlink{structmpdc__certificate__expiration}{mpdc\+\_\+certificate\+\_\+expiration}} \texorpdfstring{$\ast$}{*}expiration, const char \texorpdfstring{$\ast$}{*}issuer)
+\begin{DoxyCompactList}\small\item\em Create a root certificate. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{certificate_8h_a9f07821dd15e0e319e7c5c550545bce4}{mpdc\+\_\+certificate\+\_\+root\+\_\+decode}} (\mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}root, const char \texorpdfstring{$\ast$}{*}enck)
+\begin{DoxyCompactList}\small\item\em Decode a root certificate string into a certificate structure. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{certificate_8h_a07345badf30aeff28b11d5bd648f61f9}{mpdc\+\_\+certificate\+\_\+root\+\_\+deserialize}} (\mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}root, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}input)
+\begin{DoxyCompactList}\small\item\em Deserialize a root certificate from a byte array. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{certificate_8h_ae45024443f8c2c4652f6f5e7d1d96372}{mpdc\+\_\+certificate\+\_\+root\+\_\+encode}} (char \texorpdfstring{$\ast$}{*}enck, const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}root)
+\begin{DoxyCompactList}\small\item\em Encode a public root certificate into a human-\/readable string. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{certificate_8h_a0bdf2a420e46051c5308d14f3fbaa9d3}{mpdc\+\_\+certificate\+\_\+root\+\_\+erase}} (\mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}root)
+\begin{DoxyCompactList}\small\item\em Delete (erase) a root certificate. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{certificate_8h_a26a28b17c47fb4edf249fc1e38e7dc83}{mpdc\+\_\+certificate\+\_\+root\+\_\+file\+\_\+to\+\_\+struct}} (const char \texorpdfstring{$\ast$}{*}fpath, \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}root)
+\begin{DoxyCompactList}\small\item\em Copy a serialized root certificate from a file into a root certificate structure. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{certificate_8h_a12ea85476a55abba67e845305a34df3d}{mpdc\+\_\+certificate\+\_\+root\+\_\+hash}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}output, const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}root)
+\begin{DoxyCompactList}\small\item\em Compute the cryptographic hash of a root certificate. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{certificate_8h_afce39619dfcc655840e72ca23a4e1faf}{mpdc\+\_\+certificate\+\_\+root\+\_\+serialize}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}output, const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}root)
+\begin{DoxyCompactList}\small\item\em Serialize a root certificate into a contiguous byte array. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{certificate_8h_a2342e2fabfa38fbf8a126d748a105dd9}{mpdc\+\_\+certificate\+\_\+root\+\_\+sign}} (\mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}child, const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}root, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}rsigkey)
+\begin{DoxyCompactList}\small\item\em Sign a child certificate with the root certificate. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{certificate_8h_a6d2341a3f399148beaa56adcf4497f39}{mpdc\+\_\+certificate\+\_\+root\+\_\+signature\+\_\+verify}} (const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}child, const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}root)
+\begin{DoxyCompactList}\small\item\em Verify a child certificate against a root certificate. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{certificate_8h_a1b25d2e88b77950fcbaa0c414d990756}{mpdc\+\_\+certificate\+\_\+root\+\_\+struct\+\_\+to\+\_\+file}} (const char \texorpdfstring{$\ast$}{*}fpath, const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}root)
+\begin{DoxyCompactList}\small\item\em Write a root certificate structure to a file. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{certificate_8h_a56c122f44b35007fcc83b6a313fbdbc2}{mpdc\+\_\+certificate\+\_\+root\+\_\+is\+\_\+valid}} (const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}root)
+\begin{DoxyCompactList}\small\item\em Validate a root certificate. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{certificate_8h_a3b3e8335e5ad0f22cbbd6a1a11fd2784}{mpdc\+\_\+certificate\+\_\+signature\+\_\+generate\+\_\+keypair}} (\mbox{\hyperlink{structmpdc__signature__keypair}{mpdc\+\_\+signature\+\_\+keypair}} \texorpdfstring{$\ast$}{*}keypair)
+\begin{DoxyCompactList}\small\item\em Generate and encode an asymmetric signature scheme keypair. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{certificate_8h_a228994460803cfd191b17a6bc3b54fed}{mpdc\+\_\+certificate\+\_\+signature\+\_\+sign\+\_\+message}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}signature, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}message, size\+\_\+t msglen, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}prikey)
+\begin{DoxyCompactList}\small\item\em Sign a message using the asymmetric signature scheme. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{certificate_8h_a0bf0b1ce4895486ff8a8a24531d35da4}{mpdc\+\_\+certificate\+\_\+signature\+\_\+verify\+\_\+message}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}message, size\+\_\+t msglen, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}signature, size\+\_\+t siglen, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}pubkey)
+\begin{DoxyCompactList}\small\item\em Verify a message signature using the asymmetric signature scheme. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+MPDC Certificate Handling Functions. 
+
+This header defines the functions for managing and processing certificates used by the Multi-\/\+Party Domain Cryptosystem (MPDC). The certificate module is responsible for creating, encoding, decoding, serializing, deserializing, signing, and verifying both child (device) and root (trust anchor) certificates. These certificates carry critical information such as\+:
+
+
+\begin{DoxyItemize}
+\item The issuer identity.
+\item Certificate validity periods.
+\item Public verification keys.
+\item Algorithm configuration identifiers.
+\item Digital signatures produced by the root certificate.
+\end{DoxyItemize}
+
+The functions provided in this module allow conversion between protocol-\/set strings and their enumerated representations, as well as conversion of network-\/designation values between string and enumerated forms. They also perform cryptographic operations such as hashing and digital signing, using the underlying QSC cryptographic primitives.
+
+\begin{DoxyNote}{Note}
+The certificate functions depend on the QSC library for routines including SHA3 (Keccak), base64 encoding/decoding, file I/O, and memory utilities. The active MPDC configuration (protocol-\/set) is used to automatically populate certificate fields.
+\end{DoxyNote}
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000002}{Test}}]When the MPDC\+\_\+\+DEBUG\+\_\+\+TESTS\+\_\+\+RUN macro is defined, the function mpdc\+\_\+certificate\+\_\+functions\+\_\+test() executes a series of self-\/tests that verify\+:\end{DoxyRefDesc}
+
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Algorithm Conversion\+:}} That protocol-\/set strings are correctly decoded into enumerated values (and vice versa) via \doxylink{certificate_8h_a8115c0162e4121f9890b6185e78982c9}{mpdc\+\_\+certificate\+\_\+algorithm\+\_\+decode()} and \doxylink{certificate_8h_acc1bb4be5d3c36d778872d6e07a0da45}{mpdc\+\_\+certificate\+\_\+algorithm\+\_\+encode()}.
+\item {\bfseries{Child Certificate Operations\+:}} The creation (\doxylink{certificate_8h_a3df9b5ee33417bdbe329278181ce38d7}{mpdc\+\_\+certificate\+\_\+child\+\_\+create()}), signing (\doxylink{certificate_8h_a2342e2fabfa38fbf8a126d748a105dd9}{mpdc\+\_\+certificate\+\_\+root\+\_\+sign()}), encoding (\doxylink{certificate_8h_aeb919b7e7b11bb8c9459178ee0e1cac2}{mpdc\+\_\+certificate\+\_\+child\+\_\+encode()}), serialization/deserialization (\doxylink{certificate_8h_a7ccb35d12f9b960f711bfc89a5b4b6d4}{mpdc\+\_\+certificate\+\_\+child\+\_\+serialize()}/mpdc\+\_\+certificate\+\_\+child\+\_\+deserialize()), and validity testing (\doxylink{certificate_8h_a4848f8e372e122c3876eb99a0280a2ff}{mpdc\+\_\+certificate\+\_\+child\+\_\+is\+\_\+valid()}) of child certificates.
+\item {\bfseries{Root Certificate Operations\+:}} The creation (\doxylink{certificate_8h_a6176af2b3528db1a03b5627005be57fc}{mpdc\+\_\+certificate\+\_\+root\+\_\+create()}), encoding (\doxylink{certificate_8h_ae45024443f8c2c4652f6f5e7d1d96372}{mpdc\+\_\+certificate\+\_\+root\+\_\+encode()}), serialization/deserialization (\doxylink{certificate_8h_afce39619dfcc655840e72ca23a4e1faf}{mpdc\+\_\+certificate\+\_\+root\+\_\+serialize()}/mpdc\+\_\+certificate\+\_\+root\+\_\+deserialize()), and verification (\doxylink{certificate_8h_a6d2341a3f399148beaa56adcf4497f39}{mpdc\+\_\+certificate\+\_\+root\+\_\+signature\+\_\+verify()}) of root certificates.
+\item {\bfseries{Equality and Copy\+:}} That child certificates can be compared (\doxylink{certificate_8h_abf2aeace1464bf525feab67ed0845375}{mpdc\+\_\+certificate\+\_\+child\+\_\+are\+\_\+equal()}) and copied (\doxylink{certificate_8h_a6e8cfc979a07ef87d58e8b6469950371}{mpdc\+\_\+certificate\+\_\+child\+\_\+copy()}) correctly.
+\item {\bfseries{Expiration and Signature Functions\+:}} That certificate expiration is properly set and verified, and that messages can be hashed and signed/verified (\doxylink{certificate_8h_aedb818be2e3ebb0dd7eed2736281e64a}{mpdc\+\_\+certificate\+\_\+message\+\_\+hash\+\_\+sign()} and \doxylink{certificate_8h_a0bf0b1ce4895486ff8a8a24531d35da4}{mpdc\+\_\+certificate\+\_\+signature\+\_\+verify\+\_\+message()}).
+\end{DoxyItemize}
+
+These tests help ensure that the certificate operations function as expected in real-\/world use. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{certificate_8h_a8115c0162e4121f9890b6185e78982c9}\index{certificate.h@{certificate.h}!mpdc\_certificate\_algorithm\_decode@{mpdc\_certificate\_algorithm\_decode}}
+\index{mpdc\_certificate\_algorithm\_decode@{mpdc\_certificate\_algorithm\_decode}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_algorithm\_decode()}{mpdc\_certificate\_algorithm\_decode()}}
+{\footnotesize\ttfamily \label{certificate_8h_a8115c0162e4121f9890b6185e78982c9} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\+\_\+configuration\+\_\+sets}} mpdc\+\_\+certificate\+\_\+algorithm\+\_\+decode (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{}\end{DoxyParamCaption})}
+
+
+
+Decode the string algorithm-\/set number to the enumerated representation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & \mbox{[}in, const\mbox{]} The protocol-\/set string (for example, "{}dilithium-\/s1\+\_\+kyber-\/s1\+\_\+rcs-\/256\+\_\+sha3-\/256"{}).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the corresponding protocol-\/set enumerator. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_a30c61d8fd6e171d26fbbab6aa86a8042}\index{certificate.h@{certificate.h}!mpdc\_certificate\_algorithm\_enabled@{mpdc\_certificate\_algorithm\_enabled}}
+\index{mpdc\_certificate\_algorithm\_enabled@{mpdc\_certificate\_algorithm\_enabled}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_algorithm\_enabled()}{mpdc\_certificate\_algorithm\_enabled()}}
+{\footnotesize\ttfamily \label{certificate_8h_a30c61d8fd6e171d26fbbab6aa86a8042} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+certificate\+\_\+algorithm\+\_\+enabled (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\+\_\+configuration\+\_\+sets}}}]{conf}{}\end{DoxyParamCaption})}
+
+
+
+Test if the specified protocol-\/set is enabled on this system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em conf} & The protocol-\/set enumerator to test.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the given protocol-\/set is enabled; otherwise, false. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_acc1bb4be5d3c36d778872d6e07a0da45}\index{certificate.h@{certificate.h}!mpdc\_certificate\_algorithm\_encode@{mpdc\_certificate\_algorithm\_encode}}
+\index{mpdc\_certificate\_algorithm\_encode@{mpdc\_certificate\_algorithm\_encode}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_algorithm\_encode()}{mpdc\_certificate\_algorithm\_encode()}}
+{\footnotesize\ttfamily \label{certificate_8h_acc1bb4be5d3c36d778872d6e07a0da45} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+certificate\+\_\+algorithm\+\_\+encode (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{name}{, }\item[{\mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\+\_\+configuration\+\_\+sets}}}]{conf}{}\end{DoxyParamCaption})}
+
+
+
+Encode the protocol-\/set enumerator into its string form. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & \mbox{[}out\mbox{]} The output buffer that will receive the protocol-\/set string. \\
+\hline
+{\em conf} & The protocol-\/set enumerator to encode. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{certificate_8h_abf2aeace1464bf525feab67ed0845375}\index{certificate.h@{certificate.h}!mpdc\_certificate\_child\_are\_equal@{mpdc\_certificate\_child\_are\_equal}}
+\index{mpdc\_certificate\_child\_are\_equal@{mpdc\_certificate\_child\_are\_equal}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_child\_are\_equal()}{mpdc\_certificate\_child\_are\_equal()}}
+{\footnotesize\ttfamily \label{certificate_8h_abf2aeace1464bf525feab67ed0845375} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+certificate\+\_\+child\+\_\+are\+\_\+equal (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{a}{, }\item[{const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{b}{}\end{DoxyParamCaption})}
+
+
+
+Compare two child certificates for equivalence. 
+
+This function compares all the significant fields of two child certificate structures (including algorithm, version, designation, expiration, issuer, serial, signature, and public key).
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & \mbox{[}in, const\mbox{]} The first certificate. \\
+\hline
+{\em b} & \mbox{[}in, const\mbox{]} The second certificate.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the two certificates are equal. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_a6e8cfc979a07ef87d58e8b6469950371}\index{certificate.h@{certificate.h}!mpdc\_certificate\_child\_copy@{mpdc\_certificate\_child\_copy}}
+\index{mpdc\_certificate\_child\_copy@{mpdc\_certificate\_child\_copy}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_child\_copy()}{mpdc\_certificate\_child\_copy()}}
+{\footnotesize\ttfamily \label{certificate_8h_a6e8cfc979a07ef87d58e8b6469950371} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+certificate\+\_\+child\+\_\+copy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{input}{}\end{DoxyParamCaption})}
+
+
+
+Copy a child certificate structure. 
+
+This function performs a deep copy of the child certificate from the {\ttfamily input} structure to the {\ttfamily output} structure.
+
+
+\begin{DoxyParams}{Parameters}
+{\em output} & \mbox{[}out\mbox{]} The destination child certificate. \\
+\hline
+{\em input} & \mbox{[}in, const\mbox{]} The source child certificate. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{certificate_8h_a3df9b5ee33417bdbe329278181ce38d7}\index{certificate.h@{certificate.h}!mpdc\_certificate\_child\_create@{mpdc\_certificate\_child\_create}}
+\index{mpdc\_certificate\_child\_create@{mpdc\_certificate\_child\_create}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_child\_create()}{mpdc\_certificate\_child\_create()}}
+{\footnotesize\ttfamily \label{certificate_8h_a3df9b5ee33417bdbe329278181ce38d7} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+certificate\+\_\+child\+\_\+create (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{child}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{pubkey}{, }\item[{const \mbox{\hyperlink{structmpdc__certificate__expiration}{mpdc\+\_\+certificate\+\_\+expiration}} \texorpdfstring{$\ast$}{*}}]{expiration}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{issuer}{, }\item[{\mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}}}]{designation}{}\end{DoxyParamCaption})}
+
+
+
+Create a child certificate. 
+
+This function initializes and populates a child certificate structure with the provided public key, expiration information, issuer string, and designation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em child} & \mbox{[}out\mbox{]} A pointer to the empty child certificate to populate. \\
+\hline
+{\em pubkey} & \mbox{[}in\mbox{]} A pointer to the public signature key. \\
+\hline
+{\em expiration} & \mbox{[}in, const\mbox{]} The certificate expiration time structure. \\
+\hline
+{\em issuer} & \mbox{[}in, const\mbox{]} The certificate issuer string. \\
+\hline
+{\em designation} & The certificate designation type (e.\+g. agent, client, etc.). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{certificate_8h_ac2f2839a3ef16c91932f2407502866ee}\index{certificate.h@{certificate.h}!mpdc\_certificate\_child\_decode@{mpdc\_certificate\_child\_decode}}
+\index{mpdc\_certificate\_child\_decode@{mpdc\_certificate\_child\_decode}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_child\_decode()}{mpdc\_certificate\_child\_decode()}}
+{\footnotesize\ttfamily \label{certificate_8h_ac2f2839a3ef16c91932f2407502866ee} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+certificate\+\_\+child\+\_\+decode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{child}{, }\item[{const char}]{enck}{\mbox{[}\+MPDC\+\_\+\+CHILD\+\_\+\+CERTIFICATE\+\_\+\+STRING\+\_\+\+SIZE\mbox{]}}\end{DoxyParamCaption})}
+
+
+
+Decode a child certificate string into a certificate structure. 
+
+This function decodes an encoded child certificate string (with a fixed maximum size) into its corresponding certificate structure.
+
+
+\begin{DoxyParams}{Parameters}
+{\em child} & \mbox{[}out\mbox{]} The pointer to the child certificate structure to populate. \\
+\hline
+{\em enck} & \mbox{[}in\mbox{]} The encoded certificate string.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the certificate was successfully decoded. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_a6ebaf15697e5c41ec64aff4f19bda636}\index{certificate.h@{certificate.h}!mpdc\_certificate\_child\_deserialize@{mpdc\_certificate\_child\_deserialize}}
+\index{mpdc\_certificate\_child\_deserialize@{mpdc\_certificate\_child\_deserialize}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_child\_deserialize()}{mpdc\_certificate\_child\_deserialize()}}
+{\footnotesize\ttfamily \label{certificate_8h_a6ebaf15697e5c41ec64aff4f19bda636} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+certificate\+\_\+child\+\_\+deserialize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{child}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{input}{}\end{DoxyParamCaption})}
+
+
+
+Deserialize a child certificate from a byte array. 
+
+This function converts a serialized child certificate (stored as a byte stream) into a certificate structure.
+
+
+\begin{DoxyParams}{Parameters}
+{\em child} & \mbox{[}out\mbox{]} The pointer to the child certificate structure to populate. \\
+\hline
+{\em input} & \mbox{[}in, const\mbox{]} The input byte array containing the serialized certificate. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{certificate_8h_aeb919b7e7b11bb8c9459178ee0e1cac2}\index{certificate.h@{certificate.h}!mpdc\_certificate\_child\_encode@{mpdc\_certificate\_child\_encode}}
+\index{mpdc\_certificate\_child\_encode@{mpdc\_certificate\_child\_encode}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_child\_encode()}{mpdc\_certificate\_child\_encode()}}
+{\footnotesize\ttfamily \label{certificate_8h_aeb919b7e7b11bb8c9459178ee0e1cac2} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+certificate\+\_\+child\+\_\+encode (\begin{DoxyParamCaption}\item[{char}]{enck}{\mbox{[}\+MPDC\+\_\+\+CHILD\+\_\+\+CERTIFICATE\+\_\+\+STRING\+\_\+\+SIZE\mbox{]}, }\item[{const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{child}{}\end{DoxyParamCaption})}
+
+
+
+Encode a public child certificate into a human-\/readable string. 
+
+This function encodes the given child certificate into a formatted string representation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em enck} & \mbox{[}out\mbox{]} The output buffer that will receive the encoded certificate string. \\
+\hline
+{\em child} & \mbox{[}in, const\mbox{]} The child certificate to encode.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the size of the encoded certificate string. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_a1c92a4b7047fa435d1d8f14d3c4a6e88}\index{certificate.h@{certificate.h}!mpdc\_certificate\_child\_erase@{mpdc\_certificate\_child\_erase}}
+\index{mpdc\_certificate\_child\_erase@{mpdc\_certificate\_child\_erase}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_child\_erase()}{mpdc\_certificate\_child\_erase()}}
+{\footnotesize\ttfamily \label{certificate_8h_a1c92a4b7047fa435d1d8f14d3c4a6e88} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+certificate\+\_\+child\+\_\+erase (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{child}{}\end{DoxyParamCaption})}
+
+
+
+Delete (erase) a child certificate. 
+
+This function securely erases all fields of a child certificate structure.
+
+
+\begin{DoxyParams}{Parameters}
+{\em child} & \mbox{[}in,out\mbox{]} A pointer to the child certificate to erase. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{certificate_8h_ad8c7cd1673c6575f66ce6ad2cc6f6dd1}\index{certificate.h@{certificate.h}!mpdc\_certificate\_child\_file\_to\_struct@{mpdc\_certificate\_child\_file\_to\_struct}}
+\index{mpdc\_certificate\_child\_file\_to\_struct@{mpdc\_certificate\_child\_file\_to\_struct}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_child\_file\_to\_struct()}{mpdc\_certificate\_child\_file\_to\_struct()}}
+{\footnotesize\ttfamily \label{certificate_8h_ad8c7cd1673c6575f66ce6ad2cc6f6dd1} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+certificate\+\_\+child\+\_\+file\+\_\+to\+\_\+struct (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{fpath}{, }\item[{\mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{child}{}\end{DoxyParamCaption})}
+
+
+
+Copy a serialized certificate from a file into a child certificate structure. 
+
+This function reads a file containing a serialized child certificate, deserializes it, and populates the provided certificate structure.
+
+
+\begin{DoxyParams}{Parameters}
+{\em fpath} & \mbox{[}in, const\mbox{]} The file path from which to load the certificate. \\
+\hline
+{\em child} & \mbox{[}out\mbox{]} A pointer to the child certificate structure.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true on success. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_a2eebfe1be97c0dacdb58680a8de69a39}\index{certificate.h@{certificate.h}!mpdc\_certificate\_child\_hash@{mpdc\_certificate\_child\_hash}}
+\index{mpdc\_certificate\_child\_hash@{mpdc\_certificate\_child\_hash}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_child\_hash()}{mpdc\_certificate\_child\_hash()}}
+{\footnotesize\ttfamily \label{certificate_8h_a2eebfe1be97c0dacdb58680a8de69a39} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+certificate\+\_\+child\+\_\+hash (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{child}{}\end{DoxyParamCaption})}
+
+
+
+Compute the cryptographic hash of a child certificate. 
+
+The hash is computed over key fields such as algorithm, designation, version, expiration, issuer, serial, and public verification key.
+
+
+\begin{DoxyParams}{Parameters}
+{\em output} & \mbox{[}out\mbox{]} The output hash array (size\+: MPDC\+\_\+\+CERTIFICATE\+\_\+\+HASH\+\_\+\+SIZE). \\
+\hline
+{\em child} & \mbox{[}in, const\mbox{]} A pointer to the child certificate. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{certificate_8h_a4848f8e372e122c3876eb99a0280a2ff}\index{certificate.h@{certificate.h}!mpdc\_certificate\_child\_is\_valid@{mpdc\_certificate\_child\_is\_valid}}
+\index{mpdc\_certificate\_child\_is\_valid@{mpdc\_certificate\_child\_is\_valid}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_child\_is\_valid()}{mpdc\_certificate\_child\_is\_valid()}}
+{\footnotesize\ttfamily \label{certificate_8h_a4848f8e372e122c3876eb99a0280a2ff} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+certificate\+\_\+child\+\_\+is\+\_\+valid (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{child}{}\end{DoxyParamCaption})}
+
+
+
+Test a child certificate for a valid format and expiration. 
+
+This function checks that the certificate fields (including algorithm, designation, version, signature, serial, and public key) are nonzero and that the current time is within the expiration period.
+
+
+\begin{DoxyParams}{Parameters}
+{\em child} & \mbox{[}in, const\mbox{]} A pointer to the child certificate.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the certificate is valid. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_a034ab6ed909a3b8a3c064a69a9469979}\index{certificate.h@{certificate.h}!mpdc\_certificate\_child\_message\_verify@{mpdc\_certificate\_child\_message\_verify}}
+\index{mpdc\_certificate\_child\_message\_verify@{mpdc\_certificate\_child\_message\_verify}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_child\_message\_verify()}{mpdc\_certificate\_child\_message\_verify()}}
+{\footnotesize\ttfamily \label{certificate_8h_a034ab6ed909a3b8a3c064a69a9469979} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+certificate\+\_\+child\+\_\+message\+\_\+verify (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{message}{, }\item[{size\+\_\+t \texorpdfstring{$\ast$}{*}}]{msglen}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{signature}{, }\item[{size\+\_\+t}]{siglen}{, }\item[{const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{child}{}\end{DoxyParamCaption})}
+
+
+
+Verify a message signature using a child certificate. 
+
+This function uses the public verification key from the child certificate to verify that a given signature correctly authenticates a message.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & \mbox{[}out\mbox{]} The output buffer for the recovered message (if applicable). \\
+\hline
+{\em msglen} & \mbox{[}in,out\mbox{]} A pointer to the length of the recovered message. \\
+\hline
+{\em signature} & \mbox{[}in, const\mbox{]} A pointer to the signature. \\
+\hline
+{\em siglen} & The length of the signature. \\
+\hline
+{\em child} & \mbox{[}in, const\mbox{]} A pointer to the child certificate.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the message signature is verified. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_a7ccb35d12f9b960f711bfc89a5b4b6d4}\index{certificate.h@{certificate.h}!mpdc\_certificate\_child\_serialize@{mpdc\_certificate\_child\_serialize}}
+\index{mpdc\_certificate\_child\_serialize@{mpdc\_certificate\_child\_serialize}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_child\_serialize()}{mpdc\_certificate\_child\_serialize()}}
+{\footnotesize\ttfamily \label{certificate_8h_a7ccb35d12f9b960f711bfc89a5b4b6d4} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+certificate\+\_\+child\+\_\+serialize (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{child}{}\end{DoxyParamCaption})}
+
+
+
+Serialize a child certificate into a contiguous byte array. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em output} & \mbox{[}out\mbox{]} A pointer to the array receiving the serialized certificate (size\+: MPDC\+\_\+\+CERTIFICATE\+\_\+\+CHILD\+\_\+\+SIZE). \\
+\hline
+{\em child} & \mbox{[}in, const\mbox{]} The child certificate to serialize. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{certificate_8h_ab54a994026f92d603a4dff4ba96443ab}\index{certificate.h@{certificate.h}!mpdc\_certificate\_child\_struct\_to\_file@{mpdc\_certificate\_child\_struct\_to\_file}}
+\index{mpdc\_certificate\_child\_struct\_to\_file@{mpdc\_certificate\_child\_struct\_to\_file}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_child\_struct\_to\_file()}{mpdc\_certificate\_child\_struct\_to\_file()}}
+{\footnotesize\ttfamily \label{certificate_8h_ab54a994026f92d603a4dff4ba96443ab} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+certificate\+\_\+child\+\_\+struct\+\_\+to\+\_\+file (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{fpath}{, }\item[{const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{child}{}\end{DoxyParamCaption})}
+
+
+
+Write a child certificate structure to a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fpath} & \mbox{[}in, const\mbox{]} The file path where the certificate will be stored. \\
+\hline
+{\em child} & \mbox{[}in, const\mbox{]} A pointer to the child certificate structure.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true on success. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_adcc290fdc8a6c7ac0f55cd3afe4582a3}\index{certificate.h@{certificate.h}!mpdc\_certificate\_designation\_decode@{mpdc\_certificate\_designation\_decode}}
+\index{mpdc\_certificate\_designation\_decode@{mpdc\_certificate\_designation\_decode}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_designation\_decode()}{mpdc\_certificate\_designation\_decode()}}
+{\footnotesize\ttfamily \label{certificate_8h_adcc290fdc8a6c7ac0f55cd3afe4582a3} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}} mpdc\+\_\+certificate\+\_\+designation\+\_\+decode (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{sdsg}{}\end{DoxyParamCaption})}
+
+
+
+Decode the network-\/designation string to its enumerated representation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sdsg} & \mbox{[}in, const\mbox{]} The network-\/designation string.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the corresponding network-\/designation enumerator. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_a1e8aa988c5bcce2fc561c055091c9feb}\index{certificate.h@{certificate.h}!mpdc\_certificate\_designation\_encode@{mpdc\_certificate\_designation\_encode}}
+\index{mpdc\_certificate\_designation\_encode@{mpdc\_certificate\_designation\_encode}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_designation\_encode()}{mpdc\_certificate\_designation\_encode()}}
+{\footnotesize\ttfamily \label{certificate_8h_a1e8aa988c5bcce2fc561c055091c9feb} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+certificate\+\_\+designation\+\_\+encode (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{sdsg}{, }\item[{\mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}}}]{designation}{}\end{DoxyParamCaption})}
+
+
+
+Encode the network-\/designation enumerator into a string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sdsg} & \mbox{[}out\mbox{]} The output buffer that will receive the encoded network-\/designation string. \\
+\hline
+{\em designation} & The certificate designation type.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the size of the encoded string. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_a687e9aab32b30ef4436e1fdd46acd1a2}\index{certificate.h@{certificate.h}!mpdc\_certificate\_expiration\_set\_days@{mpdc\_certificate\_expiration\_set\_days}}
+\index{mpdc\_certificate\_expiration\_set\_days@{mpdc\_certificate\_expiration\_set\_days}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_expiration\_set\_days()}{mpdc\_certificate\_expiration\_set\_days()}}
+{\footnotesize\ttfamily \label{certificate_8h_a687e9aab32b30ef4436e1fdd46acd1a2} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+certificate\+\_\+expiration\+\_\+set\+\_\+days (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__certificate__expiration}{mpdc\+\_\+certificate\+\_\+expiration}} \texorpdfstring{$\ast$}{*}}]{expiration}{, }\item[{uint16\+\_\+t}]{start}{, }\item[{uint16\+\_\+t}]{duration}{}\end{DoxyParamCaption})}
+
+
+
+Set the expiration days on a certificate expiration structure. 
+
+This function sets the {\ttfamily from} and {\ttfamily to} fields of the expiration structure using day intervals.
+
+
+\begin{DoxyParams}{Parameters}
+{\em expiration} & \mbox{[}in,out\mbox{]} A pointer to the expiration structure. \\
+\hline
+{\em start} & The number of days until the certificate becomes valid. \\
+\hline
+{\em duration} & The number of days the certificate remains valid. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{certificate_8h_a52d864abc96f48645ad66d61c2b59ca2}\index{certificate.h@{certificate.h}!mpdc\_certificate\_expiration\_set\_seconds@{mpdc\_certificate\_expiration\_set\_seconds}}
+\index{mpdc\_certificate\_expiration\_set\_seconds@{mpdc\_certificate\_expiration\_set\_seconds}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_expiration\_set\_seconds()}{mpdc\_certificate\_expiration\_set\_seconds()}}
+{\footnotesize\ttfamily \label{certificate_8h_a52d864abc96f48645ad66d61c2b59ca2} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+certificate\+\_\+expiration\+\_\+set\+\_\+seconds (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__certificate__expiration}{mpdc\+\_\+certificate\+\_\+expiration}} \texorpdfstring{$\ast$}{*}}]{expiration}{, }\item[{uint64\+\_\+t}]{start}{, }\item[{uint64\+\_\+t}]{period}{}\end{DoxyParamCaption})}
+
+
+
+Set the expiration seconds on a certificate expiration structure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em expiration} & \mbox{[}in,out\mbox{]} A pointer to the expiration structure. \\
+\hline
+{\em start} & The number of seconds to delay before the certificate becomes valid. \\
+\hline
+{\em period} & The number of seconds the certificate remains valid. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{certificate_8h_af31e07a251810269da6074ed10af4d87}\index{certificate.h@{certificate.h}!mpdc\_certificate\_expiration\_time\_verify@{mpdc\_certificate\_expiration\_time\_verify}}
+\index{mpdc\_certificate\_expiration\_time\_verify@{mpdc\_certificate\_expiration\_time\_verify}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_expiration\_time\_verify()}{mpdc\_certificate\_expiration\_time\_verify()}}
+{\footnotesize\ttfamily \label{certificate_8h_af31e07a251810269da6074ed10af4d87} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+certificate\+\_\+expiration\+\_\+time\+\_\+verify (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__certificate__expiration}{mpdc\+\_\+certificate\+\_\+expiration}} \texorpdfstring{$\ast$}{*}}]{expiration}{}\end{DoxyParamCaption})}
+
+
+
+Verify the expiration time against the current UTC time. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em expiration} & \mbox{[}in, const\mbox{]} A pointer to the expiration time structure.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the current time is within the certificate\textquotesingle{}s validity period. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_aedb818be2e3ebb0dd7eed2736281e64a}\index{certificate.h@{certificate.h}!mpdc\_certificate\_message\_hash\_sign@{mpdc\_certificate\_message\_hash\_sign}}
+\index{mpdc\_certificate\_message\_hash\_sign@{mpdc\_certificate\_message\_hash\_sign}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_message\_hash\_sign()}{mpdc\_certificate\_message\_hash\_sign()}}
+{\footnotesize\ttfamily \label{certificate_8h_aedb818be2e3ebb0dd7eed2736281e64a} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+certificate\+\_\+message\+\_\+hash\+\_\+sign (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{signature}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{sigkey}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{message}{, }\item[{size\+\_\+t}]{msglen}{}\end{DoxyParamCaption})}
+
+
+
+Hash a message and sign the hash. 
+
+This function computes the SHA3-\/256 hash of the provided message and then signs that hash using the given private signature key.
+
+
+\begin{DoxyParams}{Parameters}
+{\em signature} & \mbox{[}out\mbox{]} The array receiving the signature (size\+: MPDC\+\_\+\+ASYMMETRIC\+\_\+\+SIGNATURE\+\_\+\+SIZE). \\
+\hline
+{\em sigkey} & \mbox{[}in, const\mbox{]} The private signature key. \\
+\hline
+{\em message} & \mbox{[}in, const\mbox{]} The message to sign. \\
+\hline
+{\em msglen} & The length of the message.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the size of the generated signature. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_a647ed56ca2aad0f5b31d095ebcd5f02c}\index{certificate.h@{certificate.h}!mpdc\_certificate\_root\_compare@{mpdc\_certificate\_root\_compare}}
+\index{mpdc\_certificate\_root\_compare@{mpdc\_certificate\_root\_compare}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_root\_compare()}{mpdc\_certificate\_root\_compare()}}
+{\footnotesize\ttfamily \label{certificate_8h_a647ed56ca2aad0f5b31d095ebcd5f02c} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+certificate\+\_\+root\+\_\+compare (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{a}{, }\item[{const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{b}{}\end{DoxyParamCaption})}
+
+
+
+Compare two root certificates for equivalence. 
+
+This function compares the key fields of two root certificates to determine if they are equal.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & \mbox{[}in, const\mbox{]} The first root certificate. \\
+\hline
+{\em b} & \mbox{[}in, const\mbox{]} The second root certificate.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the certificates are equivalent. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_a6176af2b3528db1a03b5627005be57fc}\index{certificate.h@{certificate.h}!mpdc\_certificate\_root\_create@{mpdc\_certificate\_root\_create}}
+\index{mpdc\_certificate\_root\_create@{mpdc\_certificate\_root\_create}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_root\_create()}{mpdc\_certificate\_root\_create()}}
+{\footnotesize\ttfamily \label{certificate_8h_a6176af2b3528db1a03b5627005be57fc} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+certificate\+\_\+root\+\_\+create (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{root}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{pubkey}{, }\item[{const \mbox{\hyperlink{structmpdc__certificate__expiration}{mpdc\+\_\+certificate\+\_\+expiration}} \texorpdfstring{$\ast$}{*}}]{expiration}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{issuer}{}\end{DoxyParamCaption})}
+
+
+
+Create a root certificate. 
+
+This function creates a root certificate by populating its fields with the provided public key, expiration structure, and issuer name. The generated certificate serves as the trust anchor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em root} & \mbox{[}out\mbox{]} A pointer to the empty root certificate to populate. \\
+\hline
+{\em pubkey} & \mbox{[}in\mbox{]} A pointer to the public signature key. \\
+\hline
+{\em expiration} & \mbox{[}in, const\mbox{]} The certificate expiration time structure. \\
+\hline
+{\em issuer} & \mbox{[}in, const\mbox{]} The issuer name string. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{certificate_8h_a9f07821dd15e0e319e7c5c550545bce4}\index{certificate.h@{certificate.h}!mpdc\_certificate\_root\_decode@{mpdc\_certificate\_root\_decode}}
+\index{mpdc\_certificate\_root\_decode@{mpdc\_certificate\_root\_decode}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_root\_decode()}{mpdc\_certificate\_root\_decode()}}
+{\footnotesize\ttfamily \label{certificate_8h_a9f07821dd15e0e319e7c5c550545bce4} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+certificate\+\_\+root\+\_\+decode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{root}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{enck}{}\end{DoxyParamCaption})}
+
+
+
+Decode a root certificate string into a certificate structure. 
+
+This function decodes an encoded root certificate string into its corresponding root certificate structure.
+
+
+\begin{DoxyParams}{Parameters}
+{\em root} & \mbox{[}out\mbox{]} The pointer to the root certificate structure to populate. \\
+\hline
+{\em enck} & \mbox{[}in, const\mbox{]} The encoded certificate string.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the certificate was successfully decoded. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_a07345badf30aeff28b11d5bd648f61f9}\index{certificate.h@{certificate.h}!mpdc\_certificate\_root\_deserialize@{mpdc\_certificate\_root\_deserialize}}
+\index{mpdc\_certificate\_root\_deserialize@{mpdc\_certificate\_root\_deserialize}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_root\_deserialize()}{mpdc\_certificate\_root\_deserialize()}}
+{\footnotesize\ttfamily \label{certificate_8h_a07345badf30aeff28b11d5bd648f61f9} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+certificate\+\_\+root\+\_\+deserialize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{root}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{input}{}\end{DoxyParamCaption})}
+
+
+
+Deserialize a root certificate from a byte array. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em root} & \mbox{[}out\mbox{]} A pointer to the root certificate structure to populate. \\
+\hline
+{\em input} & \mbox{[}in, const\mbox{]} A pointer to the input byte array (size\+: MPDC\+\_\+\+CERTIFICATE\+\_\+\+ROOT\+\_\+\+SIZE). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{certificate_8h_ae45024443f8c2c4652f6f5e7d1d96372}\index{certificate.h@{certificate.h}!mpdc\_certificate\_root\_encode@{mpdc\_certificate\_root\_encode}}
+\index{mpdc\_certificate\_root\_encode@{mpdc\_certificate\_root\_encode}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_root\_encode()}{mpdc\_certificate\_root\_encode()}}
+{\footnotesize\ttfamily \label{certificate_8h_ae45024443f8c2c4652f6f5e7d1d96372} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+certificate\+\_\+root\+\_\+encode (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{enck}{, }\item[{const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{root}{}\end{DoxyParamCaption})}
+
+
+
+Encode a public root certificate into a human-\/readable string. 
+
+This function encodes the given root certificate into a formatted string.
+
+
+\begin{DoxyParams}{Parameters}
+{\em enck} & \mbox{[}out\mbox{]} The output buffer that will receive the encoded certificate string. \\
+\hline
+{\em root} & \mbox{[}in, const\mbox{]} The root certificate to encode.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the size of the encoded certificate string. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_a0bdf2a420e46051c5308d14f3fbaa9d3}\index{certificate.h@{certificate.h}!mpdc\_certificate\_root\_erase@{mpdc\_certificate\_root\_erase}}
+\index{mpdc\_certificate\_root\_erase@{mpdc\_certificate\_root\_erase}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_root\_erase()}{mpdc\_certificate\_root\_erase()}}
+{\footnotesize\ttfamily \label{certificate_8h_a0bdf2a420e46051c5308d14f3fbaa9d3} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+certificate\+\_\+root\+\_\+erase (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{root}{}\end{DoxyParamCaption})}
+
+
+
+Delete (erase) a root certificate. 
+
+This function securely erases all fields of a root certificate structure.
+
+
+\begin{DoxyParams}{Parameters}
+{\em root} & \mbox{[}in,out\mbox{]} A pointer to the root certificate to erase. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{certificate_8h_a26a28b17c47fb4edf249fc1e38e7dc83}\index{certificate.h@{certificate.h}!mpdc\_certificate\_root\_file\_to\_struct@{mpdc\_certificate\_root\_file\_to\_struct}}
+\index{mpdc\_certificate\_root\_file\_to\_struct@{mpdc\_certificate\_root\_file\_to\_struct}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_root\_file\_to\_struct()}{mpdc\_certificate\_root\_file\_to\_struct()}}
+{\footnotesize\ttfamily \label{certificate_8h_a26a28b17c47fb4edf249fc1e38e7dc83} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+certificate\+\_\+root\+\_\+file\+\_\+to\+\_\+struct (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{fpath}{, }\item[{\mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{root}{}\end{DoxyParamCaption})}
+
+
+
+Copy a serialized root certificate from a file into a root certificate structure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fpath} & \mbox{[}in, const\mbox{]} The file path from which to read the certificate. \\
+\hline
+{\em root} & \mbox{[}out\mbox{]} A pointer to the root certificate structure to populate.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true on success. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_a12ea85476a55abba67e845305a34df3d}\index{certificate.h@{certificate.h}!mpdc\_certificate\_root\_hash@{mpdc\_certificate\_root\_hash}}
+\index{mpdc\_certificate\_root\_hash@{mpdc\_certificate\_root\_hash}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_root\_hash()}{mpdc\_certificate\_root\_hash()}}
+{\footnotesize\ttfamily \label{certificate_8h_a12ea85476a55abba67e845305a34df3d} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+certificate\+\_\+root\+\_\+hash (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{root}{}\end{DoxyParamCaption})}
+
+
+
+Compute the cryptographic hash of a root certificate. 
+
+The hash is computed over key fields such as algorithm, version, expiration times, issuer, serial, and public key.
+
+
+\begin{DoxyParams}{Parameters}
+{\em output} & \mbox{[}out\mbox{]} The output hash array. \\
+\hline
+{\em root} & \mbox{[}in, const\mbox{]} A pointer to the root certificate. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{certificate_8h_a56c122f44b35007fcc83b6a313fbdbc2}\index{certificate.h@{certificate.h}!mpdc\_certificate\_root\_is\_valid@{mpdc\_certificate\_root\_is\_valid}}
+\index{mpdc\_certificate\_root\_is\_valid@{mpdc\_certificate\_root\_is\_valid}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_root\_is\_valid()}{mpdc\_certificate\_root\_is\_valid()}}
+{\footnotesize\ttfamily \label{certificate_8h_a56c122f44b35007fcc83b6a313fbdbc2} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+certificate\+\_\+root\+\_\+is\+\_\+valid (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{root}{}\end{DoxyParamCaption})}
+
+
+
+Validate a root certificate. 
+
+This function checks that the root certificate fields are nonzero and that the current time is within its expiration period.
+
+
+\begin{DoxyParams}{Parameters}
+{\em root} & \mbox{[}in, const\mbox{]} A pointer to the root certificate.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the root certificate is valid. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_afce39619dfcc655840e72ca23a4e1faf}\index{certificate.h@{certificate.h}!mpdc\_certificate\_root\_serialize@{mpdc\_certificate\_root\_serialize}}
+\index{mpdc\_certificate\_root\_serialize@{mpdc\_certificate\_root\_serialize}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_root\_serialize()}{mpdc\_certificate\_root\_serialize()}}
+{\footnotesize\ttfamily \label{certificate_8h_afce39619dfcc655840e72ca23a4e1faf} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+certificate\+\_\+root\+\_\+serialize (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{root}{}\end{DoxyParamCaption})}
+
+
+
+Serialize a root certificate into a contiguous byte array. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em output} & \mbox{[}out\mbox{]} A pointer to the array receiving the serialized certificate (size\+: MPDC\+\_\+\+CERTIFICATE\+\_\+\+ROOT\+\_\+\+SIZE). \\
+\hline
+{\em root} & \mbox{[}in, const\mbox{]} The root certificate to serialize. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{certificate_8h_a2342e2fabfa38fbf8a126d748a105dd9}\index{certificate.h@{certificate.h}!mpdc\_certificate\_root\_sign@{mpdc\_certificate\_root\_sign}}
+\index{mpdc\_certificate\_root\_sign@{mpdc\_certificate\_root\_sign}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_root\_sign()}{mpdc\_certificate\_root\_sign()}}
+{\footnotesize\ttfamily \label{certificate_8h_a2342e2fabfa38fbf8a126d748a105dd9} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+certificate\+\_\+root\+\_\+sign (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{child}{, }\item[{const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{root}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{rsigkey}{}\end{DoxyParamCaption})}
+
+
+
+Sign a child certificate with the root certificate. 
+
+This function hashes the child certificate, copies the root certificate serial number into the child, and then produces a digital signature over the child certificate hash using the provided root signing key.
+
+
+\begin{DoxyParams}{Parameters}
+{\em child} & \mbox{[}in,out\mbox{]} A pointer to the child certificate to sign. \\
+\hline
+{\em root} & \mbox{[}in, const\mbox{]} A pointer to the root certificate. \\
+\hline
+{\em rsigkey} & \mbox{[}in, const\mbox{]} A pointer to the root private signing key.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the size of the generated signature. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_a6d2341a3f399148beaa56adcf4497f39}\index{certificate.h@{certificate.h}!mpdc\_certificate\_root\_signature\_verify@{mpdc\_certificate\_root\_signature\_verify}}
+\index{mpdc\_certificate\_root\_signature\_verify@{mpdc\_certificate\_root\_signature\_verify}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_root\_signature\_verify()}{mpdc\_certificate\_root\_signature\_verify()}}
+{\footnotesize\ttfamily \label{certificate_8h_a6d2341a3f399148beaa56adcf4497f39} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+certificate\+\_\+root\+\_\+signature\+\_\+verify (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{child}{, }\item[{const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{root}{}\end{DoxyParamCaption})}
+
+
+
+Verify a child certificate against a root certificate. 
+
+This function verifies that the digital signature on the child certificate (stored in its signed hash) was produced by the given root certificate.
+
+
+\begin{DoxyParams}{Parameters}
+{\em child} & \mbox{[}in, const\mbox{]} A pointer to the child certificate. \\
+\hline
+{\em root} & \mbox{[}in, const\mbox{]} A pointer to the root certificate.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the child certificate signature is valid. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_a1b25d2e88b77950fcbaa0c414d990756}\index{certificate.h@{certificate.h}!mpdc\_certificate\_root\_struct\_to\_file@{mpdc\_certificate\_root\_struct\_to\_file}}
+\index{mpdc\_certificate\_root\_struct\_to\_file@{mpdc\_certificate\_root\_struct\_to\_file}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_root\_struct\_to\_file()}{mpdc\_certificate\_root\_struct\_to\_file()}}
+{\footnotesize\ttfamily \label{certificate_8h_a1b25d2e88b77950fcbaa0c414d990756} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+certificate\+\_\+root\+\_\+struct\+\_\+to\+\_\+file (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{fpath}{, }\item[{const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{root}{}\end{DoxyParamCaption})}
+
+
+
+Write a root certificate structure to a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fpath} & \mbox{[}in, const\mbox{]} The file path where the certificate will be written. \\
+\hline
+{\em root} & \mbox{[}in, const\mbox{]} A pointer to the root certificate structure.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true on success. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_a3b3e8335e5ad0f22cbbd6a1a11fd2784}\index{certificate.h@{certificate.h}!mpdc\_certificate\_signature\_generate\_keypair@{mpdc\_certificate\_signature\_generate\_keypair}}
+\index{mpdc\_certificate\_signature\_generate\_keypair@{mpdc\_certificate\_signature\_generate\_keypair}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_signature\_generate\_keypair()}{mpdc\_certificate\_signature\_generate\_keypair()}}
+{\footnotesize\ttfamily \label{certificate_8h_a3b3e8335e5ad0f22cbbd6a1a11fd2784} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+certificate\+\_\+signature\+\_\+generate\+\_\+keypair (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__signature__keypair}{mpdc\+\_\+signature\+\_\+keypair}} \texorpdfstring{$\ast$}{*}}]{keypair}{}\end{DoxyParamCaption})}
+
+
+
+Generate and encode an asymmetric signature scheme keypair. 
+
+This function generates a new keypair for the MPDC asymmetric signature scheme and populates the provided keypair container.
+
+
+\begin{DoxyParams}{Parameters}
+{\em keypair} & \mbox{[}out\mbox{]} A pointer to the keypair container. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{certificate_8h_a50cbb4e985b4b9a9c92e47bb97ea6b5a}\index{certificate.h@{certificate.h}!mpdc\_certificate\_signature\_hash\_verify@{mpdc\_certificate\_signature\_hash\_verify}}
+\index{mpdc\_certificate\_signature\_hash\_verify@{mpdc\_certificate\_signature\_hash\_verify}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_signature\_hash\_verify()}{mpdc\_certificate\_signature\_hash\_verify()}}
+{\footnotesize\ttfamily \label{certificate_8h_a50cbb4e985b4b9a9c92e47bb97ea6b5a} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+certificate\+\_\+signature\+\_\+hash\+\_\+verify (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{signature}{, }\item[{size\+\_\+t}]{siglen}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{message}{, }\item[{size\+\_\+t}]{msglen}{, }\item[{const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{lcert}{}\end{DoxyParamCaption})}
+
+
+
+Verify that a signature hash matches a computed message hash using a child certificate. 
+
+This function first verifies the signature using the child certificate\textquotesingle{}s public key and then compares the resulting hash to an independently computed hash of the message.
+
+
+\begin{DoxyParams}{Parameters}
+{\em signature} & \mbox{[}in, const\mbox{]} A pointer to the signed hash. \\
+\hline
+{\em siglen} & The length of the signed hash. \\
+\hline
+{\em message} & \mbox{[}in, const\mbox{]} A pointer to the message. \\
+\hline
+{\em msglen} & The length of the message. \\
+\hline
+{\em lcert} & \mbox{[}in, const\mbox{]} A pointer to the child certificate used for verification.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the signature hash verifies correctly. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_a228994460803cfd191b17a6bc3b54fed}\index{certificate.h@{certificate.h}!mpdc\_certificate\_signature\_sign\_message@{mpdc\_certificate\_signature\_sign\_message}}
+\index{mpdc\_certificate\_signature\_sign\_message@{mpdc\_certificate\_signature\_sign\_message}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_signature\_sign\_message()}{mpdc\_certificate\_signature\_sign\_message()}}
+{\footnotesize\ttfamily \label{certificate_8h_a228994460803cfd191b17a6bc3b54fed} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+certificate\+\_\+signature\+\_\+sign\+\_\+message (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{signature}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{message}{, }\item[{size\+\_\+t}]{msglen}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{prikey}{}\end{DoxyParamCaption})}
+
+
+
+Sign a message using the asymmetric signature scheme. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em signature} & \mbox{[}out\mbox{]} The array that will receive the signature (size\+: MPDC\+\_\+\+ASYMMETRIC\+\_\+\+SIGNATURE\+\_\+\+SIZE). \\
+\hline
+{\em message} & \mbox{[}in, const\mbox{]} The message to sign. \\
+\hline
+{\em msglen} & The length of the message. \\
+\hline
+{\em prikey} & \mbox{[}in\mbox{]} The private signature key.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the length of the generated signature. 
+\end{DoxyReturn}
+\Hypertarget{certificate_8h_a0bf0b1ce4895486ff8a8a24531d35da4}\index{certificate.h@{certificate.h}!mpdc\_certificate\_signature\_verify\_message@{mpdc\_certificate\_signature\_verify\_message}}
+\index{mpdc\_certificate\_signature\_verify\_message@{mpdc\_certificate\_signature\_verify\_message}!certificate.h@{certificate.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_certificate\_signature\_verify\_message()}{mpdc\_certificate\_signature\_verify\_message()}}
+{\footnotesize\ttfamily \label{certificate_8h_a0bf0b1ce4895486ff8a8a24531d35da4} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+certificate\+\_\+signature\+\_\+verify\+\_\+message (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{message}{, }\item[{size\+\_\+t}]{msglen}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{signature}{, }\item[{size\+\_\+t}]{siglen}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{pubkey}{}\end{DoxyParamCaption})}
+
+
+
+Verify a message signature using the asymmetric signature scheme. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & \mbox{[}in, const\mbox{]} The original message. \\
+\hline
+{\em msglen} & The length of the message. \\
+\hline
+{\em signature} & \mbox{[}in, const\mbox{]} The signature to verify. \\
+\hline
+{\em siglen} & The length of the signature. \\
+\hline
+{\em pubkey} & \mbox{[}in\mbox{]} The public signature verification key.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the signature is verified. 
+\end{DoxyReturn}

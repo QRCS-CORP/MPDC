@@ -1,0 +1,114 @@
+\doxysection{C\+:/\+Users/stepp/\+Documents/\+Visual Studio 2022/\+Projects/\+C/\+MPDC/\+MPDC/trust.h File Reference}
+\hypertarget{trust_8h}{}\label{trust_8h}\index{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/trust.h@{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/trust.h}}
+
+
+The MPDC trust functions.  
+
+
+{\ttfamily \#include "{}common.\+h"{}}\newline
+{\ttfamily \#include "{}mpdc.\+h"{}}\newline
+{\ttfamily \#include "{}../../\+QSC/\+QSC/intutils.\+h"{}}\newline
+{\ttfamily \#include "{}../../\+QSC/\+QSC/memutils.\+h"{}}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmpdc__device__trust}{mpdc\+\_\+device\+\_\+trust}}
+\begin{DoxyCompactList}\small\item\em The MPDC topology device trust structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{trust_8h_acbccf197005501383abbcbbb337a22de}{MPDC\+\_\+\+TRUST\+\_\+\+SIZE}}~(sizeof(\mbox{\hyperlink{structmpdc__device__trust}{mpdc\+\_\+device\+\_\+trust}}))
+\begin{DoxyCompactList}\small\item\em The size of a device trust structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{trust_8h_afeb05e36b10769501f17eb2d08b090ec}\label{trust_8h_afeb05e36b10769501f17eb2d08b090ec} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+device\+\_\+trust {\bfseries mpdc\+\_\+device\+\_\+trust}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{trust_8h_a63667e615ebb2743e4e36c8ea6bda0d1}{mpdc\+\_\+trust\+\_\+clear}} (\mbox{\hyperlink{structmpdc__device__trust}{mpdc\+\_\+device\+\_\+trust}} \texorpdfstring{$\ast$}{*}device)
+\begin{DoxyCompactList}\small\item\em Remove a device trust from the database. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{trust_8h_a0d8453bfa8f4cad320312df31afa4c9a}{mpdc\+\_\+trust\+\_\+deserialize}} (\mbox{\hyperlink{structmpdc__device__trust}{mpdc\+\_\+device\+\_\+trust}} \texorpdfstring{$\ast$}{*}device, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}input)
+\begin{DoxyCompactList}\small\item\em Deserialize a device trust structure. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{trust_8h_ab8e0feac56e7628f11377812414d6618}{mpdc\+\_\+trust\+\_\+serialize}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}output, size\+\_\+t outlen, const \mbox{\hyperlink{structmpdc__device__trust}{mpdc\+\_\+device\+\_\+trust}} \texorpdfstring{$\ast$}{*}device)
+\begin{DoxyCompactList}\small\item\em Serialize a device trust structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The MPDC trust functions. 
+
+Detailed Description\+: This header file declares the functions and data structures used to manage device trust within the MPDC system. Trust data is used to store network-\/related information (address, domain, name) along with associated metrics such as trust value, bandwidth, and flags indicating IPv6 support and local network status. The functions provided herein allow for the serialization and deserialization of trust data, as well as clearing a trust record. 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{trust_8h_acbccf197005501383abbcbbb337a22de}\index{trust.h@{trust.h}!MPDC\_TRUST\_SIZE@{MPDC\_TRUST\_SIZE}}
+\index{MPDC\_TRUST\_SIZE@{MPDC\_TRUST\_SIZE}!trust.h@{trust.h}}
+\doxysubsubsection{\texorpdfstring{MPDC\_TRUST\_SIZE}{MPDC\_TRUST\_SIZE}}
+{\footnotesize\ttfamily \label{trust_8h_acbccf197005501383abbcbbb337a22de} 
+\#define MPDC\+\_\+\+TRUST\+\_\+\+SIZE~(sizeof(\mbox{\hyperlink{structmpdc__device__trust}{mpdc\+\_\+device\+\_\+trust}}))}
+
+
+
+The size of a device trust structure. 
+
+This macro returns the size in bytes of the MPDC device trust structure. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{trust_8h_a63667e615ebb2743e4e36c8ea6bda0d1}\index{trust.h@{trust.h}!mpdc\_trust\_clear@{mpdc\_trust\_clear}}
+\index{mpdc\_trust\_clear@{mpdc\_trust\_clear}!trust.h@{trust.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_trust\_clear()}{mpdc\_trust\_clear()}}
+{\footnotesize\ttfamily \label{trust_8h_a63667e615ebb2743e4e36c8ea6bda0d1} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+trust\+\_\+clear (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__device__trust}{mpdc\+\_\+device\+\_\+trust}} \texorpdfstring{$\ast$}{*}}]{device}{}\end{DoxyParamCaption})}
+
+
+
+Remove a device trust from the database. 
+
+This function clears all trust data in a given device trust structure.
+
+
+\begin{DoxyParams}{Parameters}
+{\em device} & A pointer to the device trust structure to clear. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{trust_8h_a0d8453bfa8f4cad320312df31afa4c9a}\index{trust.h@{trust.h}!mpdc\_trust\_deserialize@{mpdc\_trust\_deserialize}}
+\index{mpdc\_trust\_deserialize@{mpdc\_trust\_deserialize}!trust.h@{trust.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_trust\_deserialize()}{mpdc\_trust\_deserialize()}}
+{\footnotesize\ttfamily \label{trust_8h_a0d8453bfa8f4cad320312df31afa4c9a} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+trust\+\_\+deserialize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__device__trust}{mpdc\+\_\+device\+\_\+trust}} \texorpdfstring{$\ast$}{*}}]{device}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{input}{}\end{DoxyParamCaption})}
+
+
+
+Deserialize a device trust structure. 
+
+This function converts a serialized device trust byte array into a {\ttfamily \doxylink{structmpdc__device__trust}{mpdc\+\_\+device\+\_\+trust}} structure.
+
+
+\begin{DoxyParams}{Parameters}
+{\em device} & A pointer to the output device trust structure. \\
+\hline
+{\em input} & \mbox{[}const\mbox{]} The serialized trust structure data. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{trust_8h_ab8e0feac56e7628f11377812414d6618}\index{trust.h@{trust.h}!mpdc\_trust\_serialize@{mpdc\_trust\_serialize}}
+\index{mpdc\_trust\_serialize@{mpdc\_trust\_serialize}!trust.h@{trust.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_trust\_serialize()}{mpdc\_trust\_serialize()}}
+{\footnotesize\ttfamily \label{trust_8h_ab8e0feac56e7628f11377812414d6618} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+trust\+\_\+serialize (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{outlen}{, }\item[{const \mbox{\hyperlink{structmpdc__device__trust}{mpdc\+\_\+device\+\_\+trust}} \texorpdfstring{$\ast$}{*}}]{device}{}\end{DoxyParamCaption})}
+
+
+
+Serialize a device trust structure. 
+
+This function serializes a {\ttfamily \doxylink{structmpdc__device__trust}{mpdc\+\_\+device\+\_\+trust}} structure into a byte array.
+
+
+\begin{DoxyParams}{Parameters}
+{\em output} & The output buffer to receive the serialized data. \\
+\hline
+{\em outlen} & The length of the output buffer. \\
+\hline
+{\em device} & \mbox{[}const\mbox{]} A pointer to the device trust structure to serialize. \\
+\hline
+\end{DoxyParams}

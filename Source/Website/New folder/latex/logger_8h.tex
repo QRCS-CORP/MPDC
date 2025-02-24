@@ -1,0 +1,379 @@
+\doxysection{C\+:/\+Users/stepp/\+Documents/\+Visual Studio 2022/\+Projects/\+C/\+MPDC/\+MPDC/logger.h File Reference}
+\hypertarget{logger_8h}{}\label{logger_8h}\index{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/logger.h@{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/logger.h}}
+
+
+MPDC Logging Functions.  
+
+
+{\ttfamily \#include "{}common.\+h"{}}\newline
+{\ttfamily \#include "{}commands.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{logger_8h_a1dcebcd4854c47f648edddb52bbdef84}\label{logger_8h_a1dcebcd4854c47f648edddb52bbdef84} 
+\#define {\bfseries MPDC\+\_\+\+LOGGING\+\_\+\+MESSAGE\+\_\+\+MAX}~256
+\begin{DoxyCompactList}\small\item\em The maximum length (in characters) for a logging message. \end{DoxyCompactList}\item 
+\Hypertarget{logger_8h_ab7b29f29d4cd4db883589c6bcf908294}\label{logger_8h_ab7b29f29d4cd4db883589c6bcf908294} 
+\#define {\bfseries MPDC\+\_\+\+LOG\+\_\+\+STRING\+\_\+\+DEPTH}~69
+\begin{DoxyCompactList}\small\item\em The number of predefined log strings. \end{DoxyCompactList}\item 
+\Hypertarget{logger_8h_a77d48bf7e2adf4fcb6e8594421b82566}\label{logger_8h_a77d48bf7e2adf4fcb6e8594421b82566} 
+\#define {\bfseries MPDC\+\_\+\+LOG\+\_\+\+STRING\+\_\+\+SIZE}~64
+\begin{DoxyCompactList}\small\item\em The maximum size (in characters) for a single log string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{logger_8h_af60b25cafb4adedfaf882e3b7d7f8b03}{logger\+\_\+default\+\_\+path}} (char \texorpdfstring{$\ast$}{*}path, size\+\_\+t pathlen)
+\begin{DoxyCompactList}\small\item\em Get the default logging path. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{logger_8h_a93d056d31bd7712dd9e13b3d47b8a169}{mpdc\+\_\+logger\+\_\+dispose}} (const char \texorpdfstring{$\ast$}{*}path)
+\begin{DoxyCompactList}\small\item\em Erase and delete the log file. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{logger_8h_abccc51ad5a2f30e72fa00fc0caa0e62c}{mpdc\+\_\+logger\+\_\+erase\+\_\+all}} (const char \texorpdfstring{$\ast$}{*}path)
+\begin{DoxyCompactList}\small\item\em Erase the log file. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{logger_8h_a91be0cfc434afc1752a604157423548b}{mpdc\+\_\+logger\+\_\+exists}} (const char \texorpdfstring{$\ast$}{*}path)
+\begin{DoxyCompactList}\small\item\em Check if the log file exists. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{logger_8h_aa85ad156437134d27c283219486188d7}{mpdc\+\_\+logger\+\_\+initialize}} (const char \texorpdfstring{$\ast$}{*}path)
+\begin{DoxyCompactList}\small\item\em Initialize the logger. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{logger_8h_a70aaabf2bed21895350b9ca57f31c548}{mpdc\+\_\+logger\+\_\+get\+\_\+size}} (const char \texorpdfstring{$\ast$}{*}path)
+\begin{DoxyCompactList}\small\item\em Get the size of the log file. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{logger_8h_a022411554c0f83e90f7ae06eb2828a18}{mpdc\+\_\+logger\+\_\+reset}} (const char \texorpdfstring{$\ast$}{*}path)
+\begin{DoxyCompactList}\small\item\em Reset the logger. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{logger_8h_aa5c6a03191a3858e9023b3bdea17c8e1}{mpdc\+\_\+logger\+\_\+write\+\_\+message}} (const char \texorpdfstring{$\ast$}{*}path, const char \texorpdfstring{$\ast$}{*}line, size\+\_\+t linelen)
+\begin{DoxyCompactList}\small\item\em Write a message to the log file. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{logger_8h_a02713896351ab6bfc868d79a07f258d7}{mpdc\+\_\+logger\+\_\+write\+\_\+decorated\+\_\+message}} (const char \texorpdfstring{$\ast$}{*}path, \mbox{\hyperlink{commands_8h_ab2dbd044cb9d55bda0aa646e3e855e12}{mpdc\+\_\+application\+\_\+messages}} msgtype, const char \texorpdfstring{$\ast$}{*}message, size\+\_\+t msglen)
+\begin{DoxyCompactList}\small\item\em Write a decorated message to the log file. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{logger_8h_a704a98b0c5a961a270da0c2b6bd1fb9f}{mpdc\+\_\+logger\+\_\+write\+\_\+time\+\_\+stamped\+\_\+message}} (const char \texorpdfstring{$\ast$}{*}path, const char \texorpdfstring{$\ast$}{*}message, size\+\_\+t msglen)
+\begin{DoxyCompactList}\small\item\em Write a time-\/stamped message to the log file. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{logger_8h_a1740b28fc289cc99023c9d2fa99071c0}{mpdc\+\_\+logger\+\_\+write\+\_\+decorated\+\_\+time\+\_\+stamped\+\_\+message}} (const char \texorpdfstring{$\ast$}{*}path, \mbox{\hyperlink{commands_8h_ab2dbd044cb9d55bda0aa646e3e855e12}{mpdc\+\_\+application\+\_\+messages}} msgtype, const char \texorpdfstring{$\ast$}{*}message, size\+\_\+t msglen)
+\begin{DoxyCompactList}\small\item\em Write a decorated, time-\/stamped message to the log file. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{logger_8h_aac5718fbea8c0d95a85ab47536af8f13}{mpdc\+\_\+logger\+\_\+read\+\_\+all}} (const char \texorpdfstring{$\ast$}{*}path, char \texorpdfstring{$\ast$}{*}output, size\+\_\+t outlen)
+\begin{DoxyCompactList}\small\item\em Read the entire log into a character array. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API int64\+\_\+t \mbox{\hyperlink{logger_8h_acb944b65fe0aeebaef56357880118e33}{mpdc\+\_\+logger\+\_\+read\+\_\+line}} (const char \texorpdfstring{$\ast$}{*}path, char \texorpdfstring{$\ast$}{*}output, size\+\_\+t outlen, size\+\_\+t linenum)
+\begin{DoxyCompactList}\small\item\em Read a single line from the log file. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t \mbox{\hyperlink{logger_8h_a49f63f815c63017914f4a29686bf2377}{mpdc\+\_\+logger\+\_\+time\+\_\+stamp}} (char \texorpdfstring{$\ast$}{*}output, size\+\_\+t outlen)
+\begin{DoxyCompactList}\small\item\em Write a timestamp to a string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+MPDC Logging Functions. 
+
+This header defines the logging functions used throughout the MPDC system. The logger provides a standard mechanism for writing diagnostic and operational messages to a log file. The logging module supports basic operations such as\+:
+
+
+\begin{DoxyItemize}
+\item Obtaining the default logging file path.
+\item Initializing the logger.
+\item Checking for the existence and retrieving the size of the log file.
+\item Writing plain, decorated, and time-\/stamped log messages.
+\item Reading the complete log or individual log lines.
+\item Resetting (erasing) and disposing (deleting) the log file.
+\end{DoxyItemize}
+
+The following macros are defined to specify the maximum message length and the dimensions of the log string storage\+:
+\begin{DoxyItemize}
+\item \doxylink{logger_8h_a1dcebcd4854c47f648edddb52bbdef84}{MPDC\+\_\+\+LOGGING\+\_\+\+MESSAGE\+\_\+\+MAX} defines the maximum number of characters for a log message.
+\item \doxylink{logger_8h_ab7b29f29d4cd4db883589c6bcf908294}{MPDC\+\_\+\+LOG\+\_\+\+STRING\+\_\+\+DEPTH} and \doxylink{logger_8h_a77d48bf7e2adf4fcb6e8594421b82566}{MPDC\+\_\+\+LOG\+\_\+\+STRING\+\_\+\+SIZE} specify the dimensions used for storing pre-\/defined log strings.
+\end{DoxyItemize}
+
+Additionally, static constants provide the default logger path, file name, and header string.
+
+These logging routines utilize underlying QSC file and console utilities to ensure thread-\/safe access to the log file and provide formatted, timestamped output. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{logger_8h_af60b25cafb4adedfaf882e3b7d7f8b03}\index{logger.h@{logger.h}!logger\_default\_path@{logger\_default\_path}}
+\index{logger\_default\_path@{logger\_default\_path}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{logger\_default\_path()}{logger\_default\_path()}}
+{\footnotesize\ttfamily \label{logger_8h_af60b25cafb4adedfaf882e3b7d7f8b03} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void logger\+\_\+default\+\_\+path (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{path}{, }\item[{size\+\_\+t}]{pathlen}{}\end{DoxyParamCaption})}
+
+
+
+Get the default logging path. 
+
+This function retrieves the default log file path by obtaining the user\textquotesingle{}s documents directory, appending the MPDC logger directory name, and finally the log file name.
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & \mbox{[}out\mbox{]} The output buffer that will receive the full log file path. \\
+\hline
+{\em pathlen} & The length of the output buffer. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{logger_8h_a93d056d31bd7712dd9e13b3d47b8a169}\index{logger.h@{logger.h}!mpdc\_logger\_dispose@{mpdc\_logger\_dispose}}
+\index{mpdc\_logger\_dispose@{mpdc\_logger\_dispose}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_logger\_dispose()}{mpdc\_logger\_dispose()}}
+{\footnotesize\ttfamily \label{logger_8h_a93d056d31bd7712dd9e13b3d47b8a169} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+logger\+\_\+dispose (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{}\end{DoxyParamCaption})}
+
+
+
+Erase and delete the log file. 
+
+This function deletes the log file at the specified path.
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & \mbox{[}in\mbox{]} The log file path.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true on success. 
+\end{DoxyReturn}
+\Hypertarget{logger_8h_abccc51ad5a2f30e72fa00fc0caa0e62c}\index{logger.h@{logger.h}!mpdc\_logger\_erase\_all@{mpdc\_logger\_erase\_all}}
+\index{mpdc\_logger\_erase\_all@{mpdc\_logger\_erase\_all}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_logger\_erase\_all()}{mpdc\_logger\_erase\_all()}}
+{\footnotesize\ttfamily \label{logger_8h_abccc51ad5a2f30e72fa00fc0caa0e62c} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+logger\+\_\+erase\+\_\+all (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{}\end{DoxyParamCaption})}
+
+
+
+Erase the log file. 
+
+This function clears the contents of the log file without deleting the file itself.
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & \mbox{[}in\mbox{]} The log file path.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true on success. 
+\end{DoxyReturn}
+\Hypertarget{logger_8h_a91be0cfc434afc1752a604157423548b}\index{logger.h@{logger.h}!mpdc\_logger\_exists@{mpdc\_logger\_exists}}
+\index{mpdc\_logger\_exists@{mpdc\_logger\_exists}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_logger\_exists()}{mpdc\_logger\_exists()}}
+{\footnotesize\ttfamily \label{logger_8h_a91be0cfc434afc1752a604157423548b} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+logger\+\_\+exists (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{}\end{DoxyParamCaption})}
+
+
+
+Check if the log file exists. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & \mbox{[}in\mbox{]} The log file path.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the log file exists. 
+\end{DoxyReturn}
+\Hypertarget{logger_8h_a70aaabf2bed21895350b9ca57f31c548}\index{logger.h@{logger.h}!mpdc\_logger\_get\_size@{mpdc\_logger\_get\_size}}
+\index{mpdc\_logger\_get\_size@{mpdc\_logger\_get\_size}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_logger\_get\_size()}{mpdc\_logger\_get\_size()}}
+{\footnotesize\ttfamily \label{logger_8h_a70aaabf2bed21895350b9ca57f31c548} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+logger\+\_\+get\+\_\+size (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{}\end{DoxyParamCaption})}
+
+
+
+Get the size of the log file. 
+
+This function returns the size (in characters) of the log file.
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & \mbox{[}in\mbox{]} The log file path.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the character size of the log file. 
+\end{DoxyReturn}
+\Hypertarget{logger_8h_aa85ad156437134d27c283219486188d7}\index{logger.h@{logger.h}!mpdc\_logger\_initialize@{mpdc\_logger\_initialize}}
+\index{mpdc\_logger\_initialize@{mpdc\_logger\_initialize}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_logger\_initialize()}{mpdc\_logger\_initialize()}}
+{\footnotesize\ttfamily \label{logger_8h_aa85ad156437134d27c283219486188d7} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+logger\+\_\+initialize (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{}\end{DoxyParamCaption})}
+
+
+
+Initialize the logger. 
+
+This function creates or resets the log file at the specified path if it does not already exist.
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & \mbox{[}in\mbox{]} The log file path. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{logger_8h_aac5718fbea8c0d95a85ab47536af8f13}\index{logger.h@{logger.h}!mpdc\_logger\_read\_all@{mpdc\_logger\_read\_all}}
+\index{mpdc\_logger\_read\_all@{mpdc\_logger\_read\_all}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_logger\_read\_all()}{mpdc\_logger\_read\_all()}}
+{\footnotesize\ttfamily \label{logger_8h_aac5718fbea8c0d95a85ab47536af8f13} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+logger\+\_\+read\+\_\+all (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{outlen}{}\end{DoxyParamCaption})}
+
+
+
+Read the entire log into a character array. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & \mbox{[}in\mbox{]} The full path to the log file. \\
+\hline
+{\em output} & \mbox{[}out\mbox{]} The output string receiving the log contents. \\
+\hline
+{\em outlen} & The length of the output array.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the number of characters read. 
+\end{DoxyReturn}
+\Hypertarget{logger_8h_acb944b65fe0aeebaef56357880118e33}\index{logger.h@{logger.h}!mpdc\_logger\_read\_line@{mpdc\_logger\_read\_line}}
+\index{mpdc\_logger\_read\_line@{mpdc\_logger\_read\_line}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_logger\_read\_line()}{mpdc\_logger\_read\_line()}}
+{\footnotesize\ttfamily \label{logger_8h_acb944b65fe0aeebaef56357880118e33} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API int64\+\_\+t mpdc\+\_\+logger\+\_\+read\+\_\+line (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{outlen}{, }\item[{size\+\_\+t}]{linenum}{}\end{DoxyParamCaption})}
+
+
+
+Read a single line from the log file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & \mbox{[}in\mbox{]} The full path to the log file. \\
+\hline
+{\em output} & \mbox{[}out\mbox{]} The output string receiving the line. \\
+\hline
+{\em outlen} & The length of the output string. \\
+\hline
+{\em linenum} & The 0-\/based line number to read.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the number of characters read. 
+\end{DoxyReturn}
+\Hypertarget{logger_8h_a022411554c0f83e90f7ae06eb2828a18}\index{logger.h@{logger.h}!mpdc\_logger\_reset@{mpdc\_logger\_reset}}
+\index{mpdc\_logger\_reset@{mpdc\_logger\_reset}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_logger\_reset()}{mpdc\_logger\_reset()}}
+{\footnotesize\ttfamily \label{logger_8h_a022411554c0f83e90f7ae06eb2828a18} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+logger\+\_\+reset (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{}\end{DoxyParamCaption})}
+
+
+
+Reset the logger. 
+
+Erases the log file (or creates a new empty log file if it does not exist).
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & \mbox{[}in\mbox{]} The log file path. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{logger_8h_a49f63f815c63017914f4a29686bf2377}\index{logger.h@{logger.h}!mpdc\_logger\_time\_stamp@{mpdc\_logger\_time\_stamp}}
+\index{mpdc\_logger\_time\_stamp@{mpdc\_logger\_time\_stamp}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_logger\_time\_stamp()}{mpdc\_logger\_time\_stamp()}}
+{\footnotesize\ttfamily \label{logger_8h_a49f63f815c63017914f4a29686bf2377} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+logger\+\_\+time\+\_\+stamp (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{size\+\_\+t}]{outlen}{}\end{DoxyParamCaption})}
+
+
+
+Write a timestamp to a string. 
+
+This function retrieves the current date and time in a formatted string.
+
+
+\begin{DoxyParams}{Parameters}
+{\em output} & \mbox{[}out\mbox{]} The output string receiving the timestamp. \\
+\hline
+{\em outlen} & The length of the output array.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the number of characters in the timestamp string. 
+\end{DoxyReturn}
+\Hypertarget{logger_8h_a02713896351ab6bfc868d79a07f258d7}\index{logger.h@{logger.h}!mpdc\_logger\_write\_decorated\_message@{mpdc\_logger\_write\_decorated\_message}}
+\index{mpdc\_logger\_write\_decorated\_message@{mpdc\_logger\_write\_decorated\_message}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_logger\_write\_decorated\_message()}{mpdc\_logger\_write\_decorated\_message()}}
+{\footnotesize\ttfamily \label{logger_8h_a02713896351ab6bfc868d79a07f258d7} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+logger\+\_\+write\+\_\+decorated\+\_\+message (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{, }\item[{\mbox{\hyperlink{commands_8h_ab2dbd044cb9d55bda0aa646e3e855e12}{mpdc\+\_\+application\+\_\+messages}}}]{msgtype}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{message}{, }\item[{size\+\_\+t}]{msglen}{}\end{DoxyParamCaption})}
+
+
+
+Write a decorated message to the log file. 
+
+This function prepends a predefined message (based on the provided message type) to the given message text and writes the result to the log.
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & \mbox{[}in\mbox{]} The log file path. \\
+\hline
+{\em msgtype} & The predefined message type (from \doxylink{commands_8h_ab2dbd044cb9d55bda0aa646e3e855e12}{mpdc\+\_\+application\+\_\+messages}). \\
+\hline
+{\em message} & \mbox{[}in, const\mbox{]} The message to write. \\
+\hline
+{\em msglen} & The length of the message.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the number of characters written. 
+\end{DoxyReturn}
+\Hypertarget{logger_8h_a1740b28fc289cc99023c9d2fa99071c0}\index{logger.h@{logger.h}!mpdc\_logger\_write\_decorated\_time\_stamped\_message@{mpdc\_logger\_write\_decorated\_time\_stamped\_message}}
+\index{mpdc\_logger\_write\_decorated\_time\_stamped\_message@{mpdc\_logger\_write\_decorated\_time\_stamped\_message}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_logger\_write\_decorated\_time\_stamped\_message()}{mpdc\_logger\_write\_decorated\_time\_stamped\_message()}}
+{\footnotesize\ttfamily \label{logger_8h_a1740b28fc289cc99023c9d2fa99071c0} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+logger\+\_\+write\+\_\+decorated\+\_\+time\+\_\+stamped\+\_\+message (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{, }\item[{\mbox{\hyperlink{commands_8h_ab2dbd044cb9d55bda0aa646e3e855e12}{mpdc\+\_\+application\+\_\+messages}}}]{msgtype}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{message}{, }\item[{size\+\_\+t}]{msglen}{}\end{DoxyParamCaption})}
+
+
+
+Write a decorated, time-\/stamped message to the log file. 
+
+This function first obtains a current timestamp, then prepends a predefined message based on the given message type, and finally writes the complete entry to the log file.
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & \mbox{[}in\mbox{]} The full log file path. \\
+\hline
+{\em msgtype} & The predefined message type. \\
+\hline
+{\em message} & \mbox{[}in, const\mbox{]} The message to write. \\
+\hline
+{\em msglen} & The length of the message.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the number of characters written. 
+\end{DoxyReturn}
+\Hypertarget{logger_8h_aa5c6a03191a3858e9023b3bdea17c8e1}\index{logger.h@{logger.h}!mpdc\_logger\_write\_message@{mpdc\_logger\_write\_message}}
+\index{mpdc\_logger\_write\_message@{mpdc\_logger\_write\_message}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_logger\_write\_message()}{mpdc\_logger\_write\_message()}}
+{\footnotesize\ttfamily \label{logger_8h_aa5c6a03191a3858e9023b3bdea17c8e1} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+logger\+\_\+write\+\_\+message (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{line}{, }\item[{size\+\_\+t}]{linelen}{}\end{DoxyParamCaption})}
+
+
+
+Write a message to the log file. 
+
+This function appends a terminated line (with a newline) to the log file.
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & \mbox{[}in\mbox{]} The log file path. \\
+\hline
+{\em line} & \mbox{[}in, const\mbox{]} The null-\/terminated string to write. \\
+\hline
+{\em linelen} & The length of the line.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the number of characters written. 
+\end{DoxyReturn}
+\Hypertarget{logger_8h_a704a98b0c5a961a270da0c2b6bd1fb9f}\index{logger.h@{logger.h}!mpdc\_logger\_write\_time\_stamped\_message@{mpdc\_logger\_write\_time\_stamped\_message}}
+\index{mpdc\_logger\_write\_time\_stamped\_message@{mpdc\_logger\_write\_time\_stamped\_message}!logger.h@{logger.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_logger\_write\_time\_stamped\_message()}{mpdc\_logger\_write\_time\_stamped\_message()}}
+{\footnotesize\ttfamily \label{logger_8h_a704a98b0c5a961a270da0c2b6bd1fb9f} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API size\+\_\+t mpdc\+\_\+logger\+\_\+write\+\_\+time\+\_\+stamped\+\_\+message (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{path}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{message}{, }\item[{size\+\_\+t}]{msglen}{}\end{DoxyParamCaption})}
+
+
+
+Write a time-\/stamped message to the log file. 
+
+This function writes a log entry that begins with a current timestamp.
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & \mbox{[}in\mbox{]} The log file path. \\
+\hline
+{\em message} & \mbox{[}in, const\mbox{]} The message to log. \\
+\hline
+{\em msglen} & The length of the message.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the number of characters written. 
+\end{DoxyReturn}

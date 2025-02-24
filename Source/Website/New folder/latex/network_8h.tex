@@ -1,0 +1,1014 @@
+\doxysection{C\+:/\+Users/stepp/\+Documents/\+Visual Studio 2022/\+Projects/\+C/\+MPDC/\+MPDC/network.h File Reference}
+\hypertarget{network_8h}{}\label{network_8h}\index{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/network.h@{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/network.h}}
+
+
+The MPDC network functions.  
+
+
+{\ttfamily \#include "{}common.\+h"{}}\newline
+{\ttfamily \#include "{}topology.\+h"{}}\newline
+{\ttfamily \#include "{}../../\+QSC/\+QSC/collection.\+h"{}}\newline
+{\ttfamily \#include "{}../../\+QSC/\+QSC/sha3.\+h"{}}\newline
+{\ttfamily \#include "{}../../\+QSC/\+QSC/socket.\+h"{}}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmpdc__network__announce__request__state}{mpdc\+\_\+network\+\_\+announce\+\_\+request\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The certificate announce request function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__announce__response__state}{mpdc\+\_\+network\+\_\+announce\+\_\+response\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The certificate announce response function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__converge__request__state}{mpdc\+\_\+network\+\_\+converge\+\_\+request\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The certificate converge request function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__converge__response__state}{mpdc\+\_\+network\+\_\+converge\+\_\+response\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The certificate converge response function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__converge__response__verify__state}{mpdc\+\_\+network\+\_\+converge\+\_\+response\+\_\+verify\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The certificate converge verify function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__converge__update__verify__state}{mpdc\+\_\+network\+\_\+converge\+\_\+update\+\_\+verify\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The certificate converge update verify function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__fkey__request__state}{mpdc\+\_\+network\+\_\+fkey\+\_\+request\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The fkey request function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__fkey__response__state}{mpdc\+\_\+network\+\_\+fkey\+\_\+response\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The fkey response function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__incremental__update__request__state}{mpdc\+\_\+network\+\_\+incremental\+\_\+update\+\_\+request\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The incremental update request function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__incremental__update__response__state}{mpdc\+\_\+network\+\_\+incremental\+\_\+update\+\_\+response\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The incremental update response function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__register__request__state}{mpdc\+\_\+network\+\_\+register\+\_\+request\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The network join request function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__register__response__state}{mpdc\+\_\+network\+\_\+register\+\_\+response\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The network join response function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__register__update__request__state}{mpdc\+\_\+network\+\_\+register\+\_\+update\+\_\+request\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The network join request function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__register__update__response__state}{mpdc\+\_\+network\+\_\+register\+\_\+update\+\_\+response\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The network join update response function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__mfk__request__state}{mpdc\+\_\+network\+\_\+mfk\+\_\+request\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The mfk request function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__mfk__response__state}{mpdc\+\_\+network\+\_\+mfk\+\_\+response\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The mfk response function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__remote__signing__request__state}{mpdc\+\_\+network\+\_\+remote\+\_\+signing\+\_\+request\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The certificate remote signing request function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__remote__signing__response__state}{mpdc\+\_\+network\+\_\+remote\+\_\+signing\+\_\+response\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The certificate remote signing response function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__resign__request__state}{mpdc\+\_\+network\+\_\+resign\+\_\+request\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The certificate resign request function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__resign__response__state}{mpdc\+\_\+network\+\_\+resign\+\_\+response\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The certificate resign request function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__revoke__request__state}{mpdc\+\_\+network\+\_\+revoke\+\_\+request\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The certificate revoke request function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__revoke__response__state}{mpdc\+\_\+network\+\_\+revoke\+\_\+response\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The certificate revoke response function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__topological__query__request__state}{mpdc\+\_\+network\+\_\+topological\+\_\+query\+\_\+request\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The topological query request function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__topological__query__response__state}{mpdc\+\_\+network\+\_\+topological\+\_\+query\+\_\+response\+\_\+state}}
+\item 
+struct \mbox{\hyperlink{structmpdc__network__topological__status__request__state}{mpdc\+\_\+network\+\_\+topological\+\_\+status\+\_\+request\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The topological status request function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__topological__status__response__state}{mpdc\+\_\+network\+\_\+topological\+\_\+status\+\_\+response\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The topological status response function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__fragment__collection__request__state}{mpdc\+\_\+network\+\_\+fragment\+\_\+collection\+\_\+request\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The fkey collection request function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__fragment__collection__response__state}{mpdc\+\_\+network\+\_\+fragment\+\_\+collection\+\_\+response\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The fkey collection response function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__fragment__query__request__state}{mpdc\+\_\+network\+\_\+fragment\+\_\+query\+\_\+request\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The fkey query request function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__fragment__query__response__state}{mpdc\+\_\+network\+\_\+fragment\+\_\+query\+\_\+response\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The fkey query response function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__key__exchange__request__state}{mpdc\+\_\+network\+\_\+key\+\_\+exchange\+\_\+request\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The key exchange request function state. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmpdc__network__key__exchange__response__state}{mpdc\+\_\+network\+\_\+key\+\_\+exchange\+\_\+response\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The key exchange response function state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{network_8h_a235ecf24d0f338731445fe0d76118cfe}\label{network_8h_a235ecf24d0f338731445fe0d76118cfe} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+announce\+\_\+request\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+announce\+\_\+request\+\_\+state}
+\item 
+\Hypertarget{network_8h_af5f75adfeda859a83d51958fe0f6f20c}\label{network_8h_af5f75adfeda859a83d51958fe0f6f20c} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+announce\+\_\+response\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+announce\+\_\+response\+\_\+state}
+\item 
+\Hypertarget{network_8h_a7e295ef56808444ff27f878e2dfb3a77}\label{network_8h_a7e295ef56808444ff27f878e2dfb3a77} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+converge\+\_\+request\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+converge\+\_\+request\+\_\+state}
+\item 
+\Hypertarget{network_8h_a465349cb79bc2d47433a1e8bb1ca847f}\label{network_8h_a465349cb79bc2d47433a1e8bb1ca847f} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+converge\+\_\+response\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+converge\+\_\+response\+\_\+state}
+\item 
+\Hypertarget{network_8h_a1517cfe3f1427a4dadca66f86f1a2df8}\label{network_8h_a1517cfe3f1427a4dadca66f86f1a2df8} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+converge\+\_\+response\+\_\+verify\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+converge\+\_\+response\+\_\+verify\+\_\+state}
+\item 
+\Hypertarget{network_8h_aa94b31bed4453a221797028e42fdec23}\label{network_8h_aa94b31bed4453a221797028e42fdec23} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+converge\+\_\+update\+\_\+verify\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+converge\+\_\+update\+\_\+verify\+\_\+state}
+\item 
+\Hypertarget{network_8h_a4e7d240df1c5187af7818d57932f2179}\label{network_8h_a4e7d240df1c5187af7818d57932f2179} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+fkey\+\_\+request\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+fkey\+\_\+request\+\_\+state}
+\item 
+\Hypertarget{network_8h_a7326d6c02c6326f0104e885f623bd38f}\label{network_8h_a7326d6c02c6326f0104e885f623bd38f} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+fkey\+\_\+response\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+fkey\+\_\+response\+\_\+state}
+\item 
+\Hypertarget{network_8h_adfcbab8ca8e388c636139c6efac3f4fa}\label{network_8h_adfcbab8ca8e388c636139c6efac3f4fa} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+incremental\+\_\+update\+\_\+request\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+incremental\+\_\+update\+\_\+request\+\_\+state}
+\item 
+\Hypertarget{network_8h_a875a6a793cbea00faa4f2f820988ac41}\label{network_8h_a875a6a793cbea00faa4f2f820988ac41} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+incremental\+\_\+update\+\_\+response\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+incremental\+\_\+update\+\_\+response\+\_\+state}
+\item 
+\Hypertarget{network_8h_ac2a673ad5f0076f32ff8d9bc70a0a210}\label{network_8h_ac2a673ad5f0076f32ff8d9bc70a0a210} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+register\+\_\+request\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+register\+\_\+request\+\_\+state}
+\item 
+\Hypertarget{network_8h_ab23aff898ef1899897efbc3c9eb7af7e}\label{network_8h_ab23aff898ef1899897efbc3c9eb7af7e} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+register\+\_\+response\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+register\+\_\+response\+\_\+state}
+\item 
+\Hypertarget{network_8h_a09d522877ace2f0be7fa92b445d4f9da}\label{network_8h_a09d522877ace2f0be7fa92b445d4f9da} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+register\+\_\+update\+\_\+request\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+register\+\_\+update\+\_\+request\+\_\+state}
+\item 
+\Hypertarget{network_8h_a9948e4368a90e3debdf8dce3b5822887}\label{network_8h_a9948e4368a90e3debdf8dce3b5822887} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+register\+\_\+update\+\_\+response\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+register\+\_\+update\+\_\+response\+\_\+state}
+\item 
+\Hypertarget{network_8h_a4552a68cf43c63827eb2d6b0ea70b5a2}\label{network_8h_a4552a68cf43c63827eb2d6b0ea70b5a2} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+mfk\+\_\+request\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+mfk\+\_\+request\+\_\+state}
+\item 
+\Hypertarget{network_8h_a08dbe12186309c5346c333f84cda8159}\label{network_8h_a08dbe12186309c5346c333f84cda8159} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+mfk\+\_\+response\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+mfk\+\_\+response\+\_\+state}
+\item 
+\Hypertarget{network_8h_a85c5db4376d38085bd988638111b0114}\label{network_8h_a85c5db4376d38085bd988638111b0114} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+remote\+\_\+signing\+\_\+request\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+remote\+\_\+signing\+\_\+request\+\_\+state}
+\item 
+\Hypertarget{network_8h_af8a08b5faef1173e10bb5fb4e16ff384}\label{network_8h_af8a08b5faef1173e10bb5fb4e16ff384} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+remote\+\_\+signing\+\_\+response\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+remote\+\_\+signing\+\_\+response\+\_\+state}
+\item 
+\Hypertarget{network_8h_ab00fe57016a5cdf334bcd58d8cae832d}\label{network_8h_ab00fe57016a5cdf334bcd58d8cae832d} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+resign\+\_\+request\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+resign\+\_\+request\+\_\+state}
+\item 
+\Hypertarget{network_8h_a80d13f423bf53d0ebb175a3f64436d4b}\label{network_8h_a80d13f423bf53d0ebb175a3f64436d4b} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+resign\+\_\+response\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+resign\+\_\+response\+\_\+state}
+\item 
+\Hypertarget{network_8h_ae77f2568914cfc984fe77d8a9e6a5ede}\label{network_8h_ae77f2568914cfc984fe77d8a9e6a5ede} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+revoke\+\_\+request\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+revoke\+\_\+request\+\_\+state}
+\item 
+\Hypertarget{network_8h_a00e36687515a091ba3b963cfa54ad06c}\label{network_8h_a00e36687515a091ba3b963cfa54ad06c} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+revoke\+\_\+response\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+revoke\+\_\+response\+\_\+state}
+\item 
+\Hypertarget{network_8h_a04a853d1294247c114e5021672154292}\label{network_8h_a04a853d1294247c114e5021672154292} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+topological\+\_\+query\+\_\+request\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+topological\+\_\+query\+\_\+request\+\_\+state}
+\item 
+\Hypertarget{network_8h_a12fbc1caef355ed626133f9f133a3b08}\label{network_8h_a12fbc1caef355ed626133f9f133a3b08} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+topological\+\_\+query\+\_\+response\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+topological\+\_\+query\+\_\+response\+\_\+state}
+\item 
+\Hypertarget{network_8h_a795643abc2c33772b357c37a97c59fe1}\label{network_8h_a795643abc2c33772b357c37a97c59fe1} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+topological\+\_\+status\+\_\+request\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+topological\+\_\+status\+\_\+request\+\_\+state}
+\item 
+\Hypertarget{network_8h_aa3fd563333ed5b96f372b8f897874a3d}\label{network_8h_aa3fd563333ed5b96f372b8f897874a3d} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+topological\+\_\+status\+\_\+response\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+topological\+\_\+status\+\_\+response\+\_\+state}
+\item 
+\Hypertarget{network_8h_a9df03ba1217df5fdb4506349ccb79275}\label{network_8h_a9df03ba1217df5fdb4506349ccb79275} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+fragment\+\_\+collection\+\_\+request\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+fragment\+\_\+collection\+\_\+request\+\_\+state}
+\item 
+\Hypertarget{network_8h_aa353520d6877ec18f27de4204065d5d2}\label{network_8h_aa353520d6877ec18f27de4204065d5d2} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+fragment\+\_\+collection\+\_\+response\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+fragment\+\_\+collection\+\_\+response\+\_\+state}
+\item 
+\Hypertarget{network_8h_a38192804463ce3d343fd025d0d007b30}\label{network_8h_a38192804463ce3d343fd025d0d007b30} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+fragment\+\_\+query\+\_\+request\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+fragment\+\_\+query\+\_\+request\+\_\+state}
+\item 
+\Hypertarget{network_8h_a9a0a5354f4cb2511218f5e852bb02276}\label{network_8h_a9a0a5354f4cb2511218f5e852bb02276} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+fragment\+\_\+query\+\_\+response\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+fragment\+\_\+query\+\_\+response\+\_\+state}
+\item 
+\Hypertarget{network_8h_ac2aeee3892ace30b3aa0b8d6a0541a29}\label{network_8h_ac2aeee3892ace30b3aa0b8d6a0541a29} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+key\+\_\+exchange\+\_\+request\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+key\+\_\+exchange\+\_\+request\+\_\+state}
+\item 
+\Hypertarget{network_8h_ae4ce1dafb8b6583cdfd973b3699b8db2}\label{network_8h_ae4ce1dafb8b6583cdfd973b3699b8db2} 
+typedef MPDC\+\_\+\+EXPORT\+\_\+\+API struct mpdc\+\_\+network\+\_\+key\+\_\+exchange\+\_\+response\+\_\+state {\bfseries mpdc\+\_\+network\+\_\+key\+\_\+exchange\+\_\+response\+\_\+state}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a02a2ad0b7cc3ef9b1a19742f6dc66334}{mpdc\+\_\+network\+\_\+announce\+\_\+broadcast}} (\mbox{\hyperlink{structmpdc__network__announce__request__state}{mpdc\+\_\+network\+\_\+announce\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}state)
+\begin{DoxyCompactList}\small\item\em Announce a certificate using the dla, and broadcast it to the network. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_adaa260ff286211f92b5288cff0958042}{mpdc\+\_\+network\+\_\+announce\+\_\+response}} (\mbox{\hyperlink{structmpdc__network__announce__response__state}{mpdc\+\_\+network\+\_\+announce\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}state, const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}packetin)
+\begin{DoxyCompactList}\small\item\em Process a announce response message. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API uint16\+\_\+t \mbox{\hyperlink{network_8h_a3f7ed7ea2da9dbd47beb40bf47c16bd1}{mpdc\+\_\+network\+\_\+application\+\_\+to\+\_\+port}} (\mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}} tnode)
+\begin{DoxyCompactList}\small\item\em Gets the network designation from a port number. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{network_8h_a624cff0d4036e966d183e547876abeed}{mpdc\+\_\+network\+\_\+broadcast\+\_\+message}} (const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}list, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}message, size\+\_\+t msglen, \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}} tnode)
+\begin{DoxyCompactList}\small\item\em Broadcast a message to a node type on the network. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API qsc\+\_\+socket\+\_\+exceptions \mbox{\hyperlink{network_8h_ae74aee3fb3006b8a60d05404c1ecf2a3}{mpdc\+\_\+network\+\_\+connect\+\_\+to\+\_\+device}} (qsc\+\_\+socket \texorpdfstring{$\ast$}{*}csock, const char \texorpdfstring{$\ast$}{*}address, \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}} designation)
+\begin{DoxyCompactList}\small\item\em Connect a socket to a remote address. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_afd0f81d19a23fb144285cb51caa5ff13}{mpdc\+\_\+network\+\_\+converge\+\_\+request}} (const \mbox{\hyperlink{structmpdc__network__converge__request__state}{mpdc\+\_\+network\+\_\+converge\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}state)
+\begin{DoxyCompactList}\small\item\em The DLA sends out a convergence request, and broadcast it to the network. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a9eb9c14a8cbb758ddc40d4ea3346562d}{mpdc\+\_\+network\+\_\+converge\+\_\+response}} (const \mbox{\hyperlink{structmpdc__network__converge__response__state}{mpdc\+\_\+network\+\_\+converge\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}state, const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}packetin)
+\begin{DoxyCompactList}\small\item\em Respond to a dla network converge request. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a9c1ef1897c5f6a38224f7fd594dccd32}{mpdc\+\_\+network\+\_\+converge\+\_\+update\+\_\+verify}} (\mbox{\hyperlink{structmpdc__network__converge__update__verify__state}{mpdc\+\_\+network\+\_\+converge\+\_\+update\+\_\+verify\+\_\+state}} \texorpdfstring{$\ast$}{*}state, const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}packetin)
+\begin{DoxyCompactList}\small\item\em Process a converge response update message. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API qsc\+\_\+socket\+\_\+exceptions \mbox{\hyperlink{network_8h_a520b7c269aeb25d92ee1c24952ce02f7}{mpdc\+\_\+network\+\_\+connect\+\_\+to\+\_\+address}} (qsc\+\_\+socket \texorpdfstring{$\ast$}{*}csock, const char \texorpdfstring{$\ast$}{*}address, uint16\+\_\+t port)
+\begin{DoxyCompactList}\small\item\em Connect a socket to a remote address and port. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_acf845026667eec7957f0a2a43ba36b2c}{mpdc\+\_\+network\+\_\+fkey\+\_\+request}} (\mbox{\hyperlink{structmpdc__network__fkey__request__state}{mpdc\+\_\+network\+\_\+fkey\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}state)
+\begin{DoxyCompactList}\small\item\em Request and execute a key exchange for a fragmentation key. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a50a5f4c3b2de4b7605c00458c364ea86}{mpdc\+\_\+network\+\_\+fkey\+\_\+response}} (\mbox{\hyperlink{structmpdc__network__fkey__response__state}{mpdc\+\_\+network\+\_\+fkey\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}state, const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}packetin)
+\begin{DoxyCompactList}\small\item\em Respond and execute a key exchange for a fragmentation key. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a3c268619b4b8e9542754c1d1afb270aa}{mpdc\+\_\+network\+\_\+fragment\+\_\+collection\+\_\+request}} (\mbox{\hyperlink{structmpdc__network__fragment__collection__request__state}{mpdc\+\_\+network\+\_\+fragment\+\_\+collection\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}state)
+\begin{DoxyCompactList}\small\item\em A Client requests a fragment collection from a MAS. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a5a3a38784d8692f747b61c11a639af6a}{mpdc\+\_\+network\+\_\+fragment\+\_\+collection\+\_\+response}} (\mbox{\hyperlink{structmpdc__network__fragment__collection__response__state}{mpdc\+\_\+network\+\_\+fragment\+\_\+collection\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}state, const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}packetin)
+\begin{DoxyCompactList}\small\item\em A MAS sends a collection response to a Client. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a7bf4243406a1a97f4e4a8acdac4131ba}{mpdc\+\_\+network\+\_\+fragment\+\_\+query\+\_\+response}} (const \mbox{\hyperlink{structmpdc__network__fragment__query__response__state}{mpdc\+\_\+network\+\_\+fragment\+\_\+query\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}state, const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}packetin)
+\begin{DoxyCompactList}\small\item\em An Agent sends a fragment query response to a MAS. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool \mbox{\hyperlink{network_8h_a0546edd67d05c7511e7d9150e9a9298e}{mpdc\+\_\+network\+\_\+get\+\_\+local\+\_\+address}} (char address\mbox{[}\mbox{\hyperlink{mpdc_8h_a2cd49c99cb3c91f7f614a0732fb0824c}{MPDC\+\_\+\+CERTIFICATE\+\_\+\+ADDRESS\+\_\+\+SIZE}}\mbox{]})
+\begin{DoxyCompactList}\small\item\em Get the local IP address. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_ace80bc64194716496c30110b28457903}{mpdc\+\_\+network\+\_\+send\+\_\+error}} (const qsc\+\_\+socket \texorpdfstring{$\ast$}{*}csock, \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} error)
+\begin{DoxyCompactList}\small\item\em Send an error message. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{network_8h_a79a7dbce1e6afc7f05a447ae6c893db1}{mpdc\+\_\+network\+\_\+socket\+\_\+dispose}} (qsc\+\_\+socket \texorpdfstring{$\ast$}{*}csock)
+\begin{DoxyCompactList}\small\item\em Shut down and dispose of a socket instance. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a2686828fcac2533c39319158a6ea552c}{mpdc\+\_\+network\+\_\+incremental\+\_\+update\+\_\+request}} (const \mbox{\hyperlink{structmpdc__network__incremental__update__request__state}{mpdc\+\_\+network\+\_\+incremental\+\_\+update\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}state)
+\begin{DoxyCompactList}\small\item\em Send an incremental update request. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a37c76ee90dcc39e2e7de9ee1f94f9abf}{mpdc\+\_\+network\+\_\+incremental\+\_\+update\+\_\+response}} (const \mbox{\hyperlink{structmpdc__network__incremental__update__response__state}{mpdc\+\_\+network\+\_\+incremental\+\_\+update\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}state, const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}packetin)
+\begin{DoxyCompactList}\small\item\em Send a copy of a certificate to a remote host. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a4230434327b77fdc62d4b576faaf769a}{mpdc\+\_\+network\+\_\+register\+\_\+request}} (\mbox{\hyperlink{structmpdc__network__register__request__state}{mpdc\+\_\+network\+\_\+register\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}state)
+\begin{DoxyCompactList}\small\item\em Send an Agent join request to the DLA. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a507f5dbd7eb27454742740ef9f38b600}{mpdc\+\_\+network\+\_\+register\+\_\+update\+\_\+request}} (\mbox{\hyperlink{structmpdc__network__register__update__request__state}{mpdc\+\_\+network\+\_\+register\+\_\+update\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}state)
+\begin{DoxyCompactList}\small\item\em Send a MAS or Client join update request to the DLA. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a820883a6d29a1a9ee43910b687c5cb09}{mpdc\+\_\+network\+\_\+register\+\_\+response}} (\mbox{\hyperlink{structmpdc__network__register__response__state}{mpdc\+\_\+network\+\_\+register\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}state, const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}packetin)
+\begin{DoxyCompactList}\small\item\em Send a join response to the agent. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a60f06586469a45d128e52a9046257d88}{mpdc\+\_\+network\+\_\+register\+\_\+update\+\_\+response}} (\mbox{\hyperlink{structmpdc__network__register__update__response__state}{mpdc\+\_\+network\+\_\+register\+\_\+update\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}state, const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}packetin)
+\begin{DoxyCompactList}\small\item\em Send a join update response to the server or client. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_ae27edc9b47d5322ae0682f2491b8bd29}{mpdc\+\_\+network\+\_\+remote\+\_\+signing\+\_\+request}} (\mbox{\hyperlink{structmpdc__network__remote__signing__request__state}{mpdc\+\_\+network\+\_\+remote\+\_\+signing\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}state)
+\begin{DoxyCompactList}\small\item\em Send a certificate signing request from the DLA to the RDS. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_af2b37ea621a949c9929bcfd9c542d6f0}{mpdc\+\_\+network\+\_\+remote\+\_\+signing\+\_\+response}} (\mbox{\hyperlink{structmpdc__network__remote__signing__response__state}{mpdc\+\_\+network\+\_\+remote\+\_\+signing\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}state, const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}packetin)
+\begin{DoxyCompactList}\small\item\em Send a signed certificate response from the RDS to the DLA. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a2722c7c494799cfaeee132b32e06abdd}{mpdc\+\_\+network\+\_\+mfk\+\_\+exchange\+\_\+request}} (\mbox{\hyperlink{structmpdc__network__mfk__request__state}{mpdc\+\_\+network\+\_\+mfk\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}state)
+\begin{DoxyCompactList}\small\item\em Request and execute a key exchange request for a master fragmentation key. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_aa8b07cf41cf89cca1e2ca51d701cdc99}{mpdc\+\_\+network\+\_\+mfk\+\_\+exchange\+\_\+response}} (\mbox{\hyperlink{structmpdc__network__mfk__response__state}{mpdc\+\_\+network\+\_\+mfk\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}state, const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}packetin)
+\begin{DoxyCompactList}\small\item\em Request and execute a key exchange response for a master fragmentation key. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}} \mbox{\hyperlink{network_8h_a4940e2ffc7d64383b7e66d9b3d762054}{mpdc\+\_\+network\+\_\+port\+\_\+to\+\_\+application}} (uint16\+\_\+t port)
+\begin{DoxyCompactList}\small\item\em Gets the network designation from a port number. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a028c56021b5a6443b01ccd8ff471116a}{mpdc\+\_\+network\+\_\+certificate\+\_\+verify}} (const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}ccert, const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}root)
+\begin{DoxyCompactList}\small\item\em Verify a certificates format and root signature. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a9b01b0b35a2e52259cb86bfdce8fc3fb}{mpdc\+\_\+network\+\_\+resign\+\_\+request}} (const \mbox{\hyperlink{structmpdc__network__resign__request__state}{mpdc\+\_\+network\+\_\+resign\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}state)
+\begin{DoxyCompactList}\small\item\em Send a resign request to the dla. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a9a13cf31c694ee7c1a444fb1338bff57}{mpdc\+\_\+network\+\_\+resign\+\_\+response}} (\mbox{\hyperlink{structmpdc__network__resign__response__state}{mpdc\+\_\+network\+\_\+resign\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}state, const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}packetin)
+\begin{DoxyCompactList}\small\item\em Send a resign response to the agent or server. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_ad190aadfd341f383005d2045543f82b0}{mpdc\+\_\+network\+\_\+revoke\+\_\+broadcast}} (\mbox{\hyperlink{structmpdc__network__revoke__request__state}{mpdc\+\_\+network\+\_\+revoke\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}state)
+\begin{DoxyCompactList}\small\item\em Send a revocation request from the DLA. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a882805d977372098a2255138b391b5d1}{mpdc\+\_\+network\+\_\+revoke\+\_\+response}} (\mbox{\hyperlink{structmpdc__network__revoke__response__state}{mpdc\+\_\+network\+\_\+revoke\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}state, const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}packetin)
+\begin{DoxyCompactList}\small\item\em Verify a revocation request sent from the DLA. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a4a381862ec6d285870368d496bcb316c}{mpdc\+\_\+network\+\_\+topological\+\_\+query\+\_\+request}} (const \mbox{\hyperlink{structmpdc__network__topological__query__request__state}{mpdc\+\_\+network\+\_\+topological\+\_\+query\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}state)
+\begin{DoxyCompactList}\small\item\em Query a device for its topological information. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a8200f92d4f7c5170703abcee0ef49389}{mpdc\+\_\+network\+\_\+topological\+\_\+query\+\_\+response}} (const \mbox{\hyperlink{structmpdc__network__topological__query__response__state}{mpdc\+\_\+network\+\_\+topological\+\_\+query\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}state, const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}packetin)
+\begin{DoxyCompactList}\small\item\em Respond to a topological query request. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a631c5cb05456cd0c4c848465f2fe372f}{mpdc\+\_\+network\+\_\+topological\+\_\+status\+\_\+request}} (const \mbox{\hyperlink{structmpdc__network__topological__status__request__state}{mpdc\+\_\+network\+\_\+topological\+\_\+status\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}state)
+\begin{DoxyCompactList}\small\item\em Send a status request from the DLA to a client device. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_a25b19235c0edad59db4baa9f7c38021d}{mpdc\+\_\+network\+\_\+topological\+\_\+status\+\_\+verify}} (const \mbox{\hyperlink{structmpdc__network__topological__status__request__state}{mpdc\+\_\+network\+\_\+topological\+\_\+status\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}state, const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}packetin)
+\begin{DoxyCompactList}\small\item\em Verify the status response from the DLA. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} \mbox{\hyperlink{network_8h_ab22fa8a5ae902c6a9d07b9a25b284d2b}{mpdc\+\_\+network\+\_\+topological\+\_\+status\+\_\+response}} (const \mbox{\hyperlink{structmpdc__network__topological__status__response__state}{mpdc\+\_\+network\+\_\+topological\+\_\+status\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}state, const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}packetin)
+\begin{DoxyCompactList}\small\item\em Process the status response from the client device and send a response. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The MPDC network functions. 
+
+This header defines the public network functions and data types used by MPDC to perform secure network operations. These operations include certificate announcement, network convergence, registration and update of network nodes, key exchange, remote signing, revocation, and topological queries.
+
+Each network message is encapsulated in a packet that includes a header (with a time-\/stamp, sequence number, and flag), a payload, and a digital signature that covers the payload and header. This ensures integrity, authenticity, and protection against replay attacks.
+
+\begin{DoxyNote}{Note}
+This header declares only the public API. Many internal functions (such as those for constructing and validating packet headers, hashing, signing, etc.) are defined as static in the implementation file.
+\end{DoxyNote}
+Example\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{structmpdc__network__announce__request__state}{mpdc\_network\_announce\_request\_state}}\ req\_state;}
+\DoxyCodeLine{req\_state.\mbox{\hyperlink{structmpdc__network__announce__request__state_ad09597e087832cafc06e9d86cc7ff245}{list}}\ \ \ =\ \&global\_topology\_list;}
+\DoxyCodeLine{req\_state.\mbox{\hyperlink{structmpdc__network__announce__request__state_a621537eb80ab99ff91d19d94eb5cc00d}{rnode}}\ \ =\ \&remote\_node;}
+\DoxyCodeLine{req\_state.\mbox{\hyperlink{structmpdc__network__announce__request__state_a5cbd2b117e930d8f469c924a8b27ea21}{sigkey}}\ =\ local\_signing\_key;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\_protocol\_errors}}\ err\ =\ mpdc\_network\_announce\_broadcast(\&req\_state);}
+\DoxyCodeLine{\textcolor{keywordflow}{if}\ (err\ !=\ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa120f65ebc8ccca6a06ae7cffda0e3436}{mpdc\_protocol\_error\_none}})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Handle\ error.}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{network_8h_a02a2ad0b7cc3ef9b1a19742f6dc66334}\index{network.h@{network.h}!mpdc\_network\_announce\_broadcast@{mpdc\_network\_announce\_broadcast}}
+\index{mpdc\_network\_announce\_broadcast@{mpdc\_network\_announce\_broadcast}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_announce\_broadcast()}{mpdc\_network\_announce\_broadcast()}}
+{\footnotesize\ttfamily \label{network_8h_a02a2ad0b7cc3ef9b1a19742f6dc66334} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+announce\+\_\+broadcast (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__network__announce__request__state}{mpdc\+\_\+network\+\_\+announce\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Announce a certificate using the dla, and broadcast it to the network. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The announce state structure \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_adaa260ff286211f92b5288cff0958042}\index{network.h@{network.h}!mpdc\_network\_announce\_response@{mpdc\_network\_announce\_response}}
+\index{mpdc\_network\_announce\_response@{mpdc\_network\_announce\_response}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_announce\_response()}{mpdc\_network\_announce\_response()}}
+{\footnotesize\ttfamily \label{network_8h_adaa260ff286211f92b5288cff0958042} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+announce\+\_\+response (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__network__announce__response__state}{mpdc\+\_\+network\+\_\+announce\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}}]{packetin}{}\end{DoxyParamCaption})}
+
+
+
+Process a announce response message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The announce response state structure \\
+\hline
+{\em packetin} & \mbox{[}const\mbox{]} The input packet containing the announce request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a3f7ed7ea2da9dbd47beb40bf47c16bd1}\index{network.h@{network.h}!mpdc\_network\_application\_to\_port@{mpdc\_network\_application\_to\_port}}
+\index{mpdc\_network\_application\_to\_port@{mpdc\_network\_application\_to\_port}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_application\_to\_port()}{mpdc\_network\_application\_to\_port()}}
+{\footnotesize\ttfamily \label{network_8h_a3f7ed7ea2da9dbd47beb40bf47c16bd1} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API uint16\+\_\+t mpdc\+\_\+network\+\_\+application\+\_\+to\+\_\+port (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}}}]{tnode}{}\end{DoxyParamCaption})}
+
+
+
+Gets the network designation from a port number. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tnode} & The target network designation type \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the port number, or zero if the node type is invalid 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a624cff0d4036e966d183e547876abeed}\index{network.h@{network.h}!mpdc\_network\_broadcast\_message@{mpdc\_network\_broadcast\_message}}
+\index{mpdc\_network\_broadcast\_message@{mpdc\_network\_broadcast\_message}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_broadcast\_message()}{mpdc\_network\_broadcast\_message()}}
+{\footnotesize\ttfamily \label{network_8h_a624cff0d4036e966d183e547876abeed} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+network\+\_\+broadcast\+\_\+message (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__list__state}{mpdc\+\_\+topology\+\_\+list\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{list}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{message}{, }\item[{size\+\_\+t}]{msglen}{, }\item[{\mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}}}]{tnode}{}\end{DoxyParamCaption})}
+
+
+
+Broadcast a message to a node type on the network. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & \mbox{[}const\mbox{]} A pointer to the topology list \\
+\hline
+{\em message} & The message to send \\
+\hline
+{\em msglen} & The length of the message \\
+\hline
+{\em tnode} & The target node-\/type designation \\
+\hline
+\end{DoxyParams}
+\Hypertarget{network_8h_a028c56021b5a6443b01ccd8ff471116a}\index{network.h@{network.h}!mpdc\_network\_certificate\_verify@{mpdc\_network\_certificate\_verify}}
+\index{mpdc\_network\_certificate\_verify@{mpdc\_network\_certificate\_verify}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_certificate\_verify()}{mpdc\_network\_certificate\_verify()}}
+{\footnotesize\ttfamily \label{network_8h_a028c56021b5a6443b01ccd8ff471116a} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+certificate\+\_\+verify (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{ccert}{, }\item[{const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*}}]{root}{}\end{DoxyParamCaption})}
+
+
+
+Verify a certificates format and root signature. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ccert} & \mbox{[}const\mbox{]} The child certificate \\
+\hline
+{\em root} & \mbox{[}const\mbox{]} The root certificate \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a520b7c269aeb25d92ee1c24952ce02f7}\index{network.h@{network.h}!mpdc\_network\_connect\_to\_address@{mpdc\_network\_connect\_to\_address}}
+\index{mpdc\_network\_connect\_to\_address@{mpdc\_network\_connect\_to\_address}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_connect\_to\_address()}{mpdc\_network\_connect\_to\_address()}}
+{\footnotesize\ttfamily \label{network_8h_a520b7c269aeb25d92ee1c24952ce02f7} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API qsc\+\_\+socket\+\_\+exceptions mpdc\+\_\+network\+\_\+connect\+\_\+to\+\_\+address (\begin{DoxyParamCaption}\item[{qsc\+\_\+socket \texorpdfstring{$\ast$}{*}}]{csock}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{address}{, }\item[{uint16\+\_\+t}]{port}{}\end{DoxyParamCaption})}
+
+
+
+Connect a socket to a remote address and port. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em csock} & A pointer to the socket \\
+\hline
+{\em address} & \mbox{[}const\mbox{]} The remote hosts address \\
+\hline
+{\em port} & The application port number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the socket error 
+\end{DoxyReturn}
+\Hypertarget{network_8h_ae74aee3fb3006b8a60d05404c1ecf2a3}\index{network.h@{network.h}!mpdc\_network\_connect\_to\_device@{mpdc\_network\_connect\_to\_device}}
+\index{mpdc\_network\_connect\_to\_device@{mpdc\_network\_connect\_to\_device}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_connect\_to\_device()}{mpdc\_network\_connect\_to\_device()}}
+{\footnotesize\ttfamily \label{network_8h_ae74aee3fb3006b8a60d05404c1ecf2a3} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API qsc\+\_\+socket\+\_\+exceptions mpdc\+\_\+network\+\_\+connect\+\_\+to\+\_\+device (\begin{DoxyParamCaption}\item[{qsc\+\_\+socket \texorpdfstring{$\ast$}{*}}]{csock}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{address}{, }\item[{\mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}}}]{designation}{}\end{DoxyParamCaption})}
+
+
+
+Connect a socket to a remote address. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em csock} & A pointer to the socket \\
+\hline
+{\em address} & \mbox{[}const\mbox{]} The remote hosts address \\
+\hline
+{\em designation} & The remote hosts designation \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the socket error 
+\end{DoxyReturn}
+\Hypertarget{network_8h_afd0f81d19a23fb144285cb51caa5ff13}\index{network.h@{network.h}!mpdc\_network\_converge\_request@{mpdc\_network\_converge\_request}}
+\index{mpdc\_network\_converge\_request@{mpdc\_network\_converge\_request}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_converge\_request()}{mpdc\_network\_converge\_request()}}
+{\footnotesize\ttfamily \label{network_8h_afd0f81d19a23fb144285cb51caa5ff13} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+converge\+\_\+request (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__network__converge__request__state}{mpdc\+\_\+network\+\_\+converge\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{}\end{DoxyParamCaption})}
+
+
+
+The DLA sends out a convergence request, and broadcast it to the network. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The converge request state structure \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a9eb9c14a8cbb758ddc40d4ea3346562d}\index{network.h@{network.h}!mpdc\_network\_converge\_response@{mpdc\_network\_converge\_response}}
+\index{mpdc\_network\_converge\_response@{mpdc\_network\_converge\_response}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_converge\_response()}{mpdc\_network\_converge\_response()}}
+{\footnotesize\ttfamily \label{network_8h_a9eb9c14a8cbb758ddc40d4ea3346562d} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+converge\+\_\+response (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__network__converge__response__state}{mpdc\+\_\+network\+\_\+converge\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}}]{packetin}{}\end{DoxyParamCaption})}
+
+
+
+Respond to a dla network converge request. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The converge response state structure \\
+\hline
+{\em packetin} & \mbox{[}const\mbox{]} The input packet containing the verify response \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a9c1ef1897c5f6a38224f7fd594dccd32}\index{network.h@{network.h}!mpdc\_network\_converge\_update\_verify@{mpdc\_network\_converge\_update\_verify}}
+\index{mpdc\_network\_converge\_update\_verify@{mpdc\_network\_converge\_update\_verify}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_converge\_update\_verify()}{mpdc\_network\_converge\_update\_verify()}}
+{\footnotesize\ttfamily \label{network_8h_a9c1ef1897c5f6a38224f7fd594dccd32} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+converge\+\_\+update\+\_\+verify (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__network__converge__update__verify__state}{mpdc\+\_\+network\+\_\+converge\+\_\+update\+\_\+verify\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}}]{packetin}{}\end{DoxyParamCaption})}
+
+
+
+Process a converge response update message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The converge update verify state structure \\
+\hline
+{\em packetin} & \mbox{[}const\mbox{]} The input packet containing the verify response \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_acf845026667eec7957f0a2a43ba36b2c}\index{network.h@{network.h}!mpdc\_network\_fkey\_request@{mpdc\_network\_fkey\_request}}
+\index{mpdc\_network\_fkey\_request@{mpdc\_network\_fkey\_request}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_fkey\_request()}{mpdc\_network\_fkey\_request()}}
+{\footnotesize\ttfamily \label{network_8h_acf845026667eec7957f0a2a43ba36b2c} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+fkey\+\_\+request (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__network__fkey__request__state}{mpdc\+\_\+network\+\_\+fkey\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Request and execute a key exchange for a fragmentation key. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The fkey request state structure \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a50a5f4c3b2de4b7605c00458c364ea86}\index{network.h@{network.h}!mpdc\_network\_fkey\_response@{mpdc\_network\_fkey\_response}}
+\index{mpdc\_network\_fkey\_response@{mpdc\_network\_fkey\_response}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_fkey\_response()}{mpdc\_network\_fkey\_response()}}
+{\footnotesize\ttfamily \label{network_8h_a50a5f4c3b2de4b7605c00458c364ea86} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+fkey\+\_\+response (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__network__fkey__response__state}{mpdc\+\_\+network\+\_\+fkey\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}}]{packetin}{}\end{DoxyParamCaption})}
+
+
+
+Respond and execute a key exchange for a fragmentation key. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The fkey response state structure \\
+\hline
+{\em packetin} & \mbox{[}const\mbox{]} The input packet containing the request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a3c268619b4b8e9542754c1d1afb270aa}\index{network.h@{network.h}!mpdc\_network\_fragment\_collection\_request@{mpdc\_network\_fragment\_collection\_request}}
+\index{mpdc\_network\_fragment\_collection\_request@{mpdc\_network\_fragment\_collection\_request}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_fragment\_collection\_request()}{mpdc\_network\_fragment\_collection\_request()}}
+{\footnotesize\ttfamily \label{network_8h_a3c268619b4b8e9542754c1d1afb270aa} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+fragment\+\_\+collection\+\_\+request (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__network__fragment__collection__request__state}{mpdc\+\_\+network\+\_\+fragment\+\_\+collection\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{}\end{DoxyParamCaption})}
+
+
+
+A Client requests a fragment collection from a MAS. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The fragment collection request state \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a5a3a38784d8692f747b61c11a639af6a}\index{network.h@{network.h}!mpdc\_network\_fragment\_collection\_response@{mpdc\_network\_fragment\_collection\_response}}
+\index{mpdc\_network\_fragment\_collection\_response@{mpdc\_network\_fragment\_collection\_response}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_fragment\_collection\_response()}{mpdc\_network\_fragment\_collection\_response()}}
+{\footnotesize\ttfamily \label{network_8h_a5a3a38784d8692f747b61c11a639af6a} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+fragment\+\_\+collection\+\_\+response (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__network__fragment__collection__response__state}{mpdc\+\_\+network\+\_\+fragment\+\_\+collection\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}}]{packetin}{}\end{DoxyParamCaption})}
+
+
+
+A MAS sends a collection response to a Client. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The fkey response state structure \\
+\hline
+{\em packetin} & \mbox{[}const\mbox{]} The input packet containing the request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a7bf4243406a1a97f4e4a8acdac4131ba}\index{network.h@{network.h}!mpdc\_network\_fragment\_query\_response@{mpdc\_network\_fragment\_query\_response}}
+\index{mpdc\_network\_fragment\_query\_response@{mpdc\_network\_fragment\_query\_response}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_fragment\_query\_response()}{mpdc\_network\_fragment\_query\_response()}}
+{\footnotesize\ttfamily \label{network_8h_a7bf4243406a1a97f4e4a8acdac4131ba} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+fragment\+\_\+query\+\_\+response (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__network__fragment__query__response__state}{mpdc\+\_\+network\+\_\+fragment\+\_\+query\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}}]{packetin}{}\end{DoxyParamCaption})}
+
+
+
+An Agent sends a fragment query response to a MAS. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The fragment query response state structure \\
+\hline
+{\em packetin} & \mbox{[}const\mbox{]} The input packet containing the request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a0546edd67d05c7511e7d9150e9a9298e}\index{network.h@{network.h}!mpdc\_network\_get\_local\_address@{mpdc\_network\_get\_local\_address}}
+\index{mpdc\_network\_get\_local\_address@{mpdc\_network\_get\_local\_address}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_get\_local\_address()}{mpdc\_network\_get\_local\_address()}}
+{\footnotesize\ttfamily \label{network_8h_a0546edd67d05c7511e7d9150e9a9298e} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API bool mpdc\+\_\+network\+\_\+get\+\_\+local\+\_\+address (\begin{DoxyParamCaption}\item[{char}]{address}{\mbox{[}\+MPDC\+\_\+\+CERTIFICATE\+\_\+\+ADDRESS\+\_\+\+SIZE\mbox{]}}\end{DoxyParamCaption})}
+
+
+
+Get the local IP address. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & The output address byte array \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the address is retrieved 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a2686828fcac2533c39319158a6ea552c}\index{network.h@{network.h}!mpdc\_network\_incremental\_update\_request@{mpdc\_network\_incremental\_update\_request}}
+\index{mpdc\_network\_incremental\_update\_request@{mpdc\_network\_incremental\_update\_request}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_incremental\_update\_request()}{mpdc\_network\_incremental\_update\_request()}}
+{\footnotesize\ttfamily \label{network_8h_a2686828fcac2533c39319158a6ea552c} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+incremental\+\_\+update\+\_\+request (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__network__incremental__update__request__state}{mpdc\+\_\+network\+\_\+incremental\+\_\+update\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Send an incremental update request. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The incremental update request function state \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a37c76ee90dcc39e2e7de9ee1f94f9abf}\index{network.h@{network.h}!mpdc\_network\_incremental\_update\_response@{mpdc\_network\_incremental\_update\_response}}
+\index{mpdc\_network\_incremental\_update\_response@{mpdc\_network\_incremental\_update\_response}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_incremental\_update\_response()}{mpdc\_network\_incremental\_update\_response()}}
+{\footnotesize\ttfamily \label{network_8h_a37c76ee90dcc39e2e7de9ee1f94f9abf} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+incremental\+\_\+update\+\_\+response (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__network__incremental__update__response__state}{mpdc\+\_\+network\+\_\+incremental\+\_\+update\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}}]{packetin}{}\end{DoxyParamCaption})}
+
+
+
+Send a copy of a certificate to a remote host. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The update response function state \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a2722c7c494799cfaeee132b32e06abdd}\index{network.h@{network.h}!mpdc\_network\_mfk\_exchange\_request@{mpdc\_network\_mfk\_exchange\_request}}
+\index{mpdc\_network\_mfk\_exchange\_request@{mpdc\_network\_mfk\_exchange\_request}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_mfk\_exchange\_request()}{mpdc\_network\_mfk\_exchange\_request()}}
+{\footnotesize\ttfamily \label{network_8h_a2722c7c494799cfaeee132b32e06abdd} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+mfk\+\_\+exchange\+\_\+request (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__network__mfk__request__state}{mpdc\+\_\+network\+\_\+mfk\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Request and execute a key exchange request for a master fragmentation key. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The mfk request state structure \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_aa8b07cf41cf89cca1e2ca51d701cdc99}\index{network.h@{network.h}!mpdc\_network\_mfk\_exchange\_response@{mpdc\_network\_mfk\_exchange\_response}}
+\index{mpdc\_network\_mfk\_exchange\_response@{mpdc\_network\_mfk\_exchange\_response}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_mfk\_exchange\_response()}{mpdc\_network\_mfk\_exchange\_response()}}
+{\footnotesize\ttfamily \label{network_8h_aa8b07cf41cf89cca1e2ca51d701cdc99} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+mfk\+\_\+exchange\+\_\+response (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__network__mfk__response__state}{mpdc\+\_\+network\+\_\+mfk\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}}]{packetin}{}\end{DoxyParamCaption})}
+
+
+
+Request and execute a key exchange response for a master fragmentation key. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The mfk response state structure \\
+\hline
+{\em packetin} & \mbox{[}const\mbox{]} The input packet containing the request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a4940e2ffc7d64383b7e66d9b3d762054}\index{network.h@{network.h}!mpdc\_network\_port\_to\_application@{mpdc\_network\_port\_to\_application}}
+\index{mpdc\_network\_port\_to\_application@{mpdc\_network\_port\_to\_application}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_port\_to\_application()}{mpdc\_network\_port\_to\_application()}}
+{\footnotesize\ttfamily \label{network_8h_a4940e2ffc7d64383b7e66d9b3d762054} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\+\_\+network\+\_\+designations}} mpdc\+\_\+network\+\_\+port\+\_\+to\+\_\+application (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{port}{}\end{DoxyParamCaption})}
+
+
+
+Gets the network designation from a port number. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & The network application port \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the network designation type 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a4230434327b77fdc62d4b576faaf769a}\index{network.h@{network.h}!mpdc\_network\_register\_request@{mpdc\_network\_register\_request}}
+\index{mpdc\_network\_register\_request@{mpdc\_network\_register\_request}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_register\_request()}{mpdc\_network\_register\_request()}}
+{\footnotesize\ttfamily \label{network_8h_a4230434327b77fdc62d4b576faaf769a} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+register\+\_\+request (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__network__register__request__state}{mpdc\+\_\+network\+\_\+register\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Send an Agent join request to the DLA. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The join request function state \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a820883a6d29a1a9ee43910b687c5cb09}\index{network.h@{network.h}!mpdc\_network\_register\_response@{mpdc\_network\_register\_response}}
+\index{mpdc\_network\_register\_response@{mpdc\_network\_register\_response}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_register\_response()}{mpdc\_network\_register\_response()}}
+{\footnotesize\ttfamily \label{network_8h_a820883a6d29a1a9ee43910b687c5cb09} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+register\+\_\+response (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__network__register__response__state}{mpdc\+\_\+network\+\_\+register\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}}]{packetin}{}\end{DoxyParamCaption})}
+
+
+
+Send a join response to the agent. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The join response function state \\
+\hline
+{\em packetin} & \mbox{[}const\mbox{]} The input packet containing the request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a protocol error flag 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a507f5dbd7eb27454742740ef9f38b600}\index{network.h@{network.h}!mpdc\_network\_register\_update\_request@{mpdc\_network\_register\_update\_request}}
+\index{mpdc\_network\_register\_update\_request@{mpdc\_network\_register\_update\_request}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_register\_update\_request()}{mpdc\_network\_register\_update\_request()}}
+{\footnotesize\ttfamily \label{network_8h_a507f5dbd7eb27454742740ef9f38b600} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+register\+\_\+update\+\_\+request (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__network__register__update__request__state}{mpdc\+\_\+network\+\_\+register\+\_\+update\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Send a MAS or Client join update request to the DLA. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The join update request function state \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a60f06586469a45d128e52a9046257d88}\index{network.h@{network.h}!mpdc\_network\_register\_update\_response@{mpdc\_network\_register\_update\_response}}
+\index{mpdc\_network\_register\_update\_response@{mpdc\_network\_register\_update\_response}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_register\_update\_response()}{mpdc\_network\_register\_update\_response()}}
+{\footnotesize\ttfamily \label{network_8h_a60f06586469a45d128e52a9046257d88} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+register\+\_\+update\+\_\+response (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__network__register__update__response__state}{mpdc\+\_\+network\+\_\+register\+\_\+update\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}}]{packetin}{}\end{DoxyParamCaption})}
+
+
+
+Send a join update response to the server or client. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The join response function state \\
+\hline
+{\em packetin} & \mbox{[}const\mbox{]} The input packet containing the request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a protocol error flag 
+\end{DoxyReturn}
+\Hypertarget{network_8h_ae27edc9b47d5322ae0682f2491b8bd29}\index{network.h@{network.h}!mpdc\_network\_remote\_signing\_request@{mpdc\_network\_remote\_signing\_request}}
+\index{mpdc\_network\_remote\_signing\_request@{mpdc\_network\_remote\_signing\_request}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_remote\_signing\_request()}{mpdc\_network\_remote\_signing\_request()}}
+{\footnotesize\ttfamily \label{network_8h_ae27edc9b47d5322ae0682f2491b8bd29} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+remote\+\_\+signing\+\_\+request (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__network__remote__signing__request__state}{mpdc\+\_\+network\+\_\+remote\+\_\+signing\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Send a certificate signing request from the DLA to the RDS. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The remote signing request state \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a protocol error flag 
+\end{DoxyReturn}
+\Hypertarget{network_8h_af2b37ea621a949c9929bcfd9c542d6f0}\index{network.h@{network.h}!mpdc\_network\_remote\_signing\_response@{mpdc\_network\_remote\_signing\_response}}
+\index{mpdc\_network\_remote\_signing\_response@{mpdc\_network\_remote\_signing\_response}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_remote\_signing\_response()}{mpdc\_network\_remote\_signing\_response()}}
+{\footnotesize\ttfamily \label{network_8h_af2b37ea621a949c9929bcfd9c542d6f0} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+remote\+\_\+signing\+\_\+response (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__network__remote__signing__response__state}{mpdc\+\_\+network\+\_\+remote\+\_\+signing\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}}]{packetin}{}\end{DoxyParamCaption})}
+
+
+
+Send a signed certificate response from the RDS to the DLA. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The remote signing response state \\
+\hline
+{\em packetin} & \mbox{[}const\mbox{]} The input packet containing the request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a protocol error flag 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a9b01b0b35a2e52259cb86bfdce8fc3fb}\index{network.h@{network.h}!mpdc\_network\_resign\_request@{mpdc\_network\_resign\_request}}
+\index{mpdc\_network\_resign\_request@{mpdc\_network\_resign\_request}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_resign\_request()}{mpdc\_network\_resign\_request()}}
+{\footnotesize\ttfamily \label{network_8h_a9b01b0b35a2e52259cb86bfdce8fc3fb} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+resign\+\_\+request (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__network__resign__request__state}{mpdc\+\_\+network\+\_\+resign\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Send a resign request to the dla. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The resign request state structure \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a9a13cf31c694ee7c1a444fb1338bff57}\index{network.h@{network.h}!mpdc\_network\_resign\_response@{mpdc\_network\_resign\_response}}
+\index{mpdc\_network\_resign\_response@{mpdc\_network\_resign\_response}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_resign\_response()}{mpdc\_network\_resign\_response()}}
+{\footnotesize\ttfamily \label{network_8h_a9a13cf31c694ee7c1a444fb1338bff57} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+resign\+\_\+response (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__network__resign__response__state}{mpdc\+\_\+network\+\_\+resign\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}}]{packetin}{}\end{DoxyParamCaption})}
+
+
+
+Send a resign response to the agent or server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The resign response state structure \\
+\hline
+{\em packetin} & \mbox{[}const\mbox{]} The input packet containing the request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_ad190aadfd341f383005d2045543f82b0}\index{network.h@{network.h}!mpdc\_network\_revoke\_broadcast@{mpdc\_network\_revoke\_broadcast}}
+\index{mpdc\_network\_revoke\_broadcast@{mpdc\_network\_revoke\_broadcast}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_revoke\_broadcast()}{mpdc\_network\_revoke\_broadcast()}}
+{\footnotesize\ttfamily \label{network_8h_ad190aadfd341f383005d2045543f82b0} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+revoke\+\_\+broadcast (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__network__revoke__request__state}{mpdc\+\_\+network\+\_\+revoke\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Send a revocation request from the DLA. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The revocation broadcast function state \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a protocol error flag 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a882805d977372098a2255138b391b5d1}\index{network.h@{network.h}!mpdc\_network\_revoke\_response@{mpdc\_network\_revoke\_response}}
+\index{mpdc\_network\_revoke\_response@{mpdc\_network\_revoke\_response}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_revoke\_response()}{mpdc\_network\_revoke\_response()}}
+{\footnotesize\ttfamily \label{network_8h_a882805d977372098a2255138b391b5d1} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+revoke\+\_\+response (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__network__revoke__response__state}{mpdc\+\_\+network\+\_\+revoke\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}}]{packetin}{}\end{DoxyParamCaption})}
+
+
+
+Verify a revocation request sent from the DLA. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The revocation verify function state \\
+\hline
+{\em packetin} & \mbox{[}const\mbox{]} The input packet containing the request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a protocol error flag 
+\end{DoxyReturn}
+\Hypertarget{network_8h_ace80bc64194716496c30110b28457903}\index{network.h@{network.h}!mpdc\_network\_send\_error@{mpdc\_network\_send\_error}}
+\index{mpdc\_network\_send\_error@{mpdc\_network\_send\_error}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_send\_error()}{mpdc\_network\_send\_error()}}
+{\footnotesize\ttfamily \label{network_8h_ace80bc64194716496c30110b28457903} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+send\+\_\+error (\begin{DoxyParamCaption}\item[{const qsc\+\_\+socket \texorpdfstring{$\ast$}{*}}]{csock}{, }\item[{\mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}}}]{error}{}\end{DoxyParamCaption})}
+
+
+
+Send an error message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em csock} & A pointer to the socket \\
+\hline
+{\em error} & The error code \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a79a7dbce1e6afc7f05a447ae6c893db1}\index{network.h@{network.h}!mpdc\_network\_socket\_dispose@{mpdc\_network\_socket\_dispose}}
+\index{mpdc\_network\_socket\_dispose@{mpdc\_network\_socket\_dispose}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_socket\_dispose()}{mpdc\_network\_socket\_dispose()}}
+{\footnotesize\ttfamily \label{network_8h_a79a7dbce1e6afc7f05a447ae6c893db1} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+network\+\_\+socket\+\_\+dispose (\begin{DoxyParamCaption}\item[{qsc\+\_\+socket \texorpdfstring{$\ast$}{*}}]{csock}{}\end{DoxyParamCaption})}
+
+
+
+Shut down and dispose of a socket instance. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em csock} & A pointer to the socket \\
+\hline
+\end{DoxyParams}
+\Hypertarget{network_8h_a4a381862ec6d285870368d496bcb316c}\index{network.h@{network.h}!mpdc\_network\_topological\_query\_request@{mpdc\_network\_topological\_query\_request}}
+\index{mpdc\_network\_topological\_query\_request@{mpdc\_network\_topological\_query\_request}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_topological\_query\_request()}{mpdc\_network\_topological\_query\_request()}}
+{\footnotesize\ttfamily \label{network_8h_a4a381862ec6d285870368d496bcb316c} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+topological\+\_\+query\+\_\+request (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__network__topological__query__request__state}{mpdc\+\_\+network\+\_\+topological\+\_\+query\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Query a device for its topological information. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The topological query request state \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a8200f92d4f7c5170703abcee0ef49389}\index{network.h@{network.h}!mpdc\_network\_topological\_query\_response@{mpdc\_network\_topological\_query\_response}}
+\index{mpdc\_network\_topological\_query\_response@{mpdc\_network\_topological\_query\_response}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_topological\_query\_response()}{mpdc\_network\_topological\_query\_response()}}
+{\footnotesize\ttfamily \label{network_8h_a8200f92d4f7c5170703abcee0ef49389} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+topological\+\_\+query\+\_\+response (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__network__topological__query__response__state}{mpdc\+\_\+network\+\_\+topological\+\_\+query\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}}]{packetin}{}\end{DoxyParamCaption})}
+
+
+
+Respond to a topological query request. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & topological query response state \\
+\hline
+{\em packetin} & The packet containing the topological query request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a631c5cb05456cd0c4c848465f2fe372f}\index{network.h@{network.h}!mpdc\_network\_topological\_status\_request@{mpdc\_network\_topological\_status\_request}}
+\index{mpdc\_network\_topological\_status\_request@{mpdc\_network\_topological\_status\_request}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_topological\_status\_request()}{mpdc\_network\_topological\_status\_request()}}
+{\footnotesize\ttfamily \label{network_8h_a631c5cb05456cd0c4c848465f2fe372f} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+topological\+\_\+status\+\_\+request (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__network__topological__status__request__state}{mpdc\+\_\+network\+\_\+topological\+\_\+status\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Send a status request from the DLA to a client device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The topological status request state \\
+\hline
+{\em query} & The device query string \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_ab22fa8a5ae902c6a9d07b9a25b284d2b}\index{network.h@{network.h}!mpdc\_network\_topological\_status\_response@{mpdc\_network\_topological\_status\_response}}
+\index{mpdc\_network\_topological\_status\_response@{mpdc\_network\_topological\_status\_response}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_topological\_status\_response()}{mpdc\_network\_topological\_status\_response()}}
+{\footnotesize\ttfamily \label{network_8h_ab22fa8a5ae902c6a9d07b9a25b284d2b} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+topological\+\_\+status\+\_\+response (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__network__topological__status__response__state}{mpdc\+\_\+network\+\_\+topological\+\_\+status\+\_\+response\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}}]{packetin}{}\end{DoxyParamCaption})}
+
+
+
+Process the status response from the client device and send a response. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The topological status response state \\
+\hline
+{\em packetin} & The packet containing the topological status request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
+\Hypertarget{network_8h_a25b19235c0edad59db4baa9f7c38021d}\index{network.h@{network.h}!mpdc\_network\_topological\_status\_verify@{mpdc\_network\_topological\_status\_verify}}
+\index{mpdc\_network\_topological\_status\_verify@{mpdc\_network\_topological\_status\_verify}!network.h@{network.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_network\_topological\_status\_verify()}{mpdc\_network\_topological\_status\_verify()}}
+{\footnotesize\ttfamily \label{network_8h_a25b19235c0edad59db4baa9f7c38021d} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\+\_\+protocol\+\_\+errors}} mpdc\+\_\+network\+\_\+topological\+\_\+status\+\_\+verify (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__network__topological__status__request__state}{mpdc\+\_\+network\+\_\+topological\+\_\+status\+\_\+request\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{const \mbox{\hyperlink{structmpdc__network__packet}{mpdc\+\_\+network\+\_\+packet}} \texorpdfstring{$\ast$}{*}}]{packetin}{}\end{DoxyParamCaption})}
+
+
+
+Verify the status response from the DLA. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The topological status verify state \\
+\hline
+{\em packetin} & The packet containing the topological status response \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the error code 
+\end{DoxyReturn}
