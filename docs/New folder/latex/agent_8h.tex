@@ -1,0 +1,83 @@
+\doxysection{C\+:/\+Users/stepp/\+Documents/\+Visual Studio 2022/\+Projects/\+C/\+MPDC/\+MPDC/agent.h File Reference}
+\hypertarget{agent_8h}{}\label{agent_8h}\index{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/agent.h@{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/agent.h}}
+
+
+MPDC Agent Server Interface.  
+
+
+{\ttfamily \#include "{}common.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{agent_8h_ad82f66627ce8a433c2302cfcb69f1293}{mpdc\+\_\+agent\+\_\+pause\+\_\+server}} ()
+\begin{DoxyCompactList}\small\item\em Pause the Agent server. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API int32\+\_\+t \mbox{\hyperlink{agent_8h_aef75ba89032d46998443e81d78a1fc5c}{mpdc\+\_\+agent\+\_\+start\+\_\+server}} ()
+\begin{DoxyCompactList}\small\item\em Start the Agent server. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{agent_8h_a23ca3047d7c156fdf6e238a57a178373}{mpdc\+\_\+agent\+\_\+stop\+\_\+server}} ()
+\begin{DoxyCompactList}\small\item\em Stop the Agent server. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+MPDC Agent Server Interface. 
+
+This header defines the public functions for the MPDC Agent server, a key component of the MPDC network. The Agent server is responsible for managing incoming network connections and processing protocol messages specific to an agent device. Its duties include handling certificate generation and verification, responding to topology convergence requests from the DLA, processing fragment query and master fragment key exchange requests, and managing registration/resign operations.
+
+The Agent server implementation supports a wide range of protocol operations and user commands including\+:
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Certificate Management\+:}} The Agent generates, imports, exports, and validates its own child certificate. It ensures that the certificate is correctly signed by the network\textquotesingle{}s root and conforms to the MPDC certificate structure.
+\item {\bfseries{Topology and Key Exchange\+:}} The server handles convergence responses, fragment query responses, incremental updates, and master fragment key (mfk) exchange responses. These operations guarantee that the agent remains synchronized with the network topology and can securely participate in key exchange operations.
+\item {\bfseries{Registration and Resignation\+:}} The Agent server can register with the DLA (Domain List Agent) to join the MPDC network and send resign requests to remove itself from the network. Upon registration, the agent\textquotesingle{}s certificate is propagated to the topology; on resignation, topology and key collections are reset.
+\item {\bfseries{Command Loop and User Interaction\+:}} A console-\/based command loop supports operations such as configuration, logging, service control (start/stop/pause/resume), and backup/restore of the agent\textquotesingle{}s state. An idle timeout mechanism automatically logs out inactive sessions.
+\item {\bfseries{Network Reception and Error Handling\+:}} The Agent\textquotesingle{}s receive loop processes various network packet flags (e.\+g., converge request, fragment query, mfk request, revocation broadcast) and dispatches them to the appropriate internal functions. Detailed logging and error reporting ensure that issues such as socket failures, authentication errors, and protocol mismatches are detected and handled.
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000001}{Test}}]The Agent server implementation has been tested to verify that\+:\end{DoxyRefDesc}
+
+\item The server starts successfully (using both IPv4 and IPv6 configurations) and accepts incoming connections.
+\item Each network packet is correctly deserialized and dispatched based on its protocol flag.
+\item Certificate operations (generation, import, export, and validation) work as expected and adhere to the MPDC certificate format.
+\item Topology convergence, incremental update, and mfk exchange operations perform correctly under simulated network conditions.
+\item The command loop properly interprets and executes user commands and that the idle timeout mechanism logs out inactive sessions.
+\end{DoxyItemize}
+
+These tests ensure both the correctness of the protocol operations and the robustness of the Agent server under realistic network and user interaction scenarios. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{agent_8h_ad82f66627ce8a433c2302cfcb69f1293}\index{agent.h@{agent.h}!mpdc\_agent\_pause\_server@{mpdc\_agent\_pause\_server}}
+\index{mpdc\_agent\_pause\_server@{mpdc\_agent\_pause\_server}!agent.h@{agent.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_agent\_pause\_server()}{mpdc\_agent\_pause\_server()}}
+{\footnotesize\ttfamily \label{agent_8h_ad82f66627ce8a433c2302cfcb69f1293} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+agent\+\_\+pause\+\_\+server (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Pause the Agent server. 
+
+This function pauses the MPDC Agent server, suspending the processing of network commands and user input. \Hypertarget{agent_8h_aef75ba89032d46998443e81d78a1fc5c}\index{agent.h@{agent.h}!mpdc\_agent\_start\_server@{mpdc\_agent\_start\_server}}
+\index{mpdc\_agent\_start\_server@{mpdc\_agent\_start\_server}!agent.h@{agent.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_agent\_start\_server()}{mpdc\_agent\_start\_server()}}
+{\footnotesize\ttfamily \label{agent_8h_aef75ba89032d46998443e81d78a1fc5c} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API int32\+\_\+t mpdc\+\_\+agent\+\_\+start\+\_\+server (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Start the Agent server. 
+
+This function initializes the MPDC Agent server by setting up the network socket for accepting connections, initializing local state (including certificate and topology information), and starting the main command and receive loops. It also spawns an idle timer thread to monitor user inactivity.
+
+\begin{DoxyReturn}{Returns}
+Returns zero on success; a non-\/zero value indicates an initialization error. 
+\end{DoxyReturn}
+\Hypertarget{agent_8h_a23ca3047d7c156fdf6e238a57a178373}\index{agent.h@{agent.h}!mpdc\_agent\_stop\_server@{mpdc\_agent\_stop\_server}}
+\index{mpdc\_agent\_stop\_server@{mpdc\_agent\_stop\_server}!agent.h@{agent.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_agent\_stop\_server()}{mpdc\_agent\_stop\_server()}}
+{\footnotesize\ttfamily \label{agent_8h_a23ca3047d7c156fdf6e238a57a178373} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+agent\+\_\+stop\+\_\+server (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Stop the Agent server. 
+
+This function stops the MPDC Agent server, terminates the command loop and network receive loop, and cleans up all allocated resources. 

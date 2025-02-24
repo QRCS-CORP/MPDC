@@ -1,0 +1,948 @@
+\doxysection{mpdc.\+h}
+\hypertarget{mpdc_8h_source}{}\label{mpdc_8h_source}\index{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/mpdc.h@{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/mpdc.h}}
+\mbox{\hyperlink{mpdc_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*\ 2025\ Quantum\ Resistant\ Cryptographic\ Solutions\ Corporation}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ All\ Rights\ Reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ NOTICE:\ This\ software\ and\ all\ accompanying\ materials\ are\ the\ exclusive\ }}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ property\ of\ Quantum\ Resistant\ Cryptographic\ Solutions\ Corporation\ (QRCS).}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ The\ intellectual\ and\ technical\ concepts\ contained\ within\ this\ implementation\ }}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ are\ proprietary\ to\ QRCS\ and\ its\ authorized\ licensors\ and\ are\ protected\ under\ }}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ applicable\ U.S.\ and\ international\ copyright,\ patent,\ and\ trade\ secret\ laws.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ CRYPTOGRAPHIC\ STANDARDS:}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ -\/\ This\ software\ includes\ implementations\ of\ cryptographic\ algorithms\ such\ as\ }}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ \ \ SHA3,\ AES,\ and\ others.\ These\ algorithms\ are\ public\ domain\ or\ standardized\ }}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ \ \ by\ organizations\ such\ as\ NIST\ and\ are\ NOT\ the\ property\ of\ QRCS.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ -\/\ However,\ all\ source\ code,\ optimizations,\ and\ implementations\ in\ this\ library\ }}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ \ \ are\ original\ works\ of\ QRCS\ and\ are\ protected\ under\ this\ license.}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ RESTRICTIONS:}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ -\/\ Redistribution,\ modification,\ or\ unauthorized\ distribution\ of\ this\ software,\ }}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ \ \ in\ whole\ or\ in\ part,\ is\ strictly\ prohibited.}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ -\/\ This\ software\ is\ provided\ for\ non-\/commercial,\ educational,\ and\ research\ }}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ \ \ purposes\ only.\ Commercial\ use\ in\ any\ form\ is\ expressly\ forbidden.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ *\ -\/\ Licensing\ and\ authorized\ distribution\ are\ solely\ at\ the\ discretion\ of\ QRCS.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ *\ -\/\ Any\ use\ of\ this\ software\ implies\ acceptance\ of\ these\ restrictions.}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ *\ DISCLAIMER:}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ *\ This\ software\ is\ provided\ "{}as\ is,"{}\ without\ warranty\ of\ any\ kind,\ express\ or\ }}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ *\ implied,\ including\ but\ not\ limited\ to\ warranties\ of\ merchantability\ or\ fitness\ }}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ *\ for\ a\ particular\ purpose.\ QRCS\ disclaims\ all\ liability\ for\ any\ direct,\ indirect,\ }}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ *\ incidental,\ or\ consequential\ damages\ resulting\ from\ the\ use\ or\ misuse\ of\ this\ software.}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ *\ FULL\ LICENSE:}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ *\ This\ software\ is\ subject\ to\ the\ **Quantum\ Resistant\ Cryptographic\ Solutions\ }}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ *\ Proprietary\ License\ (QRCS-\/PL)**.\ The\ complete\ license\ terms\ are\ included\ }}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ *\ in\ the\ LICENSE.txt\ file\ distributed\ with\ this\ software.}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\ *\ Written\ by:\ John\ G.\ Underhill}}
+\DoxyCodeLine{00037\ \textcolor{comment}{\ *\ Contact:\ john.underhill@protonmail.com}}
+\DoxyCodeLine{00038\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#ifndef\ MPDC\_MPDC\_H}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ MPDC\_MPDC\_H}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ "{}common.h"{}}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ "{}../../QSC/QSC/rcs.h"{}}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#include\ "{}../../QSC/QSC/sha3.h"{}}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#include\ "{}../../QSC/QSC/socketbase.h"{}}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#if\ defined(MPDC\_CONFIG\_DILITHIUM\_KYBER)}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#\ \ \ include\ "{}../../QSC/QSC/dilithium.h"{}}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#\ \ \ include\ "{}../../QSC/QSC/kyber.h"{}}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#elif\ defined(MPDC\_CONFIG\_SPHINCS\_MCELIECE)}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#\ \ \ include\ "{}../../QSC/QSC/mceliece.h"{}}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#\ \ \ include\ "{}../../QSC/QSC/sphincsplus.h"{}}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#\ \ \ error\ Invalid\ parameter\ set!}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \textcolor{comment}{/*\ -\/-\/-\/\ Function\ Mapping\ Macros\ -\/-\/-\/\ */}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00114\ \textcolor{preprocessor}{\#if\ defined(MPDC\_CONFIG\_SPHINCS\_MCELIECE)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00119\ \textcolor{preprocessor}{\#\ \ \ define\ mpdc\_cipher\_generate\_keypair\ qsc\_mceliece\_generate\_keypair}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00124\ \textcolor{preprocessor}{\#\ \ \ define\ mpdc\_cipher\_decapsulate\ qsc\_mceliece\_decapsulate}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00129\ \textcolor{preprocessor}{\#\ \ \ define\ mpdc\_cipher\_encapsulate\ qsc\_mceliece\_encapsulate}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00134\ \textcolor{preprocessor}{\#\ \ \ define\ mpdc\_signature\_generate\_keypair\ qsc\_sphincsplus\_generate\_keypair}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00139\ \textcolor{preprocessor}{\#\ \ \ define\ mpdc\_signature\_sign\ qsc\_sphincsplus\_sign}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00144\ \textcolor{preprocessor}{\#\ \ \ define\ mpdc\_signature\_verify\ qsc\_sphincsplus\_verify}}
+\DoxyCodeLine{00145\ \textcolor{preprocessor}{\#elif\ defined(MPDC\_CONFIG\_DILITHIUM\_KYBER)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00150\ \textcolor{preprocessor}{\#\ \ \ define\ mpdc\_cipher\_generate\_keypair\ qsc\_kyber\_generate\_keypair}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00155\ \textcolor{preprocessor}{\#\ \ \ define\ mpdc\_cipher\_decapsulate\ qsc\_kyber\_decapsulate}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00160\ \textcolor{preprocessor}{\#\ \ \ define\ mpdc\_cipher\_encapsulate\ qsc\_kyber\_encapsulate}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00165\ \textcolor{preprocessor}{\#\ \ \ define\ mpdc\_signature\_generate\_keypair\ qsc\_dilithium\_generate\_keypair}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00170\ \textcolor{preprocessor}{\#\ \ \ define\ mpdc\_signature\_sign\ qsc\_dilithium\_sign}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00175\ \textcolor{preprocessor}{\#\ \ \ define\ mpdc\_signature\_verify\ qsc\_dilithium\_verify}}
+\DoxyCodeLine{00176\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00177\ \textcolor{preprocessor}{\#\ \ \ error\ Invalid\ parameter\ set!}}
+\DoxyCodeLine{00178\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \textcolor{comment}{/*\ \#\#\#\ Modifiable\ Constants:\ These\ constants\ can\ be\ enabled\ to\ turn\ on\ protocol\ features\ \#\#\#\ */}}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00183\ \textcolor{comment}{//\ *\ \(\backslash\)def\ MPDC\_NETWORK\_CLIENT\_CONNECT}}
+\DoxyCodeLine{00184\ \textcolor{comment}{//\ *\ \(\backslash\)brief\ Enable\ client\ to\ client\ encrypted\ tunnel.}}
+\DoxyCodeLine{00185\ \textcolor{comment}{//\ */}}
+\DoxyCodeLine{00186\ \textcolor{comment}{//\#define\ MPDC\_NETWORK\_CLIENT\_CONNECT}}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00189\ \textcolor{comment}{//\ *\ \(\backslash\)def\ MPDC\_NETWORK\_MFK\_HASH\_CYCLED}}
+\DoxyCodeLine{00190\ \textcolor{comment}{//\ *\ \(\backslash\)brief\ Enable\ mfk\ key\ cycling\ (default).}}
+\DoxyCodeLine{00191\ \textcolor{comment}{//\ */}}
+\DoxyCodeLine{00192\ \textcolor{comment}{//\#define\ MPDC\_NETWORK\_MFK\_HASH\_CYCLED}}
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00198\ \textcolor{comment}{//\#define\ MPDC\_NETWORK\_PROTOCOL\_IPV6}}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00201\ \textcolor{comment}{//\ *\ \(\backslash\)def\ MPDC\_EXTENDED\_SESSION\_SECURITY}}
+\DoxyCodeLine{00202\ \textcolor{comment}{//\ *\ \(\backslash\)brief\ Enable\ 512-\/bit\ security\ on\ session\ tunnels.}}
+\DoxyCodeLine{00203\ \textcolor{comment}{//\ */}}
+\DoxyCodeLine{00204\ \textcolor{comment}{//\#define\ MPDC\_EXTENDED\_SESSION\_SECURITY}}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00206\ \textcolor{comment}{/*\ \#\#\#\ End\ of\ Modifiable\ Constants\ \#\#\#\ */}}
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \textcolor{preprocessor}{\#if\ defined(MPDC\_CONFIG\_DILITHIUM\_KYBER)}}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00215\ \textcolor{preprocessor}{\#\ \ \ define\ MPDC\_ASYMMETRIC\_CIPHERTEXT\_SIZE\ (QSC\_KYBER\_CIPHERTEXT\_SIZE)}}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00221\ \textcolor{preprocessor}{\#\ \ \ define\ MPDC\_ASYMMETRIC\_PRIVATE\_KEY\_SIZE\ (QSC\_KYBER\_PRIVATEKEY\_SIZE)}}
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00227\ \textcolor{preprocessor}{\#\ \ \ define\ MPDC\_ASYMMETRIC\_PUBLIC\_KEY\_SIZE\ (QSC\_KYBER\_PUBLICKEY\_SIZE)}}
+\DoxyCodeLine{00228\ }
+\DoxyCodeLine{00233\ \textcolor{preprocessor}{\#\ \ \ define\ MPDC\_ASYMMETRIC\_SIGNATURE\_SIZE\ (QSC\_DILITHIUM\_SIGNATURE\_SIZE)}}
+\DoxyCodeLine{00234\ }
+\DoxyCodeLine{00239\ \textcolor{preprocessor}{\#\ \ \ define\ MPDC\_ASYMMETRIC\_SIGNING\_KEY\_SIZE\ (QSC\_DILITHIUM\_PRIVATEKEY\_SIZE)}}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00245\ \textcolor{preprocessor}{\#\ \ \ define\ MPDC\_ASYMMETRIC\_VERIFICATION\_KEY\_SIZE\ (QSC\_DILITHIUM\_PUBLICKEY\_SIZE)}}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ \textcolor{preprocessor}{\#\ \ \ if\ defined(QSC\_DILITHIUM\_S1P2544)\ \&\&\ defined(QSC\_KYBER\_S1P1632)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00252\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_CHILD\_CERTIFICATE\_STRING\_SIZE\ 5612}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00257\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_PARAMATERS\_DILITHIUM\_KYBER\_D1K1}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00262\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_ROOT\_CERTIFICATE\_STRING\_SIZE\ 2188}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00267\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_SIGNATURE\_ENCODING\_SIZE\ 3272}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00272\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_VERIFICATION\_KEY\_ENCODING\_SIZE\ 1752}}
+\DoxyCodeLine{00273\ \textcolor{preprocessor}{\#\ \ \ elif\ defined(QSC\_DILITHIUM\_S3P4016)\ \&\&\ defined(QSC\_KYBER\_S3P2400)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00278\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_CHILD\_CERTIFICATE\_STRING\_SIZE\ 7648}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00283\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_PARAMATERS\_DILITHIUM\_KYBER\_D3K3}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00288\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_ROOT\_CERTIFICATE\_STRING\_SIZE\ 3053}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00293\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_SIGNATURE\_ENCODING\_SIZE\ 4436}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00298\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_VERIFICATION\_KEY\_ENCODING\_SIZE\ 2604}}
+\DoxyCodeLine{00299\ \textcolor{preprocessor}{\#\ \ \ elif\ defined(QSC\_DILITHIUM\_S5P4880)\ \&\&\ defined(QSC\_KYBER\_S5P3168)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00304\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_CHILD\_CERTIFICATE\_STRING\_SIZE\ 10311}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00309\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_PARAMATERS\_DILITHIUM\_KYBER\_D5K5}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00314\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_ROOT\_CERTIFICATE\_STRING\_SIZE\ 3919}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00319\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_SIGNATURE\_ENCODING\_SIZE\ 6172}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00324\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_VERIFICATION\_KEY\_ENCODING\_SIZE\ 3456}}
+\DoxyCodeLine{00325\ \textcolor{preprocessor}{\#\ \ \ elif\ defined(QSC\_DILITHIUM\_S5P4880)\ \&\&\ defined(QSC\_KYBER\_S6P3936)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00330\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_CHILD\_CERTIFICATE\_STRING\_SIZE\ 10311}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00335\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_PARAMATERS\_DILITHIUM\_KYBER\_D5K6}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00340\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_ROOT\_CERTIFICATE\_STRING\_SIZE\ 3919}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00345\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_SIGNATURE\_ENCODING\_SIZE\ 6172}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00350\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ define\ MPDC\_VERIFICATION\_KEY\_ENCODING\_SIZE\ 3456}}
+\DoxyCodeLine{00351\ \textcolor{preprocessor}{\#\ \ \ else}}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ The\ library\ signature\ scheme\ and\ asymmetric\ cipher\ parameter\ sets\ }}
+\DoxyCodeLine{00353\ \textcolor{comment}{\ \ \ \ \ \ \ \ must\ be\ synchronized\ to\ a\ common\ security\ level;\ s1,\ s3,\ s5,\ s5+\ */}}
+\DoxyCodeLine{00354\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ error\ the\ library\ parameter\ sets\ are\ mismatched!}}
+\DoxyCodeLine{00355\ \textcolor{preprocessor}{\#\ \ \ endif}}
+\DoxyCodeLine{00356\ }
+\DoxyCodeLine{00357\ \textcolor{preprocessor}{\#elif\ defined(MPDC\_CONFIG\_SPHINCS\_MCELIECE)}}
+\DoxyCodeLine{00358\ }
+\DoxyCodeLine{00363\ \textcolor{preprocessor}{\#\ \ \ define\ MPDC\_ASYMMETRIC\_CIPHERTEXT\_SIZE\ (QSC\_MCELIECE\_CIPHERTEXT\_SIZE)}}
+\DoxyCodeLine{00364\ }
+\DoxyCodeLine{00369\ \textcolor{preprocessor}{\#\ \ \ define\ MPDC\_ASYMMETRIC\_PRIVATE\_KEY\_SIZE\ (QSC\_MCELIECE\_PRIVATEKEY\_SIZE)}}
+\DoxyCodeLine{00370\ }
+\DoxyCodeLine{00375\ \textcolor{preprocessor}{\#\ \ \ define\ MPDC\_ASYMMETRIC\_PUBLIC\_KEY\_SIZE\ (QSC\_MCELIECE\_PUBLICKEY\_SIZE)}}
+\DoxyCodeLine{00376\ }
+\DoxyCodeLine{00381\ \textcolor{preprocessor}{\#\ \ \ define\ MPDC\_ASYMMETRIC\_SIGNATURE\_SIZE\ (QSC\_SPHINCSPLUS\_SIGNATURE\_SIZE)}}
+\DoxyCodeLine{00382\ }
+\DoxyCodeLine{00387\ \textcolor{preprocessor}{\#\ \ \ define\ MPDC\_ASYMMETRIC\_SIGNING\_KEY\_SIZE\ (QSC\_SPHINCSPLUS\_PRIVATEKEY\_SIZE)}}
+\DoxyCodeLine{00388\ }
+\DoxyCodeLine{00393\ \textcolor{preprocessor}{\#\ \ \ define\ MPDC\_ASYMMETRIC\_VERIFICATION\_KEY\_SIZE\ (QSC\_SPHINCSPLUS\_PUBLICKEY\_SIZE)}}
+\DoxyCodeLine{00394\ }
+\DoxyCodeLine{00395\ \textcolor{preprocessor}{\#\ \ \ if\ defined(QSC\_MCELIECE\_S1N3488T64)}}
+\DoxyCodeLine{00396\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ if\ defined(QSC\_SPHINCSPLUS\_S1S128SHAKERF)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00401\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_CHILD\_CERTIFICATE\_STRING\_SIZE\ 23737}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00406\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_PARAMATERS\_SPHINCSF\_MCELIECE\_SF1M1}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00411\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_ROOT\_CERTIFICATE\_STRING\_SIZE\ 455}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00416\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_SIGNATURE\_ENCODING\_SIZE\ 22828}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00421\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_VERIFICATION\_KEY\_ENCODING\_SIZE\ 44}}
+\DoxyCodeLine{00422\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ elif\ defined(QSC\_SPHINCSPLUS\_S1S128SHAKERS)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00427\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_CHILD\_CERTIFICATE\_STRING\_SIZE\ 11237}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00432\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_PARAMATERS\_SPHINCSS\_MCELIECE\_SS1M1}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00437\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_ROOT\_CERTIFICATE\_STRING\_SIZE\ 455}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00442\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_SIGNATURE\_ENCODING\_SIZE\ 10520}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00447\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_VERIFICATION\_KEY\_ENCODING\_SIZE\ 44}}
+\DoxyCodeLine{00448\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ endif}}
+\DoxyCodeLine{00449\ \textcolor{preprocessor}{\#\ \ \ elif\ defined(QSC\_MCELIECE\_S3N4608T96)}}
+\DoxyCodeLine{00450\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ if\ defined(QSC\_SPHINCSPLUS\_S3S192SHAKERF)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00455\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_CHILD\_CERTIFICATE\_STRING\_SIZE\ 48912}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00460\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_PARAMATERS\_SPHINCSF\_MCELIECE\_SF3M3}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00465\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_ROOT\_CERTIFICATE\_STRING\_SIZE\ 476}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00470\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_SIGNATURE\_ENCODING\_SIZE\ 47596}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00475\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_VERIFICATION\_KEY\_ENCODING\_SIZE\ 64}}
+\DoxyCodeLine{00476\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ elif\ defined(QSC\_SPHINCSPLUS\_S3S192SHAKERS)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00481\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_CHILD\_CERTIFICATE\_STRING\_SIZE\ 22588}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00486\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_PARAMATERS\_SPHINCSS\_MCELIECE\_SS3M3}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00491\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_ROOT\_CERTIFICATE\_STRING\_SIZE\ 476}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00496\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_SIGNATURE\_ENCODING\_SIZE\ 21676}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00501\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_VERIFICATION\_KEY\_ENCODING\_SIZE\ 64}}
+\DoxyCodeLine{00502\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ endif}}
+\DoxyCodeLine{00503\ \textcolor{preprocessor}{\#\ \ \ elif\ defined(QSC\_MCELIECE\_S5N6688T128)}}
+\DoxyCodeLine{00504\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ if\ defined(QSC\_SPHINCSPLUS\_S5S256SHAKERF)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00509\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_CHILD\_CERTIFICATE\_STRING\_SIZE\ 68158}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00514\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_PARAMATERS\_SPHINCSF\_MCELIECE\_SF5M5}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00519\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_ROOT\_CERTIFICATE\_STRING\_SIZE\ 501}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00524\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_SIGNATURE\_ENCODING\_SIZE\ 66520}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00529\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_VERIFICATION\_KEY\_ENCODING\_SIZE\ 88}}
+\DoxyCodeLine{00530\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ elif\ defined(QSC\_SPHINCSPLUS\_S5S256SHAKERS)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00535\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_CHILD\_CERTIFICATE\_STRING\_SIZE\ 40987}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00540\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_PARAMATERS\_SPHINCSS\_MCELIECE\_SS5M5}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00545\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_ROOT\_CERTIFICATE\_STRING\_SIZE\ 501}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00550\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_SIGNATURE\_ENCODING\_SIZE\ 39768}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00555\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_VERIFICATION\_KEY\_ENCODING\_SIZE\ 88}}
+\DoxyCodeLine{00556\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ endif}}
+\DoxyCodeLine{00557\ \textcolor{preprocessor}{\#\ \ \ elif\ defined(QSC\_MCELIECE\_S6N6960T119)}}
+\DoxyCodeLine{00558\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ if\ defined(QSC\_SPHINCSPLUS\_S5S256SHAKERF)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00563\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_CHILD\_CERTIFICATE\_STRING\_SIZE\ 68157}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00568\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_PARAMATERS\_SPHINCSF\_MCELIECE\_SF5M6}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00573\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_ROOT\_CERTIFICATE\_STRING\_SIZE\ 501}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00578\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_SIGNATURE\_ENCODING\_SIZE\ 66520}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00583\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_VERIFICATION\_KEY\_ENCODING\_SIZE\ 88}}
+\DoxyCodeLine{00584\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ elif\ defined(QSC\_SPHINCSPLUS\_S5S256SHAKERS)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00589\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_CHILD\_CERTIFICATE\_STRING\_SIZE\ 40987}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00594\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_PARAMATERS\_SPHINCSS\_MCELIECE\_SS5M6}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00599\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_ROOT\_CERTIFICATE\_STRING\_SIZE\ 501}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00604\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_SIGNATURE\_ENCODING\_SIZE\ 39768}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00609\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_VERIFICATION\_KEY\_ENCODING\_SIZE\ 88}}
+\DoxyCodeLine{00610\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ endif}}
+\DoxyCodeLine{00611\ \textcolor{preprocessor}{\#\ \ \ elif\ defined(QSC\_MCELIECE\_S7N8192T128)}}
+\DoxyCodeLine{00612\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ if\ defined(QSC\_SPHINCSPLUS\_S5S256SHAKERF)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00617\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_CHILD\_CERTIFICATE\_STRING\_SIZE\ 68157}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00622\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_PARAMATERS\_SPHINCSF\_MCELIECE\_SF5M7}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00627\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_ROOT\_CERTIFICATE\_STRING\_SIZE\ 501}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00632\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_SIGNATURE\_ENCODING\_SIZE\ 66520}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00637\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_VERIFICATION\_KEY\_ENCODING\_SIZE\ 88}}
+\DoxyCodeLine{00638\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ elif\ defined(QSC\_SPHINCSPLUS\_S5S256SHAKERS)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00643\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_CHILD\_CERTIFICATE\_STRING\_SIZE\ 40987}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00648\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_PARAMATERS\_SPHINCSS\_MCELIECE\_SS5M7}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00653\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_ROOT\_CERTIFICATE\_STRING\_SIZE\ 501}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00658\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_SIGNATURE\_ENCODING\_SIZE\ 39768}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00663\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ define\ MPDC\_VERIFICATION\_KEY\_ENCODING\_SIZE\ 88}}
+\DoxyCodeLine{00664\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ else}}
+\DoxyCodeLine{00665\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ \ \ \ \ error\ Invalid\ parameter\ sets,\ check\ the\ QSC\ library\ settings\ }}
+\DoxyCodeLine{00666\ \textcolor{preprocessor}{\#\ \ \ \ \ \ \ endif}}
+\DoxyCodeLine{00667\ \textcolor{preprocessor}{\#\ \ \ else}}
+\DoxyCodeLine{00668\ \ \ \ \ \textcolor{comment}{/*\ The\ library\ signature\ scheme\ and\ asymmetric\ cipher\ parameter\ sets\ }}
+\DoxyCodeLine{00669\ \textcolor{comment}{\ \ \ \ must\ be\ synchronized\ to\ a\ common\ security\ level;\ s1,\ s3,\ s5\ or\ s6.}}
+\DoxyCodeLine{00670\ \textcolor{comment}{\ \ \ \ Check\ the\ QSC\ library\ common.h\ file\ for\ cipher\ and\ signature\ security\ level\ alignment.\ */}}
+\DoxyCodeLine{00671\ \textcolor{preprocessor}{\#\ \ \ error\ Invalid\ parameter\ sets,\ check\ the\ QSC\ library\ settings\ }}
+\DoxyCodeLine{00672\ \textcolor{preprocessor}{\#\ \ \ endif}}
+\DoxyCodeLine{00673\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00674\ }
+\DoxyCodeLine{00679\ \textcolor{preprocessor}{\#define\ MPDC\_ACTIVE\_VERSION\ 1}}
+\DoxyCodeLine{00680\ }
+\DoxyCodeLine{00685\ \textcolor{preprocessor}{\#define\ MPDC\_ACTIVE\_VERSION\_SIZE\ 2}}
+\DoxyCodeLine{00686\ }
+\DoxyCodeLine{00691\ \textcolor{preprocessor}{\#define\ MPDC\_APPLICATION\_AGENT\_PORT\ 37766}}
+\DoxyCodeLine{00692\ }
+\DoxyCodeLine{00697\ \textcolor{preprocessor}{\#define\ MPDC\_AGENT\_FULL\_TRUST\ 1000001}}
+\DoxyCodeLine{00698\ }
+\DoxyCodeLine{00703\ \textcolor{preprocessor}{\#define\ MPDC\_AGENT\_MINIMUM\_TRUST\ 1}}
+\DoxyCodeLine{00704\ }
+\DoxyCodeLine{00710\ \textcolor{preprocessor}{\#define\ MPDC\_AGENT\_NAME\_MAX\_SIZE\ 256}}
+\DoxyCodeLine{00711\ }
+\DoxyCodeLine{00716\ \textcolor{preprocessor}{\#define\ MPDC\_AGENT\_TWOWAY\_TRUST\ 1000002}}
+\DoxyCodeLine{00717\ }
+\DoxyCodeLine{00722\ \textcolor{preprocessor}{\#define\ MPDC\_APPLICATION\_CLIENT\_PORT\ 37761}}
+\DoxyCodeLine{00723\ }
+\DoxyCodeLine{00728\ \textcolor{preprocessor}{\#define\ MPDC\_APPLICATION\_DLA\_PORT\ 37762}}
+\DoxyCodeLine{00729\ }
+\DoxyCodeLine{00734\ \textcolor{preprocessor}{\#define\ MPDC\_APPLICATION\_IDG\_PORT\ 37763}}
+\DoxyCodeLine{00735\ }
+\DoxyCodeLine{00740\ \textcolor{preprocessor}{\#define\ MPDC\_APPLICATION\_RDS\_PORT\ 37764}}
+\DoxyCodeLine{00741\ }
+\DoxyCodeLine{00746\ \textcolor{preprocessor}{\#define\ MPDC\_APPLICATION\_MAS\_PORT\ 37765}}
+\DoxyCodeLine{00747\ }
+\DoxyCodeLine{00752\ \textcolor{preprocessor}{\#define\ MPDC\_CANONICAL\_NAME\_MINIMUM\_SIZE\ 3}}
+\DoxyCodeLine{00753\ }
+\DoxyCodeLine{00758\ \textcolor{preprocessor}{\#define\ MPDC\_CERTIFICATE\_ADDRESS\_SIZE\ 22}}
+\DoxyCodeLine{00759\ }
+\DoxyCodeLine{00764\ \textcolor{preprocessor}{\#define\ MPDC\_CERTIFICATE\_ALGORITHM\_SIZE\ 1}}
+\DoxyCodeLine{00765\ }
+\DoxyCodeLine{00770\ \textcolor{preprocessor}{\#define\ MPDC\_CERTIFICATE\_DEFAULT\_PERIOD\ ((uint64\_t)365\ *\ 24\ *\ 60\ *\ 60)}}
+\DoxyCodeLine{00771\ }
+\DoxyCodeLine{00776\ \textcolor{preprocessor}{\#define\ MPDC\_CERTIFICATE\_DESIGNATION\_SIZE\ 1}}
+\DoxyCodeLine{00777\ }
+\DoxyCodeLine{00782\ \textcolor{preprocessor}{\#define\ MPDC\_CERTIFICATE\_EXPIRATION\_SIZE\ 16}}
+\DoxyCodeLine{00783\ }
+\DoxyCodeLine{00788\ \textcolor{preprocessor}{\#define\ MPDC\_CERTIFICATE\_HASH\_SIZE\ 32}}
+\DoxyCodeLine{00789\ }
+\DoxyCodeLine{00795\ \textcolor{preprocessor}{\#define\ MPDC\_CERTIFICATE\_ISSUER\_SIZE\ 256}}
+\DoxyCodeLine{00796\ }
+\DoxyCodeLine{00801\ \textcolor{preprocessor}{\#define\ MPDC\_CERTIFICATE\_LINE\_LENGTH\ 64}}
+\DoxyCodeLine{00802\ }
+\DoxyCodeLine{00807\ \textcolor{preprocessor}{\#define\ MPDC\_CERTIFICATE\_MAXIMUM\_PERIOD\ (MPDC\_CERTIFICATE\_DEFAULT\_PERIOD\ *\ 2)}}
+\DoxyCodeLine{00808\ }
+\DoxyCodeLine{00813\ \textcolor{preprocessor}{\#define\ MPDC\_CERTIFICATE\_MINIMUM\_PERIOD\ ((uint64\_t)1\ *\ 24\ *\ 60\ *\ 60)}}
+\DoxyCodeLine{00814\ }
+\DoxyCodeLine{00819\ \textcolor{preprocessor}{\#define\ MPDC\_CERTIFICATE\_SERIAL\_SIZE\ 16}}
+\DoxyCodeLine{00820\ }
+\DoxyCodeLine{00825\ \textcolor{preprocessor}{\#define\ MPDC\_CERTIFICATE\_HINT\_SIZE\ (MPDC\_CERTIFICATE\_HASH\_SIZE\ +\ MPDC\_CERTIFICATE\_SERIAL\_SIZE)}}
+\DoxyCodeLine{00826\ }
+\DoxyCodeLine{00831\ \textcolor{preprocessor}{\#define\ MPDC\_CERTIFICATE\_SIGNED\_HASH\_SIZE\ (MPDC\_ASYMMETRIC\_SIGNATURE\_SIZE\ +\ MPDC\_CERTIFICATE\_HASH\_SIZE)}}
+\DoxyCodeLine{00832\ }
+\DoxyCodeLine{00837\ \textcolor{preprocessor}{\#define\ MPDC\_CERTIFICATE\_VERSION\_SIZE\ 1}}
+\DoxyCodeLine{00838\ }
+\DoxyCodeLine{00843\ \textcolor{preprocessor}{\#define\ MPDC\_CERTIFICATE\_CHILD\_SIZE\ (MPDC\_CERTIFICATE\_SIGNED\_HASH\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00844\ \textcolor{preprocessor}{\ \ \ \ MPDC\_ASYMMETRIC\_VERIFICATION\_KEY\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00845\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_ISSUER\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00846\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_SERIAL\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00847\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_SERIAL\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00848\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_EXPIRATION\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00849\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_DESIGNATION\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00850\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_ALGORITHM\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00851\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_VERSION\_SIZE)}}
+\DoxyCodeLine{00852\ }
+\DoxyCodeLine{00857\ \textcolor{preprocessor}{\#define\ MPDC\_CERTIFICATE\_IDG\_SIZE\ (MPDC\_ASYMMETRIC\_SIGNATURE\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00858\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_HASH\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00859\ \textcolor{preprocessor}{\ \ \ \ MPDC\_ASYMMETRIC\_VERIFICATION\_KEY\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00860\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_ISSUER\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00861\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_ADDRESS\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00862\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_SERIAL\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00863\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_SERIAL\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00864\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_EXPIRATION\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00865\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_DESIGNATION\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00866\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_ALGORITHM\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00867\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_VERSION\_SIZE)}}
+\DoxyCodeLine{00868\ }
+\DoxyCodeLine{00873\ \textcolor{preprocessor}{\#define\ MPDC\_CERTIFICATE\_ROOT\_SIZE\ (MPDC\_CERTIFICATE\_HASH\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00874\ \textcolor{preprocessor}{\ \ \ \ MPDC\_ASYMMETRIC\_VERIFICATION\_KEY\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00875\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_ISSUER\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00876\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_SERIAL\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00877\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_EXPIRATION\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00878\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_ALGORITHM\_SIZE\ +\ \(\backslash\)}}
+\DoxyCodeLine{00879\ \textcolor{preprocessor}{\ \ \ \ MPDC\_CERTIFICATE\_VERSION\_SIZE)}}
+\DoxyCodeLine{00880\ }
+\DoxyCodeLine{00885\ \textcolor{preprocessor}{\#define\ MPDC\_CRYPTO\_SYMMETRIC\_KEY\_SIZE\ 32}}
+\DoxyCodeLine{00886\ }
+\DoxyCodeLine{00891\ \textcolor{preprocessor}{\#define\ MPDC\_CRYPTO\_SYMMETRIC\_NONCE\_SIZE\ 32}}
+\DoxyCodeLine{00892\ }
+\DoxyCodeLine{00897\ \textcolor{preprocessor}{\#define\ MPDC\_CRYPTO\_SEED\_SIZE\ 64}}
+\DoxyCodeLine{00898\ }
+\DoxyCodeLine{00903\ \textcolor{preprocessor}{\#define\ MPDC\_CRYPTO\_SYMMETRIC\_TOKEN\_SIZE\ 32}}
+\DoxyCodeLine{00904\ }
+\DoxyCodeLine{00909\ \textcolor{preprocessor}{\#define\ MPDC\_CRYPTO\_SYMMETRIC\_HASH\_SIZE\ 32}}
+\DoxyCodeLine{00910\ }
+\DoxyCodeLine{00915\ \textcolor{preprocessor}{\#if\ defined(MPDC\_EXTENDED\_SESSION\_SECURITY)}}
+\DoxyCodeLine{00916\ \textcolor{preprocessor}{\#\ \ \ define\ MPDC\_CRYPTO\_SYMMETRIC\_MAC\_SIZE\ 64}}
+\DoxyCodeLine{00917\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00918\ \textcolor{preprocessor}{\#\ \ \ define\ MPDC\_CRYPTO\_SYMMETRIC\_MAC\_SIZE\ 32}}
+\DoxyCodeLine{00919\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00920\ }
+\DoxyCodeLine{00925\ \textcolor{preprocessor}{\#define\ MPDC\_CRYPTO\_SYMMETRIC\_SECRET\_SIZE\ 32}}
+\DoxyCodeLine{00926\ }
+\DoxyCodeLine{00931\ \textcolor{preprocessor}{\#if\ defined(MPDC\_EXTENDED\_SESSION\_SECURITY)}}
+\DoxyCodeLine{00932\ \textcolor{preprocessor}{\#\ \ \ define\ MPDC\_CRYPTO\_SYMMETRIC\_SESSION\_KEY\_SIZE\ 64}}
+\DoxyCodeLine{00933\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00934\ \textcolor{preprocessor}{\#\ \ \ define\ MPDC\_CRYPTO\_SYMMETRIC\_SESSION\_KEY\_SIZE\ 32}}
+\DoxyCodeLine{00935\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00936\ }
+\DoxyCodeLine{00941\ \textcolor{preprocessor}{\#define\ MPDC\_DLA\_CONVERGENCE\_INTERVAL\ (60\ *\ 60\ *\ 24)}}
+\DoxyCodeLine{00942\ }
+\DoxyCodeLine{00947\ \textcolor{preprocessor}{\#define\ MPDC\_DLA\_IP\_MAX\ 0x41}}
+\DoxyCodeLine{00948\ }
+\DoxyCodeLine{00953\ \textcolor{preprocessor}{\#define\ MPDC\_DLA\_PENALTY\_MAX\ 0x100}}
+\DoxyCodeLine{00954\ }
+\DoxyCodeLine{00959\ \textcolor{preprocessor}{\#define\ MPDC\_DLA\_REDUCTION\_INTERVAL\ 1000000}}
+\DoxyCodeLine{00960\ }
+\DoxyCodeLine{00967\ \textcolor{preprocessor}{\#define\ MPDC\_DLA\_UPDATE\_WAIT\_TIME\ (7\ *\ 24\ *\ 60\ *\ 60)}}
+\DoxyCodeLine{00968\ }
+\DoxyCodeLine{00973\ \textcolor{preprocessor}{\#define\ MPDC\_ERROR\_STRING\_DEPTH\ 26}}
+\DoxyCodeLine{00974\ }
+\DoxyCodeLine{00979\ \textcolor{preprocessor}{\#define\ MPDC\_ERROR\_STRING\_WIDTH\ 128}}
+\DoxyCodeLine{00980\ }
+\DoxyCodeLine{00985\ \textcolor{preprocessor}{\#define\ MPDC\_MESSAGE\_MAX\_SIZE\ 1400000}}
+\DoxyCodeLine{00986\ }
+\DoxyCodeLine{00991\ \textcolor{preprocessor}{\#define\ MPDC\_MFK\_EXPIRATION\_PERIOD\ ((uint64\_t)60\ *\ 24\ *\ 60\ *\ 60)}}
+\DoxyCodeLine{00992\ }
+\DoxyCodeLine{00997\ \textcolor{preprocessor}{\#define\ MPDC\_MINIMUM\_PATH\_LENGTH\ 9}}
+\DoxyCodeLine{00998\ }
+\DoxyCodeLine{01003\ \textcolor{preprocessor}{\#define\ MPDC\_NETWORK\_CONNECTION\_MTU\ 1500}}
+\DoxyCodeLine{01004\ }
+\DoxyCodeLine{01010\ \textcolor{preprocessor}{\#define\ MPDC\_NETWORK\_DOMAIN\_NAME\_MAX\_SIZE\ 256}}
+\DoxyCodeLine{01011\ }
+\DoxyCodeLine{01016\ \textcolor{preprocessor}{\#define\ MPDC\_NETWORK\_MAX\_AGENTS\ 1000000}}
+\DoxyCodeLine{01017\ }
+\DoxyCodeLine{01022\ \textcolor{preprocessor}{\#define\ MPDC\_NETWORK\_NODE\_ID\_SIZE\ 16}}
+\DoxyCodeLine{01023\ }
+\DoxyCodeLine{01028\ \textcolor{preprocessor}{\#define\ MPDC\_PERIOD\_DAY\_TO\_SECONDS\ (24\ *\ 60\ *\ 60)}}
+\DoxyCodeLine{01029\ }
+\DoxyCodeLine{01034\ \textcolor{preprocessor}{\#define\ MPDC\_SOCKET\_TERMINATOR\_SIZE\ 1}}
+\DoxyCodeLine{01035\ }
+\DoxyCodeLine{01040\ \textcolor{preprocessor}{\#define\ MPDC\_PACKET\_ERROR\_SIZE\ 1}}
+\DoxyCodeLine{01041\ }
+\DoxyCodeLine{01046\ \textcolor{preprocessor}{\#define\ MPDC\_PACKET\_HEADER\_SIZE\ 22}}
+\DoxyCodeLine{01047\ }
+\DoxyCodeLine{01052\ \textcolor{preprocessor}{\#define\ MPDC\_PACKET\_SUBHEADER\_SIZE\ 16}}
+\DoxyCodeLine{01053\ }
+\DoxyCodeLine{01058\ \textcolor{preprocessor}{\#define\ MPDC\_PACKET\_SEQUENCE\_TERMINATOR\ 0xFFFFFFFFUL}}
+\DoxyCodeLine{01059\ }
+\DoxyCodeLine{01064\ \textcolor{preprocessor}{\#define\ MPDC\_PACKET\_TIME\_SIZE\ 8}}
+\DoxyCodeLine{01065\ }
+\DoxyCodeLine{01070\ \textcolor{preprocessor}{\#define\ MPDC\_PACKET\_TIME\_THRESHOLD\ 60}}
+\DoxyCodeLine{01071\ }
+\DoxyCodeLine{01076\ \textcolor{preprocessor}{\#define\ MPDC\_NETWORK\_TERMINATION\_MESSAGE\_SIZE\ 1}}
+\DoxyCodeLine{01077\ }
+\DoxyCodeLine{01082\ \textcolor{preprocessor}{\#define\ MPDC\_NETWORK\_TERMINATION\_PACKET\_SIZE\ (MPDC\_PACKET\_HEADER\_SIZE\ +\ MPDC\_NETWORK\_TERMINATION\_MESSAGE\_SIZE)}}
+\DoxyCodeLine{01083\ }
+\DoxyCodeLine{01084\ \textcolor{comment}{/*\ enumerations\ */}}
+\DoxyCodeLine{01085\ }
+\DoxyCodeLine{01090\ MPDC\_EXPORT\_API\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\_configuration\_sets}}}
+\DoxyCodeLine{01091\ \{}
+\DoxyCodeLine{01092\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a7c964c3c1361521e974212a468b86f0c}{mpdc\_configuration\_set\_none}}\ =\ 0x00,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01093\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a23b50906ca3bc89e20c3dbbaa2c3ebdc}{mpdc\_configuration\_set\_dilithium1\_kyber1\_rcs256\_shake256}}\ =\ 0x01,\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01094\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47ae4a8bbabf16c44d6852bd80b8dab37cf}{mpdc\_configuration\_set\_dilithium3\_kyber3\_rcs256\_shake256}}\ =\ 0x02,\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01095\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a6122fd37513c8aa024a25c8ba34fcca0}{mpdc\_configuration\_set\_dilithium5\_kyber5\_rcs256\_shake256}}\ =\ 0x03,\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01096\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a22c1ed9e2a235f2f742180b7de548fb2}{mpdc\_configuration\_set\_dilithium5\_kyber6\_rcs512\_shake256}}\ =\ 0x04,\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01097\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47ab911d4920a653fd016cd505fe672ec81}{mpdc\_configuration\_set\_sphincsplus1f\_mceliece1\_rcs256\_shake256}}\ =\ 0x05,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01098\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a935beeeaaf2b813cd6efcc6800aab363}{mpdc\_configuration\_set\_sphincsplus1s\_mceliece1\_rcs256\_shake256}}\ =\ 0x06,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01099\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47afd4d5ac8b12d3592c82b698556e7e31d}{mpdc\_configuration\_set\_sphincsplus3f\_mceliece3\_rcs256\_shake256}}\ =\ 0x07,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01100\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47ac3def5074a191311a3a0a0b08b781db9}{mpdc\_configuration\_set\_sphincsplus3s\_mceliece3\_rcs256\_shake256}}\ =\ 0x08,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01101\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a2769ce58c9da8bf6d043b13a338b52de}{mpdc\_configuration\_set\_sphincsplus5f\_mceliece5\_rcs256\_shake256}}\ =\ 0x09,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01102\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a9fd1d1414fa7dfe0ab9710bb4d0718c0}{mpdc\_configuration\_set\_sphincsplus5s\_mceliece5\_rcs256\_shake256}}\ =\ 0x0A,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01103\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a898988f4371e1a98cc3f18d94defeb2d}{mpdc\_configuration\_set\_sphincsplus5f\_mceliece6\_rcs256\_shake256}}\ =\ 0x0B,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01104\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a116b274d694c5ffcfce6cf3311cb6b4a}{mpdc\_configuration\_set\_sphincsplus5s\_mceliece6\_rcs256\_shake256}}\ =\ 0x0C,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01105\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a60e9cecaf91df38f93a5a38363b09039}{mpdc\_configuration\_set\_sphincsplus5f\_mceliece7\_rcs256\_shake256}}\ =\ 0x0D,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01106\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a56b904d1c6655b50bf9cfa9700069f90}{mpdc\_configuration\_set\_sphincsplus5s\_mceliece7\_rcs256\_shake256}}\ =\ 0x0E,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01107\ \}\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\_configuration\_sets}};}
+\DoxyCodeLine{01108\ }
+\DoxyCodeLine{01113\ MPDC\_EXPORT\_API\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\_network\_designations}}}
+\DoxyCodeLine{01114\ \{}
+\DoxyCodeLine{01115\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4dae1133b59c71469d6e8563ba146fc564d}{mpdc\_network\_designation\_none}}\ =\ 0x00,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01116\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4da6987b1409a9bd554a7ceef83c974f488}{mpdc\_network\_designation\_agent}}\ =\ 0x01,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01117\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4daf4d91ebf18040484f2c679a7f6ada069}{mpdc\_network\_designation\_client}}\ =\ 0x02,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01118\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4daed47207f846bccc0bbf21f09a1fe9a9b}{mpdc\_network\_designation\_dla}}\ =\ 0x03,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01119\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4daf82953e757d2d5cbb5674fc07288a9a8}{mpdc\_network\_designation\_idg}}\ =\ 0x04,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01120\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4da0318e13f8ca9c87aee67fc2234feef0c}{mpdc\_network\_designation\_mas}}\ =\ 0x05,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01121\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4da6e7db9467a11308be1549d818e7de241}{mpdc\_network\_designation\_remote}}\ =\ 0x06,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01122\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4dabf70fd9ec2a93963e94553d65735becc}{mpdc\_network\_designation\_rds}}\ =\ 0x07,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01123\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4daef60097557559405f2edda6a20872b43}{mpdc\_network\_designation\_revoked}}\ =\ 0x08,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01124\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4daaaad50991f925e5be93fb286892a39e0}{mpdc\_network\_designation\_all}}\ =\ 0xFF,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01125\ \}\ \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\_network\_designations}};}
+\DoxyCodeLine{01126\ }
+\DoxyCodeLine{01131\ MPDC\_EXPORT\_API\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022b}{mpdc\_network\_errors}}}
+\DoxyCodeLine{01132\ \{}
+\DoxyCodeLine{01133\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022ba30c20e3a18f5f5d7658e581160bf7e8f}{mpdc\_network\_error\_none}}\ =\ 0x00,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01134\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022baa50ecde823ba793beb4eb5df2121756a}{mpdc\_network\_error\_accept\_fail}}\ =\ 0x01,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01135\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022bafe57883759fe5c2041a8a83fec8cc7de}{mpdc\_network\_error\_auth\_failure}}\ =\ 0x02,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01136\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022ba43adad2d7311fa2dc7349507f4f02117}{mpdc\_network\_error\_bad\_keep\_alive}}\ =\ 0x03,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01137\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022ba14be0a88f0c1addb4fe5926657dd8d1d}{mpdc\_network\_error\_channel\_down}}\ =\ 0x04,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01138\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022bafba824d5b9f57a317a4383b03848f689}{mpdc\_network\_error\_connection\_failure}}\ =\ 0x05,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01139\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022bac8e4c848fcf646ec68e718ce320079ce}{mpdc\_network\_error\_decryption\_failure}}\ =\ 0x06,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01140\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022ba8131364ae1b32f91a564466c0898bc0c}{mpdc\_network\_error\_establish\_failure}}\ =\ 0x07,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01141\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022bafdc50bafa8a46e29931dcd31e6410a9d}{mpdc\_network\_error\_general\_failure}}\ =\ 0x08,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01142\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022bae39caaf35bb9e40ec6e679dc6267a3b5}{mpdc\_network\_error\_hosts\_exceeded}}\ =\ 0x09,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01143\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022bac2882e6dca6a8b106c33ab5f9121a135}{mpdc\_network\_error\_identity\_unknown}}\ =\ 0x10,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01144\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022ba7e05a00bf9517e0b530eb187941df787}{mpdc\_network\_error\_invalid\_input}}\ =\ 0x1A,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01145\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022ba74a9e5dcde868127fd2e644d54f72a75}{mpdc\_network\_error\_invalid\_request}}\ =\ 0x1B,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01146\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022baaa8b57c8755f2b0c70a2b43810c57a6d}{mpdc\_network\_error\_keep\_alive\_expired}}\ =\ 0x1C,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01147\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022badf6a235d8dfd717d9fba926c902cdc8a}{mpdc\_network\_error\_keep\_alive\_timeout}}\ =\ 0x1D,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01148\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022ba45a64beb17de94a01a8cd6d7c4f4dce3}{mpdc\_network\_error\_kex\_auth\_failure}}\ =\ 0x1E,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01149\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022ba234645f8834f1db9168d41b704557d23}{mpdc\_network\_error\_key\_not\_recognized}}\ =\ 0x1F,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01150\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022ba64e5384f072ae6acb2c75440a54bbf03}{mpdc\_network\_error\_key\_has\_expired}}\ =\ 0x20,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01151\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022ba60b962421793db428d02fb623beca67a}{mpdc\_network\_error\_listener\_fail}}\ =\ 0x21,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01152\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022ba61d05f4b08f3be58eb35de7ef2c8897a}{mpdc\_network\_error\_memory\_allocation}}\ =\ 0x22,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01153\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022ba45b08eae5629a8e103d7750861ffd7a2}{mpdc\_network\_error\_packet\_unsequenced}}\ =\ 0x23,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01154\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022ba62d795ded9fb3be0820a949ad36e5e3c}{mpdc\_network\_error\_random\_failure}}\ =\ 0x24,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01155\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022ba7d909fa41a5a80e3505c7761b8b78736}{mpdc\_network\_error\_ratchet\_fail}}\ =\ 0x25,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01156\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022ba181756f1c1e2202765bb9e6a1c3e95d5}{mpdc\_network\_error\_receive\_failure}}\ =\ 0x26,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01157\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022ba1ab10e46490af6cd072d111de4a090dd}{mpdc\_network\_error\_transmit\_failure}}\ =\ 0x27,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01158\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022ba3f1393837421d72adb04ca6f8224238b}{mpdc\_network\_error\_unknown\_protocol}}\ =\ 0x28,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01159\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022ba17c42a465cecafa7489b773a0deced7d}{mpdc\_network\_error\_unsequenced}}\ =\ 0x29,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01160\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022baeb2c76f54f3c65aaa6b8a20e2e61a697}{mpdc\_network\_error\_verify\_failure}}\ =\ 0x2A,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01161\ \}\ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022b}{mpdc\_network\_errors}};}
+\DoxyCodeLine{01162\ }
+\DoxyCodeLine{01167\ MPDC\_EXPORT\_API\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0}{mpdc\_network\_flags}}}
+\DoxyCodeLine{01168\ \{}
+\DoxyCodeLine{01169\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0aff93be387288ba8858b66fd45b948f28}{mpdc\_network\_flag\_none}}\ =\ 0x00,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01170\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0ab02fdbbb6a3570b6fc471f0f028b5fdf}{mpdc\_network\_flag\_connection\_terminate\_request}}\ =\ 0x01,\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01171\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0a9d80480a57ce7da01f01eabd0835c0a0}{mpdc\_network\_flag\_error\_condition}}\ =\ 0x02,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01172\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0ae0b32db99ee07f920f92ef48ffc890f8}{mpdc\_network\_flag\_fragment\_collection\_request}}\ =\ 0x03,\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01173\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0a89059ad34a72334a39d1754f33421241}{mpdc\_network\_flag\_fragment\_collection\_response}}\ =\ 0x04,\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01174\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0a2c21581181020cdada2143bc78ed9345}{mpdc\_network\_flag\_fragment\_request}}\ =\ 0x05,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01175\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0aa14f7ce65585c455feec90a839d65e20}{mpdc\_network\_flag\_fragment\_response}}\ =\ 0x06,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01176\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0a4c7a129657747c9a3ba61db16da12266}{mpdc\_network\_flag\_fragment\_query\_request}}\ =\ 0x07,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01177\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0aa11e2ebf965d9abd162b5fd3e66fef4f}{mpdc\_network\_flag\_fragment\_query\_response}}\ =\ 0x08,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01178\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0a8fa1fe9bf91bb1edb6a75a9a5581fe5d}{mpdc\_network\_flag\_incremental\_update\_request}}\ =\ 0x09,\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01179\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0a5ed90e3231b989f9bf68f8b297c0de7e}{mpdc\_network\_flag\_incremental\_update\_response}}\ =\ 0x0A,\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01180\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0ade34404f398b233bfaa3577d647a98e1}{mpdc\_network\_flag\_register\_request}}\ =\ 0x0B,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01181\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0af2b3b93d470f9016840acaa1b9e5d040}{mpdc\_network\_flag\_register\_response}}\ =\ 0x0C,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01182\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0a03f383af4a0ef255266cc70cf461a109}{mpdc\_network\_flag\_register\_update\_request}}\ =\ 0x0D,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01183\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0ab246f46825924197c1aaee251a43ab24}{mpdc\_network\_flag\_register\_update\_response}}\ =\ 0x0E,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01184\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0ac8b6c506f7fda5959d3c73c522ad0229}{mpdc\_network\_flag\_keep\_alive\_request}}\ =\ 0x0F,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01185\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0aeee899a2f259681af060b3af2c5c45b9}{mpdc\_network\_flag\_keep\_alive\_response}}\ =\ 0x10,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01186\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0a571c32525006a9c184ab7222d33cd10c}{mpdc\_network\_flag\_mfk\_establish}}\ =\ 0x11,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01187\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0aa2c10aeba886ec39465c2bb09db6c4ba}{mpdc\_network\_flag\_mfk\_request}}\ =\ 0x12,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01188\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0acc8271cf653ddf0d46a65b495a91d38e}{mpdc\_network\_flag\_mfk\_response}}\ =\ 0x13,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01189\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0a49f7b91badc3e5645d57c3ff502ad921}{mpdc\_network\_flag\_mfk\_verify}}\ =\ 0x14,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01190\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0a46380868cb83d3dd665119eb8b87e602}{mpdc\_network\_flag\_network\_announce\_broadcast}}\ =\ 0x15,\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01191\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0a9edcd7710800b3037b19e796dcf17f23}{mpdc\_network\_flag\_network\_converge\_request}}\ =\ 0x16,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01192\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0a3faf520648235f277de18933afb81cbf}{mpdc\_network\_flag\_network\_converge\_response}}\ =\ 0x17,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01193\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0aa96e4e6aa2ecfbb34c23bcf47e31b862}{mpdc\_network\_flag\_network\_converge\_update}}\ =\ 0x18,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01194\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0ad082902afdac8ef6206d5f96dfa08b60}{mpdc\_network\_flag\_network\_resign\_request}}\ =\ 0x19,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01195\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0ac01f340ebafd54580eb0cdba72742135}{mpdc\_network\_flag\_network\_resign\_response}}\ =\ 0x1A,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01196\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0ac29cfa4d6629e710cb5f2d6d15bc6bb6}{mpdc\_network\_flag\_network\_revocation\_broadcast}}\ =\ 0x1B,\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01197\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0a2bba32225892c50ca549d6a94c7b47ae}{mpdc\_network\_flag\_network\_signature\_request}}\ =\ 0x1C,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01198\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0aff8442c8d96c9f96acf9c3b60a3d70f0}{mpdc\_network\_flag\_system\_error\_condition}}\ =\ 0x1D,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01199\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0a0828af01e99c7d24e8023c6d910a1573}{mpdc\_network\_flag\_tunnel\_connection\_terminate}}\ =\ 0x1E,\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01200\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0a937e21cd83b16b570ba2941cbf2bc62f}{mpdc\_network\_flag\_tunnel\_encrypted\_message}}\ =\ 0x1F,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01201\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0a7a2c23736b469f9fcc611358b9207139}{mpdc\_network\_flag\_tunnel\_session\_established}}\ =\ 0x20,\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01202\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0af57870a2ce1a897617d923bb9a5aea6f}{mpdc\_network\_flag\_tunnel\_transfer\_request}}\ =\ 0x21,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01203\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0a93fd18ce6351a36826b99538e1c9c492}{mpdc\_network\_flag\_topology\_query\_request}}\ =\ 0x22,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01204\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0acb6cf5f38b1c8a4669c667964e67e883}{mpdc\_network\_flag\_topology\_query\_response}}\ =\ 0x23,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01205\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0aaeb764bb90aee5097eb2e50a1ae590fd}{mpdc\_network\_flag\_topology\_status\_request}}\ =\ 0x24,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01206\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0a4c6348d12698fcf3c1551d88811cfea6}{mpdc\_network\_flag\_topology\_status\_response}}\ =\ 0x25,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01207\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0ae807698532b3c6aa4db1d1bb8c395b53}{mpdc\_network\_flag\_topology\_status\_available}}\ =\ 0x26,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01208\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0acd4a377d424296cb32e9d367ea6d75b8}{mpdc\_network\_flag\_topology\_status\_synchronized}}\ =\ 0x27,\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01209\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0ac00178358f9d8872024a6f641ea6b3a1}{mpdc\_network\_flag\_topology\_status\_unavailable}}\ =\ 0x28,\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01210\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0acee2ca9d99c5d5060ab111a7a14de296}{mpdc\_network\_flag\_network\_remote\_signing\_request}}\ =\ 0x29,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01211\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0aaacb94109a2850f298bbb6ba96aef193}{mpdc\_network\_flag\_network\_remote\_signing\_response}}\ =\ 0x2A,\ \ \ \ \ \ }
+\DoxyCodeLine{01212\ \}\ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0}{mpdc\_network\_flags}};}
+\DoxyCodeLine{01213\ }
+\DoxyCodeLine{01218\ MPDC\_EXPORT\_API\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\_protocol\_errors}}}
+\DoxyCodeLine{01219\ \{}
+\DoxyCodeLine{01220\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa120f65ebc8ccca6a06ae7cffda0e3436}{mpdc\_protocol\_error\_none}}\ =\ 0x00,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01221\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa55d3238efcfcd6cd302a15e6d9d5fbb9}{mpdc\_protocol\_error\_authentication\_failure}}\ =\ 0x01,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01222\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa3a23ff2d37e9b30d2f14098972e783a7}{mpdc\_protocol\_error\_certificate\_not\_found}}\ =\ 0x02,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01223\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa0426f9f72fb58e759a4bc3b9761b3914}{mpdc\_protocol\_error\_channel\_down}}\ =\ 0x03,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01224\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaad1f9e36ea0b6df927df7ba4d14d25e63}{mpdc\_protocol\_error\_connection\_failure}}\ =\ 0x04,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01225\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa9da462ac5d20a5368fbb44da612432e2}{mpdc\_protocol\_error\_connect\_failure}}\ =\ 0x05,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01226\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa445871a6676cac998f2d3b361b60b2a5}{mpdc\_protocol\_error\_convergence\_failure}}\ =\ 0x06,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01227\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa514c934dd658fdc7a448309b19b09d6e}{mpdc\_protocol\_error\_convergence\_synchronized}}\ =\ 0x07,\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01228\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa02468ea34e026fe06ee548b5eaea7e81}{mpdc\_protocol\_error\_decapsulation\_failure}}\ =\ 0x08,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01229\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa6094f1fd9f81a3b21095b545e5bd95de}{mpdc\_protocol\_error\_decoding\_failure}}\ =\ 0x09,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01230\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaaab984da2a39c83dda6066a394c7bd05c}{mpdc\_protocol\_error\_decryption\_failure}}\ =\ 0x0A,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01231\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa072ee9325f4d37e29676280044f4622c}{mpdc\_protocol\_error\_establish\_failure}}\ =\ 0x0B,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01232\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaabb563ffd7751d85a747406b211afd786}{mpdc\_protocol\_error\_exchange\_failure}}\ =\ 0x0C,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01233\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaac77a55646d0004ca8d832fff698a8ee0}{mpdc\_protocol\_error\_file\_not\_deleted}}\ =\ 0x0D,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01234\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa2ed879b3a4df4339bcee9c7e30ff1c99}{mpdc\_protocol\_error\_file\_not\_found}}\ =\ 0x0E,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01235\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaac2d8dbaabdf0b27353f826ba65f7a4c7}{mpdc\_protocol\_error\_file\_not\_written}}\ =\ 0x0F,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01236\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa14ffe8dd0e6d820ec4a2576b7dfe9c6d}{mpdc\_protocol\_error\_hash\_invalid}}\ =\ 0x10,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01237\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa59f4116545aa448056c6afcc0b155d0f}{mpdc\_protocol\_error\_hosts\_exceeded}}\ =\ 0x11,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01238\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa1459ce4794d425edc43c5710fd5fd675}{mpdc\_protocol\_error\_invalid\_request}}\ =\ 0x12,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01239\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa143f8d792f685a996d94c0c405bb2f4d}{mpdc\_protocol\_error\_certificate\_expired}}\ =\ 0x13,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01240\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa0e272c220a5f801ecf10c30798d3b499}{mpdc\_protocol\_error\_key\_expired}}\ =\ 0x14,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01241\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa191d3a13791740370b869526692e65f2}{mpdc\_protocol\_error\_key\_unrecognized}}\ =\ 0x15,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01242\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa98800d16ed276f46492754fe71432ba0}{mpdc\_protocol\_error\_listener\_fail}}\ =\ 0x16,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01243\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa9c90414ad73c92ac75b63ba73d36aba1}{mpdc\_protocol\_error\_memory\_allocation}}\ =\ 0x17,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01244\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa38d46bd2e70054395894acebb8d49712}{mpdc\_protocol\_error\_message\_time\_invalid}}\ =\ 0x18,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01245\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaafd4f7df2e501a33f1c6021a3a2772a61}{mpdc\_protocol\_error\_message\_verification\_failure}}\ =\ 0x19,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01246\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaae9270052009aefe85040b8bddeab13e3}{mpdc\_protocol\_error\_no\_usable\_address}}\ =\ 0x1A,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01247\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaacddcec18b6ef9b774c7543e38adfb049}{mpdc\_protocol\_error\_node\_not\_available}}\ =\ 0x1B,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01248\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa78b2b34d5a2f6a710b334deb56ce9880}{mpdc\_protocol\_error\_node\_not\_found}}\ =\ 0x1C,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01249\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaad9eaa778535d72e147fe8f243980fc85}{mpdc\_protocol\_error\_node\_was\_registered}}\ =\ 0x1D,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01250\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaaeb36ae0b8b095e4de0dcc01a187cf359}{mpdc\_protocol\_error\_operation\_cancelled}}\ =\ 0x1E,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01251\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa5efcc0d673cb7c0717ec6680929fd885}{mpdc\_protocol\_error\_packet\_header\_invalid}}\ =\ 0x1F,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01252\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaae6a0abd96c48351ad8cd9b3d64188255}{mpdc\_protocol\_error\_packet\_unsequenced}}\ =\ 0x20,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01253\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaad5332343e893c267079bdc67e323a7c9}{mpdc\_protocol\_error\_receive\_failure}}\ =\ 0x21,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01254\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa041b414d68137fc172da3d9b06565248}{mpdc\_protocol\_error\_root\_signature\_invalid}}\ =\ 0x22,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01255\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa590f6776e27c62e81eb2d2778df03287}{mpdc\_protocol\_error\_serialization\_failure}}\ =\ 0x23,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01256\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa35e66b0a2950a16bb612187ef2d621d1}{mpdc\_protocol\_error\_signature\_failure}}\ =\ 0x24,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01257\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa11d2e3983791272b3d29c781c15dbc0e}{mpdc\_protocol\_error\_signing\_failure}}\ =\ 0x25,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01258\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa8f4b6ee9b08314a71a0b9c5e6ed69a51}{mpdc\_protocol\_error\_socket\_binding}}\ =\ 0x26,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01259\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa84688ce406d7d8cf860400576d5ce861}{mpdc\_protocol\_error\_socket\_creation}}\ =\ 0x27,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01260\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaac2eb3a7bbab3ec8d431704b484c70528}{mpdc\_protocol\_error\_transmit\_failure}}\ =\ 0x28,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01261\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa5e9aafef3d4e3327eb65c902941839fd}{mpdc\_protocol\_error\_topology\_no\_agent}}\ =\ 0x29,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01262\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa5b4b982d76cc9466eb0efc36c6bbbe48}{mpdc\_protocol\_error\_unknown\_protocol}}\ =\ 0x2A,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01263\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfcaa0ab1ad81c951ed0a19ce09d62ae1f4d7}{mpdc\_protocol\_error\_verification\_failure}}\ =\ 0x2B,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01264\ \}\ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\_protocol\_errors}};}
+\DoxyCodeLine{01265\ }
+\DoxyCodeLine{01270\ MPDC\_EXPORT\_API\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{mpdc_8h_a99593e47ffae082c2567f84642e65fb5}{mpdc\_version\_sets}}}
+\DoxyCodeLine{01271\ \{}
+\DoxyCodeLine{01272\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a99593e47ffae082c2567f84642e65fb5a5bebe9cb522b70dce471d61c07588e8f}{mpdc\_version\_set\_none}}\ =\ 0x00,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01273\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a99593e47ffae082c2567f84642e65fb5a7f257e7c1692d73a7225a4261ce2683f}{mpdc\_version\_set\_one\_zero}}\ =\ 0x01,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01274\ \}\ \mbox{\hyperlink{mpdc_8h_a99593e47ffae082c2567f84642e65fb5}{mpdc\_version\_sets}};}
+\DoxyCodeLine{01275\ }
+\DoxyCodeLine{01276\ \textcolor{comment}{/*\ public\ structures\ */}}
+\DoxyCodeLine{01277\ }
+\DoxyCodeLine{01282\ MPDC\_EXPORT\_API\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmpdc__certificate__expiration}{mpdc\_certificate\_expiration}}}
+\DoxyCodeLine{01283\ \{}
+\DoxyCodeLine{01284\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structmpdc__certificate__expiration_aaa93f1aa0ffbe38a004f7241c6a4d121}{from}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01285\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structmpdc__certificate__expiration_a196669426fbc22a5dd77d21682e5af5e}{to}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01286\ \}\ \mbox{\hyperlink{structmpdc__certificate__expiration}{mpdc\_certificate\_expiration}};}
+\DoxyCodeLine{01287\ }
+\DoxyCodeLine{01292\ MPDC\_EXPORT\_API\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmpdc__child__certificate}{mpdc\_child\_certificate}}}
+\DoxyCodeLine{01293\ \{}
+\DoxyCodeLine{01294\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__child__certificate_a7e1c20bdd27c35a0356c7e95c085f68d}{csig}}[\mbox{\hyperlink{mpdc_8h_afa5c9d1c6e18a337ff309f0993ec5c1b}{MPDC\_CERTIFICATE\_SIGNED\_HASH\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01295\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__child__certificate_aff64d26489de4e80fd0aa161f2c8b591}{verkey}}[\mbox{\hyperlink{mpdc_8h_a3323909111e7aa42bde0523f1b562d8e}{MPDC\_ASYMMETRIC\_VERIFICATION\_KEY\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01296\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structmpdc__child__certificate_a628a69dffe6f6679623a03d6c46dd211}{issuer}}[\mbox{\hyperlink{mpdc_8h_a3cfc089905297aadb4230405884cdb6e}{MPDC\_CERTIFICATE\_ISSUER\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01297\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__child__certificate_a01fb19266080901c988ab7e2d6c187b7}{serial}}[\mbox{\hyperlink{mpdc_8h_a945d2c8137c447b76ee2619ddc03ad3f}{MPDC\_CERTIFICATE\_SERIAL\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01298\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__child__certificate_a588c1a3b73cbbeeae58684699f03065b}{rootser}}[\mbox{\hyperlink{mpdc_8h_a945d2c8137c447b76ee2619ddc03ad3f}{MPDC\_CERTIFICATE\_SERIAL\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01299\ \ \ \ \ \mbox{\hyperlink{structmpdc__certificate__expiration}{mpdc\_certificate\_expiration}}\ \mbox{\hyperlink{structmpdc__child__certificate_a8574d6aad0332ba47d4b1b2ca37111a6}{expiration}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01300\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\_network\_designations}}\ \mbox{\hyperlink{structmpdc__child__certificate_aafd3fad0dee9a710a89b04a807d24866}{designation}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01301\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\_configuration\_sets}}\ \mbox{\hyperlink{structmpdc__child__certificate_ae0970148eb92852ba47f4a678e9e9af5}{algorithm}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01302\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__child__certificate_ab22abc2906422da61885ac6c8e6a1a59}{version}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01303\ \}\ \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\_child\_certificate}};}
+\DoxyCodeLine{01304\ }
+\DoxyCodeLine{01309\ \textcolor{preprocessor}{\#define\ MPDC\_X509\_CERTIFICATE\_SIZE\ 4096}}
+\DoxyCodeLine{01310\ }
+\DoxyCodeLine{01318\ \textcolor{preprocessor}{\#define\ MPDC\_IDG\_HINT\_SIZE\ (MPDC\_CERTIFICATE\_HASH\_SIZE\ +\ MPDC\_CERTIFICATE\_SERIAL\_SIZE)}}
+\DoxyCodeLine{01319\ }
+\DoxyCodeLine{01324\ MPDC\_EXPORT\_API\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmpdc__idg__hint}{mpdc\_idg\_hint}}}
+\DoxyCodeLine{01325\ \{}
+\DoxyCodeLine{01326\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__idg__hint_a027b50e5571515ec3a73ad684c0314da}{chash}}[\mbox{\hyperlink{mpdc_8h_a8a86a220ebe0faa467531261b2721d1c}{MPDC\_CERTIFICATE\_HASH\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01327\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__idg__hint_a588c1a3b73cbbeeae58684699f03065b}{rootser}}[\mbox{\hyperlink{mpdc_8h_a945d2c8137c447b76ee2619ddc03ad3f}{MPDC\_CERTIFICATE\_SERIAL\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01328\ \}\ \mbox{\hyperlink{structmpdc__idg__hint}{mpdc\_idg\_hint}};}
+\DoxyCodeLine{01329\ }
+\DoxyCodeLine{01337\ MPDC\_EXPORT\_API\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmpdc__idg__certificate}{mpdc\_idg\_certificate}}}
+\DoxyCodeLine{01338\ \{}
+\DoxyCodeLine{01339\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__idg__certificate_a7e1c20bdd27c35a0356c7e95c085f68d}{csig}}[\mbox{\hyperlink{mpdc_8h_afa5c9d1c6e18a337ff309f0993ec5c1b}{MPDC\_CERTIFICATE\_SIGNED\_HASH\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01340\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__idg__certificate_a5486f06d342ee20ad6df2686348f6c0d}{vkey}}[\mbox{\hyperlink{mpdc_8h_a3323909111e7aa42bde0523f1b562d8e}{MPDC\_ASYMMETRIC\_VERIFICATION\_KEY\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01341\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__idg__certificate_a42017dc3437b8113636846ef2298c5e0}{xcert}}[\mbox{\hyperlink{mpdc_8h_ab3e783e19701694f31006744f36ffdef}{MPDC\_X509\_CERTIFICATE\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01342\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__idg__certificate_a01fb19266080901c988ab7e2d6c187b7}{serial}}[\mbox{\hyperlink{mpdc_8h_a945d2c8137c447b76ee2619ddc03ad3f}{MPDC\_CERTIFICATE\_SERIAL\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01343\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__idg__certificate_a588c1a3b73cbbeeae58684699f03065b}{rootser}}[\mbox{\hyperlink{mpdc_8h_a945d2c8137c447b76ee2619ddc03ad3f}{MPDC\_CERTIFICATE\_SERIAL\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01344\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__idg__certificate_a782bd7c4aa2e01d4a1c09be52357f60d}{hint}}[\mbox{\hyperlink{mpdc_8h_a7dbdcb16f76ea24f3e4187d4786debf1}{MPDC\_CERTIFICATE\_HINT\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01345\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structmpdc__idg__certificate_a628a69dffe6f6679623a03d6c46dd211}{issuer}}[\mbox{\hyperlink{mpdc_8h_a3cfc089905297aadb4230405884cdb6e}{MPDC\_CERTIFICATE\_ISSUER\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01346\ \ \ \ \ \mbox{\hyperlink{structmpdc__certificate__expiration}{mpdc\_certificate\_expiration}}\ \mbox{\hyperlink{structmpdc__idg__certificate_a8574d6aad0332ba47d4b1b2ca37111a6}{expiration}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01347\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a907aad4ee5b382e7e7c042296d53ee4d}{mpdc\_network\_designations}}\ \mbox{\hyperlink{structmpdc__idg__certificate_aafd3fad0dee9a710a89b04a807d24866}{designation}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01348\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\_configuration\_sets}}\ \mbox{\hyperlink{structmpdc__idg__certificate_ae0970148eb92852ba47f4a678e9e9af5}{algorithm}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01349\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__idg__certificate_ab22abc2906422da61885ac6c8e6a1a59}{version}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01350\ \}\ \mbox{\hyperlink{structmpdc__idg__certificate}{mpdc\_idg\_certificate}};}
+\DoxyCodeLine{01351\ }
+\DoxyCodeLine{01356\ MPDC\_EXPORT\_API\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmpdc__connection__state}{mpdc\_connection\_state}}}
+\DoxyCodeLine{01357\ \{}
+\DoxyCodeLine{01358\ \ \ \ \ qsc\_socket\ \mbox{\hyperlink{structmpdc__connection__state_ae6865db404fdc42e72fdb48510d5a558}{target}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01359\ \ \ \ \ qsc\_rcs\_state\ \mbox{\hyperlink{structmpdc__connection__state_aec1bc59ca91d898f673d2ca825c02853}{rxcpr}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01360\ \ \ \ \ qsc\_rcs\_state\ \mbox{\hyperlink{structmpdc__connection__state_a9016aef42a7046d75b7d0d01f1f5cddb}{txcpr}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01361\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structmpdc__connection__state_a9bc7a133c2f47895567d675d3679e15a}{rxseq}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01362\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structmpdc__connection__state_a1b9dac0a156c3747fc39192a04f01aa0}{txseq}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01363\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structmpdc__connection__state_a9ed36c4f5392e9f1819ec7c9eb9aff80}{instance}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01364\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a58fd7f262da92b6645ef8be8638e9ed0}{mpdc\_network\_flags}}\ \mbox{\hyperlink{structmpdc__connection__state_ac66037d7f8eb1a8ddc93a07b7e858103}{exflag}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01365\ \}\ \mbox{\hyperlink{structmpdc__connection__state}{mpdc\_connection\_state}};}
+\DoxyCodeLine{01366\ }
+\DoxyCodeLine{01371\ MPDC\_EXPORT\_API\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmpdc__keep__alive__state}{mpdc\_keep\_alive\_state}}}
+\DoxyCodeLine{01372\ \{}
+\DoxyCodeLine{01373\ \ \ \ \ qsc\_socket\ \mbox{\hyperlink{structmpdc__keep__alive__state_ae6865db404fdc42e72fdb48510d5a558}{target}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01374\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structmpdc__keep__alive__state_af9c9d33a13c7df6c73f89251087a823b}{etime}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01375\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structmpdc__keep__alive__state_a66dfa775bb1a394931daa9db9c9770c1}{seqctr}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01376\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structmpdc__keep__alive__state_a25991bf44108e2f9d21a6eb1d92e377e}{recd}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01377\ \}\ \mbox{\hyperlink{structmpdc__keep__alive__state}{mpdc\_keep\_alive\_state}};}
+\DoxyCodeLine{01378\ }
+\DoxyCodeLine{01383\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmpdc__mfkey__state}{mpdc\_mfkey\_state}}}
+\DoxyCodeLine{01384\ \{}
+\DoxyCodeLine{01385\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__mfkey__state_a01fb19266080901c988ab7e2d6c187b7}{serial}}[\mbox{\hyperlink{mpdc_8h_a945d2c8137c447b76ee2619ddc03ad3f}{MPDC\_CERTIFICATE\_SERIAL\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01386\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__mfkey__state_aac1fc879b1fc2acf12cb8a55948be1ef}{mfk}}[\mbox{\hyperlink{mpdc_8h_a836275cddd9561c1a00700cdaf965510}{MPDC\_CRYPTO\_SYMMETRIC\_KEY\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01387\ \}\ \mbox{\hyperlink{structmpdc__mfkey__state}{mpdc\_mfkey\_state}};}
+\DoxyCodeLine{01388\ }
+\DoxyCodeLine{01393\ MPDC\_EXPORT\_API\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmpdc__network__packet}{mpdc\_network\_packet}}}
+\DoxyCodeLine{01394\ \{}
+\DoxyCodeLine{01395\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__network__packet_aff31312fb16705aa73c53b945a1a6b30}{flag}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01396\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structmpdc__network__packet_a907c53abb8da7fb88a7681171ffb51cd}{msglen}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01397\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structmpdc__network__packet_acb520b7f5d67b3209787f3edb26d34fe}{sequence}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01398\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structmpdc__network__packet_aa9e6c59abfe8b07a96afb6594e90dcb1}{utctime}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01399\ \ \ \ \ uint8\_t*\ \mbox{\hyperlink{structmpdc__network__packet_a2a5694ff039cef244c87e65f549e2f98}{pmessage}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01400\ \}\ \mbox{\hyperlink{structmpdc__network__packet}{mpdc\_network\_packet}};}
+\DoxyCodeLine{01401\ }
+\DoxyCodeLine{01410\ MPDC\_EXPORT\_API\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmpdc__root__certificate}{mpdc\_root\_certificate}}}
+\DoxyCodeLine{01411\ \{}
+\DoxyCodeLine{01412\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__root__certificate_aff64d26489de4e80fd0aa161f2c8b591}{verkey}}[\mbox{\hyperlink{mpdc_8h_a3323909111e7aa42bde0523f1b562d8e}{MPDC\_ASYMMETRIC\_VERIFICATION\_KEY\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01413\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structmpdc__root__certificate_a628a69dffe6f6679623a03d6c46dd211}{issuer}}[\mbox{\hyperlink{mpdc_8h_a3cfc089905297aadb4230405884cdb6e}{MPDC\_CERTIFICATE\_ISSUER\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01414\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__root__certificate_a01fb19266080901c988ab7e2d6c187b7}{serial}}[\mbox{\hyperlink{mpdc_8h_a945d2c8137c447b76ee2619ddc03ad3f}{MPDC\_CERTIFICATE\_SERIAL\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01415\ \ \ \ \ \mbox{\hyperlink{structmpdc__certificate__expiration}{mpdc\_certificate\_expiration}}\ \mbox{\hyperlink{structmpdc__root__certificate_a8574d6aad0332ba47d4b1b2ca37111a6}{expiration}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01416\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\_configuration\_sets}}\ \mbox{\hyperlink{structmpdc__root__certificate_ae0970148eb92852ba47f4a678e9e9af5}{algorithm}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01417\ \ \ \ \ \mbox{\hyperlink{mpdc_8h_a99593e47ffae082c2567f84642e65fb5}{mpdc\_version\_sets}}\ \mbox{\hyperlink{structmpdc__root__certificate_a5a148a0f90a169e333774ac9aba2e5e6}{version}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01418\ \}\ \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\_root\_certificate}};}
+\DoxyCodeLine{01419\ }
+\DoxyCodeLine{01424\ MPDC\_EXPORT\_API\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmpdc__serialized__symmetric__key}{mpdc\_serialized\_symmetric\_key}}}
+\DoxyCodeLine{01425\ \{}
+\DoxyCodeLine{01426\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structmpdc__serialized__symmetric__key_ae4abe8e3c416f5330bd8899b320c2ab1}{keyid}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01427\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__serialized__symmetric__key_a3409224c9fb8fac4dd106417c16c34ec}{key}}[\mbox{\hyperlink{mpdc_8h_a836275cddd9561c1a00700cdaf965510}{MPDC\_CRYPTO\_SYMMETRIC\_KEY\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01428\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__serialized__symmetric__key_a6721eb9458ae5432136052d1a78fc5dc}{nonce}}[\mbox{\hyperlink{mpdc_8h_ac37352511c22d5396f4555d65a1c2768}{MPDC\_CRYPTO\_SYMMETRIC\_NONCE\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01429\ \}\ \mbox{\hyperlink{structmpdc__serialized__symmetric__key}{mpdc\_serialized\_symmetric\_key}};}
+\DoxyCodeLine{01430\ }
+\DoxyCodeLine{01435\ MPDC\_EXPORT\_API\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmpdc__signature__keypair}{mpdc\_signature\_keypair}}}
+\DoxyCodeLine{01436\ \{}
+\DoxyCodeLine{01437\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__signature__keypair_a158422f184f89c55bc47f15baec71fc1}{prikey}}[\mbox{\hyperlink{mpdc_8h_aed84fa1849ed574e0c0aec3e38be9aa3}{MPDC\_ASYMMETRIC\_SIGNING\_KEY\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01438\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__signature__keypair_a2064d01d03a51f5084c1c9d952292369}{pubkey}}[\mbox{\hyperlink{mpdc_8h_a3323909111e7aa42bde0523f1b562d8e}{MPDC\_ASYMMETRIC\_VERIFICATION\_KEY\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01439\ \}\ \mbox{\hyperlink{structmpdc__signature__keypair}{mpdc\_signature\_keypair}};}
+\DoxyCodeLine{01440\ }
+\DoxyCodeLine{01445\ MPDC\_EXPORT\_API\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmpdc__cipher__keypair}{mpdc\_cipher\_keypair}}}
+\DoxyCodeLine{01446\ \{}
+\DoxyCodeLine{01447\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__cipher__keypair_a6a391d2d109fcd93c34ed03f5ef7294d}{prikey}}[\mbox{\hyperlink{mpdc_8h_a28212f992c3bf4ada55c543e87199233}{MPDC\_ASYMMETRIC\_PRIVATE\_KEY\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01448\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__cipher__keypair_a50f053487be57d847bb11c0cf4851211}{pubkey}}[\mbox{\hyperlink{mpdc_8h_a8d53851ff6d4d6b4b06ccbb4c2cfb842}{MPDC\_ASYMMETRIC\_PUBLIC\_KEY\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01449\ \}\ \mbox{\hyperlink{structmpdc__cipher__keypair}{mpdc\_cipher\_keypair}};}
+\DoxyCodeLine{01450\ }
+\DoxyCodeLine{01451\ \textcolor{comment}{/*\ public\ key\ encoding\ constants\ */}}
+\DoxyCodeLine{01452\ }
+\DoxyCodeLine{01454\ }
+\DoxyCodeLine{01455\ \textcolor{preprocessor}{\#define\ MPDC\_CERTIFICATE\_SEPERATOR\_SIZE\ 1}}
+\DoxyCodeLine{01456\ \textcolor{preprocessor}{\#define\ MPDC\_CHILD\_CERTIFICATE\_HEADER\_SIZE\ 64}}
+\DoxyCodeLine{01457\ \textcolor{preprocessor}{\#define\ MPDC\_CHILD\_CERTIFICATE\_ROOT\_HASH\_PREFIX\_SIZE\ 30}}
+\DoxyCodeLine{01458\ \textcolor{preprocessor}{\#define\ MPDC\_CHILD\_CERTIFICATE\_SIGNATURE\_KEY\_PREFIX\_SIZE\ 23}}
+\DoxyCodeLine{01459\ \textcolor{preprocessor}{\#define\ MPDC\_CHILD\_CERTIFICATE\_ISSUER\_PREFIX\_SIZE\ 9}}
+\DoxyCodeLine{01460\ \textcolor{preprocessor}{\#define\ MPDC\_CHILD\_CERTIFICATE\_NAME\_PREFIX\_SIZE\ 7}}
+\DoxyCodeLine{01461\ \textcolor{preprocessor}{\#define\ MPDC\_CHILD\_CERTIFICATE\_SERIAL\_PREFIX\_SIZE\ 9}}
+\DoxyCodeLine{01462\ \textcolor{preprocessor}{\#define\ MPDC\_CHILD\_CERTIFICATE\_ROOT\_SERIAL\_PREFIX\_SIZE\ 14}}
+\DoxyCodeLine{01463\ \textcolor{preprocessor}{\#define\ MPDC\_CHILD\_CERTIFICATE\_VALID\_FROM\_PREFIX\_SIZE\ 13}}
+\DoxyCodeLine{01464\ \textcolor{preprocessor}{\#define\ MPDC\_CHILD\_CERTIFICATE\_EXPIRATION\_TO\_PREFIX\_SIZE\ 6}}
+\DoxyCodeLine{01465\ \textcolor{preprocessor}{\#define\ MPDC\_CHILD\_CERTIFICATE\_ALGORITHM\_PREFIX\_SIZE\ 12}}
+\DoxyCodeLine{01466\ \textcolor{preprocessor}{\#define\ MPDC\_CHILD\_CERTIFICATE\_VERSION\_PREFIX\_SIZE\ 10}}
+\DoxyCodeLine{01467\ \textcolor{preprocessor}{\#define\ MPDC\_CHILD\_CERTIFICATE\_DESIGNATION\_PREFIX\_SIZE\ 14}}
+\DoxyCodeLine{01468\ \textcolor{preprocessor}{\#define\ MPDC\_CHILD\_CERTIFICATE\_ADDRESS\_PREFIX\_SIZE\ 10}}
+\DoxyCodeLine{01469\ \textcolor{preprocessor}{\#define\ MPDC\_CHILD\_CERTIFICATE\_FOOTER\_SIZE\ 64}}
+\DoxyCodeLine{01470\ \textcolor{preprocessor}{\#define\ MPDC\_CHILD\_CERTIFICATE\_DEFAULT\_NAME\_SIZE\ 19}}
+\DoxyCodeLine{01471\ }
+\DoxyCodeLine{01472\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CHILD\_CERTIFICATE\_HEADER[MPDC\_CHILD\_CERTIFICATE\_HEADER\_SIZE]\ =\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/BEGIN\ MPDC\ CHILD\ PUBLIC\ CERTIFICATE\ BLOCK-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}};}
+\DoxyCodeLine{01473\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CHILD\_CERTIFICATE\_ROOT\_HASH\_PREFIX[MPDC\_CHILD\_CERTIFICATE\_ROOT\_HASH\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}Root\ Signed\ Public\ Key\ Hash:\ "{}};}
+\DoxyCodeLine{01474\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CHILD\_CERTIFICATE\_SIGNATURE\_KEY\_PREFIX[MPDC\_CHILD\_CERTIFICATE\_SIGNATURE\_KEY\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}Public\ Signature\ Key:\ "{}};}
+\DoxyCodeLine{01475\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CHILD\_CERTIFICATE\_ISSUER\_PREFIX[MPDC\_CHILD\_CERTIFICATE\_ISSUER\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}Issuer:\ "{}};}
+\DoxyCodeLine{01476\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CHILD\_CERTIFICATE\_NAME\_PREFIX[MPDC\_CHILD\_CERTIFICATE\_NAME\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}Name:\ "{}};}
+\DoxyCodeLine{01477\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CHILD\_CERTIFICATE\_SERIAL\_PREFIX[MPDC\_CHILD\_CERTIFICATE\_SERIAL\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}Serial:\ "{}};}
+\DoxyCodeLine{01478\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CHILD\_CERTIFICATE\_ROOT\_SERIAL\_PREFIX[MPDC\_CHILD\_CERTIFICATE\_ROOT\_SERIAL\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}Root\ Serial:\ "{}};}
+\DoxyCodeLine{01479\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CHILD\_CERTIFICATE\_VALID\_FROM\_PREFIX[MPDC\_CHILD\_CERTIFICATE\_VALID\_FROM\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}Valid\ From:\ "{}};}
+\DoxyCodeLine{01480\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CHILD\_CERTIFICATE\_EXPIRATION\_TO\_PREFIX[MPDC\_CHILD\_CERTIFICATE\_EXPIRATION\_TO\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}\ To:\ "{}};}
+\DoxyCodeLine{01481\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CHILD\_CERTIFICATE\_ALGORITHM\_PREFIX[MPDC\_CHILD\_CERTIFICATE\_ALGORITHM\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}Algorithm:\ "{}};}
+\DoxyCodeLine{01482\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CHILD\_CERTIFICATE\_VERSION\_PREFIX[MPDC\_CHILD\_CERTIFICATE\_VERSION\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}Version:\ "{}};}
+\DoxyCodeLine{01483\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CHILD\_CERTIFICATE\_DESIGNATION\_PREFIX[MPDC\_CHILD\_CERTIFICATE\_DESIGNATION\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}Designation:\ "{}};}
+\DoxyCodeLine{01484\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CHILD\_CERTIFICATE\_ADDRESS\_PREFIX[MPDC\_CHILD\_CERTIFICATE\_ADDRESS\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}Address:\ "{}};}
+\DoxyCodeLine{01485\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CHILD\_CERTIFICATE\_FOOTER[MPDC\_CHILD\_CERTIFICATE\_FOOTER\_SIZE]\ =\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/END\ MPDC\ CHILD\ PUBLIC\ CERTIFICATE\ BLOCK-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}};}
+\DoxyCodeLine{01486\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CHILD\_CERTIFICATE\_DEFAULT\_NAME[MPDC\_CHILD\_CERTIFICATE\_DEFAULT\_NAME\_SIZE]\ =\ \textcolor{stringliteral}{"{}\ Child\ Certificate"{}};}
+\DoxyCodeLine{01487\ }
+\DoxyCodeLine{01488\ \textcolor{preprocessor}{\#define\ MPDC\_NETWORK\_DESIGNATION\_SIZE\ 33}}
+\DoxyCodeLine{01489\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_NETWORK\_DESIGNATION\_NONE[MPDC\_NETWORK\_DESIGNATION\_SIZE]\ =\ \textcolor{stringliteral}{"{}mpdc\_network\_designation\_none"{}};}
+\DoxyCodeLine{01490\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_NETWORK\_DESIGNATION\_AGENT[MPDC\_NETWORK\_DESIGNATION\_SIZE]\ =\ \textcolor{stringliteral}{"{}mpdc\_network\_designation\_agent"{}};}
+\DoxyCodeLine{01491\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_NETWORK\_DESIGNATION\_CLIENT[MPDC\_NETWORK\_DESIGNATION\_SIZE]\ =\ \textcolor{stringliteral}{"{}mpdc\_network\_designation\_client"{}};}
+\DoxyCodeLine{01492\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_NETWORK\_DESIGNATION\_DLA[MPDC\_NETWORK\_DESIGNATION\_SIZE]\ =\ \textcolor{stringliteral}{"{}mpdc\_network\_designation\_dla"{}};}
+\DoxyCodeLine{01493\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_NETWORK\_DESIGNATION\_IDG[MPDC\_NETWORK\_DESIGNATION\_SIZE]\ =\ \textcolor{stringliteral}{"{}mpdc\_network\_designation\_idg"{}};}
+\DoxyCodeLine{01494\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_NETWORK\_DESIGNATION\_REMOTE[MPDC\_NETWORK\_DESIGNATION\_SIZE]\ =\ \textcolor{stringliteral}{"{}mpdc\_network\_designation\_remote"{}};}
+\DoxyCodeLine{01495\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_NETWORK\_DESIGNATION\_ROOT[MPDC\_NETWORK\_DESIGNATION\_SIZE]\ =\ \textcolor{stringliteral}{"{}mpdc\_network\_designation\_rds"{}};}
+\DoxyCodeLine{01496\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_NETWORK\_DESIGNATION\_SERVER[MPDC\_NETWORK\_DESIGNATION\_SIZE]\ =\ \textcolor{stringliteral}{"{}mpdc\_network\_designation\_mas"{}};}
+\DoxyCodeLine{01497\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_NETWORK\_DESIGNATION\_ALL[MPDC\_NETWORK\_DESIGNATION\_SIZE]\ =\ \textcolor{stringliteral}{"{}mpdc\_network\_designation\_all"{}};}
+\DoxyCodeLine{01498\ }
+\DoxyCodeLine{01500\ }
+\DoxyCodeLine{01505\ \textcolor{preprocessor}{\#define\ MPDC\_PROTOCOL\_SET\_SIZE\ 41}}
+\DoxyCodeLine{01506\ }
+\DoxyCodeLine{01507\ \textcolor{comment}{/*\ Valid\ parameter\ sets:\ }}
+\DoxyCodeLine{01508\ \textcolor{comment}{Kyber-\/S1,\ Dilithium-\/S1}}
+\DoxyCodeLine{01509\ \textcolor{comment}{Kyber-\/S3,\ Dilithium-\/S3}}
+\DoxyCodeLine{01510\ \textcolor{comment}{Kyber-\/S5,\ Dilithium-\/S5}}
+\DoxyCodeLine{01511\ \textcolor{comment}{Kyber-\/S6,\ Dilithium-\/S5}}
+\DoxyCodeLine{01512\ \textcolor{comment}{McEliece-\/S1,\ Sphincs-\/S1(f,s)}}
+\DoxyCodeLine{01513\ \textcolor{comment}{McEliece-\/S3,\ Sphincs-\/S3(f,s)}}
+\DoxyCodeLine{01514\ \textcolor{comment}{McEliece-\/S5,\ Sphincs-\/S5(f,s)}}
+\DoxyCodeLine{01515\ \textcolor{comment}{McEliece-\/S6,\ Sphincs-\/S5(f,s)}}
+\DoxyCodeLine{01516\ \textcolor{comment}{McEliece-\/S7,\ Sphincs-\/S6(f,s)\ */}}
+\DoxyCodeLine{01517\ }
+\DoxyCodeLine{01519\ }
+\DoxyCodeLine{01520\ \textcolor{preprocessor}{\#if\ defined(MPDC\_PARAMATERS\_DILITHIUM\_KYBER\_D1K1)}}
+\DoxyCodeLine{01521\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CONFIG\_STRING[\mbox{\hyperlink{mpdc_8h_a53daa720e5cbf99808d912b4d4b012b8}{MPDC\_PROTOCOL\_SET\_SIZE}}]\ =\ \textcolor{stringliteral}{"{}dilithium-\/s1\_kyber-\/s1\_rcs-\/256\_sha3-\/256"{}};}
+\DoxyCodeLine{01522\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\_configuration\_sets}}\ MPDC\_CONFIGURATION\_SET\ =\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a23b50906ca3bc89e20c3dbbaa2c3ebdc}{mpdc\_configuration\_set\_dilithium1\_kyber1\_rcs256\_shake256}};}
+\DoxyCodeLine{01523\ \textcolor{preprocessor}{\#elif\ defined(MPDC\_PARAMATERS\_DILITHIUM\_KYBER\_D3K3)}}
+\DoxyCodeLine{01524\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CONFIG\_STRING[\mbox{\hyperlink{mpdc_8h_a53daa720e5cbf99808d912b4d4b012b8}{MPDC\_PROTOCOL\_SET\_SIZE}}]\ =\ \textcolor{stringliteral}{"{}dilithium-\/s3\_kyber-\/s3\_rcs-\/256\_sha3-\/256"{}};}
+\DoxyCodeLine{01525\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\_configuration\_sets}}\ MPDC\_CONFIGURATION\_SET\ =\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47ae4a8bbabf16c44d6852bd80b8dab37cf}{mpdc\_configuration\_set\_dilithium3\_kyber3\_rcs256\_shake256}};}
+\DoxyCodeLine{01526\ \textcolor{preprocessor}{\#elif\ defined(MPDC\_PARAMATERS\_DILITHIUM\_KYBER\_D5K5)}}
+\DoxyCodeLine{01527\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CONFIG\_STRING[\mbox{\hyperlink{mpdc_8h_a53daa720e5cbf99808d912b4d4b012b8}{MPDC\_PROTOCOL\_SET\_SIZE}}]\ =\ \textcolor{stringliteral}{"{}dilithium-\/s5\_kyber-\/s5\_rcs-\/256\_sha3-\/256"{}};}
+\DoxyCodeLine{01528\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\_configuration\_sets}}\ MPDC\_CONFIGURATION\_SET\ =\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a6122fd37513c8aa024a25c8ba34fcca0}{mpdc\_configuration\_set\_dilithium5\_kyber5\_rcs256\_shake256}};}
+\DoxyCodeLine{01529\ \textcolor{preprocessor}{\#elif\ defined(MPDC\_PARAMATERS\_DILITHIUM\_KYBER\_D5K6)}}
+\DoxyCodeLine{01530\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CONFIG\_STRING[\mbox{\hyperlink{mpdc_8h_a53daa720e5cbf99808d912b4d4b012b8}{MPDC\_PROTOCOL\_SET\_SIZE}}]\ =\ \textcolor{stringliteral}{"{}dilithium-\/s5\_kyber-\/s6\_rcs-\/512\_sha3-\/512"{}};}
+\DoxyCodeLine{01531\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\_configuration\_sets}}\ MPDC\_CONFIGURATION\_SET\ =\ mpdc\_configuration\_set\_dilithium5\_kyber6\_rcs512\_shake512;}
+\DoxyCodeLine{01532\ \textcolor{preprocessor}{\#elif\ defined(MPDC\_PARAMATERS\_SPHINCSF\_MCELIECE\_SF1M1)\ }}
+\DoxyCodeLine{01533\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CONFIG\_STRING[\mbox{\hyperlink{mpdc_8h_a53daa720e5cbf99808d912b4d4b012b8}{MPDC\_PROTOCOL\_SET\_SIZE}}]\ =\ \textcolor{stringliteral}{"{}sphincs-\/1f\_mceliece-\/s1\_rcs-\/256\_sha3-\/256"{}};}
+\DoxyCodeLine{01534\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\_configuration\_sets}}\ MPDC\_CONFIGURATION\_SET\ =\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47ab911d4920a653fd016cd505fe672ec81}{mpdc\_configuration\_set\_sphincsplus1f\_mceliece1\_rcs256\_shake256}};}
+\DoxyCodeLine{01535\ \textcolor{preprocessor}{\#elif\ defined(MPDC\_PARAMATERS\_SPHINCSPLUS\_S1S128SHAKERS)}}
+\DoxyCodeLine{01536\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CONFIG\_STRING[\mbox{\hyperlink{mpdc_8h_a53daa720e5cbf99808d912b4d4b012b8}{MPDC\_PROTOCOL\_SET\_SIZE}}]\ =\ \textcolor{stringliteral}{"{}sphincs-\/1s\_mceliece-\/s1\_rcs-\/256\_sha3-\/256"{}};}
+\DoxyCodeLine{01537\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\_configuration\_sets}}\ MPDC\_CONFIGURATION\_SET\ =\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a935beeeaaf2b813cd6efcc6800aab363}{mpdc\_configuration\_set\_sphincsplus1s\_mceliece1\_rcs256\_shake256}};}
+\DoxyCodeLine{01538\ \textcolor{preprocessor}{\#elif\ defined(MPDC\_PARAMATERS\_SPHINCSF\_MCELIECE\_SF3M3)}}
+\DoxyCodeLine{01539\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CONFIG\_STRING[\mbox{\hyperlink{mpdc_8h_a53daa720e5cbf99808d912b4d4b012b8}{MPDC\_PROTOCOL\_SET\_SIZE}}]\ =\ \textcolor{stringliteral}{"{}sphincs-\/3f\_mceliece-\/s3\_rcs-\/256\_sha3-\/256"{}};}
+\DoxyCodeLine{01540\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\_configuration\_sets}}\ MPDC\_CONFIGURATION\_SET\ =\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47afd4d5ac8b12d3592c82b698556e7e31d}{mpdc\_configuration\_set\_sphincsplus3f\_mceliece3\_rcs256\_shake256}};}
+\DoxyCodeLine{01541\ \textcolor{preprocessor}{\#elif\ defined(MPDC\_PARAMATERS\_SPHINCSPLUS\_S3S192SHAKERS)}}
+\DoxyCodeLine{01542\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CONFIG\_STRING[\mbox{\hyperlink{mpdc_8h_a53daa720e5cbf99808d912b4d4b012b8}{MPDC\_PROTOCOL\_SET\_SIZE}}]\ =\ \textcolor{stringliteral}{"{}sphincs-\/3s\_mceliece-\/s3\_rcs-\/256\_sha3-\/256"{}};}
+\DoxyCodeLine{01543\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\_configuration\_sets}}\ MPDC\_CONFIGURATION\_SET\ =\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47ac3def5074a191311a3a0a0b08b781db9}{mpdc\_configuration\_set\_sphincsplus3s\_mceliece3\_rcs256\_shake256}};}
+\DoxyCodeLine{01544\ \textcolor{preprocessor}{\#elif\ defined(MPDC\_PARAMATERS\_SPHINCSF\_MCELIECE\_SF5M5)}}
+\DoxyCodeLine{01545\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CONFIG\_STRING[\mbox{\hyperlink{mpdc_8h_a53daa720e5cbf99808d912b4d4b012b8}{MPDC\_PROTOCOL\_SET\_SIZE}}]\ =\ \textcolor{stringliteral}{"{}sphincs-\/5f\_mceliece-\/s5\_rcs-\/256\_sha3-\/256"{}};}
+\DoxyCodeLine{01546\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\_configuration\_sets}}\ MPDC\_CONFIGURATION\_SET\ =\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a2769ce58c9da8bf6d043b13a338b52de}{mpdc\_configuration\_set\_sphincsplus5f\_mceliece5\_rcs256\_shake256}};}
+\DoxyCodeLine{01547\ \textcolor{preprocessor}{\#elif\ defined(MPDC\_PARAMATERS\_SPHINCSPLUS\_S5S256SHAKERS)}}
+\DoxyCodeLine{01548\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CONFIG\_STRING[\mbox{\hyperlink{mpdc_8h_a53daa720e5cbf99808d912b4d4b012b8}{MPDC\_PROTOCOL\_SET\_SIZE}}]\ =\ \textcolor{stringliteral}{"{}sphincs-\/5s\_mceliece-\/s5\_rcs-\/256\_sha3-\/256"{}};}
+\DoxyCodeLine{01549\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\_configuration\_sets}}\ MPDC\_CONFIGURATION\_SET\ =\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a9fd1d1414fa7dfe0ab9710bb4d0718c0}{mpdc\_configuration\_set\_sphincsplus5s\_mceliece5\_rcs256\_shake256}};}
+\DoxyCodeLine{01550\ \textcolor{preprocessor}{\#elif\ defined(MPDC\_PARAMATERS\_SPHINCSF\_MCELIECE\_SF5M6)}}
+\DoxyCodeLine{01551\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CONFIG\_STRING[\mbox{\hyperlink{mpdc_8h_a53daa720e5cbf99808d912b4d4b012b8}{MPDC\_PROTOCOL\_SET\_SIZE}}]\ =\ \textcolor{stringliteral}{"{}sphincs-\/5f\_mceliece-\/s6\_rcs-\/256\_sha3-\/256"{}};}
+\DoxyCodeLine{01552\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\_configuration\_sets}}\ MPDC\_CONFIGURATION\_SET\ =\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a898988f4371e1a98cc3f18d94defeb2d}{mpdc\_configuration\_set\_sphincsplus5f\_mceliece6\_rcs256\_shake256}};}
+\DoxyCodeLine{01553\ \textcolor{preprocessor}{\#elif\ defined(MPDC\_PARAMATERS\_SPHINCSPLUS\_S5S256SHAKERS)}}
+\DoxyCodeLine{01554\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CONFIG\_STRING[\mbox{\hyperlink{mpdc_8h_a53daa720e5cbf99808d912b4d4b012b8}{MPDC\_PROTOCOL\_SET\_SIZE}}]\ =\ \textcolor{stringliteral}{"{}sphincs-\/5s\_mceliece-\/s6\_rcs-\/256\_sha3-\/256"{}};}
+\DoxyCodeLine{01555\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\_configuration\_sets}}\ MPDC\_CONFIGURATION\_SET\ =\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a116b274d694c5ffcfce6cf3311cb6b4a}{mpdc\_configuration\_set\_sphincsplus5s\_mceliece6\_rcs256\_shake256}};}
+\DoxyCodeLine{01556\ \textcolor{preprocessor}{\#elif\ defined(MPDC\_PARAMATERS\_SPHINCSF\_MCELIECE\_SF5M7)}}
+\DoxyCodeLine{01557\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CONFIG\_STRING[\mbox{\hyperlink{mpdc_8h_a53daa720e5cbf99808d912b4d4b012b8}{MPDC\_PROTOCOL\_SET\_SIZE}}]\ =\ \textcolor{stringliteral}{"{}sphincs-\/5f\_mceliece-\/s7\_rcs-\/256\_sha3-\/256"{}};}
+\DoxyCodeLine{01558\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\_configuration\_sets}}\ MPDC\_CONFIGURATION\_SET\ =\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a60e9cecaf91df38f93a5a38363b09039}{mpdc\_configuration\_set\_sphincsplus5f\_mceliece7\_rcs256\_shake256}};}
+\DoxyCodeLine{01559\ \textcolor{preprocessor}{\#elif\ defined(MPDC\_PARAMATERS\_SPHINCSPLUS\_S5S256SHAKERS)}}
+\DoxyCodeLine{01560\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CONFIG\_STRING[\mbox{\hyperlink{mpdc_8h_a53daa720e5cbf99808d912b4d4b012b8}{MPDC\_PROTOCOL\_SET\_SIZE}}]\ =\ \textcolor{stringliteral}{"{}sphincs-\/5s\_mceliece-\/s7\_rcs-\/256\_sha3-\/256"{}};}
+\DoxyCodeLine{01561\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47}{mpdc\_configuration\_sets}}\ MPDC\_CONFIGURATION\_SET\ =\ \mbox{\hyperlink{mpdc_8h_a4d12b2b3f517ad5f4db14193bc1cee47a56b904d1c6655b50bf9cfa9700069f90}{mpdc\_configuration\_set\_sphincsplus5s\_mceliece7\_rcs256\_shake256}};}
+\DoxyCodeLine{01562\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{01563\ \textcolor{preprocessor}{\#\ \ \ error\ Invalid\ parameter\ set!}}
+\DoxyCodeLine{01564\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01565\ }
+\DoxyCodeLine{01567\ }
+\DoxyCodeLine{01569\ }
+\DoxyCodeLine{01570\ \textcolor{preprocessor}{\#define\ MPDC\_ROOT\_CERTIFICATE\_HEADER\_SIZE\ 64}}
+\DoxyCodeLine{01571\ \textcolor{preprocessor}{\#define\ MPDC\_ROOT\_CERTIFICATE\_HASH\_PREFIX\_SIZE\ 19}}
+\DoxyCodeLine{01572\ \textcolor{preprocessor}{\#define\ MPDC\_ROOT\_CERTIFICATE\_PUBLICKEY\_PREFIX\_SIZE\ 13}}
+\DoxyCodeLine{01573\ \textcolor{preprocessor}{\#define\ MPDC\_ROOT\_CERTIFICATE\_ISSUER\_PREFIX\_SIZE\ 9}}
+\DoxyCodeLine{01574\ \textcolor{preprocessor}{\#define\ MPDC\_ROOT\_CERTIFICATE\_NAME\_PREFIX\_SIZE\ 7}}
+\DoxyCodeLine{01575\ \textcolor{preprocessor}{\#define\ MPDC\_ROOT\_CERTIFICATE\_SERIAL\_PREFIX\_SIZE\ 9}}
+\DoxyCodeLine{01576\ \textcolor{preprocessor}{\#define\ MPDC\_ROOT\_CERTIFICATE\_FOOTER\_SIZE\ 64}}
+\DoxyCodeLine{01577\ \textcolor{preprocessor}{\#define\ MPDC\_ROOT\_CERTIFICATE\_VALID\_FROM\_PREFIX\_SIZE\ 13}}
+\DoxyCodeLine{01578\ \textcolor{preprocessor}{\#define\ MPDC\_ROOT\_CERTIFICATE\_EXPIRATION\_TO\_PREFIX\_SIZE\ 6}}
+\DoxyCodeLine{01579\ \textcolor{preprocessor}{\#define\ MPDC\_ROOT\_CERTIFICATE\_ALGORITHM\_PREFIX\_SIZE\ 12}}
+\DoxyCodeLine{01580\ \textcolor{preprocessor}{\#define\ MPDC\_ROOT\_CERTIFICATE\_VERSION\_PREFIX\_SIZE\ 10}}
+\DoxyCodeLine{01581\ \textcolor{preprocessor}{\#define\ MPDC\_ROOT\_CERTIFICATE\_DEFAULT\_NAME\_SIZE\ 18}}
+\DoxyCodeLine{01582\ \textcolor{preprocessor}{\#define\ MPDC\_ACTIVE\_VERSION\_STRING\_SIZE\ 5}}
+\DoxyCodeLine{01583\ }
+\DoxyCodeLine{01585\ }
+\DoxyCodeLine{01587\ }
+\DoxyCodeLine{01588\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_ROOT\_CERTIFICATE\_HEADER[MPDC\_ROOT\_CERTIFICATE\_HEADER\_SIZE]\ =\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/BEGIN\ MPDC\ ROOT\ PUBLIC\ CERTIFICATE\ BLOCK-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}};}
+\DoxyCodeLine{01589\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_ROOT\_CERTIFICATE\_ISSUER\_PREFIX[MPDC\_ROOT\_CERTIFICATE\_ISSUER\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}Issuer:\ "{}};}
+\DoxyCodeLine{01590\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_ROOT\_CERTIFICATE\_NAME\_PREFIX[MPDC\_ROOT\_CERTIFICATE\_NAME\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}Name:\ "{}};}
+\DoxyCodeLine{01591\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_ROOT\_CERTIFICATE\_SERIAL\_PREFIX[MPDC\_ROOT\_CERTIFICATE\_SERIAL\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}Serial:\ "{}};}
+\DoxyCodeLine{01592\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_ROOT\_CERTIFICATE\_VALID\_FROM\_PREFIX[MPDC\_ROOT\_CERTIFICATE\_VALID\_FROM\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}Valid\ From:\ "{}};}
+\DoxyCodeLine{01593\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_ROOT\_CERTIFICATE\_EXPIRATION\_TO\_PREFIX[MPDC\_ROOT\_CERTIFICATE\_EXPIRATION\_TO\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}\ To:\ "{}};}
+\DoxyCodeLine{01594\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_ROOT\_CERTIFICATE\_ALGORITHM\_PREFIX[MPDC\_ROOT\_CERTIFICATE\_ALGORITHM\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}Algorithm:\ "{}};}
+\DoxyCodeLine{01595\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_ROOT\_CERTIFICATE\_VERSION\_PREFIX[MPDC\_ROOT\_CERTIFICATE\_VERSION\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}Version:\ "{}};}
+\DoxyCodeLine{01596\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_ROOT\_CERTIFICATE\_HASH\_PREFIX[MPDC\_ROOT\_CERTIFICATE\_HASH\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}Certificate\ Hash:\ "{}};}
+\DoxyCodeLine{01597\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_ROOT\_CERTIFICATE\_PUBLICKEY\_PREFIX[MPDC\_ROOT\_CERTIFICATE\_PUBLICKEY\_PREFIX\_SIZE]\ =\ \textcolor{stringliteral}{"{}Public\ Key:\ "{}};}
+\DoxyCodeLine{01598\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_ROOT\_CERTIFICATE\_FOOTER[MPDC\_ROOT\_CERTIFICATE\_FOOTER\_SIZE]\ =\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/END\ MPDC\ ROOT\ PUBLIC\ CERTIFICATE\ BLOCK-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}};}
+\DoxyCodeLine{01599\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_ROOT\_CERTIFICATE\_DEFAULT\_NAME[MPDC\_ROOT\_CERTIFICATE\_DEFAULT\_NAME\_SIZE]\ =\ \textcolor{stringliteral}{"{}\ Root\ Certificate"{}};}
+\DoxyCodeLine{01600\ }
+\DoxyCodeLine{01601\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_ACTIVE\_VERSION\_STRING[MPDC\_ACTIVE\_VERSION\_STRING\_SIZE]\ =\ \textcolor{stringliteral}{"{}0x01"{}};}
+\DoxyCodeLine{01602\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CERTIFICATE\_CHILD\_EXTENSION[]\ =\ \textcolor{stringliteral}{"{}.ccert"{}};}
+\DoxyCodeLine{01603\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CERTIFICATE\_MFCOL\_EXTENSION[]\ =\ \textcolor{stringliteral}{"{}.mfcol"{}};}
+\DoxyCodeLine{01604\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CERTIFICATE\_ROOT\_EXTENSION[]\ =\ \textcolor{stringliteral}{"{}.rcert"{}};}
+\DoxyCodeLine{01605\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CERTIFICATE\_TOPOLOGY\_EXTENSION[]\ =\ \textcolor{stringliteral}{"{}.dtop"{}};}
+\DoxyCodeLine{01606\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_APPLICATION\_ROOT\_PATH[]\ =\ \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)MPDC"{}};}
+\DoxyCodeLine{01607\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CERTIFICATE\_BACKUP\_PATH[]\ =\ \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)Backup"{}};}
+\DoxyCodeLine{01608\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CERTIFICATE\_STORE\_PATH[]\ =\ \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)Certificates"{}};}
+\DoxyCodeLine{01609\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_ROOT\_CERTIFICATE\_PATH[]\ =\ \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)Root"{}};}
+\DoxyCodeLine{01610\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_CERTIFICATE\_TOPOLOGY\_PATH[]\ =\ \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)Topology"{}};}
+\DoxyCodeLine{01611\ }
+\DoxyCodeLine{01613\ }
+\DoxyCodeLine{01614\ \textcolor{preprocessor}{\#define\ MPDC\_NETWORK\_ERROR\_STRING\_DEPTH\ 28}}
+\DoxyCodeLine{01615\ \textcolor{preprocessor}{\#define\ MPDC\_NETWORK\_ERROR\_STRING\_SIZE\ 128}}
+\DoxyCodeLine{01616\ }
+\DoxyCodeLine{01618\ }
+\DoxyCodeLine{01619\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_NETWORK\_ERROR\_STRINGS[\mbox{\hyperlink{mpdc_8h_a378b4897f1bb21c73fcb69c91b7a9150}{MPDC\_NETWORK\_ERROR\_STRING\_DEPTH}}][MPDC\_NETWORK\_ERROR\_STRING\_SIZE]\ =}
+\DoxyCodeLine{01620\ \{}
+\DoxyCodeLine{01621\ \ \ \ \ \textcolor{stringliteral}{"{}No\ error\ was\ detected"{}},}
+\DoxyCodeLine{01622\ \ \ \ \ \textcolor{stringliteral}{"{}The\ socket\ accept\ function\ returned\ an\ error"{}},}
+\DoxyCodeLine{01623\ \ \ \ \ \textcolor{stringliteral}{"{}The\ cipher\ authentication\ has\ failed"{}},}
+\DoxyCodeLine{01624\ \ \ \ \ \textcolor{stringliteral}{"{}The\ keep\ alive\ check\ failed"{}},}
+\DoxyCodeLine{01625\ \ \ \ \ \textcolor{stringliteral}{"{}The\ communications\ channel\ has\ failed"{}},}
+\DoxyCodeLine{01626\ \ \ \ \ \textcolor{stringliteral}{"{}The\ device\ could\ not\ make\ a\ connnection\ to\ the\ remote\ host"{}},}
+\DoxyCodeLine{01627\ \ \ \ \ \textcolor{stringliteral}{"{}The\ decryption\ authentication\ has\ failed"{}},}
+\DoxyCodeLine{01628\ \ \ \ \ \textcolor{stringliteral}{"{}The\ transmission\ failed\ at\ the\ kex\ establish\ phase"{}},}
+\DoxyCodeLine{01629\ \ \ \ \ \textcolor{stringliteral}{"{}The\ connection\ experienced\ an\ unexpected\ error"{}},}
+\DoxyCodeLine{01630\ \ \ \ \ \textcolor{stringliteral}{"{}The\ server\ has\ run\ out\ of\ socket\ connections"{}},}
+\DoxyCodeLine{01631\ \ \ \ \ \textcolor{stringliteral}{"{}The\ random\ generator\ experienced\ a\ failure"{}},}
+\DoxyCodeLine{01632\ \ \ \ \ \textcolor{stringliteral}{"{}The\ input\ is\ invalid"{}},}
+\DoxyCodeLine{01633\ \ \ \ \ \textcolor{stringliteral}{"{}The\ request\ is\ invalid"{}},}
+\DoxyCodeLine{01634\ \ \ \ \ \textcolor{stringliteral}{"{}The\ keep\ alive\ has\ expired\ with\ no\ response"{}},}
+\DoxyCodeLine{01635\ \ \ \ \ \textcolor{stringliteral}{"{}The\ keepalive\ failure\ counter\ has\ exceeded\ maximum\ "{}},}
+\DoxyCodeLine{01636\ \ \ \ \ \textcolor{stringliteral}{"{}The\ kex\ authentication\ has\ failed"{}},}
+\DoxyCodeLine{01637\ \ \ \ \ \textcolor{stringliteral}{"{}The\ key-\/id\ is\ not\ recognized"{}},}
+\DoxyCodeLine{01638\ \ \ \ \ \textcolor{stringliteral}{"{}The\ certificate\ has\ expired"{}},}
+\DoxyCodeLine{01639\ \ \ \ \ \textcolor{stringliteral}{"{}The\ listener\ function\ failed\ to\ initialize"{}},}
+\DoxyCodeLine{01640\ \ \ \ \ \textcolor{stringliteral}{"{}The\ server\ has\ run\ out\ of\ memory"{}},}
+\DoxyCodeLine{01641\ \ \ \ \ \textcolor{stringliteral}{"{}The\ random\ generator\ experienced\ a\ failure"{}},}
+\DoxyCodeLine{01642\ \ \ \ \ \textcolor{stringliteral}{"{}The\ random\ generator\ experienced\ a\ failure"{}},}
+\DoxyCodeLine{01643\ \ \ \ \ \textcolor{stringliteral}{"{}The\ ratchet\ operation\ has\ failed"{}},}
+\DoxyCodeLine{01644\ \ \ \ \ \textcolor{stringliteral}{"{}The\ receiver\ failed\ at\ the\ network\ layer"{}},}
+\DoxyCodeLine{01645\ \ \ \ \ \textcolor{stringliteral}{"{}The\ transmitter\ failed\ at\ the\ network\ layer"{}},}
+\DoxyCodeLine{01646\ \ \ \ \ \textcolor{stringliteral}{"{}The\ protocol\ version\ is\ unknown"{}},}
+\DoxyCodeLine{01647\ \ \ \ \ \textcolor{stringliteral}{"{}The\ packet\ was\ received\ out\ of\ sequence"{}},}
+\DoxyCodeLine{01648\ \ \ \ \ \textcolor{stringliteral}{"{}The\ expected\ data\ could\ not\ be\ verified"{}}}
+\DoxyCodeLine{01649\ \};}
+\DoxyCodeLine{01650\ }
+\DoxyCodeLine{01651\ \textcolor{preprocessor}{\#define\ MPDC\_PROTOCOL\_ERROR\_STRING\_DEPTH\ 44}}
+\DoxyCodeLine{01652\ \textcolor{preprocessor}{\#define\ MPDC\_PROTOCOL\_ERROR\_STRING\_SIZE\ 128}}
+\DoxyCodeLine{01653\ }
+\DoxyCodeLine{01654\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ MPDC\_PROTOCOL\_ERROR\_STRINGS[MPDC\_PROTOCOL\_ERROR\_STRING\_DEPTH][MPDC\_PROTOCOL\_ERROR\_STRING\_SIZE]\ =}
+\DoxyCodeLine{01655\ \{}
+\DoxyCodeLine{01656\ \ \ \ \ \textcolor{stringliteral}{"{}No\ error\ was\ detected"{}},}
+\DoxyCodeLine{01657\ \ \ \ \ \textcolor{stringliteral}{"{}The\ symmetric\ cipher\ had\ an\ authentication\ failure"{}},}
+\DoxyCodeLine{01658\ \ \ \ \ \textcolor{stringliteral}{"{}The\ node\ certificate\ could\ not\ be\ found"{}},}
+\DoxyCodeLine{01659\ \ \ \ \ \textcolor{stringliteral}{"{}The\ communications\ channel\ has\ failed"{}},}
+\DoxyCodeLine{01660\ \ \ \ \ \textcolor{stringliteral}{"{}The\ device\ could\ not\ make\ a\ connection\ to\ the\ remote\ host"{}},}
+\DoxyCodeLine{01661\ \ \ \ \ \textcolor{stringliteral}{"{}The\ transmission\ failed\ at\ the\ KEX\ connection\ phase"{}},}
+\DoxyCodeLine{01662\ \ \ \ \ \textcolor{stringliteral}{"{}The\ convergence\ call\ has\ returned\ an\ error"{}},}
+\DoxyCodeLine{01663\ \ \ \ \ \textcolor{stringliteral}{"{}The\ database\ is\ already\ synchronized"{}},}
+\DoxyCodeLine{01664\ \ \ \ \ \textcolor{stringliteral}{"{}The\ asymmetric\ cipher\ failed\ to\ decapsulate\ the\ shared\ secret"{}},}
+\DoxyCodeLine{01665\ \ \ \ \ \textcolor{stringliteral}{"{}The\ node\ or\ certificate\ decoding\ failed"{}},}
+\DoxyCodeLine{01666\ \ \ \ \ \textcolor{stringliteral}{"{}The\ decryption\ authentication\ has\ failed"{}},}
+\DoxyCodeLine{01667\ \ \ \ \ \textcolor{stringliteral}{"{}The\ transmission\ failed\ at\ the\ KEX\ establish\ phase"{}},}
+\DoxyCodeLine{01668\ \ \ \ \ \textcolor{stringliteral}{"{}The\ transmission\ failed\ at\ the\ KEX\ exchange\ phase"{}},}
+\DoxyCodeLine{01669\ \ \ \ \ \textcolor{stringliteral}{"{}The\ application\ could\ not\ delete\ a\ local\ file"{}},}
+\DoxyCodeLine{01670\ \ \ \ \ \textcolor{stringliteral}{"{}The\ file\ could\ not\ be\ found"{}},}
+\DoxyCodeLine{01671\ \ \ \ \ \textcolor{stringliteral}{"{}The\ file\ could\ not\ be\ written\ to\ storage"{}},}
+\DoxyCodeLine{01672\ \ \ \ \ \textcolor{stringliteral}{"{}The\ public-\/key\ hash\ is\ invalid"{}},}
+\DoxyCodeLine{01673\ \ \ \ \ \textcolor{stringliteral}{"{}The\ server\ has\ run\ out\ of\ socket\ connections"{}},}
+\DoxyCodeLine{01674\ \ \ \ \ \textcolor{stringliteral}{"{}The\ packet\ flag\ was\ unexpected"{}},}
+\DoxyCodeLine{01675\ \ \ \ \ \textcolor{stringliteral}{"{}The\ certificate\ has\ expired\ and\ is\ invalid"{}},}
+\DoxyCodeLine{01676\ \ \ \ \ \textcolor{stringliteral}{"{}The\ MPDC\ public\ key\ has\ expired\ "{}},}
+\DoxyCodeLine{01677\ \ \ \ \ \textcolor{stringliteral}{"{}The\ key\ identity\ is\ unrecognized"{}},}
+\DoxyCodeLine{01678\ \ \ \ \ \textcolor{stringliteral}{"{}The\ listener\ function\ failed\ to\ initialize"{}},}
+\DoxyCodeLine{01679\ \ \ \ \ \textcolor{stringliteral}{"{}The\ server\ has\ run\ out\ of\ memory"{}},}
+\DoxyCodeLine{01680\ \ \ \ \ \textcolor{stringliteral}{"{}The\ network\ time\ is\ invalid\ or\ has\ substantial\ delay"{}},}
+\DoxyCodeLine{01681\ \ \ \ \ \textcolor{stringliteral}{"{}The\ expected\ data\ could\ not\ be\ verified"{}},}
+\DoxyCodeLine{01682\ \ \ \ \ \textcolor{stringliteral}{"{}The\ server\ has\ no\ usable\ IP\ address,\ assign\ in\ configuration"{}},}
+\DoxyCodeLine{01683\ \ \ \ \ \textcolor{stringliteral}{"{}The\ node\ is\ offline\ or\ not\ available\ for\ connection"{}},}
+\DoxyCodeLine{01684\ \ \ \ \ \textcolor{stringliteral}{"{}The\ node\ could\ not\ be\ found\ in\ the\ database"{}},}
+\DoxyCodeLine{01685\ \ \ \ \ \textcolor{stringliteral}{"{}The\ node\ was\ previously\ registered\ in\ the\ database"{}},}
+\DoxyCodeLine{01686\ \ \ \ \ \textcolor{stringliteral}{"{}The\ operation\ was\ cancelled\ by\ the\ user"{}},}
+\DoxyCodeLine{01687\ \ \ \ \ \textcolor{stringliteral}{"{}The\ packet\ header\ received\ was\ invalid"{}},}
+\DoxyCodeLine{01688\ \ \ \ \ \textcolor{stringliteral}{"{}The\ packet\ was\ received\ out\ of\ sequence"{}},}
+\DoxyCodeLine{01689\ \ \ \ \ \textcolor{stringliteral}{"{}The\ receiver\ failed\ at\ the\ network\ layer"{}},}
+\DoxyCodeLine{01690\ \ \ \ \ \textcolor{stringliteral}{"{}The\ root\ signature\ failed\ authentication"{}},}
+\DoxyCodeLine{01691\ \ \ \ \ \textcolor{stringliteral}{"{}The\ certificate\ could\ not\ be\ serialized"{}},}
+\DoxyCodeLine{01692\ \ \ \ \ \textcolor{stringliteral}{"{}The\ signature\ scheme\ could\ not\ sign\ a\ message"{}},}
+\DoxyCodeLine{01693\ \ \ \ \ \textcolor{stringliteral}{"{}The\ transmission\ failed\ to\ sign\ the\ data"{}},}
+\DoxyCodeLine{01694\ \ \ \ \ \textcolor{stringliteral}{"{}The\ socket\ could\ not\ be\ bound\ to\ an\ IP\ address"{}},}
+\DoxyCodeLine{01695\ \ \ \ \ \textcolor{stringliteral}{"{}The\ socket\ could\ not\ be\ created"{}},}
+\DoxyCodeLine{01696\ \ \ \ \ \textcolor{stringliteral}{"{}The\ transmitter\ failed\ at\ the\ network\ layer"{}},}
+\DoxyCodeLine{01697\ \ \ \ \ \textcolor{stringliteral}{"{}The\ topological\ database\ has\ no\ agent\ entries"{}},}
+\DoxyCodeLine{01698\ \ \ \ \ \textcolor{stringliteral}{"{}The\ protocol\ string\ was\ not\ recognized"{}},}
+\DoxyCodeLine{01699\ \ \ \ \ \textcolor{stringliteral}{"{}The\ transmission\ failed\ at\ the\ KEX\ verify\ phase"{}}}
+\DoxyCodeLine{01700\ \};}
+\DoxyCodeLine{01701\ }
+\DoxyCodeLine{01703\ }
+\DoxyCodeLine{01704\ \textcolor{comment}{/*\ API\ */}}
+\DoxyCodeLine{01705\ }
+\DoxyCodeLine{01713\ MPDC\_EXPORT\_API\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mpdc_8h_ae03058849734f5dd9384865ac9187e8c}{mpdc\_connection\_close}}(qsc\_socket*\ rsock,\ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022b}{mpdc\_network\_errors}}\ err,\ \textcolor{keywordtype}{bool}\ notify);}
+\DoxyCodeLine{01714\ }
+\DoxyCodeLine{01725\ MPDC\_EXPORT\_API\ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022b}{mpdc\_network\_errors}}\ \mbox{\hyperlink{mpdc_8h_a84bea8ceb98acb62e87ff7c1c6567357}{mpdc\_decrypt\_packet}}(\mbox{\hyperlink{structmpdc__connection__state}{mpdc\_connection\_state}}*\ cns,\ uint8\_t*\ message,\ \textcolor{keywordtype}{size\_t}*\ msglen,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structmpdc__network__packet}{mpdc\_network\_packet}}*\ packetin);}
+\DoxyCodeLine{01726\ }
+\DoxyCodeLine{01737\ MPDC\_EXPORT\_API\ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022b}{mpdc\_network\_errors}}\ \mbox{\hyperlink{mpdc_8h_a92f531897fe53f948e2c417013442509}{mpdc\_encrypt\_packet}}(\mbox{\hyperlink{structmpdc__connection__state}{mpdc\_connection\_state}}*\ cns,\ \mbox{\hyperlink{structmpdc__network__packet}{mpdc\_network\_packet}}*\ packetout,\ \textcolor{keyword}{const}\ uint8\_t*\ message,\ \textcolor{keywordtype}{size\_t}\ msglen);}
+\DoxyCodeLine{01738\ }
+\DoxyCodeLine{01744\ MPDC\_EXPORT\_API\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mpdc_8h_a6412588a0165effa66d12c3a8ea74338}{mpdc\_connection\_state\_dispose}}(\mbox{\hyperlink{structmpdc__connection__state}{mpdc\_connection\_state}}*\ cns);}
+\DoxyCodeLine{01745\ }
+\DoxyCodeLine{01753\ MPDC\_EXPORT\_API\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{mpdc_8h_acfa122c94a458c34bd24b2a35a791b66}{mpdc\_network\_error\_to\_string}}(\mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022b}{mpdc\_network\_errors}}\ error);}
+\DoxyCodeLine{01754\ }
+\DoxyCodeLine{01762\ MPDC\_EXPORT\_API\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{mpdc_8h_a7c65731c3eac11899a22120d385a376a}{mpdc\_protocol\_error\_to\_string}}(\mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\_protocol\_errors}}\ error);}
+\DoxyCodeLine{01763\ }
+\DoxyCodeLine{01769\ MPDC\_EXPORT\_API\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mpdc_8h_a4a16395b6e8dc5a6a150dc4afc7462f1}{mpdc\_packet\_clear}}(\mbox{\hyperlink{structmpdc__network__packet}{mpdc\_network\_packet}}*\ packet);}
+\DoxyCodeLine{01770\ }
+\DoxyCodeLine{01777\ MPDC\_EXPORT\_API\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mpdc_8h_a368b0322cdf0d6bd4dc007c6024d0666}{mpdc\_packet\_error\_message}}(\mbox{\hyperlink{structmpdc__network__packet}{mpdc\_network\_packet}}*\ packet,\ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\_protocol\_errors}}\ error);}
+\DoxyCodeLine{01778\ }
+\DoxyCodeLine{01785\ MPDC\_EXPORT\_API\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mpdc_8h_a230827e962360f4726c1632dbe331a3f}{mpdc\_packet\_header\_deserialize}}(\textcolor{keyword}{const}\ uint8\_t*\ header,\ \mbox{\hyperlink{structmpdc__network__packet}{mpdc\_network\_packet}}*\ packet);}
+\DoxyCodeLine{01786\ }
+\DoxyCodeLine{01793\ MPDC\_EXPORT\_API\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mpdc_8h_a5663802dacb3228f42e320a152f8fd93}{mpdc\_packet\_header\_serialize}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structmpdc__network__packet}{mpdc\_network\_packet}}*\ packet,\ uint8\_t*\ header);}
+\DoxyCodeLine{01794\ }
+\DoxyCodeLine{01800\ MPDC\_EXPORT\_API\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mpdc_8h_af3a553818adf967a302419d51a7efb5c}{mpdc\_packet\_set\_utc\_time}}(\mbox{\hyperlink{structmpdc__network__packet}{mpdc\_network\_packet}}*\ packet);}
+\DoxyCodeLine{01801\ }
+\DoxyCodeLine{01809\ MPDC\_EXPORT\_API\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{mpdc_8h_a1cb87436a1cad7d4c852a6de9af1b784}{mpdc\_packet\_time\_valid}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structmpdc__network__packet}{mpdc\_network\_packet}}*\ packet);}
+\DoxyCodeLine{01810\ }
+\DoxyCodeLine{01819\ MPDC\_EXPORT\_API\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{mpdc_8h_a763a1f0f423d3e23c39ed5412336bd20}{mpdc\_packet\_to\_stream}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structmpdc__network__packet}{mpdc\_network\_packet}}*\ packet,\ uint8\_t*\ pstream);}
+\DoxyCodeLine{01820\ }
+\DoxyCodeLine{01827\ MPDC\_EXPORT\_API\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mpdc_8h_ad5c4d2dfadb404b518db7bc70a0f8c42}{mpdc\_stream\_to\_packet}}(\textcolor{keyword}{const}\ uint8\_t*\ pstream,\ \mbox{\hyperlink{structmpdc__network__packet}{mpdc\_network\_packet}}*\ packet);}
+\DoxyCodeLine{01828\ }
+\DoxyCodeLine{01829\ }
+\DoxyCodeLine{01830\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

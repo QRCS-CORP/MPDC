@@ -1,0 +1,151 @@
+\doxysection{kex.\+h}
+\hypertarget{kex_8h_source}{}\label{kex_8h_source}\index{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/Saved/kex.h@{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/Saved/kex.h}}
+\mbox{\hyperlink{kex_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*\ 2023\ Quantum\ Secure\ Cryptographic\ Solutions\ QSCS\ Corp.\ (QSCS.ca)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{*\ All\ Rights\ Reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{*}}
+\DoxyCodeLine{00004\ \textcolor{comment}{*\ NOTICE:\ \ All\ information\ contained\ herein\ is,\ and\ remains}}
+\DoxyCodeLine{00005\ \textcolor{comment}{*\ the\ property\ of\ the\ QSCS\ Corporation.}}
+\DoxyCodeLine{00006\ \textcolor{comment}{*\ The\ intellectual\ and\ technical\ concepts\ contained}}
+\DoxyCodeLine{00007\ \textcolor{comment}{*\ herein\ are\ proprietary\ to\ the\ QSCS\ Corporation}}
+\DoxyCodeLine{00008\ \textcolor{comment}{*\ and\ its\ suppliers\ and\ may\ be\ covered\ by\ U.S.\ and\ Foreign\ Patents,}}
+\DoxyCodeLine{00009\ \textcolor{comment}{*\ patents\ in\ process,\ and\ are\ protected\ by\ trade\ secret\ or\ copyright\ law.}}
+\DoxyCodeLine{00010\ \textcolor{comment}{*\ Dissemination\ of\ this\ information\ or\ reproduction\ of\ this\ material}}
+\DoxyCodeLine{00011\ \textcolor{comment}{*\ is\ strictly\ forbidden\ unless\ prior\ written\ permission\ is\ obtained}}
+\DoxyCodeLine{00012\ \textcolor{comment}{*\ from\ the\ QSCS\ Corporation.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{*}}
+\DoxyCodeLine{00014\ \textcolor{comment}{*\ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{00015\ \textcolor{comment}{*\ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{00016\ \textcolor{comment}{*\ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.}}
+\DoxyCodeLine{00017\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#ifndef\ MPDC\_KEX\_H}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ MPDC\_KEX\_H}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ "{}common.h"{}}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{mpdc_8h}{mpdc.h}}"{}}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00038\ \textcolor{comment}{*\ Client\ to\ Server:}}
+\DoxyCodeLine{00039\ \textcolor{comment}{*\ On\ internal\ network,\ client\ could\ have\ the\ RDS\ public\ verification\ key.}}
+\DoxyCodeLine{00040\ \textcolor{comment}{*\ On\ external\ network,\ how\ would\ the\ client\ get\ that\ key?}}
+\DoxyCodeLine{00041\ \textcolor{comment}{*\ How\ would\ browsers\ authenticate\ websites\ for\ example?}}
+\DoxyCodeLine{00042\ \textcolor{comment}{*\ This\ is\ done\ using\ IDGs,\ which\ are\ part\ of\ the\ ISPs\ infrastructure.}}
+\DoxyCodeLine{00043\ \textcolor{comment}{*\ An\ IDG\ caches\ RDS\ certificates\ of\ other\ ISPs,\ which\ in\ turn\ sign\ domain\ certificates\ }}
+\DoxyCodeLine{00044\ \textcolor{comment}{*\ of\ domain\ operators\ on\ their\ network.\ }}
+\DoxyCodeLine{00045\ \textcolor{comment}{*\ IDGs\ keep\ caches\ of\ ISP\ level\ certificates,\ and\ are\ able\ authenticate\ or\ forward\ an\ IDGs\ public\ signature\ key.}}
+\DoxyCodeLine{00046\ \textcolor{comment}{*\ The\ ISPs\ charge\ the\ domain\ operators\ for\ signing\ their\ certificates,\ which\ can\ include\ reliability\ metrics}}
+\DoxyCodeLine{00047\ \textcolor{comment}{*\ to\ create\ a\ dynamic\ pricing\ model\ e.g.\ phishing\ sites\ can\ be\ downgraded\ in\ the\ reliability\ model,}}
+\DoxyCodeLine{00048\ \textcolor{comment}{*\ which\ translates\ to\ how\ browsers\ and\ other\ softwares\ apply\ permissions\ to\ a\ website.}}
+\DoxyCodeLine{00049\ \textcolor{comment}{*\ Upstream\ ISPs\ can\ negotiate\ IDG\ database\ contracts\ in\ a\ similar\ way\ that\ BGP\ is\ done,}}
+\DoxyCodeLine{00050\ \textcolor{comment}{*\ Conditional\ peering\ arrangements,\ in\ which\ a\ sliding\ scal\ cost\ structure\ is\ applied\ depending\ on}}
+\DoxyCodeLine{00051\ \textcolor{comment}{*\ request\ volume\ and\ the\ relaibility\ of\ the\ traffic.}}
+\DoxyCodeLine{00052\ \textcolor{comment}{*\ Downstream\ ISPs\ peer\ to\ upstream\ ISPs,\ from\ which\ they\ can\ do\ recursive\ authentication\ queries,}}
+\DoxyCodeLine{00053\ \textcolor{comment}{*\ and\ can\ also\ be\ 'taxed'\ based\ on\ their\ reliability\ metrics.}}
+\DoxyCodeLine{00054\ \textcolor{comment}{*\ ISPs\ charge\ client\ domains\ for\ the\ security\ service\ as\ part\ of\ their\ pricing\ model\ just\ like\ DNS,}}
+\DoxyCodeLine{00055\ \textcolor{comment}{*\ They\ sign\ certificates,\ guaranteeing\ the\ ownership\ of\ domains\ they\ host,\ and\ are\ responsible\ for}}
+\DoxyCodeLine{00056\ \textcolor{comment}{*\ the\ reliability\ metric\ applied\ to\ that\ certificate\ which\ is\ generated\ in\ a\ dynamic\ model.}}
+\DoxyCodeLine{00057\ \textcolor{comment}{*\ The\ ISP\ can\ downgrade\ reliability,\ which\ in\ turn\ can\ interact\ with\ software\ at\ the\ user\ level,\ }}
+\DoxyCodeLine{00058\ \textcolor{comment}{*\ applying\ or\ removing\ permissions\ based\ on\ the\ trust\ metric\ of\ a\ domain.\ }}
+\DoxyCodeLine{00059\ \textcolor{comment}{*\ Likewise,\ traffic\ that\ is\ rejected\ by\ a\ local\ IDG,\ can\ reduce\ the\ trust\ metric\ of\ the\ remote\ domain\ via}}
+\DoxyCodeLine{00060\ \textcolor{comment}{*\ the\ IDG,\ which\ caches\ the\ certificate.\ This\ distributes\ control\ over\ how\ clients\ on\ the\ network\ perceive\ the\ trust,}}
+\DoxyCodeLine{00061\ \textcolor{comment}{*\ while\ applying\ the\ same\ controls\ to\ the\ domain\ host.\ }}
+\DoxyCodeLine{00062\ \textcolor{comment}{*\ An\ economic\ cost\ can\ be\ applied,\ via\ the\ trust\ relationships\ between\ ISPs,\ and\ ISP\ and\ domain,}}
+\DoxyCodeLine{00063\ \textcolor{comment}{*\ using\ 'living\ contracts'\ in\ which\ the\ cost\ of\ maintaining\ the\ peer\ relationship\ goes\ up\ for\ bad\ actors,}}
+\DoxyCodeLine{00064\ \textcolor{comment}{*\ or\ for\ the\ ISPs\ that\ host\ them.}}
+\DoxyCodeLine{00065\ \textcolor{comment}{*\ This\ shifts\ authentication\ reponsibility\ onto\ the\ upstream\ ISPs,\ which\ contract\ IP\ space\ and\ bandwidth}}
+\DoxyCodeLine{00066\ \textcolor{comment}{*\ to\ smaller\ ISPs,\ and\ in\ turn,\ downstream\ ISPs\ and\ the\ domains\ they\ host.\ }}
+\DoxyCodeLine{00067\ \textcolor{comment}{*\ Downstream\ ISPs\ that\ host\ bad\ actors\ would\ see\ the\ cost\ of\ their\ access\ increase,\ and\ can\ apply\ that\ cost}}
+\DoxyCodeLine{00068\ \textcolor{comment}{*\ to\ the\ bad\ domains,\ or\ revoke\ their\ access.}}
+\DoxyCodeLine{00069\ \textcolor{comment}{*\ A\ host\ connects\ to\ a\ website\ and\ receives\ a\ certificate\ from\ a\ domain\ it\ does\ not\ know.}}
+\DoxyCodeLine{00070\ \textcolor{comment}{*\ It\ queries\ the\ domain\ level\ IDG,\ to\ see\ if\ the\ gateway\ has\ this\ certificate\ cached.}}
+\DoxyCodeLine{00071\ \textcolor{comment}{*\ If\ the\ domain\ level\ IDG\ does\ not\ know\ this\ domain,\ it\ forwards\ the\ query\ to\ the\ ISP\ level\ IDG.}}
+\DoxyCodeLine{00072\ \textcolor{comment}{*\ The\ ISP\ level\ IDG\ may\ be\ a\ downstream\ ISP,\ if\ it\ does\ not\ know\ the\ certificate,\ it\ forwards\ the\ query\ to\ the\ upstream\ ISP.}}
+\DoxyCodeLine{00073\ \textcolor{comment}{*\ If\ the\ upstream\ ISP\ does\ not\ know\ the\ certificate,\ or\ the\ ISP\ that\ issued\ it,\ it\ queries\ other\ ISPs\ that\ it\ has\ a\ relationship\ with.}}
+\DoxyCodeLine{00074\ \textcolor{comment}{*\ If\ the\ upstream\ ISP\ knows\ the\ issuer,\ or\ knows\ of\ the\ issuers\ upstream\ ISP,\ then\ it\ verifies\ the\ certificate\ with\ them.}}
+\DoxyCodeLine{00075\ \textcolor{comment}{*\ This\ can\ be\ done\ using\ hints;\ the\ serial\ number\ of\ the\ certificate\ contains\ 4\ 128-\/bit\ identifiers:}}
+\DoxyCodeLine{00076\ \textcolor{comment}{*\ The\ certificate\ serial\ number,\ a\ unique\ number\ associated\ with\ that\ certificate.\ }}
+\DoxyCodeLine{00077\ \textcolor{comment}{*\ The\ domain\ level\ serial\ number,\ which\ is\ the\ serial\ number\ of\ the\ domains\ certificate.}}
+\DoxyCodeLine{00078\ \textcolor{comment}{*\ The\ hosting\ ISP\ serial\ number,\ which\ is\ the\ ISPs\ certificate\ serial\ number.}}
+\DoxyCodeLine{00079\ \textcolor{comment}{*\ The\ upstream\ ISPs\ serial\ number,\ this\ is\ the\ guarantor\ of\ the\ ISP\ hosting\ the\ domain.}}
+\DoxyCodeLine{00080\ \textcolor{comment}{*\ ISPs\ can\ have\ multiple\ certificates,\ as\ can\ domains,\ and\ the\ serial\ number\ is\ a\ composite\ of\ the\ unique\ identifier\ of\ the\ certificate,}}
+\DoxyCodeLine{00081\ \textcolor{comment}{*\ and\ an\ address\ identifier,\ indicating\ which\ entity\ owns\ the\ certificate.}}
+\DoxyCodeLine{00082\ \textcolor{comment}{*\ domain\ level\ id:\ 24-\/bits\ identify\ the\ upstream\ ISP,\ 24-\/bits\ identify\ the\ hosting\ ISP,\ 24-\/bits\ identify\ the\ domain,\ }}
+\DoxyCodeLine{00083\ \textcolor{comment}{*\ 16\ bits\ identify\ the\ server,\ and\ the\ remaining\ 16-\/bits\ identify\ the\ certificate\ itself.}}
+\DoxyCodeLine{00084\ \textcolor{comment}{*\ }}
+\DoxyCodeLine{00085\ \textcolor{comment}{*\ }}
+\DoxyCodeLine{00086\ \textcolor{comment}{*\ }}
+\DoxyCodeLine{00087\ \textcolor{comment}{*\ Server\ to\ Agent:}}
+\DoxyCodeLine{00088\ \textcolor{comment}{*\ }}
+\DoxyCodeLine{00089\ \textcolor{comment}{*\ }}
+\DoxyCodeLine{00090\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00096\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775}{mpdc\_kex\_flags}}}
+\DoxyCodeLine{00097\ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775ae556bd193c295b1f7135bd609a2d8e67}{mpdc\_kex\_flag\_none}}\ =\ 0x00,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00099\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775abfbbb4420054fc9420f1c17dac43f365}{mpdc\_kex\_flag\_connect\_request}}\ =\ 0x01,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00100\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775acb1b9e9f1552d6bfaaf20a6454a65d41}{mpdc\_kex\_flag\_connect\_response}}\ =\ 0x02,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00101\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a62a224c433ac1565b8403e77d5e5e150}{mpdc\_kex\_flag\_connection\_terminate}}\ =\ 0x03,\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00102\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775ab9a708c7a2ae347e1f10da46873920d0}{mpdc\_kex\_flag\_encrypted\_message}}\ =\ 0x04,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00103\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a425a05672ce59847716a65e7da04dbec}{mpdc\_kex\_flag\_exstart\_request}}\ =\ 0x05,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00104\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775aa4312d2643b7156030226c61ed0c22a5}{mpdc\_kex\_flag\_exstart\_response}}\ =\ 0x06,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00105\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775af49de8fc95f0da5395a84ac990986b90}{mpdc\_kex\_flag\_exchange\_request}}\ =\ 0x07,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00106\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a78004f467717fe8c1eb70976d4bc76b4}{mpdc\_kex\_flag\_exchange\_response}}\ =\ 0x08,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00107\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a64504cb5aa74ebaf2d2789cbc82630fa}{mpdc\_kex\_flag\_establish\_request}}\ =\ 0x09,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00108\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775aad33f71dc051f7d2c0cf3cbea035dabd}{mpdc\_kex\_flag\_establish\_response}}\ =\ 0x0A,\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00109\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775ac51fb02125f508764c7fb3d82685a6eb}{mpdc\_kex\_flag\_keep\_alive\_request}}\ =\ 0x0B,\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00110\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a26d7f881a9aa1ed4e18ba19103de5127}{mpdc\_kex\_flag\_keep\_alive\_response}}\ =\ 0x0C,\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00111\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a605adf6457517f5197daf9ccad6ebf6f}{mpdc\_kex\_flag\_remote\_connected}}\ =\ 0x0D,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00112\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a320a0d1ade5ba3080fda125ae77c95c8}{mpdc\_kex\_flag\_remote\_terminated}}\ =\ 0x0E,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00113\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a4059559a7e9459273d538db228e36538}{mpdc\_kex\_flag\_session\_established}}\ =\ 0x0F,\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00114\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775af80d662be430b41a07d76846aa51cad3}{mpdc\_kex\_flag\_session\_establish\_verify}}\ =\ 0x10,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00115\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a14c463e62df4303d065523c7b8063b00}{mpdc\_kex\_flag\_unrecognized\_protocol}}\ =\ 0x11,\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00116\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a32b8b70d4e65cb8a2b3ea12979f1911b}{mpdc\_kex\_flag\_ratchet\_request}}\ =\ 0x12,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00117\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775a2c436402472217a528fc709871c89fae}{mpdc\_kex\_flag\_transfer\_request}}\ =\ 0x13,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00118\ \ \ \ \ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775af6c3b2ecec4eebdecf6041fb034e75ba}{mpdc\_kex\_flag\_error\_condition}}\ =\ 0xFF,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00119\ \}\ \mbox{\hyperlink{kex_8h_a31c07b7b62eb451c01887d2649110775}{mpdc\_kex\_flags}};}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00125\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmpdc__kex__client__state}{mpdc\_kex\_client\_state}}}
+\DoxyCodeLine{00126\ \{}
+\DoxyCodeLine{00127\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__kex__client__state_a8a92a81f741df9e50a5ff1325b812f02}{keyid}}[\mbox{\hyperlink{mpdc_8h_a945d2c8137c447b76ee2619ddc03ad3f}{MPDC\_CERTIFICATE\_SERIAL\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00128\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__kex__client__state_a13b735ecfa2b96600d4b30681e7a1c9f}{rverkey}}[\mbox{\hyperlink{mpdc_8h_a3323909111e7aa42bde0523f1b562d8e}{MPDC\_ASYMMETRIC\_VERIFICATION\_KEY\_SIZE}}];\ }
+\DoxyCodeLine{00129\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__kex__client__state_aabb34854084db7032fac3b46b59bbe85}{schash}}[\mbox{\hyperlink{mpdc_8h_a8a86a220ebe0faa467531261b2721d1c}{MPDC\_CERTIFICATE\_HASH\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00130\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__kex__client__state_aa82cc20557308e0778433e102f4ccabc}{verkey}}[\mbox{\hyperlink{mpdc_8h_a3323909111e7aa42bde0523f1b562d8e}{MPDC\_ASYMMETRIC\_VERIFICATION\_KEY\_SIZE}}];\ \ \ }
+\DoxyCodeLine{00131\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structmpdc__kex__client__state_a1ae51b327f1029829c86907444d6d371}{expiration}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00132\ \}\ \mbox{\hyperlink{structmpdc__kex__client__state}{mpdc\_kex\_client\_state}};}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00138\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmpdc__kex__server__state}{mpdc\_kex\_server\_state}}}
+\DoxyCodeLine{00139\ \{}
+\DoxyCodeLine{00140\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__kex__server__state_a528c5158041ad721c29b54efdd81972a}{keyid}}[\mbox{\hyperlink{mpdc_8h_a945d2c8137c447b76ee2619ddc03ad3f}{MPDC\_CERTIFICATE\_SERIAL\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00141\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__kex__server__state_aad3827d7c86ca7c67f882337fa015001}{schash}}[\mbox{\hyperlink{mpdc_8h_a8a86a220ebe0faa467531261b2721d1c}{MPDC\_CERTIFICATE\_HASH\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00142\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__kex__server__state_a29ea28ad409b6c081c71676316d6f9be}{prikey}}[\mbox{\hyperlink{mpdc_8h_a28212f992c3bf4ada55c543e87199233}{MPDC\_ASYMMETRIC\_PRIVATE\_KEY\_SIZE}}];\ \ \ \ \ }
+\DoxyCodeLine{00143\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__kex__server__state_ab3c52b3b07b88083c35508f3ead0c6a9}{pubkey}}[\mbox{\hyperlink{mpdc_8h_a8d53851ff6d4d6b4b06ccbb4c2cfb842}{MPDC\_ASYMMETRIC\_PUBLIC\_KEY\_SIZE}}];\ \ \ \ \ \ \ }
+\DoxyCodeLine{00144\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__kex__server__state_a48aa1a19966b5db6281ef3248b1ba4a1}{sigkey}}[\mbox{\hyperlink{mpdc_8h_aed84fa1849ed574e0c0aec3e38be9aa3}{MPDC\_ASYMMETRIC\_SIGNING\_KEY\_SIZE}}];\ \ \ \ \ }
+\DoxyCodeLine{00145\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structmpdc__kex__server__state_aabf96df62b3e5e86258cdcf9f73b6d67}{verkey}}[\mbox{\hyperlink{mpdc_8h_a3323909111e7aa42bde0523f1b562d8e}{MPDC\_ASYMMETRIC\_VERIFICATION\_KEY\_SIZE}}];\ \ \ }
+\DoxyCodeLine{00146\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structmpdc__kex__server__state_a6a7a0453d8c3db46e0a26a17b835700d}{expiration}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00147\ \}\ \mbox{\hyperlink{structmpdc__kex__server__state}{mpdc\_kex\_server\_state}};}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00156\ \mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\_EXPORT\_API}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{kex_8h_a23b99851e258328869c720ec1b3918c6}{mpdc\_kex\_connection\_close}}(\mbox{\hyperlink{structmpdc__connection__state}{mpdc\_connection\_state}}*\ cns,\ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022b}{mpdc\_network\_errors}}\ err,\ \textcolor{keywordtype}{bool}\ notify);}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00168\ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\_protocol\_errors}}\ \mbox{\hyperlink{kex_8h_ae8076c3a771bfdaffaaff2efed586c2b}{mpdc\_kex\_client\_key\_exchange}}(\mbox{\hyperlink{structmpdc__kex__client__state}{mpdc\_kex\_client\_state}}*\ kcs,\ \mbox{\hyperlink{structmpdc__connection__state}{mpdc\_connection\_state}}*\ cns);}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00175\ \mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\_EXPORT\_API}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{kex_8h_ab6879a08a1d431f74b351f9f345def03}{mpdc\_kex\_connection\_state\_dispose}}(\mbox{\hyperlink{structmpdc__connection__state}{mpdc\_connection\_state}}*\ cns);}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00187\ \mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\_EXPORT\_API}}\ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\_protocol\_errors}}\ \mbox{\hyperlink{kex_8h_ab5a6d156e09fd64adc418f0aebf11172}{mpdc\_kex\_decrypt\_packet}}(\mbox{\hyperlink{structmpdc__connection__state}{mpdc\_connection\_state}}*\ cns,\ uint8\_t*\ message,\ \textcolor{keywordtype}{size\_t}*\ msglen,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structmpdc__network__packet}{mpdc\_network\_packet}}*\ packetin);}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00199\ \mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\_EXPORT\_API}}\ \mbox{\hyperlink{mpdc_8h_afe13a1a0944bc283dcbc7c1cf3a2cfca}{mpdc\_protocol\_errors}}\ \mbox{\hyperlink{kex_8h_a9d453cdc5e845b3547e6070bfa2129a6}{mpdc\_kex\_encrypt\_packet}}(\mbox{\hyperlink{structmpdc__connection__state}{mpdc\_connection\_state}}*\ cns,\ \mbox{\hyperlink{structmpdc__network__packet}{mpdc\_network\_packet}}*\ packetout,\ \textcolor{keyword}{const}\ uint8\_t*\ message,\ \textcolor{keywordtype}{size\_t}\ msglen);}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00211\ \mbox{\hyperlink{mpdc_8h_a13b688c2268f6947a2a8d7ff4813022b}{mpdc\_network\_errors}}\ \mbox{\hyperlink{kex_8h_a6d152aa1e7874887eeb4da0d9baa50d5}{mpdc\_kex\_appserv\_key\_exchange}}(\mbox{\hyperlink{structmpdc__kex__server__state}{mpdc\_kex\_server\_state}}*\ kss,\ \mbox{\hyperlink{structmpdc__connection__state}{mpdc\_connection\_state}}*\ cns);}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00218\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{kex_8h_ab6879a08a1d431f74b351f9f345def03}{mpdc\_kex\_connection\_state\_dispose}}(\mbox{\hyperlink{structmpdc__connection__state}{mpdc\_connection\_state}}*\ cns);}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \textcolor{preprocessor}{\#if\ defined(MPDC\_COMPILE\_DEBUG\_MODE)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00228\ \mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\_EXPORT\_API}}\ \textcolor{keywordtype}{bool}\ mpdc\_kex\_test();}
+\DoxyCodeLine{00229\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00231\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00232\ }
+
+\end{DoxyCode}

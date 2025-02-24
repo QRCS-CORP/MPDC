@@ -1,0 +1,65 @@
+\doxysection{mpdc\+\_\+network\+\_\+register\+\_\+response\+\_\+state Struct Reference}
+\hypertarget{structmpdc__network__register__response__state}{}\label{structmpdc__network__register__response__state}\index{mpdc\_network\_register\_response\_state@{mpdc\_network\_register\_response\_state}}
+
+
+The network join response function state.  
+
+
+
+
+{\ttfamily \#include $<$network.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+const qsc\+\_\+socket \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmpdc__network__register__response__state_a5a54676e53cc1837094dad7fa95a09bf}{csock}}
+\item 
+const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmpdc__network__register__response__state_a1fe6c60fddcdfce8fd6384095950a9c4}{lcert}}
+\item 
+\mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmpdc__network__register__response__state_a024e86a7c25fcda525d309146891cf71}{rcert}}
+\item 
+const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmpdc__network__register__response__state_a6ee55dc74689fd4838aec6d74de58af9}{root}}
+\item 
+const uint8\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmpdc__network__register__response__state_a5cbd2b117e930d8f469c924a8b27ea21}{sigkey}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The network join response function state. 
+
+\doxysubsection{Field Documentation}
+\Hypertarget{structmpdc__network__register__response__state_a5a54676e53cc1837094dad7fa95a09bf}\index{mpdc\_network\_register\_response\_state@{mpdc\_network\_register\_response\_state}!csock@{csock}}
+\index{csock@{csock}!mpdc\_network\_register\_response\_state@{mpdc\_network\_register\_response\_state}}
+\doxysubsubsection{\texorpdfstring{csock}{csock}}
+{\footnotesize\ttfamily \label{structmpdc__network__register__response__state_a5a54676e53cc1837094dad7fa95a09bf} 
+const qsc\+\_\+socket\texorpdfstring{$\ast$}{*} csock}
+
+A pointer to the connected socket \Hypertarget{structmpdc__network__register__response__state_a1fe6c60fddcdfce8fd6384095950a9c4}\index{mpdc\_network\_register\_response\_state@{mpdc\_network\_register\_response\_state}!lcert@{lcert}}
+\index{lcert@{lcert}!mpdc\_network\_register\_response\_state@{mpdc\_network\_register\_response\_state}}
+\doxysubsubsection{\texorpdfstring{lcert}{lcert}}
+{\footnotesize\ttfamily \label{structmpdc__network__register__response__state_a1fe6c60fddcdfce8fd6384095950a9c4} 
+const \mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}}\texorpdfstring{$\ast$}{*} lcert}
+
+A pointer to the local certificate \Hypertarget{structmpdc__network__register__response__state_a024e86a7c25fcda525d309146891cf71}\index{mpdc\_network\_register\_response\_state@{mpdc\_network\_register\_response\_state}!rcert@{rcert}}
+\index{rcert@{rcert}!mpdc\_network\_register\_response\_state@{mpdc\_network\_register\_response\_state}}
+\doxysubsubsection{\texorpdfstring{rcert}{rcert}}
+{\footnotesize\ttfamily \label{structmpdc__network__register__response__state_a024e86a7c25fcda525d309146891cf71} 
+\mbox{\hyperlink{structmpdc__child__certificate}{mpdc\+\_\+child\+\_\+certificate}}\texorpdfstring{$\ast$}{*} rcert}
+
+A pointer to the output remote certificate \Hypertarget{structmpdc__network__register__response__state_a6ee55dc74689fd4838aec6d74de58af9}\index{mpdc\_network\_register\_response\_state@{mpdc\_network\_register\_response\_state}!root@{root}}
+\index{root@{root}!mpdc\_network\_register\_response\_state@{mpdc\_network\_register\_response\_state}}
+\doxysubsubsection{\texorpdfstring{root}{root}}
+{\footnotesize\ttfamily \label{structmpdc__network__register__response__state_a6ee55dc74689fd4838aec6d74de58af9} 
+const \mbox{\hyperlink{structmpdc__root__certificate}{mpdc\+\_\+root\+\_\+certificate}}\texorpdfstring{$\ast$}{*} root}
+
+A pointer to the root certificate \Hypertarget{structmpdc__network__register__response__state_a5cbd2b117e930d8f469c924a8b27ea21}\index{mpdc\_network\_register\_response\_state@{mpdc\_network\_register\_response\_state}!sigkey@{sigkey}}
+\index{sigkey@{sigkey}!mpdc\_network\_register\_response\_state@{mpdc\_network\_register\_response\_state}}
+\doxysubsubsection{\texorpdfstring{sigkey}{sigkey}}
+{\footnotesize\ttfamily \label{structmpdc__network__register__response__state_a5cbd2b117e930d8f469c924a8b27ea21} 
+const uint8\+\_\+t\texorpdfstring{$\ast$}{*} sigkey}
+
+A pointer to the secret signing key 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/stepp/\+Documents/\+Visual Studio 2022/\+Projects/\+C/\+MPDC/\+MPDC/\mbox{\hyperlink{network_8h}{network.\+h}}\end{DoxyCompactItemize}

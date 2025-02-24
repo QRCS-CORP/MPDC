@@ -1,0 +1,74 @@
+\doxysection{trust.\+h}
+\hypertarget{trust_8h_source}{}\label{trust_8h_source}\index{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/trust.h@{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/trust.h}}
+\mbox{\hyperlink{trust_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*\ 2025\ Quantum\ Resistant\ Cryptographic\ Solutions\ Corporation}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ All\ Rights\ Reserved.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ NOTICE:\ This\ software\ and\ all\ accompanying\ materials\ are\ the\ exclusive\ }}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ property\ of\ Quantum\ Resistant\ Cryptographic\ Solutions\ Corporation\ (QRCS).}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ The\ intellectual\ and\ technical\ concepts\ contained\ within\ this\ implementation\ }}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ are\ proprietary\ to\ QRCS\ and\ its\ authorized\ licensors\ and\ are\ protected\ under\ }}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ applicable\ U.S.\ and\ international\ copyright,\ patent,\ and\ trade\ secret\ laws.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ CRYPTOGRAPHIC\ STANDARDS:}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ -\/\ This\ software\ includes\ implementations\ of\ cryptographic\ algorithms\ such\ as\ }}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ \ \ SHA3,\ AES,\ and\ others.\ These\ algorithms\ are\ public\ domain\ or\ standardized\ }}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ \ \ by\ organizations\ such\ as\ NIST\ and\ are\ NOT\ the\ property\ of\ QRCS.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ -\/\ However,\ all\ source\ code,\ optimizations,\ and\ implementations\ in\ this\ library\ }}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ \ \ are\ original\ works\ of\ QRCS\ and\ are\ protected\ under\ this\ license.}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ RESTRICTIONS:}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ -\/\ Redistribution,\ modification,\ or\ unauthorized\ distribution\ of\ this\ software,\ }}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ \ \ in\ whole\ or\ in\ part,\ is\ strictly\ prohibited.}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ -\/\ This\ software\ is\ provided\ for\ non-\/commercial,\ educational,\ and\ research\ }}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ \ \ purposes\ only.\ Commercial\ use\ in\ any\ form\ is\ expressly\ forbidden.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ *\ -\/\ Licensing\ and\ authorized\ distribution\ are\ solely\ at\ the\ discretion\ of\ QRCS.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ *\ -\/\ Any\ use\ of\ this\ software\ implies\ acceptance\ of\ these\ restrictions.}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ *\ DISCLAIMER:}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ *\ This\ software\ is\ provided\ "{}as\ is,"{}\ without\ warranty\ of\ any\ kind,\ express\ or\ }}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ *\ implied,\ including\ but\ not\ limited\ to\ warranties\ of\ merchantability\ or\ fitness\ }}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ *\ for\ a\ particular\ purpose.\ QRCS\ disclaims\ all\ liability\ for\ any\ direct,\ indirect,\ }}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ *\ incidental,\ or\ consequential\ damages\ resulting\ from\ the\ use\ or\ misuse\ of\ this\ software.}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ *\ FULL\ LICENSE:}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ *\ This\ software\ is\ subject\ to\ the\ **Quantum\ Resistant\ Cryptographic\ Solutions\ }}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ *\ Proprietary\ License\ (QRCS-\/PL)**.\ The\ complete\ license\ terms\ are\ included\ }}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ *\ in\ the\ LICENSE.txt\ file\ distributed\ with\ this\ software.}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\ *\ Written\ by:\ John\ G.\ Underhill}}
+\DoxyCodeLine{00037\ \textcolor{comment}{\ *\ Contact:\ john.underhill@protonmail.com}}
+\DoxyCodeLine{00038\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#ifndef\ MPDC\_TRUST\_H}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ MPDC\_TRUST\_H}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ "{}common.h"{}}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{mpdc_8h}{mpdc.h}}"{}}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#include\ "{}../../QSC/QSC/intutils.h"{}}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#include\ "{}../../QSC/QSC/memutils.h"{}}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ MPDC\_TRUST\_SIZE\ (sizeof(mpdc\_device\_trust))}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00075\ MPDC\_EXPORT\_API\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmpdc__device__trust}{mpdc\_device\_trust}}}
+\DoxyCodeLine{00076\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structmpdc__device__trust_a58c8368bc4896efa36643d4e5b3ec323}{address}}[\mbox{\hyperlink{mpdc_8h_af443984e6515a97f3f369eb0d4de8265}{MPDC\_DLA\_IP\_MAX}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structmpdc__device__trust_af206d209cdf166e5b3f4a35d47d9bb40}{domain}}[\mbox{\hyperlink{mpdc_8h_af062ae94e4527d96ddc5560252c4fc19}{MPDC\_NETWORK\_DOMAIN\_NAME\_MAX\_SIZE}}];\ \ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structmpdc__device__trust_a8a99e8b2bc1c6a305d06280925cb2309}{name}}[\mbox{\hyperlink{mpdc_8h_a0cf9b0c088c1a8c68a56362ed974a928}{MPDC\_AGENT\_NAME\_MAX\_SIZE}}];\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00080\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structmpdc__device__trust_a7e8effcf6979b7958165fff8c7d61c08}{dtrust}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structmpdc__device__trust_aa3ebacb990d54160273ab642ea776a0b}{bandwidth}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structmpdc__device__trust_aa31f944e1fcb62b2de4ef1aeade12d1f}{isipv6}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structmpdc__device__trust_ac7dea507466f9f8d216a8c8db5f445fd}{local}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00084\ \}\ \mbox{\hyperlink{structmpdc__device__trust}{mpdc\_device\_trust}};}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00093\ MPDC\_EXPORT\_API\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{trust_8h_a63667e615ebb2743e4e36c8ea6bda0d1}{mpdc\_trust\_clear}}(\mbox{\hyperlink{structmpdc__device__trust}{mpdc\_device\_trust}}*\ device);}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00103\ MPDC\_EXPORT\_API\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{trust_8h_a0d8453bfa8f4cad320312df31afa4c9a}{mpdc\_trust\_deserialize}}(\mbox{\hyperlink{structmpdc__device__trust}{mpdc\_device\_trust}}*\ device,\ \textcolor{keyword}{const}\ uint8\_t*\ input);}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00114\ MPDC\_EXPORT\_API\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{trust_8h_ab8e0feac56e7628f11377812414d6618}{mpdc\_trust\_serialize}}(uint8\_t*\ output,\ \textcolor{keywordtype}{size\_t}\ outlen,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structmpdc__device__trust}{mpdc\_device\_trust}}*\ device);}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
