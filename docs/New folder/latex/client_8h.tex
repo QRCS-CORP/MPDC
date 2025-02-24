@@ -1,0 +1,110 @@
+\doxysection{C\+:/\+Users/stepp/\+Documents/\+Visual Studio 2022/\+Projects/\+C/\+MPDC/\+MPDC/client.h File Reference}
+\hypertarget{client_8h}{}\label{client_8h}\index{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/client.h@{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/MPDC/client.h}}
+
+
+MPDC Client Functions.  
+
+
+{\ttfamily \#include "{}common.\+h"{}}\newline
+{\ttfamily \#include "{}topology.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{client_8h_afeb845ece04be5de64159ed84c91396d}{mpdc\+\_\+client\+\_\+connect\+\_\+callback}} (const \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}rnode)
+\begin{DoxyCompactList}\small\item\em Callback function to evaluate an incoming connection request. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{client_8h_a883137ca12c05c06b8c77a1f1d46f8c9}{mpdc\+\_\+client\+\_\+pause\+\_\+server}} ()
+\begin{DoxyCompactList}\small\item\em Pause the Client server. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API int32\+\_\+t \mbox{\hyperlink{client_8h_a1937d6453743511614544081c75f4bca}{mpdc\+\_\+client\+\_\+start\+\_\+server}} ()
+\begin{DoxyCompactList}\small\item\em Start the Client server. \end{DoxyCompactList}\item 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void \mbox{\hyperlink{client_8h_a5fd1d287d9dd31db76128334b722de01}{mpdc\+\_\+client\+\_\+stop\+\_\+server}} ()
+\begin{DoxyCompactList}\small\item\em Stop the Client server. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+MPDC Client Functions. 
+
+This header defines the public interface for the MPDC client, which is responsible for handling secure communications, certificate registration, topology queries, and tunnel establishment on the client side of the Multi-\/\+Party Domain Cryptosystem (MPDC). The client module works in coordination with other network components (e.\+g., MAS, DLA, and Agent) to provide a secure communication channel.
+
+Key functionalities include\+:
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Connection Evaluation\+:}} ~\newline
+ The client provides a callback function to evaluate incoming connection requests. This function examines the remote topology node requesting the connection and determines whether the connection should be accepted.
+\item {\bfseries{Server Control Operations\+:}} ~\newline
+ Functions are provided to start, pause, and stop the client server. Starting the client server initializes network resources, loads certificates, sets up the user command loop, and begins listening for incoming connections. Pausing the server temporarily halts processing, while stopping the server gracefully terminates the client operation.
+\item {\bfseries{Secure Tunnel and Topology Management\+:}} ~\newline
+ The client module handles master fragment key (mfk) exchanges, incremental updates to the network topology, and secure tunnel establishment. These functions ensure that the client maintains an up-\/to-\/date view of the network and can securely communicate with remote nodes.
+\item {\bfseries{User Command Processing\+:}} ~\newline
+ A console-\/based command loop allows interactive configuration and operation of the client. Commands include certificate generation/import/export, connection requests, registration updates, and more.
+\end{DoxyItemize}
+
+Testing\+: The client module is validated through a series of network simulation tests which exercise\+:
+
+
+\begin{DoxyItemize}
+\item The evaluation of incoming connection requests via the \doxylink{client_8h_afeb845ece04be5de64159ed84c91396d}{mpdc\+\_\+client\+\_\+connect\+\_\+callback()}.
+\item Registration with remote nodes, mfk key exchange, and topology synchronization.
+\item Secure tunnel establishment including both the transmit and receive paths.
+\item Proper handling of certificate expiration, error conditions, and user command processing.
+\end{DoxyItemize}
+
+These tests collectively ensure that the client correctly implements the MPDC protocol and can maintain secure and reliable communication within the network. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{client_8h_afeb845ece04be5de64159ed84c91396d}\index{client.h@{client.h}!mpdc\_client\_connect\_callback@{mpdc\_client\_connect\_callback}}
+\index{mpdc\_client\_connect\_callback@{mpdc\_client\_connect\_callback}!client.h@{client.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_client\_connect\_callback()}{mpdc\_client\_connect\_callback()}}
+{\footnotesize\ttfamily \label{client_8h_afeb845ece04be5de64159ed84c91396d} 
+bool mpdc\+\_\+client\+\_\+connect\+\_\+callback (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__topology__node__state}{mpdc\+\_\+topology\+\_\+node\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{rnode}{}\end{DoxyParamCaption})}
+
+
+
+Callback function to evaluate an incoming connection request. 
+
+Use this callback to determine whether a remote node requesting connection should be accepted.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rnode} & \mbox{[}in, const\mbox{]} The remote topology node requesting the connection.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the connection is accepted; otherwise, false. 
+\end{DoxyReturn}
+\Hypertarget{client_8h_a883137ca12c05c06b8c77a1f1d46f8c9}\index{client.h@{client.h}!mpdc\_client\_pause\_server@{mpdc\_client\_pause\_server}}
+\index{mpdc\_client\_pause\_server@{mpdc\_client\_pause\_server}!client.h@{client.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_client\_pause\_server()}{mpdc\_client\_pause\_server()}}
+{\footnotesize\ttfamily \label{client_8h_a883137ca12c05c06b8c77a1f1d46f8c9} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+client\+\_\+pause\+\_\+server (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Pause the Client server. 
+
+Temporarily pause the MPDC client server, suspending network operations and the user command loop. \Hypertarget{client_8h_a1937d6453743511614544081c75f4bca}\index{client.h@{client.h}!mpdc\_client\_start\_server@{mpdc\_client\_start\_server}}
+\index{mpdc\_client\_start\_server@{mpdc\_client\_start\_server}!client.h@{client.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_client\_start\_server()}{mpdc\_client\_start\_server()}}
+{\footnotesize\ttfamily \label{client_8h_a1937d6453743511614544081c75f4bca} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API int32\+\_\+t mpdc\+\_\+client\+\_\+start\+\_\+server (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Start the Client server. 
+
+Initializes and starts the MPDC client server. This function sets up the network socket, loads the local certificate, registers with the network topology, and begins the user command loop along with the secure tunnel interface.
+
+\begin{DoxyReturn}{Returns}
+Returns zero on success; a non-\/zero value indicates an initialization error. 
+\end{DoxyReturn}
+\Hypertarget{client_8h_a5fd1d287d9dd31db76128334b722de01}\index{client.h@{client.h}!mpdc\_client\_stop\_server@{mpdc\_client\_stop\_server}}
+\index{mpdc\_client\_stop\_server@{mpdc\_client\_stop\_server}!client.h@{client.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_client\_stop\_server()}{mpdc\_client\_stop\_server()}}
+{\footnotesize\ttfamily \label{client_8h_a5fd1d287d9dd31db76128334b722de01} 
+MPDC\+\_\+\+EXPORT\+\_\+\+API void mpdc\+\_\+client\+\_\+stop\+\_\+server (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Stop the Client server. 
+
+Terminates the MPDC client server, closing all active network connections and stopping the command loop. 

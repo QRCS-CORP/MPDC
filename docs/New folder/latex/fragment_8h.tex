@@ -1,0 +1,136 @@
+\doxysection{C\+:/\+Users/stepp/\+Documents/\+Visual Studio 2022/\+Projects/\+C/\+MPDC/\+Saved/fragment.h File Reference}
+\hypertarget{fragment_8h}{}\label{fragment_8h}\index{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/Saved/fragment.h@{C:/Users/stepp/Documents/Visual Studio 2022/Projects/C/MPDC/Saved/fragment.h}}
+
+
+The MPDC key fragment functions.  
+
+
+{\ttfamily \#include "{}common.\+h"{}}\newline
+{\ttfamily \#include "{}mpdc.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmpdc__fragment__state}{mpdc\+\_\+fragment\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The key fragment state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{fragment_8h_a2583aaf93fbcdbbddc8faea16550ad8e}\label{fragment_8h_a2583aaf93fbcdbbddc8faea16550ad8e} 
+\#define {\bfseries MPDC\+\_\+\+FRAGMENT\+\_\+\+MAXIMUM}~16
+\item 
+\Hypertarget{fragment_8h_a7446f6b5dc39bf116917d80344a39af2}\label{fragment_8h_a7446f6b5dc39bf116917d80344a39af2} 
+\#define {\bfseries MPDC\+\_\+\+FRAGMENT\+\_\+\+SIZE}~32
+\item 
+\Hypertarget{fragment_8h_adca7eab1c4524f76ae6a59ab48ed4594}\label{fragment_8h_adca7eab1c4524f76ae6a59ab48ed4594} 
+\#define {\bfseries MPDC\+\_\+\+FRAGMENT\+\_\+\+KEY\+\_\+\+SIZE}~32
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{fragment_8h_a1e68289c3a0a11763701bcc25f84b8c8}\label{fragment_8h_a1e68289c3a0a11763701bcc25f84b8c8} 
+typedef \mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\+\_\+\+EXPORT\+\_\+\+API}} struct mpdc\+\_\+fragment\+\_\+state {\bfseries mpdc\+\_\+fragment\+\_\+state}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\+\_\+\+EXPORT\+\_\+\+API}} void \mbox{\hyperlink{fragment_8h_a6d85935b577653ff1af3f6f6b00454f5}{mpdc\+\_\+fragment\+\_\+add}} (\mbox{\hyperlink{structmpdc__fragment__state}{mpdc\+\_\+fragment\+\_\+state}} \texorpdfstring{$\ast$}{*}state, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}input)
+\begin{DoxyCompactList}\small\item\em Derive a session key from the collection of key fragments. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\+\_\+\+EXPORT\+\_\+\+API}} void \mbox{\hyperlink{fragment_8h_a1e14419fb87123c8fd60357dcb52a665}{mpdc\+\_\+fragment\+\_\+dispose}} (\mbox{\hyperlink{structmpdc__fragment__state}{mpdc\+\_\+fragment\+\_\+state}} \texorpdfstring{$\ast$}{*}state)
+\begin{DoxyCompactList}\small\item\em Erase a key fragment state structure. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\+\_\+\+EXPORT\+\_\+\+API}} void \mbox{\hyperlink{fragment_8h_ad26104f168ee6f4fe9b48d46455f59bc}{mpdc\+\_\+fragment\+\_\+derive}} (const \mbox{\hyperlink{structmpdc__fragment__state}{mpdc\+\_\+fragment\+\_\+state}} \texorpdfstring{$\ast$}{*}state, uint8\+\_\+t \texorpdfstring{$\ast$}{*}output)
+\begin{DoxyCompactList}\small\item\em Derive a session key from the collection of key fragments. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\+\_\+\+EXPORT\+\_\+\+API}} void \mbox{\hyperlink{fragment_8h_aedabb119a52dc02ebd6399b714f25389}{mpdc\+\_\+fragment\+\_\+generate}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}fragment)
+\begin{DoxyCompactList}\small\item\em Generate a key fragment. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\+\_\+\+EXPORT\+\_\+\+API}} void \mbox{\hyperlink{fragment_8h_af5d94a2594a0e2c49d37ecd27869436e}{mpdc\+\_\+fragment\+\_\+load}} (\mbox{\hyperlink{structmpdc__fragment__state}{mpdc\+\_\+fragment\+\_\+state}} \texorpdfstring{$\ast$}{*}state, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}fragment, size\+\_\+t sequence)
+\begin{DoxyCompactList}\small\item\em Load a key fragment into the key fragment array in sequence. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The MPDC key fragment functions. 
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{fragment_8h_a6d85935b577653ff1af3f6f6b00454f5}\index{fragment.h@{fragment.h}!mpdc\_fragment\_add@{mpdc\_fragment\_add}}
+\index{mpdc\_fragment\_add@{mpdc\_fragment\_add}!fragment.h@{fragment.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_fragment\_add()}{mpdc\_fragment\_add()}}
+{\footnotesize\ttfamily \label{fragment_8h_a6d85935b577653ff1af3f6f6b00454f5} 
+\mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\+\_\+\+EXPORT\+\_\+\+API}} void mpdc\+\_\+fragment\+\_\+add (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__fragment__state}{mpdc\+\_\+fragment\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{input}{}\end{DoxyParamCaption})}
+
+
+
+Derive a session key from the collection of key fragments. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The key fragment state object \\
+\hline
+{\em input} & The array receiving the fragment key \\
+\hline
+\end{DoxyParams}
+\Hypertarget{fragment_8h_ad26104f168ee6f4fe9b48d46455f59bc}\index{fragment.h@{fragment.h}!mpdc\_fragment\_derive@{mpdc\_fragment\_derive}}
+\index{mpdc\_fragment\_derive@{mpdc\_fragment\_derive}!fragment.h@{fragment.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_fragment\_derive()}{mpdc\_fragment\_derive()}}
+{\footnotesize\ttfamily \label{fragment_8h_ad26104f168ee6f4fe9b48d46455f59bc} 
+\mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\+\_\+\+EXPORT\+\_\+\+API}} void mpdc\+\_\+fragment\+\_\+derive (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structmpdc__fragment__state}{mpdc\+\_\+fragment\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{output}{}\end{DoxyParamCaption})}
+
+
+
+Derive a session key from the collection of key fragments. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The key fragment state object \\
+\hline
+{\em output} & The array receiving the session key \\
+\hline
+\end{DoxyParams}
+\Hypertarget{fragment_8h_a1e14419fb87123c8fd60357dcb52a665}\index{fragment.h@{fragment.h}!mpdc\_fragment\_dispose@{mpdc\_fragment\_dispose}}
+\index{mpdc\_fragment\_dispose@{mpdc\_fragment\_dispose}!fragment.h@{fragment.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_fragment\_dispose()}{mpdc\_fragment\_dispose()}}
+{\footnotesize\ttfamily \label{fragment_8h_a1e14419fb87123c8fd60357dcb52a665} 
+\mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\+\_\+\+EXPORT\+\_\+\+API}} void mpdc\+\_\+fragment\+\_\+dispose (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__fragment__state}{mpdc\+\_\+fragment\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Erase a key fragment state structure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The key fragment state object \\
+\hline
+\end{DoxyParams}
+\Hypertarget{fragment_8h_aedabb119a52dc02ebd6399b714f25389}\index{fragment.h@{fragment.h}!mpdc\_fragment\_generate@{mpdc\_fragment\_generate}}
+\index{mpdc\_fragment\_generate@{mpdc\_fragment\_generate}!fragment.h@{fragment.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_fragment\_generate()}{mpdc\_fragment\_generate()}}
+{\footnotesize\ttfamily \label{fragment_8h_aedabb119a52dc02ebd6399b714f25389} 
+\mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\+\_\+\+EXPORT\+\_\+\+API}} void mpdc\+\_\+fragment\+\_\+generate (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{fragment}{}\end{DoxyParamCaption})}
+
+
+
+Generate a key fragment. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fragment} & The array receiving the key fragment \\
+\hline
+\end{DoxyParams}
+\Hypertarget{fragment_8h_af5d94a2594a0e2c49d37ecd27869436e}\index{fragment.h@{fragment.h}!mpdc\_fragment\_load@{mpdc\_fragment\_load}}
+\index{mpdc\_fragment\_load@{mpdc\_fragment\_load}!fragment.h@{fragment.h}}
+\doxysubsubsection{\texorpdfstring{mpdc\_fragment\_load()}{mpdc\_fragment\_load()}}
+{\footnotesize\ttfamily \label{fragment_8h_af5d94a2594a0e2c49d37ecd27869436e} 
+\mbox{\hyperlink{_m_p_d_c_2common_8h_a76d6a26a12f469fcbdc6cabc6027549d}{MPDC\+\_\+\+EXPORT\+\_\+\+API}} void mpdc\+\_\+fragment\+\_\+load (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmpdc__fragment__state}{mpdc\+\_\+fragment\+\_\+state}} \texorpdfstring{$\ast$}{*}}]{state}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{fragment}{, }\item[{size\+\_\+t}]{sequence}{}\end{DoxyParamCaption})}
+
+
+
+Load a key fragment into the key fragment array in sequence. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The key fragment state object \\
+\hline
+{\em fragment} & \mbox{[}const\mbox{]} the key fragment array \\
+\hline
+{\em sequence} & The position within the key fragment set \\
+\hline
+\end{DoxyParams}

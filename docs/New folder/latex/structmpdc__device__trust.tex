@@ -1,0 +1,83 @@
+\doxysection{mpdc\+\_\+device\+\_\+trust Struct Reference}
+\hypertarget{structmpdc__device__trust}{}\label{structmpdc__device__trust}\index{mpdc\_device\_trust@{mpdc\_device\_trust}}
+
+
+The MPDC topology device trust structure.  
+
+
+
+
+{\ttfamily \#include $<$trust.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+char \mbox{\hyperlink{structmpdc__device__trust_a58c8368bc4896efa36643d4e5b3ec323}{address}} \mbox{[}\mbox{\hyperlink{mpdc_8h_af443984e6515a97f3f369eb0d4de8265}{MPDC\+\_\+\+DLA\+\_\+\+IP\+\_\+\+MAX}}\mbox{]}
+\item 
+char \mbox{\hyperlink{structmpdc__device__trust_af206d209cdf166e5b3f4a35d47d9bb40}{domain}} \mbox{[}\mbox{\hyperlink{mpdc_8h_af062ae94e4527d96ddc5560252c4fc19}{MPDC\+\_\+\+NETWORK\+\_\+\+DOMAIN\+\_\+\+NAME\+\_\+\+MAX\+\_\+\+SIZE}}\mbox{]}
+\item 
+char \mbox{\hyperlink{structmpdc__device__trust_a8a99e8b2bc1c6a305d06280925cb2309}{name}} \mbox{[}\mbox{\hyperlink{mpdc_8h_a0cf9b0c088c1a8c68a56362ed974a928}{MPDC\+\_\+\+AGENT\+\_\+\+NAME\+\_\+\+MAX\+\_\+\+SIZE}}\mbox{]}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{structmpdc__device__trust_a7e8effcf6979b7958165fff8c7d61c08}{dtrust}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structmpdc__device__trust_aa3ebacb990d54160273ab642ea776a0b}{bandwidth}}
+\item 
+bool \mbox{\hyperlink{structmpdc__device__trust_aa31f944e1fcb62b2de4ef1aeade12d1f}{isipv6}}
+\item 
+bool \mbox{\hyperlink{structmpdc__device__trust_ac7dea507466f9f8d216a8c8db5f445fd}{local}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The MPDC topology device trust structure. 
+
+This structure contains trust-\/related information for a network device. It includes the device\textquotesingle{}s network address, domain, name, trust value, bandwidth metric, and flags to indicate IPv6 capability and whether the device is on the local network. 
+
+\doxysubsection{Field Documentation}
+\Hypertarget{structmpdc__device__trust_a58c8368bc4896efa36643d4e5b3ec323}\index{mpdc\_device\_trust@{mpdc\_device\_trust}!address@{address}}
+\index{address@{address}!mpdc\_device\_trust@{mpdc\_device\_trust}}
+\doxysubsubsection{\texorpdfstring{address}{address}}
+{\footnotesize\ttfamily \label{structmpdc__device__trust_a58c8368bc4896efa36643d4e5b3ec323} 
+char address\mbox{[}\mbox{\hyperlink{mpdc_8h_af443984e6515a97f3f369eb0d4de8265}{MPDC\+\_\+\+DLA\+\_\+\+IP\+\_\+\+MAX}}\mbox{]}}
+
+The device address \Hypertarget{structmpdc__device__trust_aa3ebacb990d54160273ab642ea776a0b}\index{mpdc\_device\_trust@{mpdc\_device\_trust}!bandwidth@{bandwidth}}
+\index{bandwidth@{bandwidth}!mpdc\_device\_trust@{mpdc\_device\_trust}}
+\doxysubsubsection{\texorpdfstring{bandwidth}{bandwidth}}
+{\footnotesize\ttfamily \label{structmpdc__device__trust_aa3ebacb990d54160273ab642ea776a0b} 
+uint32\+\_\+t bandwidth}
+
+The bandwidth metric \Hypertarget{structmpdc__device__trust_af206d209cdf166e5b3f4a35d47d9bb40}\index{mpdc\_device\_trust@{mpdc\_device\_trust}!domain@{domain}}
+\index{domain@{domain}!mpdc\_device\_trust@{mpdc\_device\_trust}}
+\doxysubsubsection{\texorpdfstring{domain}{domain}}
+{\footnotesize\ttfamily \label{structmpdc__device__trust_af206d209cdf166e5b3f4a35d47d9bb40} 
+char domain\mbox{[}\mbox{\hyperlink{mpdc_8h_af062ae94e4527d96ddc5560252c4fc19}{MPDC\+\_\+\+NETWORK\+\_\+\+DOMAIN\+\_\+\+NAME\+\_\+\+MAX\+\_\+\+SIZE}}\mbox{]}}
+
+The device domain name \Hypertarget{structmpdc__device__trust_a7e8effcf6979b7958165fff8c7d61c08}\index{mpdc\_device\_trust@{mpdc\_device\_trust}!dtrust@{dtrust}}
+\index{dtrust@{dtrust}!mpdc\_device\_trust@{mpdc\_device\_trust}}
+\doxysubsubsection{\texorpdfstring{dtrust}{dtrust}}
+{\footnotesize\ttfamily \label{structmpdc__device__trust_a7e8effcf6979b7958165fff8c7d61c08} 
+uint64\+\_\+t dtrust}
+
+The device trust value \Hypertarget{structmpdc__device__trust_aa31f944e1fcb62b2de4ef1aeade12d1f}\index{mpdc\_device\_trust@{mpdc\_device\_trust}!isipv6@{isipv6}}
+\index{isipv6@{isipv6}!mpdc\_device\_trust@{mpdc\_device\_trust}}
+\doxysubsubsection{\texorpdfstring{isipv6}{isipv6}}
+{\footnotesize\ttfamily \label{structmpdc__device__trust_aa31f944e1fcb62b2de4ef1aeade12d1f} 
+bool isipv6}
+
+True if the device supports IPv6 \Hypertarget{structmpdc__device__trust_ac7dea507466f9f8d216a8c8db5f445fd}\index{mpdc\_device\_trust@{mpdc\_device\_trust}!local@{local}}
+\index{local@{local}!mpdc\_device\_trust@{mpdc\_device\_trust}}
+\doxysubsubsection{\texorpdfstring{local}{local}}
+{\footnotesize\ttfamily \label{structmpdc__device__trust_ac7dea507466f9f8d216a8c8db5f445fd} 
+bool local}
+
+True if the device is on the local network \Hypertarget{structmpdc__device__trust_a8a99e8b2bc1c6a305d06280925cb2309}\index{mpdc\_device\_trust@{mpdc\_device\_trust}!name@{name}}
+\index{name@{name}!mpdc\_device\_trust@{mpdc\_device\_trust}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily \label{structmpdc__device__trust_a8a99e8b2bc1c6a305d06280925cb2309} 
+char name\mbox{[}\mbox{\hyperlink{mpdc_8h_a0cf9b0c088c1a8c68a56362ed974a928}{MPDC\+\_\+\+AGENT\+\_\+\+NAME\+\_\+\+MAX\+\_\+\+SIZE}}\mbox{]}}
+
+The device name 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/stepp/\+Documents/\+Visual Studio 2022/\+Projects/\+C/\+MPDC/\+MPDC/\mbox{\hyperlink{trust_8h}{trust.\+h}}\end{DoxyCompactItemize}
