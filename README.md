@@ -8,6 +8,8 @@ On an interior network, the server and client establish a shared secret with eac
 
 This approach means that any attack involving impersonation or man‐in‐the‐middle tactics would have to simultaneously compromise multiple, independently authenticated network devices. Unlike other schemes that rely solely on expensive classical asymmetric cryptography, MPDC-I utilizes a hybrid asymmetric/symmetric post‐quantum secure design. This provides not only robust security but also scalability and computational efficiency, making it suitable for wide-scale adoption.
 
+See the documentation at: https://qrcs-corp.github.io/MPDC/
+
 ## Architecture Overview
 
 MPDC-I operates with five key device types, each fulfilling a distinct role within the security ecosystem:
@@ -147,11 +149,11 @@ To use the MPDC library:
 MPDC-I uses the QSC cryptographic library, available on [GitHub](https://github.com/QRCS-CORP/QSC).  
 *QRCS-PL private License. See license file for details. All rights reserved by QRCS Corporation, copyrighted and patents pending.*
 
-*Author: John G. Underhill*  
-*Date: 2025-02-10*
-
 
 ## License
-Written by John G. Underhill, under the QRCS-PL license, see the included license file for details.
-Not to be redistributed without the author's expressed written permission.
+
+QRCS-PL private License. See license file for details.  
+Software is copyrighted and MPDC is patent pending.
+Written by John G. Underhill, under the QRCS-PL license, see the included license file for details. 
+Not to be redistributed or used commercially without the author's expressed written permission. 
 All rights reserved by QRCS Corp. 2025.
