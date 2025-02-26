@@ -8,7 +8,7 @@ On an interior network, the server and client establish a shared secret with eac
 
 This approach means that any attack involving impersonation or man‐in‐the‐middle tactics would have to simultaneously compromise multiple, independently authenticated network devices. Unlike other schemes that rely solely on expensive classical asymmetric cryptography, MPDC-I utilizes a hybrid asymmetric/symmetric post‐quantum secure design. This provides not only robust security but also scalability and computational efficiency, making it suitable for wide-scale adoption.
 
-See the documentation at: https://qrcs-corp.github.io/MPDC/
+[View full documentation online](https://qrcs-corp.github.io/MPDC/)
 
 ## Architecture Overview
 
@@ -21,7 +21,7 @@ An end-user network device that initiates secure communication with the MPDC-ena
 
 **Functions:**
 - Generates its own certificate and stores the secret signing key.
-- Has its certificate signed by the RDS (Root Domain Security), either directly or by proxy through the DLA.
+- Has its certificate signed by the RDS (Root Domain Security server), either directly or by proxy through the DLA.
 - Exchanges master fragment keys (mfk) with Agents and MAS servers, which are used to encrypt key fragments.
 - Combines key fragments received from Agents with the MAS fragment key to derive secure session keys.
 - Encrypts and decrypts messages using the session keys through a duplexed, encrypted, and authenticated tunnel.
@@ -146,7 +146,7 @@ To use the MPDC library:
 
 ### Cryptographic Dependencies
 
-MPDC-I uses the QSC cryptographic library, available on [GitHub](https://github.com/QRCS-CORP/QSC).  
+MPDC-I uses the QSC cryptographic library, available on [The QSC Library](https://github.com/QRCS-CORP/QSC).  
 *QRCS-PL private License. See license file for details. All rights reserved by QRCS Corporation, copyrighted and patents pending.*
 
 
