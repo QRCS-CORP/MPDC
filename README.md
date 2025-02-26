@@ -146,7 +146,7 @@ To use the MPDC library:
 
 ### Cryptographic Dependencies
 
-MPDC-I uses the QSC cryptographic library, available on [The QSC Library](https://github.com/QRCS-CORP/QSC).  
+MPDC-I uses the QSC cryptographic library: [The QSC Library](https://github.com/QRCS-CORP/QSC).  
 *QRCS-PL private License. See license file for details. All rights reserved by QRCS Corporation, copyrighted and patents pending.*
 
 
