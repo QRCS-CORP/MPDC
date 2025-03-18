@@ -11,7 +11,7 @@ On an interior network, the server and client establish a shared secret with eac
 This approach means that any attack involving impersonation or man‐in‐the‐middle tactics would have to simultaneously compromise multiple, independently authenticated network devices. Unlike other schemes that rely solely on expensive classical asymmetric cryptography, MPDC-I utilizes a hybrid asymmetric/symmetric post‐quantum secure design. This provides not only robust security but also scalability and computational efficiency, making it suitable for wide-scale adoption.
 
 [MPDC Help Documentation](https://qrcs-corp.github.io/MPDC/)  
-[MPDC Protocol Specification](https://qrcs-corp.github.io/MPDC/pdf/MPDC_Specification.pdf)  
+[MPDC Protocol Specification](https://qrcs-corp.github.io/MPDC/pdf/MDPC_Specification.pdf)  
 [MPDC Summary Document](https://qrcs-corp.github.io/MPDC/pdf/MPDC_Summary.pdf)  
 
 ## Architecture Overview
