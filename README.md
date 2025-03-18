@@ -1,5 +1,7 @@
 # Multi Party Domain Cryptosystem (MPDC-I)
 
+The Multi Party Domain Cryptosystem protocol
+
 ## Introduction
 
 MPDC-I (Multi Party Domain Cryptosystem - Interior Protocol) is a multi‐party key exchange and network security system. It distributes the security of a key exchange between a server and a client across multiple devices. This design leverages the contribution of network agents—trusted devices that each inject a portion of pseudo‐random material into the key exchange process—ensuring that no single entity controls the entire shared-secret derivation.
