@@ -4,9 +4,7 @@
 #include "../../QSC/QSC/intutils.h"
 #include "../../QSC/QSC/memutils.h"
 #include "../../QSC/QSC/netutils.h"
-#include "../../QSC/QSC/rcs.h"
 #include "../../QSC/QSC/scb.h"
-#include "../../QSC/QSC/sha3.h"
 #include "../../QSC/QSC/sysutils.h"
 
 uint8_t* mpdc_crypto_secure_memory_allocate(size_t length)
@@ -81,18 +79,18 @@ bool mpdc_crypto_decrypt_stream(uint8_t* output, const uint8_t* seed, const uint
 
 	if (output != NULL && seed != NULL && input != NULL && length != 0)
 	{
-		qsc_rcs_state ctx = { 0 };
+		mpdc_cipher_state ctx = { 0 };
 
-		const qsc_rcs_keyparams kp = {
+		const mpdc_cipher_keyparams kp = {
 			.key = seed,
-			.keylen = QSC_RCS256_KEY_SIZE,
-			.nonce = (uint8_t*)seed + QSC_RCS256_KEY_SIZE,
+			.keylen = MPDC_CRYPTO_SYMMETRIC_KEY_SIZE,
+			.nonce = (uint8_t*)seed + MPDC_CRYPTO_SYMMETRIC_KEY_SIZE,
 			.info = NULL,
 			.infolen = 0 };
 
-		qsc_rcs_initialize(&ctx, &kp, false);
-		res = qsc_rcs_transform(&ctx, output, input, length);
-		qsc_rcs_dispose(&ctx);
+		mpdc_cipher_initialize(&ctx, &kp, false);
+		res = mpdc_cipher_transform(&ctx, output, input, length);
+		mpdc_cipher_dispose(&ctx);
 	}
 
 	return res;
@@ -105,20 +103,20 @@ void mpdc_crypto_encrypt_stream(uint8_t* output, const uint8_t* seed, const uint
 	assert(input != NULL);
 	assert(length != 0);
 
-	qsc_rcs_state ctx = { 0 };
+	mpdc_cipher_state ctx = { 0 };
 
 	if (output != NULL && seed != NULL && input != NULL && length != 0)
 	{
-		const qsc_rcs_keyparams kp = {
+		const mpdc_cipher_keyparams kp = {
 		.key = seed,
-		.keylen = QSC_RCS256_KEY_SIZE,
-		.nonce = (uint8_t*)seed + QSC_RCS256_KEY_SIZE,
+		.keylen = MPDC_CRYPTO_SYMMETRIC_KEY_SIZE,
+		.nonce = (uint8_t*)seed + MPDC_CRYPTO_SYMMETRIC_KEY_SIZE,
 		.info = NULL,
 		.infolen = 0 };
 
-		qsc_rcs_initialize(&ctx, &kp, true);
-		qsc_rcs_transform(&ctx, output, input, length);
-		qsc_rcs_dispose(&ctx);
+		mpdc_cipher_initialize(&ctx, &kp, true);
+		mpdc_cipher_transform(&ctx, output, input, length);
+		mpdc_cipher_dispose(&ctx);
 	}
 }
 

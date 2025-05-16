@@ -7,8 +7,6 @@
 #include "../../QSC/QSC/ipinfo.h"
 #include "../../QSC/QSC/memutils.h"
 #include "../../QSC/QSC/netutils.h"
-#include "../../QSC/QSC/rcs.h"
-#include "../../QSC/QSC/sha3.h"
 #include "../../QSC/QSC/socketclient.h"
 #include "../../QSC/QSC/timestamp.h"
 

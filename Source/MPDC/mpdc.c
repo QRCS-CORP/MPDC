@@ -62,11 +62,11 @@ mpdc_network_errors mpdc_decrypt_packet(mpdc_connection_state* pcns, uint8_t* me
 
 					/* serialize the header and add it to the ciphers associated data */
 					mpdc_packet_header_serialize(packetin, hdr);
-					qsc_rcs_set_associated(&pcns->rxcpr, hdr, MPDC_PACKET_HEADER_SIZE);
+					mpdc_cipher_set_associated(&pcns->rxcpr, hdr, MPDC_PACKET_HEADER_SIZE);
 					*msglen = packetin->msglen - MPDC_CRYPTO_SYMMETRIC_MAC_SIZE;
 
 					/* authenticate then decrypt the data */
-					if (qsc_rcs_transform(&pcns->rxcpr, message, packetin->pmessage, *msglen) == true)
+					if (mpdc_cipher_transform(&pcns->rxcpr, message, packetin->pmessage, *msglen) == true)
 					{
 						merr = mpdc_protocol_error_none;
 					}
@@ -122,9 +122,9 @@ mpdc_network_errors mpdc_encrypt_packet(mpdc_connection_state* pcns, mpdc_networ
 
 			/* serialize the header and add it to the ciphers associated data */
 			mpdc_packet_header_serialize(packetout, hdr);
-			qsc_rcs_set_associated(&pcns->txcpr, hdr, MPDC_PACKET_HEADER_SIZE);
+			mpdc_cipher_set_associated(&pcns->txcpr, hdr, MPDC_PACKET_HEADER_SIZE);
 			/* encrypt the message */
-			qsc_rcs_transform(&pcns->txcpr, packetout->pmessage, message, msglen);
+			mpdc_cipher_transform(&pcns->txcpr, packetout->pmessage, message, msglen);
 
 			merr = mpdc_protocol_error_none;
 		}
@@ -305,8 +305,8 @@ void mpdc_connection_state_dispose(mpdc_connection_state* pcns)
 
 	if (pcns != NULL)
 	{
-		qsc_rcs_dispose(&pcns->rxcpr);
-		qsc_rcs_dispose(&pcns->txcpr);
+		mpdc_cipher_dispose(&pcns->rxcpr);
+		mpdc_cipher_dispose(&pcns->txcpr);
 		qsc_memutils_clear((uint8_t*)&pcns->target, sizeof(qsc_socket));
 		pcns->rxseq = 0;
 		pcns->txseq = 0;

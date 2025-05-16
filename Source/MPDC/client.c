@@ -822,22 +822,22 @@ static void client_tunnel_rxinit(mpdc_connection_state* pcns, const uint8_t* hfk
 	qsc_shake_squeezeblocks(&kstate, qsc_keccak_rate_512, prnd, 3);
 
 	/* initialize the symmetric cipher, and raise client channel-1 rx */
-	qsc_rcs_keyparams kp1;
+	mpdc_cipher_keyparams kp1;
 	kp1.key = prnd;
 	kp1.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.info = NULL;
 	kp1.infolen = 0;
-	qsc_rcs_initialize(&pcns->rxcpr, &kp1, false);
+	mpdc_cipher_initialize(&pcns->rxcpr, &kp1, false);
 
 	/* initialize the symmetric cipher, and raise client channel-1 tx */
-	qsc_rcs_keyparams kp2;
+	mpdc_cipher_keyparams kp2;
 	kp2.key = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE + MPDC_CRYPTO_SYMMETRIC_NONCE_SIZE;
 	kp2.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE + MPDC_CRYPTO_SYMMETRIC_NONCE_SIZE + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.info = NULL;
 	kp2.infolen = 0;
-	qsc_rcs_initialize(&pcns->txcpr, &kp2, true);
+	mpdc_cipher_initialize(&pcns->txcpr, &kp2, true);
 	pcns->exflag = mpdc_network_flag_tunnel_session_established;
 
 #else
@@ -850,22 +850,22 @@ static void client_tunnel_rxinit(mpdc_connection_state* pcns, const uint8_t* hfk
 	qsc_shake_squeezeblocks(&kstate, qsc_keccak_rate_256, prnd, 1);
 
 	/* initialize the symmetric cipher, and raise client channel-1 rx */
-	qsc_rcs_keyparams kp1;
+	mpdc_cipher_keyparams kp1;
 	kp1.key = prnd;
 	kp1.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.info = NULL;
 	kp1.infolen = 0;
-	qsc_rcs_initialize(&pcns->rxcpr, &kp1, false);
+	mpdc_cipher_initialize(&pcns->rxcpr, &kp1, false);
 
 	/* initialize the symmetric cipher, and raise client channel-1 tx */
-	qsc_rcs_keyparams kp2;
+	mpdc_cipher_keyparams kp2;
 	kp2.key = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE + MPDC_CRYPTO_SYMMETRIC_NONCE_SIZE;
 	kp2.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE + MPDC_CRYPTO_SYMMETRIC_NONCE_SIZE + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.info = NULL;
 	kp2.infolen = 0;
-	qsc_rcs_initialize(&pcns->txcpr, &kp2, true);
+	mpdc_cipher_initialize(&pcns->txcpr, &kp2, true);
 	pcns->exflag = mpdc_network_flag_tunnel_session_established;
 
 #endif
@@ -893,22 +893,22 @@ static void client_tunnel_txinit(mpdc_connection_state* pcns, const uint8_t* hfk
 	qsc_shake_squeezeblocks(&kstate, qsc_keccak_rate_512, prnd, 3);
 
 	/* initialize the symmetric cipher, and raise client channel-1 tx */
-	qsc_rcs_keyparams kp1;
+	mpdc_cipher_keyparams kp1;
 	kp1.key = prnd;
 	kp1.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.info = NULL;
 	kp1.infolen = 0;
-	qsc_rcs_initialize(&pcns->txcpr, &kp1, true);
+	mpdc_cipher_initialize(&pcns->txcpr, &kp1, true);
 
 	/* initialize the symmetric cipher, and raise client channel-1 rx */
-	qsc_rcs_keyparams kp2;
+	mpdc_cipher_keyparams kp2;
 	kp2.key = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE + MPDC_CRYPTO_SYMMETRIC_NONCE_SIZE;
 	kp2.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE + MPDC_CRYPTO_SYMMETRIC_NONCE_SIZE + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.info = NULL;
 	kp2.infolen = 0;
-	qsc_rcs_initialize(&pcns->rxcpr, &kp2, false);
+	mpdc_cipher_initialize(&pcns->rxcpr, &kp2, false);
 	pcns->exflag = mpdc_network_flag_tunnel_session_established;
 
 #else
@@ -923,22 +923,22 @@ static void client_tunnel_txinit(mpdc_connection_state* pcns, const uint8_t* hfk
 	qsc_keccak_permute(&kstate, QSC_KECCAK_PERMUTATION_ROUNDS);
 
 	/* initialize the symmetric cipher, and raise client channel-1 tx */
-	qsc_rcs_keyparams kp1;
+	mpdc_cipher_keyparams kp1;
 	kp1.key = prnd;
 	kp1.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.info = NULL;
 	kp1.infolen = 0;
-	qsc_rcs_initialize(&pcns->txcpr, &kp1, true);
+	mpdc_cipher_initialize(&pcns->txcpr, &kp1, true);
 
 	/* initialize the symmetric cipher, and raise client channel-1 rx */
-	qsc_rcs_keyparams kp2;
+	mpdc_cipher_keyparams kp2;
 	kp2.key = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE + MPDC_CRYPTO_SYMMETRIC_NONCE_SIZE;
 	kp2.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE + MPDC_CRYPTO_SYMMETRIC_NONCE_SIZE + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.info = NULL;
 	kp2.infolen = 0;
-	qsc_rcs_initialize(&pcns->rxcpr, &kp2, false);
+	mpdc_cipher_initialize(&pcns->rxcpr, &kp2, false);
 	pcns->exflag = mpdc_network_flag_tunnel_session_established;
 
 #endif

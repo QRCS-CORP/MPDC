@@ -41,7 +41,6 @@
 #define MPDC_MPDC_H
 
 #include "common.h"
-#include "../../QSC/QSC/rcs.h"
 #include "../../QSC/QSC/sha3.h"
 #include "../../QSC/QSC/socketbase.h"
 
@@ -102,6 +101,31 @@
  */
 
 /* --- Function Mapping Macros --- */
+
+/*!
+* \def MPDC_USE_RCS_ENCRYPTION
+* \brief If the RCS encryption option is chosen SKDP uses the more modern RCS stream cipher with KMAC/QMAC authentication.
+* The default symmetric cipher/authenticator is AES-256/GCM (GMAC Counter Mode) NIST standardized per SP800-38a.
+*/
+//#define MPDC_USE_RCS_ENCRYPTION
+
+#if defined(MPDC_USE_RCS_ENCRYPTION)
+#	include "../../QSC/QSC/rcs.h"
+#	define mpdc_cipher_state qsc_rcs_state
+#	define mpdc_cipher_dispose qsc_rcs_dispose
+#	define mpdc_cipher_initialize qsc_rcs_initialize
+#	define mpdc_cipher_keyparams qsc_rcs_keyparams
+#	define mpdc_cipher_set_associated qsc_rcs_set_associated
+#	define mpdc_cipher_transform qsc_rcs_transform
+#else
+#	include "../../QSC/QSC/aes.h"
+#	define mpdc_cipher_state qsc_aes_gcm256_state
+#	define mpdc_cipher_dispose qsc_aes_gcm256_dispose
+#	define mpdc_cipher_initialize qsc_aes_gcm256_initialize
+#	define mpdc_cipher_keyparams qsc_aes_keyparams
+#	define mpdc_cipher_set_associated qsc_aes_gcm256_set_associated
+#	define mpdc_cipher_transform qsc_aes_gcm256_transform
+#endif
 
 /**
  * \brief MPDC function mapping macros.
@@ -264,7 +288,7 @@
  * \def MPDC_SIGNATURE_ENCODING_SIZE
  * \brief The encoded signature size
  */
-#		define MPDC_SIGNATURE_ENCODING_SIZE 3272
+#		define MPDC_SIGNATURE_ENCODING_SIZE 3312
 /*!
  * \def MPDC_VERIFICATION_KEY_ENCODING_SIZE
  * \brief The verification key size
@@ -290,7 +314,7 @@
  * \def MPDC_SIGNATURE_ENCODING_SIZE
  * \brief The encoded signature size
  */
-#		define MPDC_SIGNATURE_ENCODING_SIZE 4436
+#		define MPDC_SIGNATURE_ENCODING_SIZE 4476
 /*!
  * \def MPDC_VERIFICATION_KEY_ENCODING_SIZE
  * \brief The verification key size
@@ -316,7 +340,7 @@
  * \def MPDC_SIGNATURE_ENCODING_SIZE
  * \brief The encoded signature size
  */
-#		define MPDC_SIGNATURE_ENCODING_SIZE 6172
+#		define MPDC_SIGNATURE_ENCODING_SIZE 6212
 /*!
  * \def MPDC_VERIFICATION_KEY_ENCODING_SIZE
  * \brief The verification key size
@@ -888,7 +912,11 @@
  * \def MPDC_CRYPTO_SYMMETRIC_NONCE_SIZE
  * \brief The byte length of the symmetric cipher nonce.
  */
-#define MPDC_CRYPTO_SYMMETRIC_NONCE_SIZE 32
+#if defined(MPDC_USE_RCS_ENCRYPTION)
+#	define MPDC_CRYPTO_SYMMETRIC_NONCE_SIZE 32
+#else
+#	define MPDC_CRYPTO_SYMMETRIC_NONCE_SIZE 16
+#endif
 
 /*!
  * \def MPDC_CRYPTO_SEED_SIZE
@@ -912,10 +940,14 @@
  * \def MPDC_CRYPTO_SYMMETRIC_MAC_SIZE
  * \brief The MAC function output byte size.
  */
-#if defined(MPDC_EXTENDED_SESSION_SECURITY)
-#	define MPDC_CRYPTO_SYMMETRIC_MAC_SIZE 64
+#if defined(MPDC_USE_RCS_ENCRYPTION)
+#	if defined(MPDC_EXTENDED_SESSION_SECURITY)
+#		define MPDC_CRYPTO_SYMMETRIC_MAC_SIZE 64
+#	else
+#		define MPDC_CRYPTO_SYMMETRIC_MAC_SIZE 32
+#	endif
 #else
-#	define MPDC_CRYPTO_SYMMETRIC_MAC_SIZE 32
+#	define MPDC_CRYPTO_SYMMETRIC_MAC_SIZE 16
 #endif
 
 /*!
@@ -1356,8 +1388,8 @@ MPDC_EXPORT_API typedef struct mpdc_idg_certificate
 MPDC_EXPORT_API typedef struct mpdc_connection_state
 {
 	qsc_socket target;												/*!< The target socket structure */
-	qsc_rcs_state rxcpr;											/*!< The receive channel cipher state */
-	qsc_rcs_state txcpr;											/*!< The transmit channel cipher state */
+	mpdc_cipher_state rxcpr;											/*!< The receive channel cipher state */
+	mpdc_cipher_state txcpr;											/*!< The transmit channel cipher state */
 	uint64_t rxseq;													/*!< The receive channel's packet sequence number */
 	uint64_t txseq;													/*!< The transmit channel's packet sequence number */
 	uint32_t instance;												/*!< The connection's instance count */
