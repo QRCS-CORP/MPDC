@@ -1,5 +1,5 @@
 #include "help.h"
-#include "../../QSC/QSC/consoleutils.h"
+#include "consoleutils.h"
 
 static void help_print_line(const char* prompt, const char* line)
 {

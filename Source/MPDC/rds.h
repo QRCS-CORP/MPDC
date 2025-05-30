@@ -40,7 +40,7 @@
 #ifndef MPDC_RDS_H
 #define MPDC_RDS_H
 
-#include "common.h"
+#include "mpdccommon.h"
 
 /**
  * \file rds.h

@@ -1,11 +1,11 @@
 #include "logger.h"
 #include "resources.h"
-#include "../../QSC/QSC/async.h"
-#include "../../QSC/QSC/fileutils.h"
-#include "../../QSC/QSC/folderutils.h"
-#include "../../QSC/QSC/memutils.h"
-#include "../../QSC/QSC/stringutils.h"
-#include "../../QSC/QSC/timestamp.h"
+#include "async.h"
+#include "fileutils.h"
+#include "folderutils.h"
+#include "memutils.h"
+#include "stringutils.h"
+#include "timestamp.h"
 
 static const char NLINE[2] = { 10, 0 };
 

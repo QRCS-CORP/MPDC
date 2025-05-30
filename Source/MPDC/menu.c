@@ -1,10 +1,10 @@
 #include "menu.h"
 #include "logger.h"
 #include "resources.h"
-#include "../../QSC/QSC/consoleutils.h"
-#include "../../QSC/QSC/fileutils.h"
-#include "../../QSC/QSC/folderutils.h"
-#include "../../QSC/QSC/stringutils.h"
+#include "consoleutils.h"
+#include "fileutils.h"
+#include "folderutils.h"
+#include "stringutils.h"
 
 const char* mpdc_menu_get_prompt(mpdc_console_modes mode)
 {

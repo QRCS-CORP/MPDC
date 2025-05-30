@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="common.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="dla.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -73,6 +70,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="doxymain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mpdccommon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

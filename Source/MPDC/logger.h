@@ -40,7 +40,7 @@
 #ifndef MPDC_LOG_H
 #define MPDC_LOG_H
 
-#include "common.h"
+#include "mpdccommon.h"
 #include "commands.h"
 
 /**

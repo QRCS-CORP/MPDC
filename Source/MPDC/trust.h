@@ -40,10 +40,9 @@
 #ifndef MPDC_TRUST_H
 #define MPDC_TRUST_H
 
-#include "common.h"
 #include "mpdc.h"
-#include "../../QSC/QSC/intutils.h"
-#include "../../QSC/QSC/memutils.h"
+#include "intutils.h"
+#include "memutils.h"
 
 /**
  * \file trust.h

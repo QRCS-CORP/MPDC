@@ -41,6 +41,11 @@
 #ifndef MPDC_APPSRV_H
 #define MPDC_APPSRV_H
 
-#include "common.h"
+#include <assert.h>
+#include <errno.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <limits.h>
+#include <string.h>
 
 #endif

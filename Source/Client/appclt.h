@@ -41,7 +41,13 @@
 #ifndef MPDC_APPCLT_H
 #define MPDC_APPCLT_H
 
-#include "common.h"
+#include <assert.h>
+#include <errno.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <limits.h>
+#include <string.h>
+#include "mpdccommon.h"
 
 static const char MPDC_APP_PATH[] = "MPDC";
 static const char MPDC_CLIENT_PATH[] = "Client";

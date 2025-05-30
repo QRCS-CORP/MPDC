@@ -40,13 +40,13 @@
 #ifndef MPDC_SERVER_H
 #define MPDC_SERVER_H
 
-#include "common.h"
+#include "mpdccommon.h"
 #include "certificate.h"
 #include "commands.h"
 #include "logger.h"
 #include "mpdc.h"
 #include "topology.h"
-#include "../../QSC/QSC/collection.h"
+#include "collection.h"
 
 /**
  * \file server.h

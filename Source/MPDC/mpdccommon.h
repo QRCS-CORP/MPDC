@@ -46,7 +46,7 @@
 #include <stdint.h>
 #include <limits.h>
 #include <string.h>
-#include "../../QSC/QSC/common.h"
+#include "qsccommon.h"
 
 /**
 * \internal

@@ -40,16 +40,16 @@
 #ifndef MPDC_MPDC_H
 #define MPDC_MPDC_H
 
-#include "common.h"
-#include "../../QSC/QSC/sha3.h"
-#include "../../QSC/QSC/socketbase.h"
+#include "mpdccommon.h"
+#include "sha3.h"
+#include "socketbase.h"
 
 #if defined(MPDC_CONFIG_DILITHIUM_KYBER)
-#	include "../../QSC/QSC/dilithium.h"
-#	include "../../QSC/QSC/kyber.h"
+#	include "dilithium.h"
+#	include "kyber.h"
 #elif defined(MPDC_CONFIG_SPHINCS_MCELIECE)
-#	include "../../QSC/QSC/mceliece.h"
-#	include "../../QSC/QSC/sphincsplus.h"
+#	include "mceliece.h"
+#	include "sphincsplus.h"
 #else
 #	error Invalid parameter set!
 #endif
@@ -110,7 +110,7 @@
 //#define MPDC_USE_RCS_ENCRYPTION
 
 #if defined(MPDC_USE_RCS_ENCRYPTION)
-#	include "../../QSC/QSC/rcs.h"
+#	include "rcs.h"
 #	define mpdc_cipher_state qsc_rcs_state
 #	define mpdc_cipher_dispose qsc_rcs_dispose
 #	define mpdc_cipher_initialize qsc_rcs_initialize
@@ -118,7 +118,7 @@
 #	define mpdc_cipher_set_associated qsc_rcs_set_associated
 #	define mpdc_cipher_transform qsc_rcs_transform
 #else
-#	include "../../QSC/QSC/aes.h"
+#	include "aes.h"
 #	define mpdc_cipher_state qsc_aes_gcm256_state
 #	define mpdc_cipher_dispose qsc_aes_gcm256_dispose
 #	define mpdc_cipher_initialize qsc_aes_gcm256_initialize
@@ -1754,7 +1754,7 @@ MPDC_EXPORT_API void mpdc_connection_close(qsc_socket* rsock, mpdc_network_error
  *
  * \return Returns the network error state.
  */
-MPDC_EXPORT_API mpdc_network_errors mpdc_decrypt_packet(mpdc_connection_state* cns, uint8_t* message, size_t* msglen, const mpdc_network_packet* packetin);
+MPDC_EXPORT_API mpdc_protocol_errors mpdc_decrypt_packet(mpdc_connection_state* cns, uint8_t* message, size_t* msglen, const mpdc_network_packet* packetin);
 
 /**
  * \brief Encrypt a message and build an output packet.
@@ -1766,7 +1766,7 @@ MPDC_EXPORT_API mpdc_network_errors mpdc_decrypt_packet(mpdc_connection_state* c
  *
  * \return Returns the network error state.
  */
-MPDC_EXPORT_API mpdc_network_errors mpdc_encrypt_packet(mpdc_connection_state* cns, mpdc_network_packet* packetout, const uint8_t* message, size_t msglen);
+MPDC_EXPORT_API mpdc_protocol_errors mpdc_encrypt_packet(mpdc_connection_state* cns, mpdc_network_packet* packetout, const uint8_t* message, size_t msglen);
 
 /**
  * \brief Dispose of the tunnel connection state.

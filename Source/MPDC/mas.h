@@ -40,7 +40,7 @@
 #ifndef MPDC_MAS_H
 #define MPDC_MAS_H
 
-#include "common.h"
+#include "mpdccommon.h"
 #include "mpdc.h"
 
 /**

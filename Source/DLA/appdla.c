@@ -1,5 +1,5 @@
 #include "appdla.h"
-#include "../MPDC/dla.h"
+#include "dla.h"
 
 int main(void)
 {

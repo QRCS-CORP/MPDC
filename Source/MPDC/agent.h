@@ -40,7 +40,7 @@
 #ifndef MPDC_AGENT_H
 #define MPDC_AGENT_H
 
-#include "common.h"
+#include "mpdccommon.h"
 
 /**
  * \file agent.h

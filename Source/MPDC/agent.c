@@ -8,17 +8,17 @@
 #include "network.h"
 #include "resources.h"
 #include "topology.h"
-#include "../../QSC/QSC/acp.h"
-#include "../../QSC/QSC/async.h"
-#include "../../QSC/QSC/collection.h"
-#include "../../QSC/QSC/consoleutils.h"
-#include "../../QSC/QSC/fileutils.h"
-#include "../../QSC/QSC/ipinfo.h"
-#include "../../QSC/QSC/memutils.h"
-#include "../../QSC/QSC/socketserver.h"
-#include "../../QSC/QSC/stringutils.h"
-#include "../../QSC/QSC/timerex.h"
-#include "../../QSC/QSC/timestamp.h"
+#include "acp.h"
+#include "async.h"
+#include "collection.h"
+#include "consoleutils.h"
+#include "fileutils.h"
+#include "ipinfo.h"
+#include "memutils.h"
+#include "socketserver.h"
+#include "stringutils.h"
+#include "timerex.h"
+#include "timestamp.h"
 
 /** \cond */
 typedef struct agent_receive_state
@@ -295,7 +295,7 @@ static mpdc_protocol_errors agent_register_request(const char* address)
 			/* create and send the join request */
 			merr = mpdc_network_register_request(&jrs);
 
-			if (merr == mpdc_network_error_none)
+			if (merr == mpdc_protocol_error_none)
 			{
 				char fpath[MPDC_STORAGE_PATH_MAX] = { 0 };
 

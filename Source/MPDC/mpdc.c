@@ -1,11 +1,11 @@
 #include "mpdc.h"
 #include "certificate.h"
 #include "resources.h"
-#include "../../QSC/QSC/encoding.h"
-#include "../../QSC/QSC/intutils.h"
-#include "../../QSC/QSC/memutils.h"
-#include "../../QSC/QSC/stringutils.h"
-#include "../../QSC/QSC/timestamp.h"
+#include "encoding.h"
+#include "intutils.h"
+#include "memutils.h"
+#include "stringutils.h"
+#include "timestamp.h"
 
 void mpdc_connection_close(qsc_socket* rsock, mpdc_network_errors err, bool notify)
 {
@@ -38,14 +38,14 @@ void mpdc_connection_close(qsc_socket* rsock, mpdc_network_errors err, bool noti
 	}
 }
 
-mpdc_network_errors mpdc_decrypt_packet(mpdc_connection_state* pcns, uint8_t* message, size_t* msglen, const mpdc_network_packet* packetin)
+mpdc_protocol_errors mpdc_decrypt_packet(mpdc_connection_state* pcns, uint8_t* message, size_t* msglen, const mpdc_network_packet* packetin)
 {
 	assert(pcns != NULL);
 	assert(packetin != NULL);
 	assert(message != NULL);
 	assert(msglen != NULL);
 
-	mpdc_network_errors merr;
+	mpdc_protocol_errors merr;
 
 	if (pcns != NULL && message != NULL && msglen != NULL && packetin != NULL)
 	{
@@ -99,13 +99,13 @@ mpdc_network_errors mpdc_decrypt_packet(mpdc_connection_state* pcns, uint8_t* me
 	return merr;
 }
 
-mpdc_network_errors mpdc_encrypt_packet(mpdc_connection_state* pcns, mpdc_network_packet* packetout, const uint8_t* message, size_t msglen)
+mpdc_protocol_errors mpdc_encrypt_packet(mpdc_connection_state* pcns, mpdc_network_packet* packetout, const uint8_t* message, size_t msglen)
 {
 	assert(pcns != NULL);
 	assert(message != NULL);
 	assert(packetout != NULL);
 
-	mpdc_network_errors merr;
+	mpdc_protocol_errors merr;
 
 	if (pcns != NULL && message != NULL && packetout != NULL)
 	{

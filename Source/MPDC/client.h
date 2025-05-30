@@ -40,7 +40,7 @@
 #ifndef MPDC_CLIENT_H
 #define MPDC_CLIENT_H
 
-#include "common.h"
+#include "mpdccommon.h"
 #include "topology.h"
 
 /**

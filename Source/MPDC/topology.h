@@ -42,9 +42,9 @@
 
 #include "mpdc.h"
 #include "certificate.h"
-#include "../../QSC/QSC/ipinfo.h"
-#include "../../QSC/QSC/list.h"
-#include "../../QSC/QSC/timestamp.h"
+#include "ipinfo.h"
+#include "list.h"
+#include "timestamp.h"
 
 /**
  * \file topology.h

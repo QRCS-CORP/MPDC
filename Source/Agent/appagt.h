@@ -41,6 +41,12 @@
 #ifndef MPDC_APPAGT_H
 #define MPDC_APPAGT_H
 
-#include "common.h"
+#include <assert.h>
+#include <errno.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <limits.h>
+#include <string.h>
+#include "mpdccommon.h"
 
 #endif

@@ -69,9 +69,6 @@
 #ifndef MPDC_IDG_H
 #define MPDC_IDG_H
 
-#include "common.h"
-
-
-
+#include "mpdccommon.h"
 
 #endif

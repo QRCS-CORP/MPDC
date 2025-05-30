@@ -40,7 +40,7 @@
 #ifndef MPDC_HELP_H
 #define MPDC_HELP_H
 
-#include "common.h"
+#include "mpdccommon.h"
 #include "commands.h"
 #include "resources.h"
 

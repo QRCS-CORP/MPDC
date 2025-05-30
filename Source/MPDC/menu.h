@@ -40,7 +40,7 @@
 #ifndef MPDC_MENU_H
 #define MPDC_MENU_H
 
-#include "common.h"
+#include "mpdccommon.h"
 #include "commands.h"
 
 /**

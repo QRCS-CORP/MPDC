@@ -2,13 +2,13 @@
 #include "mpdc.h"
 #include "certificate.h"
 #include "topology.h"
-#include "../../QSC/QSC/acp.h"
-#include "../../QSC/QSC/intutils.h"
-#include "../../QSC/QSC/ipinfo.h"
-#include "../../QSC/QSC/memutils.h"
-#include "../../QSC/QSC/netutils.h"
-#include "../../QSC/QSC/socketclient.h"
-#include "../../QSC/QSC/timestamp.h"
+#include "acp.h"
+#include "intutils.h"
+#include "ipinfo.h"
+#include "memutils.h"
+#include "netutils.h"
+#include "socketclient.h"
+#include "timestamp.h"
 
 #define NETWORK_NODE_COMPRESSED_SIZE (MPDC_CERTIFICATE_ISSUER_SIZE + MPDC_CERTIFICATE_SERIAL_SIZE + MPDC_CERTIFICATE_HASH_SIZE)
 #define NETWORK_CERTIFICATE_UPDATE_SIZE (MPDC_PACKET_SUBHEADER_SIZE + MPDC_CERTIFICATE_CHILD_SIZE)
@@ -151,7 +151,7 @@ static mpdc_protocol_errors network_header_validate(const mpdc_network_packet* p
 
 	if (packetin->flag == mpdc_network_flag_system_error_condition)
 	{
-		merr = (mpdc_network_flags)packetin->pmessage[0];
+		merr = (mpdc_protocol_errors)packetin->pmessage[0];
 	}
 	else
 	{
@@ -216,7 +216,7 @@ static mpdc_protocol_errors network_unpack_error(uint8_t* pmsg)
 
 		if (resp.flag == mpdc_network_flag_system_error_condition && resp.pmessage != NULL)
 		{
-			merr = (mpdc_network_flags)resp.pmessage[0];
+			merr = (mpdc_protocol_errors)resp.pmessage[0];
 		}
 	}
 

@@ -40,7 +40,7 @@
 #ifndef MPDC_DLA_H
 #define MPDC_DLA_H
 
-#include "common.h"
+#include "mpdccommon.h"
 
 /**
  * \file dla.h

@@ -1,12 +1,12 @@
 #include "topology.h"
-#include "../../QSC/QSC/async.h"
-#include "../../QSC/QSC/fileutils.h"
-#include "../../QSC/QSC/intutils.h"
-#include "../../QSC/QSC/memutils.h"
-#include "../../QSC/QSC/sha3.h"
-#include "../../QSC/QSC/stringutils.h"
+#include "async.h"
+#include "fileutils.h"
+#include "intutils.h"
+#include "memutils.h"
+#include "sha3.h"
+#include "stringutils.h"
 #if defined(QSC_DEBUG_MODE)
-#	include "../../QSC/QSC/acp.h"
+#	include "acp.h"
 #endif
 
 void mpdc_topology_address_from_issuer(char* address, const char* issuer, const mpdc_topology_list_state* list)

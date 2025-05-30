@@ -1,11 +1,11 @@
 #include "crypto.h"
-#include "../../QSC/QSC/acp.h"
-#include "../../QSC/QSC/cpuidex.h"
-#include "../../QSC/QSC/intutils.h"
-#include "../../QSC/QSC/memutils.h"
-#include "../../QSC/QSC/netutils.h"
-#include "../../QSC/QSC/scb.h"
-#include "../../QSC/QSC/sysutils.h"
+#include "acp.h"
+#include "cpuidex.h"
+#include "intutils.h"
+#include "memutils.h"
+#include "netutils.h"
+#include "scb.h"
+#include "sysutils.h"
 
 uint8_t* mpdc_crypto_secure_memory_allocate(size_t length)
 {

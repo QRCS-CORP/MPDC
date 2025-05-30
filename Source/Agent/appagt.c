@@ -1,11 +1,11 @@
 #include "appagt.h"
-#include "../MPDC/agent.h"
-#include "../MPDC/certificate.h"
-#include "../MPDC/mpdc.h"
+#include "agent.h"
+#include "certificate.h"
+#include "mpdc.h"
 #if defined(MPDC_DEBUG_TESTS_RUN)
-#	include "../../QSC/QSC/consoleutils.h"
-#	include "../MPDC/network.h"
-#	include "../MPDC/topology.h"
+#	include "consoleutils.h"
+#	include "network.h"
+#	include "topology.h"
 #endif
 
 int main(void)

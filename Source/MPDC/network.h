@@ -40,11 +40,11 @@
 #ifndef MPDC_NETWORK_H
 #define MPDC_NETWORK_H
 
-#include "common.h"
+#include "mpdccommon.h"
 #include "topology.h"
-#include "../../QSC/QSC/collection.h"
-#include "../../QSC/QSC/sha3.h"
-#include "../../QSC/QSC/socket.h"
+#include "collection.h"
+#include "sha3.h"
+#include "socket.h"
 
 /**
  * \file network.h

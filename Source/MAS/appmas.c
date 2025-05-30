@@ -1,5 +1,5 @@
 #include "appmas.h"
-#include "../MPDC/mas.h"
+#include "mas.h"
 
 int main(void)
 {

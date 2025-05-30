@@ -46,7 +46,7 @@
 #ifndef MPDC_COMMANDS_H
 #define MPDC_COMMANDS_H
 
-#include "../MPDC/mpdc.h"
+#include "mpdc.h"
 
 /*!
 * \enum mpdc_console_commands

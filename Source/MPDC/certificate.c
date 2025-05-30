@@ -1,14 +1,14 @@
 #include "certificate.h"
 #include "crypto.h"
-#include "../../QSC/QSC/acp.h"
-#include "../../QSC/QSC/encoding.h"
-#include "../../QSC/QSC/fileutils.h"
-#include "../../QSC/QSC/memutils.h"
-#include "../../QSC/QSC/sha3.h"
-#include "../../QSC/QSC/stringutils.h"
-#include "../../QSC/QSC/timestamp.h"
+#include "acp.h"
+#include "encoding.h"
+#include "fileutils.h"
+#include "memutils.h"
+#include "sha3.h"
+#include "stringutils.h"
+#include "timestamp.h"
 #if defined(MPDC_DEBUG_TESTS_RUN)
-#include "../../QSC/QSC/consoleutils.h"
+#include "consoleutils.h"
 #endif
 
 mpdc_configuration_sets mpdc_certificate_algorithm_decode(const char* name)

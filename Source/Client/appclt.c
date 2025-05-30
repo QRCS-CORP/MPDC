@@ -1,6 +1,6 @@
 #include "appclt.h"
-#include "../MPDC/mpdc.h"
-#include "../MPDC/client.h"
+#include "mpdc.h"
+#include "client.h"
 
 int main(void)
 {

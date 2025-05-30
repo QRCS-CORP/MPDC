@@ -40,7 +40,7 @@
 #ifndef MPDC_CRYPTO_H
 #define MPDC_CRYPTO_H
 
-#include "common.h"
+#include "mpdccommon.h"
 #include "mpdc.h"
 
 /**
