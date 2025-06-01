@@ -31,7 +31,7 @@ target_link_libraries(mpdc PUBLIC qsc)
 # MPDC Agent
 file(GLOB_RECURSE MPDC_AGENT_SOURCES "Source/Agent/*.c")
 
-add_executable(mpdc_agent ${QSMP_AGENT_SOURCES})
+add_executable(mpdc_agent ${MPDC_AGENT_SOURCES})
 target_include_directories(mpdc_agent PRIVATE "Source/Agent")
 target_link_libraries(mpdc_agent PRIVATE mpdc)
 
