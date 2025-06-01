@@ -25,7 +25,7 @@ file(GLOB_RECURSE MPDC_SOURCES "Source/MPDC/*.c")
 file(GLOB_RECURSE MPDC_HEADERS "Source/MPDC/include/*.h")
 
 add_library(mpdc STATIC ${MPDC_SOURCES} ${MPDC_HEADERS})
-target_include_directories(mpdc PUBLIC Source/MPDC)
+target_include_directories(mpdc PUBLIC "Source/MPDC")
 target_link_libraries(mpdc PUBLIC qsc)
 
 # MPDC Agent
@@ -39,14 +39,14 @@ target_link_libraries(mpdc_agent PRIVATE mpdc)
 file(GLOB_RECURSE MPDC_CLIENT_SOURCES "Source/Client/*.c")
 
 add_executable(mpdc_client ${MPDC_CLIENT_SOURCES})
-target_include_directories(mpdc_client PRIVATE Source/Client)
+target_include_directories(mpdc_client PRIVATE "Source/Client")
 target_link_libraries(mpdc_client PRIVATE mpdc)
 
 # MPDC DLA
 file(GLOB_RECURSE MPDC_DLA_SOURCES "Source/DLA/*.c")
 
 add_executable(mpdc_dla ${MPDC_DLA_SOURCES})
-target_include_directories(mpdc_dla PRIVATE Source/DLA)
+target_include_directories(mpdc_dla PRIVATE "Source/DLA")
 target_link_libraries(mpdc_dla PRIVATE mpdc)
 
 # MPDC MAS

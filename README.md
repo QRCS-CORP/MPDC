@@ -4,6 +4,13 @@ The Multi Party Domain Cryptosystem protocol
 
 ## Introduction
 
+[![Build](https://github.com/QRCS-CORP/MPDC/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/QRCS-CORP/MPDC/actions/workflows/build.yml)
+[![CodeQL](https://github.com/QRCS-CORP/MPDC/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/QRCS-CORP/MPDC/actions/workflows/codeql-analysis.yml)
+[![Platforms](https://img.shields.io/badge/platforms-Linux%20|%20macOS%20|%20Windows-blue)](#)
+[![docs](https://img.shields.io/badge/docs-online-brightgreen)](https://qrcs-corp.github.io/MPDC/)
+[![Security Policy](https://img.shields.io/badge/security-policy-blue)](https://github.com/QRCS-CORP/MPDC/security/policy)  
+
+
 MPDC-I (Multi Party Domain Cryptosystem - Interior Protocol) is a multi‐party key exchange and network security system. It distributes the security of a key exchange between a server and a client across multiple devices. This design leverages the contribution of network agents—trusted devices that each inject a portion of pseudo‐random material into the key exchange process—ensuring that no single entity controls the entire shared-secret derivation.
 
 On an interior network, the server and client establish a shared secret with each authenticated agent using an asymmetric key exchange. The resulting shared-secret, retained for the lifetime of the device's certificate, is used to generate a unique key-stream to encrypt small chunks of pseudo‐random data called "key fragments". These fragments are subsequently combined and hashed to derive the primary session keys that secure the encrypted tunnel between the server and client.
