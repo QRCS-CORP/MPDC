@@ -472,7 +472,7 @@ static mpdc_protocol_errors agent_incremental_update_response(const qsc_socket* 
 	return merr;
 }
 
-static void agent_receive_loop(agent_receive_state* ras)
+static void agent_receive_loop(void* ras)
 {
 	assert(ras != NULL);
 
@@ -480,26 +480,28 @@ static void agent_receive_loop(agent_receive_state* ras)
 
 	uint8_t* buff;
 	const char* cmsg;
+	agent_receive_state* pras;
 	size_t mlen;
 	size_t plen;
 	size_t slen;
 	mpdc_protocol_errors merr;
 
+	pras = (agent_receive_state*)ras;
 	merr = mpdc_protocol_error_none;
 
-	if (ras != NULL)
+	if (pras != NULL)
 	{
 		buff = (uint8_t*)qsc_memutils_malloc(QSC_SOCKET_TERMINATOR_SIZE);
 
 		if (buff != NULL)
 		{
-			if (ras->csock.connection_status == qsc_socket_state_connected)
+			if (pras->csock.connection_status == qsc_socket_state_connected)
 			{
 				uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0 };
 
 				mlen = 0;
 				slen = 0;
-				plen = qsc_socket_peek(&ras->csock, hdr, sizeof(hdr));
+				plen = qsc_socket_peek(&pras->csock, hdr, sizeof(hdr));
 
 				if (plen == sizeof(hdr))
 				{
@@ -513,18 +515,18 @@ static void agent_receive_loop(agent_receive_state* ras)
 						if (buff != NULL)
 						{
 							qsc_memutils_clear(buff, plen);
-							mlen = qsc_socket_receive(&ras->csock, buff, plen, qsc_socket_receive_flag_wait_all);
+							mlen = qsc_socket_receive(&pras->csock, buff, plen, qsc_socket_receive_flag_wait_all);
 						}
 						else
 						{
 							merr = mpdc_protocol_error_memory_allocation;
-							mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_allocation_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_allocation_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 					}
 					else
 					{
 						merr = mpdc_protocol_error_invalid_request;
-						mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_receive_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+						mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_receive_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 					}
 
 					if (mlen > 0)
@@ -533,17 +535,17 @@ static void agent_receive_loop(agent_receive_state* ras)
 
 						if (pkt.flag == mpdc_network_flag_tunnel_connection_terminate)
 						{
-							mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_connection_terminated, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_connection_terminated, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 						/* agent messages */
 						else if (pkt.flag == mpdc_network_flag_network_converge_request)
 						{
 							/* sent by the dla, preceedes the mfk exchange */
-							merr = agent_converge_response(&ras->csock, &pkt);
+							merr = agent_converge_response(&pras->csock, &pkt);
 
 							if (merr == mpdc_protocol_error_none)
 							{
-								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_convergence_success, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_convergence_success, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 							else
 							{
@@ -554,7 +556,7 @@ static void agent_receive_loop(agent_receive_state* ras)
 									mpdc_logger_write_time_stamped_message(m_agent_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 								}
 
-								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_convergence_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_convergence_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 						}
 						else if (pkt.flag == mpdc_network_flag_network_revocation_broadcast)
@@ -565,7 +567,7 @@ static void agent_receive_loop(agent_receive_state* ras)
 
 							if (merr == mpdc_protocol_error_none)
 							{
-								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_revocation_success, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_revocation_success, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 							else
 							{
@@ -576,17 +578,17 @@ static void agent_receive_loop(agent_receive_state* ras)
 									mpdc_logger_write_time_stamped_message(m_agent_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 								}
 
-								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_revocation_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_revocation_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 						}
 						else if (pkt.flag == mpdc_network_flag_fragment_query_request)
 						{
 							/* sent by the server or client, requesting an encrypted fragment key */
-							merr = agent_fragment_query_response(&ras->csock, &pkt);
+							merr = agent_fragment_query_response(&pras->csock, &pkt);
 
 							if (merr == mpdc_protocol_error_none)
 							{
-								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_fragment_exchange_success, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_fragment_exchange_success, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 							else
 							{
@@ -597,17 +599,17 @@ static void agent_receive_loop(agent_receive_state* ras)
 									mpdc_logger_write_time_stamped_message(m_agent_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 								}
 
-								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_fragment_exchange_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_fragment_exchange_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 						}
 						else if (pkt.flag == mpdc_network_flag_incremental_update_request)
 						{
 							/* sent by a client or server, requesting an agents topological info */
-							merr = agent_incremental_update_response(&ras->csock, &pkt);
+							merr = agent_incremental_update_response(&pras->csock, &pkt);
 
 							if (merr == mpdc_protocol_error_none)
 							{
-								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_incremental_success, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_incremental_success, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 							else
 							{
@@ -618,18 +620,18 @@ static void agent_receive_loop(agent_receive_state* ras)
 									mpdc_logger_write_time_stamped_message(m_agent_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 								}
 
-								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_incremental_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_incremental_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 						}
 						else if (pkt.flag == mpdc_network_flag_mfk_request)
 						{
 							/* sent by a client or server, requesting an mfk exchange */
 
-							merr = agent_mfk_response(&ras->csock, &pkt);
+							merr = agent_mfk_response(&pras->csock, &pkt);
 
 							if (merr == mpdc_protocol_error_none)
 							{
-								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_mfk_exchange_success, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_mfk_exchange_success, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 							else
 							{
@@ -640,7 +642,7 @@ static void agent_receive_loop(agent_receive_state* ras)
 									mpdc_logger_write_time_stamped_message(m_agent_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 								}
 
-								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_mfk_exchange_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_mfk_exchange_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 						}
 						else if (pkt.flag == mpdc_network_flag_system_error_condition)
@@ -653,7 +655,7 @@ static void agent_receive_loop(agent_receive_state* ras)
 								mpdc_logger_write_time_stamped_message(m_agent_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 							}
 
-							mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_remote_reported_error, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_remote_reported_error, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 						else
 						{
@@ -669,13 +671,13 @@ static void agent_receive_loop(agent_receive_state* ras)
 									err == qsc_socket_exception_network_failure ||
 									err == qsc_socket_exception_shut_down)
 								{
-									mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_connection_terminated, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+									mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_connection_terminated, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 								}
 							}
 							else
 							{
-								mpdc_network_send_error(&ras->csock, mpdc_protocol_error_invalid_request);
-								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_remote_invalid_request, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_network_send_error(&pras->csock, mpdc_protocol_error_invalid_request);
+								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_remote_invalid_request, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 						}
 					}
@@ -686,10 +688,11 @@ static void agent_receive_loop(agent_receive_state* ras)
 		}
 
 		/* close the connection */
-		mpdc_network_socket_dispose(&ras->csock);
+		mpdc_network_socket_dispose(&pras->csock);
 
 		/* free the socket from memory */
-		qsc_memutils_alloc_free(ras);
+		qsc_memutils_alloc_free(pras);
+		pras = NULL;
 	}
 }
 
@@ -735,7 +738,7 @@ static mpdc_protocol_errors agent_ipv4_server_start()
 
 							if (serr == qsc_socket_exception_success)
 							{
-								qsc_async_thread_create((void*)&agent_receive_loop, ras);
+								qsc_async_thread_create(&agent_receive_loop, ras);
 							}
 							else
 							{
@@ -823,7 +826,7 @@ static mpdc_protocol_errors agent_ipv6_server_start()
 
 							if (serr == qsc_socket_exception_success)
 							{
-								qsc_async_thread_create((void*)&agent_receive_loop, ras);
+								qsc_async_thread_create(&agent_receive_loop, ras);
 							}
 							else
 							{
@@ -947,9 +950,9 @@ static bool agent_server_service_start()
 
 #if defined(MPDC_NETWORK_PROTOCOL_IPV6)
 	/* start the main receive loop on a new thread */
-	if (qsc_async_thread_create((void*)&agent_ipv6_server_start, NULL) != NULL)
+	if (qsc_async_thread_create(&agent_ipv6_server_start, NULL) != NULL)
 #else
-	if (qsc_async_thread_create((void*)&agent_ipv4_server_start, NULL) != NULL)
+	if (qsc_async_thread_create(&agent_ipv4_server_start, NULL) != NULL)
 #endif
 	{
 		m_agent_server_loop_status = mpdc_server_loop_status_started;
@@ -1563,7 +1566,7 @@ static void agent_command_execute(const char* command)
 	{
 		/* sends the root signed certificate to the dla and joins the network
 		* dla gets request and sends back confirm, and triggers mfk exchange */
-		if (m_agent_server_loop_status = mpdc_server_loop_status_started)
+		if (m_agent_server_loop_status == mpdc_server_loop_status_started)
 		{
 			cmsg = qsc_stringutils_reverse_sub_string(command, " ");
 
@@ -1612,7 +1615,7 @@ static void agent_command_execute(const char* command)
 	}
 	case mpdc_command_action_server_resign:
 	{
-		if (m_agent_server_loop_status = mpdc_server_loop_status_started)
+		if (m_agent_server_loop_status == mpdc_server_loop_status_started)
 		{
 			cmsg = qsc_stringutils_reverse_sub_string(command, " ");
 

@@ -144,7 +144,7 @@ static bool rds_certificate_sign(const char* fpath)
 	return res;
 }
 
-static mpdc_protocol_errors dla_remote_signing_response(const qsc_socket* csock, const mpdc_network_packet* packetin)
+static mpdc_protocol_errors dla_remote_signing_response(qsc_socket* csock, const mpdc_network_packet* packetin)
 {
 	assert(csock != NULL);
 	assert(packetin != NULL);
@@ -156,7 +156,7 @@ static mpdc_protocol_errors dla_remote_signing_response(const qsc_socket* csock,
 	{
 		if (mpdc_topology_node_find(&m_rds_application_state.tlist, &dnode, m_rds_application_state.dla.serial) == true)
 		{
-			if (qsc_memutils_are_equal(dnode.address, csock->address, MPDC_CERTIFICATE_ADDRESS_SIZE) == true)
+			if (qsc_memutils_are_equal((const uint8_t*)dnode.address, (const uint8_t*)csock->address, MPDC_CERTIFICATE_ADDRESS_SIZE) == true)
 			{
 				mpdc_child_certificate rcert = { 0 };
 
@@ -223,7 +223,6 @@ static bool rds_server_load_dla()
 static bool rds_server_dla_dialogue()
 {
 	char cmsg[MPDC_STORAGE_PATH_MAX] = { 0 };
-	char ladd[MPDC_CERTIFICATE_ADDRESS_SIZE] = { 0 };
 	char fpath[MPDC_STORAGE_PATH_MAX] = { 0 };
 	size_t slen;
 	uint8_t rctr;
@@ -323,12 +322,13 @@ static bool rds_server_dla_dialogue()
 	return res;
 }
 
-static void rds_receive_loop(rds_receive_state* ras)
+static void rds_receive_loop(void* ras)
 {
 	assert(ras != NULL);
 
 	mpdc_network_packet pkt = { 0 };
 	uint8_t* buff;
+	rds_receive_state* pras;
 	const char* cmsg;
 	size_t mlen;
 	size_t plen;
@@ -339,6 +339,7 @@ static void rds_receive_loop(rds_receive_state* ras)
 
 	if (ras != NULL)
 	{
+		pras = (rds_receive_state*)ras;
 		buff = (uint8_t*)qsc_memutils_malloc(QSC_SOCKET_TERMINATOR_SIZE);
 
 		if (buff != NULL)
@@ -347,7 +348,7 @@ static void rds_receive_loop(rds_receive_state* ras)
 
 			mlen = 0;
 			slen = 0;
-			plen = qsc_socket_peek(&ras->csock, hdr, MPDC_PACKET_HEADER_SIZE);
+			plen = qsc_socket_peek(&pras->csock, hdr, MPDC_PACKET_HEADER_SIZE);
 
 			if (plen == MPDC_PACKET_HEADER_SIZE)
 			{
@@ -361,18 +362,18 @@ static void rds_receive_loop(rds_receive_state* ras)
 					if (buff != NULL)
 					{
 						qsc_memutils_clear(buff, plen);
-						mlen = qsc_socket_receive(&ras->csock, buff, plen, qsc_socket_receive_flag_wait_all);
+						mlen = qsc_socket_receive(&pras->csock, buff, plen, qsc_socket_receive_flag_wait_all);
 					}
 					else
 					{
 						merr = mpdc_protocol_error_memory_allocation;
-						mpdc_server_log_write_message(&m_rds_application_state, mpdc_application_log_allocation_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+						mpdc_server_log_write_message(&m_rds_application_state, mpdc_application_log_allocation_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 					}
 				}
 				else
 				{
 					merr = mpdc_protocol_error_invalid_request;
-					mpdc_server_log_write_message(&m_rds_application_state, mpdc_application_log_receive_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+					mpdc_server_log_write_message(&m_rds_application_state, mpdc_application_log_receive_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 				}
 
 				if (mlen > 0)
@@ -381,11 +382,11 @@ static void rds_receive_loop(rds_receive_state* ras)
 
 					if (pkt.flag == mpdc_network_flag_network_remote_signing_request)
 					{
-						merr = dla_remote_signing_response(&ras->csock, &pkt);
+						merr = dla_remote_signing_response(&pras->csock, &pkt);
 
 						if (merr == mpdc_protocol_error_none)
 						{
-							mpdc_server_log_write_message(&m_rds_application_state, mpdc_application_log_remote_signing_success, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_rds_application_state, mpdc_application_log_remote_signing_success, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 						else
 						{
@@ -396,7 +397,7 @@ static void rds_receive_loop(rds_receive_state* ras)
 								mpdc_logger_write_time_stamped_message(m_rds_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 							}
 
-							mpdc_server_log_write_message(&m_rds_application_state, mpdc_application_log_remote_signing_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_rds_application_state, mpdc_application_log_remote_signing_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 					}
 					else if (pkt.flag == mpdc_network_flag_system_error_condition)
@@ -409,7 +410,7 @@ static void rds_receive_loop(rds_receive_state* ras)
 							mpdc_logger_write_time_stamped_message(m_rds_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 						}
 
-						mpdc_server_log_write_message(&m_rds_application_state, mpdc_application_log_remote_reported_error, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+						mpdc_server_log_write_message(&m_rds_application_state, mpdc_application_log_remote_reported_error, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 					}
 					else
 					{
@@ -425,13 +426,13 @@ static void rds_receive_loop(rds_receive_state* ras)
 								err == qsc_socket_exception_network_failure ||
 								err == qsc_socket_exception_shut_down)
 							{
-								mpdc_server_log_write_message(&m_rds_application_state, mpdc_application_log_connection_terminated, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_rds_application_state, mpdc_application_log_connection_terminated, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 						}
 						else
 						{
-							mpdc_network_send_error(&ras->csock, mpdc_protocol_error_invalid_request);
-							mpdc_server_log_write_message(&m_rds_application_state, mpdc_application_log_remote_invalid_request, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_network_send_error(&pras->csock, mpdc_protocol_error_invalid_request);
+							mpdc_server_log_write_message(&m_rds_application_state, mpdc_application_log_remote_invalid_request, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 					}
 				}
@@ -441,10 +442,11 @@ static void rds_receive_loop(rds_receive_state* ras)
 		}
 
 		/* close the connection and dispose of the socket */
-		mpdc_network_socket_dispose(&ras->csock);
+		mpdc_network_socket_dispose(&pras->csock);
 
 		/* free the socket from memory */
-		qsc_memutils_alloc_free(ras);
+		qsc_memutils_alloc_free(pras);
+		pras = NULL;
 	}
 }
 
@@ -490,7 +492,7 @@ static mpdc_protocol_errors rds_ipv4_server_start()
 
 							if (serr == qsc_socket_exception_success)
 							{
-								qsc_async_thread_create((void*)&rds_receive_loop, ras);
+								qsc_async_thread_create(&rds_receive_loop, ras);
 							}
 							else
 							{
@@ -578,7 +580,7 @@ static mpdc_protocol_errors rds_ipv6_server_start()
 
 							if (serr == qsc_socket_exception_success)
 							{
-								qsc_async_thread_create((void*)&rds_receive_loop, ras);
+								qsc_async_thread_create(&rds_receive_loop, ras);
 							}
 							else
 							{
@@ -622,9 +624,9 @@ static bool rds_server_service_start()
 {
 #if defined(MPDC_NETWORK_PROTOCOL_IPV6)
 	/* start the main receive loop on a new thread */
-	if (qsc_async_thread_create((void*)&rds_ipv6_server_start, NULL) != NULL)
+	if (qsc_async_thread_create(&rds_ipv6_server_start, NULL) != NULL)
 #else
-	if (qsc_async_thread_create((void*)&rds_ipv4_server_start, NULL) != NULL)
+	if (qsc_async_thread_create(&rds_ipv4_server_start, NULL) != NULL)
 #endif
 	{
 		m_rds_server_loop_status = mpdc_server_loop_status_started;
@@ -1516,7 +1518,7 @@ void mpdc_rds_start_server()
 
 	/* start the idle timer */
 	m_rds_idle_timer = 0;
-	idle = qsc_async_thread_create((void*)&rds_idle_timer, NULL);
+	idle = qsc_async_thread_create(&rds_idle_timer, NULL);
 
 	/* command loop */
 	rds_command_loop(command);

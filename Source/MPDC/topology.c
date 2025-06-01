@@ -29,7 +29,7 @@ void mpdc_topology_address_from_issuer(char* address, const char* issuer, const 
 
 				if (mpdc_topology_list_item(list, &node, i) == true)
 				{
-					if (qsc_memutils_are_equal(node.issuer, issuer, clen) == true)
+					if (qsc_memutils_are_equal((const char*)node.issuer, (const char*)issuer, clen) == true)
 					{
 						qsc_memutils_copy(address, node.address, MPDC_CERTIFICATE_ADDRESS_SIZE);
 						break;
@@ -626,13 +626,13 @@ bool mpdc_topology_nodes_are_equal(const mpdc_topology_node_state* a, const mpdc
 
 	if (a != NULL && b != NULL)
 	{
-		if (qsc_memutils_are_equal(a->address, b->address, MPDC_CERTIFICATE_ADDRESS_SIZE) == true)
+		if (qsc_memutils_are_equal((const uint8_t*)a->address, (const uint8_t*)b->address, MPDC_CERTIFICATE_ADDRESS_SIZE) == true)
 		{
 			if (qsc_memutils_are_equal(a->chash, b->chash, MPDC_CERTIFICATE_HASH_SIZE) == true)
 			{
 				if (qsc_memutils_are_equal(a->serial, b->serial, MPDC_CERTIFICATE_SERIAL_SIZE) == true)
 				{
-					if (qsc_memutils_are_equal(a->issuer, b->issuer, MPDC_CERTIFICATE_ISSUER_SIZE) == true)
+					if (qsc_memutils_are_equal((const uint8_t*)a->issuer, (const uint8_t*)b->issuer, MPDC_CERTIFICATE_ISSUER_SIZE) == true)
 					{
 						if (a->expiration.from == b->expiration.from && a->expiration.to == b->expiration.to)
 						{
@@ -767,7 +767,7 @@ bool mpdc_topology_node_find_address(const mpdc_topology_list_state* list, mpdc_
 
 			if (mpdc_topology_list_item(list, &ntmp, i) == true)
 			{
-				if (qsc_memutils_are_equal_128(ntmp.address, address) == true)
+				if (qsc_memutils_are_equal_128((const uint8_t*)ntmp.address, (const uint8_t*)address) == true)
 				{
 					mpdc_topology_node_copy(&ntmp, node);
 					res = true;
@@ -886,7 +886,7 @@ bool mpdc_topology_node_find_issuer(const mpdc_topology_list_state* list, mpdc_t
 
 				if (mpdc_topology_list_item(list, &ntmp, i) == true)
 				{
-					if (qsc_memutils_are_equal(ntmp.issuer, issuer, clen) == true)
+					if (qsc_memutils_are_equal((const uint8_t*)ntmp.issuer, (const uint8_t*)issuer, clen) == true)
 					{
 						mpdc_topology_node_copy(&ntmp, node);
 						res = true;
@@ -1316,7 +1316,7 @@ void mpdc_topology_from_file(const char* fpath, mpdc_topology_list_state* list)
 
 				if (lbuf != NULL)
 				{
-					qsc_fileutils_copy_file_to_stream(fpath, lbuf, flen);
+					qsc_fileutils_copy_file_to_stream(fpath, (char*)lbuf, flen);
 					mpdc_topology_list_deserialize(list, lbuf, flen);
 					qsc_memutils_alloc_free(lbuf);
 				}
@@ -1341,7 +1341,7 @@ void mpdc_topology_to_file(const mpdc_topology_list_state* list, const char* fpa
 		if (pbuf != NULL)
 		{
 			mpdc_topology_list_serialize(pbuf, list);
-			qsc_fileutils_copy_stream_to_file(fpath, pbuf, flen);
+			qsc_fileutils_copy_stream_to_file(fpath, (const char*)pbuf, flen);
 			qsc_memutils_alloc_free(pbuf);
 		}
 	}

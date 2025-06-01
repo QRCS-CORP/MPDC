@@ -605,6 +605,7 @@ static mpdc_protocol_errors dla_resign_response(const qsc_socket* csock, const m
 	const uint8_t* rser;
 	mpdc_protocol_errors merr;
 
+	(void)csock;
 	rser = packetin->pmessage + MPDC_PACKET_SUBHEADER_SIZE;
 
 	if (mpdc_topology_node_find(&m_dla_application_state.tlist, &rnode, rser) == true)
@@ -768,7 +769,7 @@ static mpdc_protocol_errors dla_topological_query_response(const qsc_socket* cso
 	mpdc_protocol_errors merr;
 
 	cser = packetin->pmessage + MPDC_PACKET_SUBHEADER_SIZE;
-	riss = packetin->pmessage + MPDC_PACKET_SUBHEADER_SIZE + MPDC_CERTIFICATE_SERIAL_SIZE;
+	riss = (const char*)packetin->pmessage + MPDC_PACKET_SUBHEADER_SIZE + MPDC_CERTIFICATE_SERIAL_SIZE;
 
 	if (mpdc_topology_node_find_issuer(&m_dla_application_state.tlist, &rnode, riss) == true)
 	{
@@ -815,12 +816,13 @@ static mpdc_protocol_errors dla_topological_query_response(const qsc_socket* cso
 	return merr;
 }
 
-static void dla_receive_loop(dla_receive_state* ras)
+static void dla_receive_loop(void* ras)
 {
 	assert(ras != NULL);
 
 	mpdc_network_packet pkt = { 0 };
 	uint8_t* buff;
+	dla_receive_state* pras;
 	const char* cmsg;
 	size_t mlen;
 	size_t plen;
@@ -831,17 +833,18 @@ static void dla_receive_loop(dla_receive_state* ras)
 
 	if (ras != NULL)
 	{
+		pras = (dla_receive_state*)ras;
 		buff = (uint8_t*)qsc_memutils_malloc(QSC_SOCKET_TERMINATOR_SIZE);
 
 		if (buff != NULL)
 		{
-			if (ras->csock.connection_status == qsc_socket_state_connected)
+			if (pras->csock.connection_status == qsc_socket_state_connected)
 			{
 				uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0 };
 
 				mlen = 0;
 				slen = 0;
-				plen = qsc_socket_peek(&ras->csock, hdr, MPDC_PACKET_HEADER_SIZE);
+				plen = qsc_socket_peek(&pras->csock, hdr, MPDC_PACKET_HEADER_SIZE);
 
 				if (plen == MPDC_PACKET_HEADER_SIZE)
 				{
@@ -855,18 +858,18 @@ static void dla_receive_loop(dla_receive_state* ras)
 						if (buff != NULL)
 						{
 							qsc_memutils_clear(buff, plen);
-							mlen = qsc_socket_receive(&ras->csock, buff, plen, qsc_socket_receive_flag_wait_all);
+							mlen = qsc_socket_receive(&pras->csock, buff, plen, qsc_socket_receive_flag_wait_all);
 						}
 						else
 						{
 							merr = mpdc_protocol_error_memory_allocation;
-							mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_allocation_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_allocation_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 					}
 					else
 					{
 						merr = mpdc_protocol_error_invalid_request;
-						mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_receive_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+						mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_receive_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 					}
 			
 					if (mlen > 0)
@@ -875,17 +878,17 @@ static void dla_receive_loop(dla_receive_state* ras)
 
 						if (pkt.flag == mpdc_network_flag_tunnel_connection_terminate)
 						{
-							mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_connection_terminated, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
-							mpdc_connection_close(&ras->csock, mpdc_protocol_error_none, true);
+							mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_connection_terminated, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_connection_close(&pras->csock, mpdc_protocol_error_none, true);
 						}
 						else if (pkt.flag == mpdc_network_flag_incremental_update_request)
 						{
 							/* sent by a client or server, requesting an agents topological info */
-							merr = dla_incremental_update_response(&ras->csock, &pkt);
+							merr = dla_incremental_update_response(&pras->csock, &pkt);
 
 							if (merr == mpdc_protocol_error_none)
 							{
-								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_incremental_success, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_incremental_success, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 							else
 							{
@@ -896,17 +899,17 @@ static void dla_receive_loop(dla_receive_state* ras)
 									mpdc_logger_write_time_stamped_message(m_dla_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 								}
 
-								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_incremental_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_incremental_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 						}
 						else if (pkt.flag == mpdc_network_flag_register_request)
 						{
 							/* sent to the dla requesting to join the network */
-							merr = dla_register_response(&ras->csock, &pkt);
+							merr = dla_register_response(&pras->csock, &pkt);
 
 							if (merr == mpdc_protocol_error_none)
 							{
-								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_register_success, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_register_success, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 							else
 							{
@@ -917,17 +920,17 @@ static void dla_receive_loop(dla_receive_state* ras)
 									mpdc_logger_write_time_stamped_message(m_dla_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 								}
 
-								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_register_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_register_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 						}
 						else if (pkt.flag == mpdc_network_flag_register_update_request)
 						{
 							/* sent to the dla from a MAS requesting to register on the network */
-							merr = dla_register_update_response(&ras->csock, &pkt);
+							merr = dla_register_update_response(&pras->csock, &pkt);
 
 							if (merr == mpdc_protocol_error_none)
 							{
-								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_register_success, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_register_success, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 							else
 							{
@@ -938,18 +941,18 @@ static void dla_receive_loop(dla_receive_state* ras)
 									mpdc_logger_write_time_stamped_message(m_dla_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 								}
 
-								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_register_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_register_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 						}
 						else if (pkt.flag == mpdc_network_flag_network_resign_request)
 						{
 							/* sent to the dla from a server or agent requesting a network resignation */
 							
-							merr = dla_resign_response(&ras->csock, &pkt);
+							merr = dla_resign_response(&pras->csock, &pkt);
 
 							if (merr == mpdc_protocol_error_none)
 							{
-								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_remote_resign_success, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_remote_resign_success, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 							else
 							{
@@ -960,18 +963,18 @@ static void dla_receive_loop(dla_receive_state* ras)
 									mpdc_logger_write_time_stamped_message(m_dla_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 								}
 
-								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_remote_resign_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_remote_resign_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 						}
 						else if (pkt.flag == mpdc_network_flag_topology_query_request)
 						{
 							/* sent to the dla from a server or agent querying for a node */
 							
-							merr = dla_topological_query_response(&ras->csock, &pkt);
+							merr = dla_topological_query_response(&pras->csock, &pkt);
 
 							if (merr == mpdc_protocol_error_none)
 							{
-								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_topology_node_query_success, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_topology_node_query_success, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 							else
 							{
@@ -982,7 +985,7 @@ static void dla_receive_loop(dla_receive_state* ras)
 									mpdc_logger_write_time_stamped_message(m_dla_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 								}
 
-								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_topology_node_query_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_topology_node_query_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 						}
 						else if (pkt.flag == mpdc_network_flag_system_error_condition)
@@ -996,7 +999,7 @@ static void dla_receive_loop(dla_receive_state* ras)
 								mpdc_logger_write_time_stamped_message(m_dla_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 							}
 
-							mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_remote_reported_error, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_remote_reported_error, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 						else
 						{
@@ -1012,13 +1015,13 @@ static void dla_receive_loop(dla_receive_state* ras)
 									err == qsc_socket_exception_network_failure ||
 									err == qsc_socket_exception_shut_down)
 								{
-									mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_connection_terminated, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+									mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_connection_terminated, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 								}
 							}
 							else
 							{
-								mpdc_network_send_error(&ras->csock, mpdc_protocol_error_invalid_request);
-								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_remote_invalid_request, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+								mpdc_network_send_error(&pras->csock, mpdc_protocol_error_invalid_request);
+								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_remote_invalid_request, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 							}
 						}
 					}
@@ -1029,10 +1032,11 @@ static void dla_receive_loop(dla_receive_state* ras)
 		}
 
 		/* close the connection */
-		mpdc_network_socket_dispose(&ras->csock);
+		mpdc_network_socket_dispose(&pras->csock);
 
 		/* free the socket from memory */
-		qsc_memutils_alloc_free(ras);
+		qsc_memutils_alloc_free(pras);
+		pras = NULL;
 	}
 }
 
@@ -1074,7 +1078,7 @@ static mpdc_protocol_errors dla_ipv4_server_start()
 
 							if (serr == qsc_socket_exception_success)
 							{
-								qsc_async_thread_create((void*)&dla_receive_loop, ras);
+								qsc_async_thread_create(&dla_receive_loop, ras);
 							}
 							else
 							{
@@ -1153,7 +1157,7 @@ static mpdc_protocol_errors dla_ipv6_server_start()
 							if (serr == qsc_socket_exception_success)
 							{
 								ras->csock.connection_status = qsc_socket_state_connected;
-								qsc_async_thread_create((void*)&dla_receive_loop, ras);
+								qsc_async_thread_create(&dla_receive_loop, ras);
 							}
 							else
 							{
@@ -1243,9 +1247,9 @@ static bool dla_server_start()
 {
 #if defined(MPDC_NETWORK_PROTOCOL_IPV6)
 	/* start the main receive loop on a new thread */
-	if (qsc_async_thread_create((void*)&dla_ipv6_server_start, NULL) != NULL)
+	if (qsc_async_thread_create(&dla_ipv6_server_start, NULL) != NULL)
 #else
-	if (qsc_async_thread_create((void*)&dla_ipv4_server_start, NULL) != NULL)
+	if (qsc_async_thread_create(&dla_ipv4_server_start, NULL) != NULL)
 #endif
 	{
 		m_dla_server_loop_status = mpdc_server_loop_status_started;
@@ -1860,13 +1864,13 @@ static void dla_command_execute(const char* command)
 	}
 	case mpdc_command_action_dla_server_announce:
 	{
-		if (m_dla_server_loop_status = mpdc_server_loop_status_started)
+		if (m_dla_server_loop_status == mpdc_server_loop_status_started)
 		{
 			uint8_t sadd[QSC_SOCKET_ADDRESS_MAX_SIZE] = { 0 };
-			uint8_t fpath[MPDC_STORAGE_PATH_MAX] = { 0 };
+			char fpath[MPDC_STORAGE_PATH_MAX] = { 0 };
 
 			cmsg = qsc_stringutils_sub_string(command, " ");
-			qsc_stringutils_split_strings(fpath, sadd, sizeof(fpath), cmsg + 1, ", ");
+			qsc_stringutils_split_strings(fpath, (char*)sadd, sizeof(fpath), cmsg + 1, ", ");
 			slen = qsc_stringutils_string_size(fpath);
 
 			merr = dla_announce_broadcast(fpath, sadd);
@@ -1906,7 +1910,7 @@ static void dla_command_execute(const char* command)
 	}
 	case mpdc_command_action_dla_server_converge:
 	{
-		if (m_dla_server_loop_status = mpdc_server_loop_status_started)
+		if (m_dla_server_loop_status == mpdc_server_loop_status_started)
 		{
 			dla_converge_broadcast();
 			mpdc_menu_print_predefined_message(mpdc_application_converge_success, m_dla_application_state.mode, m_dla_application_state.hostname);
@@ -1937,7 +1941,7 @@ static void dla_command_execute(const char* command)
 	}
 	case mpdc_command_action_server_resign:
 	{
-		if (m_dla_server_loop_status = mpdc_server_loop_status_started)
+		if (m_dla_server_loop_status == mpdc_server_loop_status_started)
 		{
 			dla_resign_command();
 			slen = qsc_stringutils_string_size(m_dla_application_state.hostname);
@@ -1971,7 +1975,7 @@ static void dla_command_execute(const char* command)
 	}
 	case mpdc_command_action_dla_server_revoke:
 	{
-		if (m_dla_server_loop_status = mpdc_server_loop_status_started)
+		if (m_dla_server_loop_status == mpdc_server_loop_status_started)
 		{
 			cmsg = qsc_stringutils_reverse_sub_string(command, " ");
 
@@ -2072,7 +2076,7 @@ static void dla_command_execute(const char* command)
 	}
 	case mpdc_command_action_dla_server_sproxy:
 	{
-		if (m_dla_server_loop_status = mpdc_server_loop_status_started)
+		if (m_dla_server_loop_status == mpdc_server_loop_status_started)
 		{
 			cmsg = qsc_stringutils_reverse_sub_string(command, " ");
 
@@ -2364,7 +2368,7 @@ int32_t mpdc_dla_start_server()
 
 	/* start the idle timer */
 	m_dla_idle_timer = 0;
-	idle = qsc_async_thread_create((void*)&dla_idle_timer, NULL);
+	idle = qsc_async_thread_create(&dla_idle_timer, NULL);
 	
 	if (idle != NULL)
 	{

@@ -172,7 +172,7 @@ bool mpdc_certificate_child_are_equal(const mpdc_child_certificate* a, const mpd
 		if (a->algorithm == b->algorithm && a->version == b->version && a->designation == b->designation &&
 			a->expiration.from == b->expiration.from && a->expiration.to == b->expiration.to)
 		{
-			if (qsc_memutils_are_equal(a->issuer, b->issuer, MPDC_CERTIFICATE_ISSUER_SIZE) == true)
+			if (qsc_memutils_are_equal((const uint8_t*)a->issuer, (const uint8_t*)b->issuer, MPDC_CERTIFICATE_ISSUER_SIZE) == true)
 			{
 				if (qsc_memutils_are_equal(a->serial, b->serial, MPDC_CERTIFICATE_SERIAL_SIZE) == true)
 				{
@@ -515,7 +515,7 @@ bool mpdc_certificate_child_file_to_struct(const char* fpath, mpdc_child_certifi
 		{
 			uint8_t schild[MPDC_CERTIFICATE_CHILD_SIZE] = { 0 };
 
-			if (qsc_fileutils_copy_file_to_stream(fpath, schild, MPDC_CERTIFICATE_CHILD_SIZE) == MPDC_CERTIFICATE_CHILD_SIZE)
+			if (qsc_fileutils_copy_file_to_stream(fpath, (char*)schild, MPDC_CERTIFICATE_CHILD_SIZE) == MPDC_CERTIFICATE_CHILD_SIZE)
 			{
 				mpdc_certificate_child_deserialize(child, schild);
 				res = true;
@@ -547,7 +547,7 @@ void mpdc_certificate_child_hash(uint8_t* output, const mpdc_child_certificate* 
 		qsc_sha3_update(&hstate, qsc_keccak_rate_256, nbuf, sizeof(uint64_t));
 		qsc_intutils_le64to8(nbuf, child->expiration.to);
 		qsc_sha3_update(&hstate, qsc_keccak_rate_256, nbuf, sizeof(uint64_t));
-		qsc_sha3_update(&hstate, qsc_keccak_rate_256, child->issuer, qsc_stringutils_string_size((const char*)child->issuer));
+		qsc_sha3_update(&hstate, qsc_keccak_rate_256, (const uint8_t*)child->issuer, qsc_stringutils_string_size((const char*)child->issuer));
 		qsc_sha3_update(&hstate, qsc_keccak_rate_256, child->serial, MPDC_CERTIFICATE_SERIAL_SIZE);
 		qsc_sha3_update(&hstate, qsc_keccak_rate_256, child->verkey, MPDC_ASYMMETRIC_VERIFICATION_KEY_SIZE);
 		qsc_sha3_finalize(&hstate, qsc_keccak_rate_256, output);
@@ -687,7 +687,7 @@ bool mpdc_certificate_child_struct_to_file(const char* fpath, const mpdc_child_c
 		}
 
 		mpdc_certificate_child_serialize(schild, child);
-		res = qsc_fileutils_copy_stream_to_file(fpath, schild, sizeof(schild));
+		res = qsc_fileutils_copy_stream_to_file(fpath, (const char*)schild, sizeof(schild));
 	}
 
 	return res;
@@ -862,7 +862,7 @@ bool mpdc_certificate_root_compare(const mpdc_root_certificate* a, const mpdc_ro
 		if (a->algorithm == b->algorithm && a->version == b->version &&
 			a->expiration.from == b->expiration.from && a->expiration.to == b->expiration.to)
 		{
-			if (qsc_memutils_are_equal(a->issuer, b->issuer, MPDC_CERTIFICATE_ISSUER_SIZE) == true)
+			if (qsc_memutils_are_equal((const uint8_t*)a->issuer, (const uint8_t*)b->issuer, MPDC_CERTIFICATE_ISSUER_SIZE) == true)
 			{
 				if (qsc_memutils_are_equal(a->serial, b->serial, MPDC_CERTIFICATE_SERIAL_SIZE) == true)
 				{
@@ -1108,7 +1108,7 @@ bool mpdc_certificate_root_file_to_struct(const char* fpath, mpdc_root_certifica
 		{
 			uint8_t sroot[MPDC_CERTIFICATE_ROOT_SIZE] = { 0 };
 
-			if (qsc_fileutils_copy_file_to_stream(fpath, sroot, MPDC_CERTIFICATE_ROOT_SIZE) == MPDC_CERTIFICATE_ROOT_SIZE)
+			if (qsc_fileutils_copy_file_to_stream(fpath, (char*)sroot, MPDC_CERTIFICATE_ROOT_SIZE) == MPDC_CERTIFICATE_ROOT_SIZE)
 			{
 				mpdc_certificate_root_deserialize(root, sroot);
 				res = mpdc_certificate_root_is_valid(root);
@@ -1138,7 +1138,7 @@ void mpdc_certificate_root_hash(uint8_t* output, const mpdc_root_certificate* ro
 		qsc_sha3_update(&hstate, qsc_keccak_rate_256, nbuf, sizeof(uint64_t));
 		qsc_intutils_le64to8(nbuf, root->expiration.to);
 		qsc_sha3_update(&hstate, qsc_keccak_rate_256, nbuf, sizeof(uint64_t));
-		qsc_sha3_update(&hstate, qsc_keccak_rate_256, root->issuer, qsc_stringutils_string_size((const char*)root->issuer));
+		qsc_sha3_update(&hstate, qsc_keccak_rate_256, (const uint8_t*)root->issuer, qsc_stringutils_string_size((const char*)root->issuer));
 		qsc_sha3_update(&hstate, qsc_keccak_rate_256, root->serial, MPDC_CERTIFICATE_SERIAL_SIZE);
 		qsc_sha3_update(&hstate, qsc_keccak_rate_256, root->verkey, MPDC_ASYMMETRIC_VERIFICATION_KEY_SIZE);
 		qsc_sha3_finalize(&hstate, qsc_keccak_rate_256, output);
@@ -1265,7 +1265,7 @@ bool mpdc_certificate_root_struct_to_file(const char* fpath, const mpdc_root_cer
 		uint8_t sroot[MPDC_CERTIFICATE_ROOT_SIZE] = { 0 };
 
 		mpdc_certificate_root_serialize(sroot, root);
-		res = qsc_fileutils_copy_stream_to_file(fpath, sroot, sizeof(sroot));
+		res = qsc_fileutils_copy_stream_to_file(fpath, (const char*)sroot, sizeof(sroot));
 	}
 
 	return res;

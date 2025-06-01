@@ -49,8 +49,6 @@ static mpdc_protocol_errors mas_mfk_request(const mpdc_topology_node_state* rnod
 
 	if (qsc_fileutils_exists(fpath) == true)
 	{
-		qsc_socket csock = { 0 };
-
 		if (mpdc_certificate_child_file_to_struct(fpath, &rcert) == true)
 		{
 			uint8_t mfkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
@@ -221,6 +219,7 @@ static mpdc_protocol_errors mas_announce_broadcast_response(const qsc_socket* cs
 	mpdc_topology_node_state rnode = { 0 };
 	mpdc_protocol_errors merr;
 
+	(void)csock;
 	merr = mpdc_protocol_error_none;
 
 	mpdc_network_announce_response_state ars = { 
@@ -840,7 +839,7 @@ static mpdc_protocol_errors mas_tunnel_receive_loop(mpdc_connection_state* pcns)
 									break;
 								}
 
-								mas_tunnel_callback(pcns, pmsg, dlen);
+								mas_tunnel_callback(pcns, (const char*)pmsg, dlen);
 								qsc_memutils_alloc_free(pmsg);
 							}
 							else
@@ -962,12 +961,13 @@ static mpdc_protocol_errors mas_tunnel_connection_response(const qsc_socket* cso
 	return merr;
 }
 
-static void mas_receive_loop(mas_receive_state* ras)
+static void mas_receive_loop(void* ras)
 {
 	assert(ras != NULL);
 
 	mpdc_network_packet pkt = { 0 };
 	uint8_t* buff;
+	mas_receive_state* pras;
 	const char* cmsg;
 	size_t mlen;
 	size_t plen;
@@ -978,6 +978,7 @@ static void mas_receive_loop(mas_receive_state* ras)
 
 	if (ras != NULL)
 	{
+		pras = (mas_receive_state*)ras;
 		buff = (uint8_t*)qsc_memutils_malloc(QSC_SOCKET_TERMINATOR_SIZE);
 
 		if (buff != NULL)
@@ -986,7 +987,7 @@ static void mas_receive_loop(mas_receive_state* ras)
 
 			mlen = 0;
 			slen = 0;
-			plen = qsc_socket_peek(&ras->csock, hdr, MPDC_PACKET_HEADER_SIZE);
+			plen = qsc_socket_peek(&pras->csock, hdr, MPDC_PACKET_HEADER_SIZE);
 
 			if (plen == MPDC_PACKET_HEADER_SIZE)
 			{
@@ -1000,18 +1001,18 @@ static void mas_receive_loop(mas_receive_state* ras)
 					if (buff != NULL)
 					{
 						qsc_memutils_clear(buff, plen);
-						mlen = qsc_socket_receive(&ras->csock, buff, plen, qsc_socket_receive_flag_wait_all);
+						mlen = qsc_socket_receive(&pras->csock, buff, plen, qsc_socket_receive_flag_wait_all);
 					}
 					else
 					{
 						merr = mpdc_protocol_error_memory_allocation;
-						mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_allocation_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+						mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_allocation_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 					}
 				}
 				else
 				{
 					merr = mpdc_protocol_error_invalid_request;
-					mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_receive_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+					mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_receive_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 				}
 
 				if (mlen > 0)
@@ -1020,11 +1021,11 @@ static void mas_receive_loop(mas_receive_state* ras)
 
 					if (pkt.flag == mpdc_network_flag_fragment_collection_request)
 					{
-						merr = mas_tunnel_connection_response(&ras->csock, &pkt);
+						merr = mas_tunnel_connection_response(&pras->csock, &pkt);
 						
 						if (merr == mpdc_protocol_error_none)
 						{
-							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_connect_success, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_connect_success, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 						else
 						{
@@ -1035,16 +1036,16 @@ static void mas_receive_loop(mas_receive_state* ras)
 								mpdc_logger_write_time_stamped_message(m_mas_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 							}
 
-							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_connect_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_connect_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 					}
 					else if (pkt.flag == mpdc_network_flag_topology_status_request)
 					{
-						merr = mas_topological_status_response(&ras->csock, &pkt);
+						merr = mas_topological_status_response(&pras->csock, &pkt);
 
 						if (merr == mpdc_protocol_error_none)
 						{
-							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_topology_node_query_success, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_topology_node_query_success, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 						else
 						{
@@ -1055,17 +1056,17 @@ static void mas_receive_loop(mas_receive_state* ras)
 								mpdc_logger_write_time_stamped_message(m_mas_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 							}
 
-							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_topology_node_query_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_topology_node_query_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 					}
 					else if (pkt.flag == mpdc_network_flag_incremental_update_request)
 					{
 						/* sent by a client requesting a servers topological info */
-						merr = mas_incremental_update_response(&ras->csock, &pkt);
+						merr = mas_incremental_update_response(&pras->csock, &pkt);
 
 						if (merr == mpdc_protocol_error_none)
 						{
-							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_incremental_success, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_incremental_success, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 						else
 						{
@@ -1076,17 +1077,17 @@ static void mas_receive_loop(mas_receive_state* ras)
 								mpdc_logger_write_time_stamped_message(m_mas_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 							}
 
-							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_incremental_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_incremental_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 					}
 					else if (pkt.flag == mpdc_network_flag_network_converge_request)
 					{
 						/* sent by the dla, preceedes the mfk exchange */
-						merr = mas_converge_response(&ras->csock, &pkt);
+						merr = mas_converge_response(&pras->csock, &pkt);
 
 						if (merr == mpdc_protocol_error_none)
 						{
-							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_convergence_success, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_convergence_success, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 						else
 						{
@@ -1097,7 +1098,7 @@ static void mas_receive_loop(mas_receive_state* ras)
 								mpdc_logger_write_time_stamped_message(m_mas_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 							}
 
-							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_convergence_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_convergence_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 					}
 					else if (pkt.flag == mpdc_network_flag_network_revocation_broadcast)
@@ -1108,7 +1109,7 @@ static void mas_receive_loop(mas_receive_state* ras)
 
 						if (merr == mpdc_protocol_error_none)
 						{
-							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_revocation_success, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_revocation_success, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 						else
 						{
@@ -1119,18 +1120,18 @@ static void mas_receive_loop(mas_receive_state* ras)
 								mpdc_logger_write_time_stamped_message(m_mas_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 							}
 
-							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_revocation_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_revocation_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 					}
 					else if (pkt.flag == mpdc_network_flag_mfk_request)
 					{
 						/* sent by a client requesting an mfk exchange */
 
-						merr = mas_mfk_response(&ras->csock, &pkt);
+						merr = mas_mfk_response(&pras->csock, &pkt);
 
 						if (merr == mpdc_protocol_error_none)
 						{
-							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_mfk_exchange_success, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_mfk_exchange_success, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 						else
 						{
@@ -1141,7 +1142,7 @@ static void mas_receive_loop(mas_receive_state* ras)
 								mpdc_logger_write_time_stamped_message(m_mas_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 							}
 
-							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_mfk_exchange_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_mfk_exchange_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 					}
 					else if (pkt.flag == mpdc_network_flag_system_error_condition)
@@ -1154,15 +1155,15 @@ static void mas_receive_loop(mas_receive_state* ras)
 							mpdc_logger_write_time_stamped_message(m_mas_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 						}
 
-						mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_remote_reported_error, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+						mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_remote_reported_error, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 					}
 					else if (pkt.flag == mpdc_network_flag_network_announce_broadcast)
 					{
-						merr = mas_announce_broadcast_response(&ras->csock, &pkt);
+						merr = mas_announce_broadcast_response(&pras->csock, &pkt);
 
 						if (merr == mpdc_protocol_error_none)
 						{
-							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_announce_success, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_announce_success, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 						else
 						{
@@ -1173,7 +1174,7 @@ static void mas_receive_loop(mas_receive_state* ras)
 								mpdc_logger_write_time_stamped_message(m_mas_application_state.logpath, cmsg, qsc_stringutils_string_size(cmsg));
 							}
 
-							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_announce_failure, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_announce_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 					}
 					else
@@ -1190,13 +1191,13 @@ static void mas_receive_loop(mas_receive_state* ras)
 								err == qsc_socket_exception_network_failure ||
 								err == qsc_socket_exception_shut_down)
 							{
-								mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_connection_terminated, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);	
+								mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_connection_terminated, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);	
 							}
 						}
 						else
 						{
-							mpdc_network_send_error(&ras->csock, mpdc_protocol_error_invalid_request);
-							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_remote_invalid_request, (const char*)ras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							mpdc_network_send_error(&pras->csock, mpdc_protocol_error_invalid_request);
+							mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_remote_invalid_request, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 					}
 				}
@@ -1206,10 +1207,11 @@ static void mas_receive_loop(mas_receive_state* ras)
 		}
 
 		/* close the connection and dispose of the socket */
-		mpdc_network_socket_dispose(&ras->csock);
+		mpdc_network_socket_dispose(&pras->csock);
 
 		/* free the socket from memory */
-		qsc_memutils_alloc_free(ras);
+		qsc_memutils_alloc_free(pras);
+		pras = NULL;
 	}
 }
 
@@ -1255,7 +1257,7 @@ static mpdc_protocol_errors mas_ipv4_server_start()
 
 							if (serr == qsc_socket_exception_success)
 							{
-								qsc_async_thread_create((void*)&mas_receive_loop, ras);
+								qsc_async_thread_create(&mas_receive_loop, ras);
 							}
 							else
 							{
@@ -1343,7 +1345,7 @@ static mpdc_protocol_errors mas_ipv6_server_start()
 
 							if (serr == qsc_socket_exception_success)
 							{
-								qsc_async_thread_create((void*)&mas_receive_loop, ras);
+								qsc_async_thread_create(&mas_receive_loop, ras);
 							}
 							else
 							{
@@ -1467,9 +1469,9 @@ static bool mas_server_service_start()
 
 #if defined(MPDC_NETWORK_PROTOCOL_IPV6)
 	/* start the main receive loop on a new thread */
-	if (qsc_async_thread_create((void*)&mas_ipv6_server_start, NULL) != NULL)
+	if (qsc_async_thread_create(&mas_ipv6_server_start, NULL) != NULL)
 #else
-	if (qsc_async_thread_create((void*)&mas_ipv4_server_start, NULL) != NULL)
+	if (qsc_async_thread_create(&mas_ipv4_server_start, NULL) != NULL)
 #endif
 	{
 		m_mas_server_loop_status = mpdc_server_loop_status_started;
@@ -2087,7 +2089,7 @@ static void mas_command_execute(const char* command)
 
 		if (cmsg != NULL)
 		{
-			if (m_mas_server_loop_status = mpdc_server_loop_status_started)
+			if (m_mas_server_loop_status == mpdc_server_loop_status_started)
 			{
 				slen = qsc_stringutils_string_size(cmsg);
 
@@ -2136,7 +2138,7 @@ static void mas_command_execute(const char* command)
 
 		if (cmsg != NULL)
 		{
-			if (m_mas_server_loop_status = mpdc_server_loop_status_started)
+			if (m_mas_server_loop_status == mpdc_server_loop_status_started)
 			{
 				slen = qsc_stringutils_string_size(cmsg);
 
@@ -2516,7 +2518,7 @@ int32_t mpdc_mas_start_server()
 
 	/* start the idle timer */
 	m_mas_idle_timer = 0;
-	idle = qsc_async_thread_create((void*)&mas_idle_timer, NULL);
+	idle = qsc_async_thread_create(&mas_idle_timer, NULL);
 	
 	if (idle != NULL)
 	{

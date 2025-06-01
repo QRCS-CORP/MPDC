@@ -297,7 +297,7 @@ static bool server_log_decrypt(mpdc_server_application_state* state)
 				{
 					size_t mlen;
 
-					mlen = qsc_fileutils_copy_file_to_stream(state->logpath, penc, flen);
+					mlen = qsc_fileutils_copy_file_to_stream(state->logpath, (char*)penc, flen);
 
 					if (mlen > 0)
 					{
@@ -310,7 +310,7 @@ static bool server_log_decrypt(mpdc_server_application_state* state)
 						if (res == true)
 						{
 							qsc_fileutils_erase(state->logpath);
-							qsc_fileutils_copy_stream_to_file(state->logpath, pdec, flen - MPDC_STORAGE_MAC_SIZE);
+							qsc_fileutils_copy_stream_to_file(state->logpath, (const char*)pdec, flen - MPDC_STORAGE_MAC_SIZE);
 						}
 						else
 						{
@@ -359,7 +359,7 @@ static void server_log_encrypt(const mpdc_server_application_state* state)
 
 				if (penc != NULL && ptxt != NULL)
 				{
-					flen = qsc_fileutils_copy_file_to_stream(state->logpath, ptxt, flen);
+					flen = qsc_fileutils_copy_file_to_stream(state->logpath, (char*)ptxt, flen);
 
 					if (flen > 0)
 					{
@@ -369,7 +369,7 @@ static void server_log_encrypt(const mpdc_server_application_state* state)
 
 						mpdc_crypto_encrypt_stream(penc, pkey, ptxt, flen);
 						qsc_fileutils_erase(state->logpath);
-						qsc_fileutils_copy_stream_to_file(state->logpath, penc, flen + MPDC_STORAGE_MAC_SIZE);
+						qsc_fileutils_copy_stream_to_file(state->logpath, (const char*)penc, flen + MPDC_STORAGE_MAC_SIZE);
 					}
 				}
 
@@ -490,7 +490,7 @@ static bool mpdc_server_configuration_load(mpdc_server_application_state* state)
 			uint8_t encs[MPDC_SERVER_APPLICATION_STATE_SIZE + MPDC_STORAGE_MAC_SIZE] = { 0 };
 			const uint8_t* pkey;
 
-			res = (qsc_fileutils_copy_file_to_stream(fpath, encs, sizeof(encs)) == sizeof(encs));
+			res = (qsc_fileutils_copy_file_to_stream(fpath, (char*)encs, sizeof(encs)) == sizeof(encs));
 
 			if (res == true)
 			{
@@ -749,7 +749,6 @@ void mpdc_server_child_certificate_generate(mpdc_server_application_state* state
 	{
 		mpdc_certificate_expiration exp = { 0 };
 		mpdc_signature_keypair akp = { 0 };
-		char fname[MPDC_CERTIFICATE_ISSUER_SIZE] = { 0 };
 
 		/* generate the key-pair */
 		mpdc_certificate_signature_generate_keypair(&akp);
@@ -779,7 +778,6 @@ bool mpdc_server_child_certificate_import(mpdc_child_certificate* lcert, mpdc_se
 
 	if (lcert != NULL && state != NULL && fpath != NULL)
 	{
-		mpdc_child_certificate rcert = { 0 };
 		char cpath[MPDC_STORAGE_PATH_MAX] = { 0 };
 
 		mpdc_server_child_certificate_path(state, cpath, sizeof(cpath));
@@ -1104,7 +1102,7 @@ bool mpdc_server_mfkcol_from_file(qsc_collection_state* mfkcol, const mpdc_serve
 				{
 					size_t mlen;
 
-					mlen = qsc_fileutils_copy_file_to_stream(fpath, penc, flen);
+					mlen = qsc_fileutils_copy_file_to_stream(fpath, (char*)penc, flen);
 
 					if (mlen > 0)
 					{
@@ -1172,7 +1170,7 @@ void mpdc_server_mfkcol_to_file(const qsc_collection_state* mfkcol, const mpdc_s
 
 				qsc_collection_serialize(ptxt, mfkcol);
 				mpdc_crypto_encrypt_stream(penc, pkey, ptxt, clen);
-				qsc_fileutils_copy_stream_to_file(fpath, penc, clen + MPDC_STORAGE_MAC_SIZE);
+				qsc_fileutils_copy_stream_to_file(fpath, (const char*)penc, clen + MPDC_STORAGE_MAC_SIZE);
 
 				qsc_memutils_alloc_free(penc);
 				qsc_memutils_alloc_free(ptxt);
@@ -1325,7 +1323,6 @@ bool mpdc_server_root_import_dialogue(mpdc_server_application_state* state)
 	if (state != NULL)
 	{
 		char cmsg[MPDC_STORAGE_PASSWORD_MAX] = { 0 };
-		char fpath[MPDC_STORAGE_PATH_MAX] = { 0 };
 
 		while (true)
 		{
@@ -1370,7 +1367,6 @@ void mpdc_server_root_certificate_generate(mpdc_server_application_state* state,
 	{
 		mpdc_certificate_expiration exp = { 0 };
 		mpdc_signature_keypair akp = { 0 };
-		char issuer[MPDC_CERTIFICATE_ISSUER_SIZE] = { 0 };
 
 		/* generate the key-pair*/
 		mpdc_certificate_signature_generate_keypair(&akp);
@@ -1945,8 +1941,6 @@ void mpdc_server_state_initialize(mpdc_server_application_state* state, mpdc_net
 
 	if (state != NULL && srvtype != mpdc_network_designation_none)
 	{
-		char fpath[MPDC_STORAGE_PATH_MAX] = { 0 };
-
 		qsc_memutils_clear(state->cmdprompt, sizeof(state->cmdprompt));
 		qsc_memutils_clear(state->domain, sizeof(state->domain));
 		qsc_memutils_clear(state->hostname, sizeof(state->hostname));
@@ -2088,7 +2082,7 @@ bool mpdc_server_state_store(mpdc_server_application_state* state)
 		if (res == false)
 		{
 			mpdc_crypto_encrypt_stream(encs, pkey, tmps, sizeof(tmps));
-			res = qsc_fileutils_copy_stream_to_file(fpath, encs, sizeof(encs));
+			res = qsc_fileutils_copy_stream_to_file(fpath, (const char*)encs, sizeof(encs));
 		}
 	}
 
@@ -2169,7 +2163,7 @@ bool mpdc_server_topology_load(mpdc_server_application_state* state)
 				{
 					size_t mlen;
 
-					mlen = qsc_fileutils_copy_file_to_stream(fpath, penc, flen);
+					mlen = qsc_fileutils_copy_file_to_stream(fpath, (char*)penc, flen);
 
 					if (mlen > 0)
 					{
@@ -2276,7 +2270,7 @@ void mpdc_server_topology_purge_externals(mpdc_server_application_state* state)
 
 		if (mpdc_topology_list_item(&tcopy, &node, i) == true)
 		{
-			if (qsc_memutils_are_equal(node.issuer, state->issuer, MPDC_CERTIFICATE_ISSUER_SIZE) == false)
+			if (qsc_memutils_are_equal((const uint8_t*)node.issuer, (const uint8_t*)state->issuer, MPDC_CERTIFICATE_ISSUER_SIZE) == false)
 			{
 				if (node.designation != mpdc_network_designation_rds)
 				{
@@ -2435,7 +2429,7 @@ void mpdc_server_topology_to_file(mpdc_server_application_state* state)
 				qsc_memutils_clear(penc, tlen + MPDC_STORAGE_MAC_SIZE);
 				mpdc_topology_list_serialize(ptxt, &state->tlist);
 				mpdc_crypto_encrypt_stream(penc, pkey, ptxt, tlen);
-				qsc_fileutils_copy_stream_to_file(fpath, penc, tlen + MPDC_STORAGE_MAC_SIZE);
+				qsc_fileutils_copy_stream_to_file(fpath, (const char*)penc, tlen + MPDC_STORAGE_MAC_SIZE);
 
 				qsc_memutils_alloc_free(penc);
 				qsc_memutils_alloc_free(ptxt);
@@ -2469,8 +2463,6 @@ bool mpdc_server_user_login(mpdc_server_application_state* state)
 
 		if (res == false)
 		{
-			char tmph[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0 };
-
 			/* print the intro message */
 			mpdc_menu_print_predefined_message(mpdc_application_first_login, mpdc_console_mode_login_message, state->hostname);
 

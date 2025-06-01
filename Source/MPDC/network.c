@@ -685,8 +685,6 @@ mpdc_protocol_errors mpdc_network_converge_request(const mpdc_network_converge_r
 
 						if (rlen == NETWORK_CONVERGE_RESPONSE_PACKET_SIZE)
 						{
-							mpdc_topology_node_state rnode = { 0 };
-
 							mpdc_packet_header_deserialize(rbuf, &resp);
 							resp.pmessage = rbuf + MPDC_PACKET_HEADER_SIZE;
 
@@ -1479,10 +1477,9 @@ static mpdc_protocol_errors network_fragment_collection_query_request_packet(mpd
 	return merr;
 }
 
-static mpdc_protocol_errors network_fragment_collection_response_packet(mpdc_network_packet* packetout, const mpdc_network_packet* packetin, const qsc_list_state* flist, const mpdc_network_fragment_collection_response_state* state)
+static mpdc_protocol_errors network_fragment_collection_response_packet(mpdc_network_packet* packetout, const qsc_list_state* flist, const mpdc_network_fragment_collection_response_state* state)
 {
 	assert(packetout != NULL);
-	assert(packetin != NULL);
 	assert(flist != NULL);
 	assert(state != NULL);
 
@@ -1790,7 +1787,7 @@ mpdc_protocol_errors mpdc_network_fragment_collection_response(mpdc_network_frag
 				{
 					/* create the client fragment collection response packet */
 					resp.pmessage = pbuf + MPDC_PACKET_HEADER_SIZE;
-					merr = network_fragment_collection_response_packet(&resp, packetin, &clst, state);
+					merr = network_fragment_collection_response_packet(&resp, &clst, state);
 					mpdc_packet_header_serialize(&resp, pbuf);
 
 					if (merr == mpdc_protocol_error_none)
@@ -1798,7 +1795,7 @@ mpdc_protocol_errors mpdc_network_fragment_collection_response(mpdc_network_frag
 						/* send the encrypted key bundle to the client */
 						slen = qsc_socket_client_send(state->csock, pbuf, mlen, qsc_socket_send_flag_none);
 
-						if (slen = mlen)
+						if (slen == mlen)
 						{
 #if defined(MPDC_EXTENDED_SESSION_SECURITY)
 							/* create the fragment hash key and store in state */
@@ -4932,7 +4929,7 @@ static bool network_test_fragment_collection()
 						if (merr == mpdc_protocol_error_none)
 						{
 							/* the mas creates the response packet for the client */
-							merr = network_fragment_collection_response_packet(&crsp, &qrsp, &clst, &crr);
+							merr = network_fragment_collection_response_packet(&crsp, &clst, &crr);
 
 							if (merr == mpdc_protocol_error_none)
 							{

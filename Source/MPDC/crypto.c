@@ -57,7 +57,7 @@ void mpdc_crypto_generate_application_keychain(uint8_t* seed, size_t seedlen, co
 		qsc_scb_state scbx = { 0 };
 
 		mpdc_crypto_generate_application_salt(salt, sizeof(salt));
-		qsc_cshake256_compute(phash, sizeof(phash), password, passlen, NULL, 0, username, userlen);
+		qsc_cshake256_compute(phash, sizeof(phash), (const uint8_t*)password, passlen, NULL, 0, (const uint8_t*)username, userlen);
 
 		/* use cost based kdf to generate the stored comparison value */
 		qsc_scb_initialize(&scbx, phash, sizeof(phash), salt, sizeof(salt), MPDC_CRYPTO_PHASH_CPU_COST, MPDC_CRYPTO_PHASH_MEMORY_COST);
@@ -130,8 +130,8 @@ void mpdc_crypto_generate_application_salt(uint8_t* output, size_t outlen)
 		uint8_t buff[QSC_SYSUTILS_SYSTEM_NAME_MAX + QSC_USERNAME_SYSTEM_NAME_MAX + QSC_NETUTILS_MAC_ADDRESS_SIZE] = { 0 };
 		size_t pos;
 
-		pos = qsc_sysutils_computer_name(buff);
-		pos += qsc_sysutils_user_name(buff + pos);
+		pos = qsc_sysutils_computer_name((char*)buff);
+		pos += qsc_sysutils_user_name((char*)buff + pos);
 
 		qsc_netutils_get_mac_address(buff + pos);
 		pos += QSC_NETUTILS_MAC_ADDRESS_SIZE;
@@ -148,7 +148,7 @@ void mpdc_crypto_generate_hash_code(char* output, const char* message, size_t ms
 
 	if (output != NULL && message != NULL && msglen != 0)
 	{
-		qsc_sha3_compute256(output, message, msglen);
+		qsc_sha3_compute256(output, (const uint8_t*)message, msglen);
 	}
 }
 
@@ -163,7 +163,7 @@ void mpdc_crypto_generate_mac_code(char* output, size_t outlen, const char* mess
 
 	if (output != NULL && outlen != 0 && message != NULL && msglen != 0 && key != NULL && keylen != 0)
 	{
-		qsc_kmac256_compute(output, outlen, message, msglen, key, keylen, NULL, 0);
+		qsc_kmac256_compute(output, outlen, (const uint8_t*)message, msglen, (const uint8_t*)key, keylen, NULL, 0);
 	}
 }
 
@@ -181,7 +181,7 @@ void mpdc_crypto_hash_password(char* output, size_t outlen, const char* username
 		uint8_t salt[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0 };
 
 		mpdc_crypto_generate_application_salt(salt, sizeof(salt));
-		qsc_kmac256_compute(output, outlen, username, userlen, password, passlen, salt, sizeof(salt));
+		qsc_kmac256_compute(output, outlen, (const uint8_t*)username, userlen, (const uint8_t*)password, passlen, salt, sizeof(salt));
 	}
 }
 
@@ -252,7 +252,7 @@ bool mpdc_crypto_password_verify(const char* username, size_t userlen, const cha
 		char tmph[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0 };
 
 		mpdc_crypto_hash_password(tmph, sizeof(tmph), username, userlen, password, passlen);
-		res = qsc_memutils_are_equal(tmph, hash, hashlen);
+		res = qsc_memutils_are_equal((const uint8_t*)tmph, (const uint8_t*)hash, hashlen);
 	}
 
 	return res;
