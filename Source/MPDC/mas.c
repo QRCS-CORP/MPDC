@@ -51,7 +51,7 @@ static mpdc_protocol_errors mas_mfk_request(const mpdc_topology_node_state* rnod
 	{
 		if (mpdc_certificate_child_file_to_struct(fpath, &rcert) == true)
 		{
-			uint8_t mfkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
+			uint8_t mfkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
 
 			mpdc_network_mfk_request_state mrs = {
 				.lcert = &m_mas_local_certificate,
@@ -105,7 +105,7 @@ static mpdc_protocol_errors mas_mfk_response(qsc_socket* csock, const mpdc_netwo
 
 	if (mpdc_certificate_child_is_valid(&rcert) == true)
 	{
-		uint8_t mfkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
+		uint8_t mfkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
 
 		mpdc_network_mfk_response_state mrs = {
 			.csock = csock,
@@ -162,7 +162,7 @@ static mpdc_protocol_errors mas_register_device(const mpdc_topology_node_state* 
 
 		if (merr == mpdc_protocol_error_none)
 		{
-			uint8_t chash[MPDC_CERTIFICATE_HASH_SIZE] = { 0 };
+			uint8_t chash[MPDC_CERTIFICATE_HASH_SIZE] = { 0U };
 
 			mpdc_certificate_child_hash(chash, &rcert);
 
@@ -407,7 +407,7 @@ static void mas_reset_topology(void)
 {
 	mpdc_topology_node_state node = { 0 };
 	qsc_list_state lstate = { 0 };
-	uint8_t item[MPDC_CERTIFICATE_SERIAL_SIZE] = { 0 };
+	uint8_t item[MPDC_CERTIFICATE_SERIAL_SIZE] = { 0U };
 
 	mpdc_server_topology_remove_certificate(&m_mas_application_state, m_mas_application_state.dla.issuer);
 	qsc_memutils_clear(&m_mas_application_state.dla, sizeof(mpdc_child_certificate));
@@ -415,7 +415,7 @@ static void mas_reset_topology(void)
 	qsc_list_initialize(&lstate, MPDC_CERTIFICATE_SERIAL_SIZE);
 
 	/* remove topological nodes except for root and local */
-	for (size_t i = 0; i < m_mas_application_state.tlist.count; ++i)
+	for (size_t i = 0U; i < m_mas_application_state.tlist.count; ++i)
 	{
 		if (mpdc_topology_list_item(&m_mas_application_state.tlist, &node, i) == true)
 		{
@@ -427,7 +427,7 @@ static void mas_reset_topology(void)
 		}
 	}
 
-	for (size_t i = 0; i < lstate.count; ++i)
+	for (size_t i = 0U; i < lstate.count; ++i)
 	{
 		qsc_list_item(&lstate, item, i);
 		mpdc_topology_node_remove(&m_mas_application_state.tlist, item);
@@ -488,7 +488,7 @@ static mpdc_protocol_errors mas_register_update_request(const char* address)
 
 				/* send incremental update requests to each agent,
 					and initiate an mfk key-exchange with responders */
-				for (size_t i = 0; i < ulist.count; ++i)
+				for (size_t i = 0U; i < ulist.count; ++i)
 				{
 					mpdc_topology_node_state node = { 0 };
 
@@ -664,18 +664,18 @@ static void mas_tunnel_initialize(mpdc_connection_state* pcns, const uint8_t* hf
 	qsc_keccak_state kstate = { 0 };
 
 	pcns->exflag = mpdc_network_flag_none;
-	pcns->instance = 0;
-	pcns->rxseq = 0;
-	pcns->txseq = 0;
+	pcns->instance = 0U;
+	pcns->rxseq = 0U;
+	pcns->txseq = 0U;
 
 #if defined(MPDC_EXTENDED_SESSION_SECURITY)
 
-	uint8_t prnd[3 * QSC_KECCAK_512_RATE] = { 0 };
+	uint8_t prnd[3U * QSC_KECCAK_512_RATE] = { 0U };
 
 	/* initialize cSHAKE k = H(sec, sch) */
 	qsc_keccak_initialize_state(&kstate);
 	qsc_shake_initialize(&kstate, qsc_keccak_rate_512, hfks, MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE);
-	qsc_shake_squeezeblocks(&kstate, qsc_keccak_rate_512, prnd, 3);
+	qsc_shake_squeezeblocks(&kstate, qsc_keccak_rate_512, prnd, 3U);
 
 	/* initialize the symmetric cipher, and raise client channel-1 rx */
 	mpdc_cipher_keyparams kp1;
@@ -683,7 +683,7 @@ static void mas_tunnel_initialize(mpdc_connection_state* pcns, const uint8_t* hf
 	kp1.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.info = NULL;
-	kp1.infolen = 0;
+	kp1.infolen = 0U;
 	mpdc_cipher_initialize(&pcns->rxcpr, &kp1, false);
 
 	/* initialize the symmetric cipher, and raise client channel-1 tx */
@@ -692,18 +692,18 @@ static void mas_tunnel_initialize(mpdc_connection_state* pcns, const uint8_t* hf
 	kp2.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE + MPDC_CRYPTO_SYMMETRIC_NONCE_SIZE + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.info = NULL;
-	kp2.infolen = 0;
+	kp2.infolen = 0U;
 	mpdc_cipher_initialize(&pcns->txcpr, &kp2, true);
 	pcns->exflag = mpdc_network_flag_tunnel_session_established;
 
 #else
 
-	uint8_t prnd[QSC_KECCAK_256_RATE] = { 0 };
+	uint8_t prnd[QSC_KECCAK_256_RATE] = { 0U };
 
 	/* initialize cSHAKE k = H(sec, sch) */
 	qsc_keccak_initialize_state(&kstate);
 	qsc_shake_initialize(&kstate, qsc_keccak_rate_256, hfks, MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE);
-	qsc_shake_squeezeblocks(&kstate, qsc_keccak_rate_256, prnd, 1);
+	qsc_shake_squeezeblocks(&kstate, qsc_keccak_rate_256, prnd, 1U);
 
 	/* initialize the symmetric cipher, and raise client channel-1 rx */
 	mpdc_cipher_keyparams kp1;
@@ -711,7 +711,7 @@ static void mas_tunnel_initialize(mpdc_connection_state* pcns, const uint8_t* hf
 	kp1.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.info = NULL;
-	kp1.infolen = 0;
+	kp1.infolen = 0U;
 	mpdc_cipher_initialize(&pcns->rxcpr, &kp1, false);
 
 	/* initialize the symmetric cipher, and raise client channel-1 tx */
@@ -720,7 +720,7 @@ static void mas_tunnel_initialize(mpdc_connection_state* pcns, const uint8_t* hf
 	kp2.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE + MPDC_CRYPTO_SYMMETRIC_NONCE_SIZE + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.info = NULL;
-	kp2.infolen = 0;
+	kp2.infolen = 0U;
 	mpdc_cipher_initialize(&pcns->txcpr, &kp2, true);
 	pcns->exflag = mpdc_network_flag_tunnel_session_established;
 
@@ -737,12 +737,12 @@ static void mas_tunnel_send_echo(mpdc_connection_state* pcns, const char* messag
 	qsc_mutex mtx;
 	size_t mlen;
 
-	if (msglen > 0)
+	if (msglen > 0U)
 	{
 		mpdc_network_packet pkt = { 0 };
 		const char mpfx[] = "ECHO: ";
 		const char rpfx[] = "RCVD #";
-		uint8_t pmsg[MPDC_STORAGE_MESSAGE_MAX] = { 0 };
+		uint8_t pmsg[MPDC_STORAGE_MESSAGE_MAX] = { 0U };
 		char prcd[MPDC_STORAGE_MESSAGE_MAX] = { 0 };
 
 		mlen = qsc_stringutils_copy_string(prcd, sizeof(prcd), rpfx);
@@ -796,7 +796,7 @@ static mpdc_protocol_errors mas_tunnel_receive_loop(mpdc_connection_state* pcns)
 		while (qsc_socket_is_connected(&pcns->target) == true)
 		{
 			mpdc_network_packet pktin = { 0 };
-			uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0 };
+			uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0U };
 
 			plen = qsc_socket_peek(&pcns->target, hdr, MPDC_PACKET_HEADER_SIZE);
 
@@ -829,7 +829,7 @@ static mpdc_protocol_errors mas_tunnel_receive_loop(mpdc_connection_state* pcns)
 							{
 								size_t dlen;
 
-								dlen = 0;
+								dlen = 0U;
 								qsc_memutils_clear(pmsg, mlen);
 								pktin.pmessage = pcpt + MPDC_PACKET_HEADER_SIZE;
 								merr = mpdc_decrypt_packet(pcns, pmsg, &dlen, &pktin);
@@ -906,10 +906,10 @@ static mpdc_protocol_errors mas_tunnel_connection_response(const qsc_socket* cso
 			if (mpdc_certificate_expiration_time_verify(&rnode.expiration) == true && 
 				mpdc_certificate_expiration_time_verify(&lnode.expiration) == true)
 			{
-				uint8_t frag[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
-				uint8_t hfks[MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE] = { 0 };
-				uint8_t ctok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0 };
-				uint8_t mtok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0 };
+				uint8_t frag[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
+				uint8_t hfks[MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE] = { 0U };
+				uint8_t ctok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0U };
+				uint8_t mtok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0U };
 
 				mpdc_network_fragment_collection_response_state crs = {
 					.csock = csock,
@@ -985,15 +985,15 @@ static void mas_receive_loop(void* ras)
 		{
 			uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0 };
 
-			mlen = 0;
-			slen = 0;
+			mlen = 0U;
+			slen = 0U;
 			plen = qsc_socket_peek(&pras->csock, hdr, MPDC_PACKET_HEADER_SIZE);
 
 			if (plen == MPDC_PACKET_HEADER_SIZE)
 			{
 				mpdc_packet_header_deserialize(hdr, &pkt);
 
-				if (pkt.msglen > 0 && pkt.msglen <= MPDC_MESSAGE_MAX_SIZE)
+				if (pkt.msglen > 0U && pkt.msglen <= MPDC_MESSAGE_MAX_SIZE)
 				{
 					plen = pkt.msglen + MPDC_PACKET_HEADER_SIZE;
 					buff = (uint8_t*)qsc_memutils_realloc(buff, plen);
@@ -1395,7 +1395,7 @@ static void mas_server_dispose(void)
 	qsc_memutils_clear(&m_mas_local_certificate, sizeof(mpdc_child_certificate));
 	m_mas_command_loop_status = mpdc_server_loop_status_stopped;
 	m_mas_server_loop_status = mpdc_server_loop_status_stopped;
-	m_mas_idle_timer = 0;
+	m_mas_idle_timer = 0U;
 }
 
 static bool mas_server_load_root(void)
@@ -1581,7 +1581,7 @@ static void mas_get_command_mode(const char* command)
 			{
 				nmode = mpdc_console_mode_enable;
 			}
-			else if (qsc_stringutils_string_size(command) > 0)
+			else if (qsc_stringutils_string_size(command) > 0U)
 			{
 				nmode = mpdc_console_mode_user;
 			}
@@ -1606,7 +1606,7 @@ static void mas_set_command_action(const char* command)
 	res = mpdc_command_action_command_unrecognized;
 	clen = qsc_stringutils_string_size(command);
 
-	if (clen == 0 || clen > QSC_CONSOLE_MAX_LINE)
+	if (clen == 0U || clen > QSC_CONSOLE_MAX_LINE)
 	{
 		res = mpdc_command_action_none;
 	}
@@ -1982,7 +1982,7 @@ static void mas_command_execute(const char* command)
 			else
 			{
 				mpdc_menu_print_predefined_message(mpdc_application_generate_key_failure, m_mas_application_state.mode, m_mas_application_state.hostname);
-				mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_generate_failure, NULL, 0);
+				mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_generate_failure, NULL, 0U);
 			}
 		}
 
@@ -2093,7 +2093,7 @@ static void mas_command_execute(const char* command)
 			{
 				slen = qsc_stringutils_string_size(cmsg);
 
-				if (slen > 0)
+				if (slen > 0U)
 				{
 					merr = mas_register_update_request(cmsg);
 
@@ -2142,7 +2142,7 @@ static void mas_command_execute(const char* command)
 			{
 				slen = qsc_stringutils_string_size(cmsg);
 
-				if (slen > 0)
+				if (slen > 0U)
 				{
 					merr = mas_resign_request(cmsg);
 
@@ -2427,7 +2427,7 @@ static void mas_command_execute(const char* command)
 
 static void mas_idle_timer(void)
 {
-	const uint32_t MMSEC = 60 * 1000;
+	const uint32_t MMSEC = 60U * 1000U;
 
 	while (true)
 	{
@@ -2465,7 +2465,7 @@ static void mas_command_loop(char* command)
 
 		/* lock the mutex */
 		qsc_mutex mtx = qsc_async_mutex_lock_ex();
-		m_mas_idle_timer = 0;
+		m_mas_idle_timer = 0U;
 		qsc_async_mutex_unlock_ex(mtx);
 
 		mas_set_command_action(command);
@@ -2506,7 +2506,7 @@ int32_t mpdc_mas_start_server(void)
 
 	/* set the window parameters */
 	qsc_consoleutils_set_virtual_terminal();
-	qsc_consoleutils_set_window_size(1000, 600);
+	qsc_consoleutils_set_window_size(1000U, 600U);
 	qsc_consoleutils_set_window_title(m_mas_application_state.wtitle);
 
 	/* application banner */
@@ -2517,7 +2517,7 @@ int32_t mpdc_mas_start_server(void)
 	mpdc_menu_print_prompt(m_mas_application_state.mode, m_mas_application_state.hostname);
 
 	/* start the idle timer */
-	m_mas_idle_timer = 0;
+	m_mas_idle_timer = 0U;
 	idle = qsc_async_thread_create_noargs(&mas_idle_timer);
 	
 	if (idle != NULL)
