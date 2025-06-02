@@ -483,7 +483,6 @@ static void agent_receive_loop(void* ras)
 	agent_receive_state* pras;
 	size_t mlen;
 	size_t plen;
-	size_t slen;
 	mpdc_protocol_errors merr;
 
 	pras = (agent_receive_state*)ras;
@@ -500,7 +499,6 @@ static void agent_receive_loop(void* ras)
 				uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0 };
 
 				mlen = 0;
-				slen = 0;
 				plen = qsc_socket_peek(&pras->csock, hdr, sizeof(hdr));
 
 				if (plen == sizeof(hdr))
@@ -696,7 +694,7 @@ static void agent_receive_loop(void* ras)
 	}
 }
 
-static mpdc_protocol_errors agent_ipv4_server_start()
+static mpdc_protocol_errors agent_ipv4_server_start(void)
 {
 	qsc_socket lsock = { 0 };
 	qsc_ipinfo_ipv4_address addt = { 0 };
@@ -778,7 +776,7 @@ static mpdc_protocol_errors agent_ipv4_server_start()
 	return merr;
 }
 
-static mpdc_protocol_errors agent_ipv6_server_start()
+static mpdc_protocol_errors agent_ipv6_server_start(void)
 {
 	qsc_socket lsock = { 0 };
 	qsc_ipinfo_ipv6_address addt = { 0 };
