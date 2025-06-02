@@ -34,7 +34,7 @@
  * in the LICENSE.txt file distributed with this software.
  *
  * Written by: John G. Underhill
- * Contact: john.underhill@protonmail.com
+ * Contact: contact@qrcscorp.ca
  */
 
 #ifndef MPDC_AGENT_H
@@ -97,7 +97,7 @@
  *
  * This function pauses the MPDC Agent server, suspending the processing of network commands and user input.
  */
-MPDC_EXPORT_API void mpdc_agent_pause_server();
+MPDC_EXPORT_API void mpdc_agent_pause_server(void);
 
 /**
  * \brief Start the Agent server.
@@ -108,7 +108,7 @@ MPDC_EXPORT_API void mpdc_agent_pause_server();
  *
  * \return Returns zero on success; a non-zero value indicates an initialization error.
  */
-MPDC_EXPORT_API int32_t mpdc_agent_start_server();
+MPDC_EXPORT_API int32_t mpdc_agent_start_server(void);
 
 /**
  * \brief Stop the Agent server.
@@ -116,7 +116,6 @@ MPDC_EXPORT_API int32_t mpdc_agent_start_server();
  * This function stops the MPDC Agent server, terminates the command loop and network receive loop,
  * and cleans up all allocated resources.
  */
-MPDC_EXPORT_API void mpdc_agent_stop_server();
-
+MPDC_EXPORT_API void mpdc_agent_stop_server(void);
 
 #endif

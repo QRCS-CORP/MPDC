@@ -34,7 +34,7 @@
  * in the LICENSE.txt file distributed with this software.
  *
  * Written by: John G. Underhill
- * Contact: john.underhill@protonmail.com
+ * Contact: contact@qrcscorp.ca
  */
 
 #ifndef MPDC_MENU_H
@@ -209,6 +209,6 @@ MPDC_EXPORT_API void mpdc_menu_print_text_line(const char* message);
  *
  * This function prints the default application prompt on a new line.
  */
-MPDC_EXPORT_API void mpdc_menu_print_prompt_empty();
+MPDC_EXPORT_API void mpdc_menu_print_prompt_empty(void);
 
 #endif

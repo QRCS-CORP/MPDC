@@ -7,12 +7,12 @@
 #include "stringutils.h"
 #include "timestamp.h"
 
-static const char NLINE[2] = { 10, 0 };
+static const char NLINE[2u] = { 10, 0 };
 
 void logger_default_path(char* path, size_t pathlen)
 {
-	assert(path != NULL);
-	assert(pathlen != 0);
+	MPDC_ASSERT(path != NULL);
+	MPDC_ASSERT(pathlen != 0);
 
 	if (path != NULL && pathlen != 0)
 	{
@@ -38,7 +38,7 @@ void logger_default_path(char* path, size_t pathlen)
 
 void mpdc_logger_initialize(const char* path)
 {
-	assert(path != NULL);
+	MPDC_ASSERT(path != NULL);
 
 	if (path != NULL)
 	{
@@ -51,7 +51,7 @@ void mpdc_logger_initialize(const char* path)
 
 bool mpdc_logger_dispose(const char* path)
 {
-	assert(path != NULL);
+	MPDC_ASSERT(path != NULL);
 
 	bool res;
 
@@ -72,7 +72,7 @@ bool mpdc_logger_dispose(const char* path)
 
 bool mpdc_logger_erase_all(const char* path)
 {
-	assert(path != NULL);
+	MPDC_ASSERT(path != NULL);
 
 	bool res;
 
@@ -93,7 +93,7 @@ bool mpdc_logger_erase_all(const char* path)
 
 bool mpdc_logger_exists(const char* path)
 {
-	assert(path != NULL);
+	MPDC_ASSERT(path != NULL);
 
 	bool res;
 
@@ -112,7 +112,7 @@ bool mpdc_logger_exists(const char* path)
 
 size_t mpdc_logger_get_size(const char* path)
 {
-	assert(path != NULL);
+	MPDC_ASSERT(path != NULL);
 
 	size_t len;
 
@@ -131,7 +131,7 @@ size_t mpdc_logger_get_size(const char* path)
 
 void mpdc_logger_reset(const char* path)
 {
-	assert(path != NULL);
+	MPDC_ASSERT(path != NULL);
 
 	if (path != NULL)
 	{
@@ -148,9 +148,9 @@ void mpdc_logger_reset(const char* path)
 
 size_t mpdc_logger_write_message(const char* path, const char* message, size_t msglen)
 {
-	assert(path != NULL);
-	assert(message != NULL);
-	assert(msglen != 0);
+	MPDC_ASSERT(path != NULL);
+	MPDC_ASSERT(message != NULL);
+	MPDC_ASSERT(msglen != 0);
 
 	size_t len;
 
@@ -179,7 +179,7 @@ size_t mpdc_logger_write_message(const char* path, const char* message, size_t m
 
 size_t mpdc_logger_write_decorated_message(const char* path, mpdc_application_messages msgtype, const char* message, size_t msglen)
 {
-	assert(path != NULL);
+	MPDC_ASSERT(path != NULL);
 
 	size_t idx;
 	size_t len;
@@ -209,7 +209,7 @@ size_t mpdc_logger_write_decorated_message(const char* path, mpdc_application_me
 
 size_t mpdc_logger_write_decorated_time_stamped_message(const char* path, mpdc_application_messages msgtype, const char* message, size_t msglen)
 {
-	assert(path != NULL);
+	MPDC_ASSERT(path != NULL);
 
 	size_t len;
 
@@ -237,7 +237,7 @@ size_t mpdc_logger_write_decorated_time_stamped_message(const char* path, mpdc_a
 
 size_t mpdc_logger_write_time_stamped_message(const char* path, const char* message, size_t msglen)
 {
-	assert(path != NULL);
+	MPDC_ASSERT(path != NULL);
 
 	size_t len;
 
@@ -267,9 +267,9 @@ size_t mpdc_logger_write_time_stamped_message(const char* path, const char* mess
 
 size_t mpdc_logger_read_all(const char* path, char* output, size_t outlen)
 {
-	assert(path != NULL);
-	assert(output != NULL);
-	assert(outlen != 0);
+	MPDC_ASSERT(path != NULL);
+	MPDC_ASSERT(output != NULL);
+	MPDC_ASSERT(outlen != 0);
 
 	size_t len;
 
@@ -292,9 +292,9 @@ size_t mpdc_logger_read_all(const char* path, char* output, size_t outlen)
 
 int64_t mpdc_logger_read_line(const char* path, char* output, size_t outlen, size_t linenum)
 {
-	assert(path != NULL);
-	assert(output != NULL);
-	assert(outlen != 0);
+	MPDC_ASSERT(path != NULL);
+	MPDC_ASSERT(output != NULL);
+	MPDC_ASSERT(outlen != 0);
 
 	int64_t len;
 
@@ -317,8 +317,8 @@ int64_t mpdc_logger_read_line(const char* path, char* output, size_t outlen, siz
 
 size_t mpdc_logger_time_stamp(char* output, size_t outlen)
 {
-	assert(output != NULL);
-	assert(outlen != 0);
+	MPDC_ASSERT(output != NULL);
+	MPDC_ASSERT(outlen != 0);
 
 	size_t len;
 

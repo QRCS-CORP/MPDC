@@ -34,7 +34,7 @@
  * in the LICENSE.txt file distributed with this software.
  *
  * Written by: John G. Underhill
- * Contact: john.underhill@protonmail.com
+ * Contact: contact@qrcscorp.ca
  */
 
 #ifndef MPDC_MAS_H
@@ -89,7 +89,7 @@
  *
  * \note While paused, the MAS will not accept new connections until resumed or restarted.
  */
-MPDC_EXPORT_API void mpdc_mas_pause_server();
+MPDC_EXPORT_API void mpdc_mas_pause_server(void);
 
 /**
  * \brief Start the Application server.
@@ -106,7 +106,7 @@ MPDC_EXPORT_API void mpdc_mas_pause_server();
  * Any non-zero return value signifies a failure, possibly due to configuration issues,
  * missing certificates, or insufficient system resources.
  */
-MPDC_EXPORT_API int32_t mpdc_mas_start_server();
+MPDC_EXPORT_API int32_t mpdc_mas_start_server(void);
 
 /**
  * \brief Stop the Application server.
@@ -117,6 +117,6 @@ MPDC_EXPORT_API int32_t mpdc_mas_start_server();
  *
  * \note After stopping, the MAS can be restarted by calling mpdc_mas_start_server().
  */
-MPDC_EXPORT_API void mpdc_mas_stop_server();
+MPDC_EXPORT_API void mpdc_mas_stop_server(void);
 
 #endif

@@ -34,7 +34,7 @@
  * in the LICENSE.txt file distributed with this software.
  *
  * Written by: John G. Underhill
- * Contact: john.underhill@protonmail.com
+ * Contact: contact@qrcscorp.ca
  */
 
 #ifndef MPDC_TOPOLOGY_H
@@ -111,7 +111,7 @@
  * \def MPDC_TOPOLOGY_NODE_MINIMUM_ISSUER_SIZE
  * \brief The minimum size of an issuer string.
  */
-#define MPDC_TOPOLOGY_NODE_MINIMUM_ISSUER_SIZE 3
+#define MPDC_TOPOLOGY_NODE_MINIMUM_ISSUER_SIZE 3U
 
 /*!
  * \def MPDC_TOPOLOGY_NODE_NOT_FOUND
@@ -123,7 +123,7 @@
  * \def MPDC_NETWORK_TOPOLOGY_MAX_SIZE
  * \brief The maximum size of the topology.
  */
-#define MPDC_NETWORK_TOPOLOGY_MAX_SIZE 1024
+#define MPDC_NETWORK_TOPOLOGY_MAX_SIZE 1024U
 
 /*!
  * \def MPDC_NETWORK_TOPOLOGY_NODE_SIZE
@@ -651,7 +651,7 @@ MPDC_EXPORT_API void mpdc_topology_from_file(const char* fpath, mpdc_topology_li
  */
 MPDC_EXPORT_API void mpdc_topology_to_file(const mpdc_topology_list_state* list, const char* fpath);
 
-#if defined(QSC_DEBUG_MODE)
+#if defined(MPDC_DEBUG_MODE)
 /**
  * \brief Test the topology functions.
  *

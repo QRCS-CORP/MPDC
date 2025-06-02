@@ -38,7 +38,7 @@ static uint64_t m_agent_idle_timer;
 
 static bool agent_certificate_generate(const char* cmsg)
 {
-	assert(cmsg != NULL);
+	MPDC_ASSERT(cmsg != NULL);
 
 	uint64_t period;
 	size_t nlen;
@@ -66,7 +66,7 @@ static bool agent_certificate_generate(const char* cmsg)
 			res = mpdc_server_root_import_dialogue(&m_agent_application_state);
 		}
 
-		if (res == true && period >= MPDC_CERTIFICATE_MINIMUM_PERIOD || period <= MPDC_CERTIFICATE_MAXIMUM_PERIOD)
+		if (res == true && (period >= MPDC_CERTIFICATE_MINIMUM_PERIOD || period <= MPDC_CERTIFICATE_MAXIMUM_PERIOD))
 		{
 			char tadd[MPDC_CERTIFICATE_ADDRESS_SIZE] = { 0 };
 
@@ -140,8 +140,8 @@ static bool agent_certificate_generate(const char* cmsg)
 
 static mpdc_protocol_errors agent_converge_response(const qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_node_state lnode = { 0 };
 	mpdc_protocol_errors merr;
@@ -169,8 +169,8 @@ static mpdc_protocol_errors agent_converge_response(const qsc_socket* csock, con
 
 static mpdc_protocol_errors agent_fragment_query_response(const qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_node_state lnode = { 0 };
 	mpdc_topology_node_state rnode = { 0 };
@@ -209,8 +209,8 @@ static mpdc_protocol_errors agent_fragment_query_response(const qsc_socket* csoc
 
 static mpdc_protocol_errors agent_mfk_response(qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_child_certificate rcert = { 0 };
 	qsc_mutex mtx;
@@ -239,7 +239,7 @@ static mpdc_protocol_errors agent_mfk_response(qsc_socket* csock, const mpdc_net
 			mtx = qsc_async_mutex_lock_ex();
 
 			/* add the node to the topology */
-			mpdc_topology_child_register(&m_agent_application_state.tlist, &rcert, csock->address);
+			mpdc_topology_child_register(&m_agent_application_state.tlist, &rcert, (const char*)csock->address);
 			mpdc_server_topology_to_file(&m_agent_application_state);
 
 			/* add the mfk to key collection */
@@ -259,7 +259,7 @@ static mpdc_protocol_errors agent_mfk_response(qsc_socket* csock, const mpdc_net
 
 static mpdc_protocol_errors agent_register_request(const char* address)
 {
-	assert(address != NULL);
+	MPDC_ASSERT(address != NULL);
 
 	/* register connects the agent to the mpdc network.
 	   The agent sends its certificate and downloads the dla certificate. */
@@ -332,7 +332,7 @@ static mpdc_protocol_errors agent_register_request(const char* address)
  	return merr;
 }
 
-static void agent_reset_topology()
+static void agent_reset_topology(void)
 {
 	mpdc_topology_node_state node = { 0 };
 	qsc_list_state lstate = { 0 };
@@ -365,7 +365,7 @@ static void agent_reset_topology()
 
 static mpdc_protocol_errors agent_resign_request(const char* address)
 {
-	assert(address != NULL);
+	MPDC_ASSERT(address != NULL);
 
 	/* resigning removes the dla from the topology, 
 	   and deletes the dla certificate and database entry */
@@ -407,7 +407,7 @@ static mpdc_protocol_errors agent_resign_request(const char* address)
 
 static mpdc_protocol_errors agent_revoke_response(const mpdc_network_packet* packetin)
 {
-	assert(packetin != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_node_state rnode = { 0 };
 	qsc_mutex mtx;
@@ -438,8 +438,8 @@ static mpdc_protocol_errors agent_revoke_response(const mpdc_network_packet* pac
 
 static mpdc_protocol_errors agent_incremental_update_response(const qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_node_state rnode = { 0 };
 	mpdc_protocol_errors merr;
@@ -474,7 +474,7 @@ static mpdc_protocol_errors agent_incremental_update_response(const qsc_socket* 
 
 static void agent_receive_loop(void* ras)
 {
-	assert(ras != NULL);
+	MPDC_ASSERT(ras != NULL);
 
 	mpdc_network_packet pkt = { 0 };
 
@@ -866,7 +866,7 @@ static mpdc_protocol_errors agent_ipv6_server_start()
 	return merr;
 }
 
-static void agent_server_dispose()
+static void agent_server_dispose(void)
 {
 	m_agent_command_loop_status = mpdc_server_loop_status_stopped;
 	mpdc_server_state_unload(&m_agent_application_state);
@@ -879,7 +879,7 @@ static void agent_server_dispose()
 	m_agent_idle_timer = 0;
 }
 
-static bool agent_server_load_root()
+static bool agent_server_load_root(void)
 {
 	bool res;
 
@@ -894,7 +894,7 @@ static bool agent_server_load_root()
 	return res;
 }
 
-static bool agent_server_load_dla()
+static bool agent_server_load_dla(void)
 {
 	bool res;
 
@@ -918,7 +918,7 @@ static bool agent_server_load_dla()
 	return res;
 }
 
-static bool agent_server_load_local()
+static bool agent_server_load_local(void)
 {
 	bool res;
 
@@ -942,7 +942,7 @@ static bool agent_server_load_local()
 	return res;
 }
 
-static bool agent_server_service_start()
+static bool agent_server_service_start(void)
 {
 	/* initialize the mfk array */
 	qsc_collection_initialize(&m_agent_mfk_collection, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
@@ -950,9 +950,9 @@ static bool agent_server_service_start()
 
 #if defined(MPDC_NETWORK_PROTOCOL_IPV6)
 	/* start the main receive loop on a new thread */
-	if (qsc_async_thread_create(&agent_ipv6_server_start, NULL) != NULL)
+	if (qsc_async_thread_create_noargs(&agent_ipv6_server_start) != NULL)
 #else
-	if (qsc_async_thread_create(&agent_ipv4_server_start, NULL) != NULL)
+	if (qsc_async_thread_create_noargs(&agent_ipv4_server_start) != NULL)
 #endif
 	{
 		m_agent_server_loop_status = mpdc_server_loop_status_started;
@@ -963,7 +963,7 @@ static bool agent_server_service_start()
 
 static bool agent_certificate_export(const char* cmsg)
 {
-	assert(cmsg != NULL);
+	MPDC_ASSERT(cmsg != NULL);
 
 	bool res;
 
@@ -974,7 +974,7 @@ static bool agent_certificate_export(const char* cmsg)
 
 static bool agent_certificate_import(const char* cmsg)
 {
-	assert(cmsg != NULL);
+	MPDC_ASSERT(cmsg != NULL);
 
 	bool res;
 
@@ -997,7 +997,7 @@ static bool agent_certificate_import(const char* cmsg)
 
 static void agent_get_command_mode(const char* command)
 {
-	assert(command != NULL);
+	MPDC_ASSERT(command != NULL);
 
 	mpdc_console_modes nmode;
 
@@ -1079,7 +1079,7 @@ static void agent_get_command_mode(const char* command)
 
 static void agent_set_command_action(const char* command)
 {
-	assert(command != NULL);
+	MPDC_ASSERT(command != NULL);
 
 	mpdc_command_actions res;
 	size_t clen;
@@ -1263,7 +1263,7 @@ static void agent_set_command_action(const char* command)
 
 static void agent_command_execute(const char* command)
 {
-	assert(command != NULL);
+	MPDC_ASSERT(command != NULL);
 
 	const char* cmsg;
 	size_t slen;
@@ -1906,7 +1906,7 @@ static void agent_command_execute(const char* command)
 	}
 }
 
-static void agent_idle_timer()
+static void agent_idle_timer(void)
 {
 	const uint32_t MMSEC = 60 * 1000;
 
@@ -1969,12 +1969,12 @@ static void agent_command_loop(char* command)
 
 /* agent functions */
 
-void mpdc_agent_pause_server()
+void mpdc_agent_pause_server(void)
 {
 	m_agent_command_loop_status = mpdc_server_loop_status_paused;
 }
 
-int32_t mpdc_agent_start_server()
+int32_t mpdc_agent_start_server(void)
 {
 	char command[QSC_CONSOLE_MAX_LINE] = { 0 };
 	qsc_thread idle;
@@ -1997,7 +1997,7 @@ int32_t mpdc_agent_start_server()
 
 	/* start the idle timer */
 	m_agent_idle_timer = 0;
-	idle = qsc_async_thread_create((void*)&agent_idle_timer, NULL);
+	idle = qsc_async_thread_create_noargs(&agent_idle_timer);
 	
 	if (idle != NULL)
 	{
@@ -2014,7 +2014,7 @@ int32_t mpdc_agent_start_server()
 	return (ret == 0);
 }
 
-void mpdc_agent_stop_server()
+void mpdc_agent_stop_server(void)
 {
 	m_agent_command_loop_status = mpdc_server_loop_status_stopped;
 }

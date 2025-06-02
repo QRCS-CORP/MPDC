@@ -34,7 +34,7 @@
  * in the LICENSE.txt file distributed with this software.
  *
  * Written by: John G. Underhill
- * Contact: john.underhill@protonmail.com
+ * Contact: contact@qrcscorp.ca
  */
 
 #ifndef MPDC_HELP_H
@@ -91,6 +91,5 @@ MPDC_EXPORT_API void mpdc_help_print_context(const char* prompt, mpdc_command_ac
  * the help messages should be tailored.
  */
 MPDC_EXPORT_API void mpdc_help_print_mode(const char* prompt, mpdc_console_modes mode, mpdc_network_designations designation);
-
 
 #endif

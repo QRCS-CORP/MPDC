@@ -9,7 +9,7 @@
 
 uint8_t* mpdc_crypto_secure_memory_allocate(size_t length)
 {
-	assert(length != 0);
+	MPDC_ASSERT(length != 0);
 
 	uint8_t* pblk;
 
@@ -30,8 +30,8 @@ uint8_t* mpdc_crypto_secure_memory_allocate(size_t length)
 
 void mpdc_crypto_secure_memory_deallocate(uint8_t* block, size_t length)
 {
-	assert(block != NULL);
-	assert(length != 0);
+	MPDC_ASSERT(block != NULL);
+	MPDC_ASSERT(length != 0);
 
 	if (block != NULL)
 	{
@@ -43,12 +43,12 @@ void mpdc_crypto_secure_memory_deallocate(uint8_t* block, size_t length)
 
 void mpdc_crypto_generate_application_keychain(uint8_t* seed, size_t seedlen, const char* password, size_t passlen, const char* username, size_t userlen)
 {
-	assert(seed != NULL);
-	assert(seedlen != 0);
-	assert(password != NULL);
-	assert(passlen != 0);
-	assert(username != NULL);
-	assert(userlen != 0);
+	MPDC_ASSERT(seed != NULL);
+	MPDC_ASSERT(seedlen != 0);
+	MPDC_ASSERT(password != NULL);
+	MPDC_ASSERT(passlen != 0);
+	MPDC_ASSERT(username != NULL);
+	MPDC_ASSERT(userlen != 0);
 
 	if (seed != NULL && seedlen != 0 && password != NULL && passlen != 0 && username != NULL && userlen != 0)
 	{
@@ -68,10 +68,10 @@ void mpdc_crypto_generate_application_keychain(uint8_t* seed, size_t seedlen, co
 
 bool mpdc_crypto_decrypt_stream(uint8_t* output, const uint8_t* seed, const uint8_t* input, size_t length)
 {
-	assert(output != NULL);
-	assert(seed != NULL);
-	assert(input != NULL);
-	assert(length != 0);
+	MPDC_ASSERT(output != NULL);
+	MPDC_ASSERT(seed != NULL);
+	MPDC_ASSERT(input != NULL);
+	MPDC_ASSERT(length != 0);
 
 	bool res;
 
@@ -98,10 +98,10 @@ bool mpdc_crypto_decrypt_stream(uint8_t* output, const uint8_t* seed, const uint
 
 void mpdc_crypto_encrypt_stream(uint8_t* output, const uint8_t* seed, const uint8_t* input, size_t length)
 {
-	assert(output != NULL);
-	assert(seed != NULL);
-	assert(input != NULL);
-	assert(length != 0);
+	MPDC_ASSERT(output != NULL);
+	MPDC_ASSERT(seed != NULL);
+	MPDC_ASSERT(input != NULL);
+	MPDC_ASSERT(length != 0);
 
 	mpdc_cipher_state ctx = { 0 };
 
@@ -122,8 +122,8 @@ void mpdc_crypto_encrypt_stream(uint8_t* output, const uint8_t* seed, const uint
 
 void mpdc_crypto_generate_application_salt(uint8_t* output, size_t outlen)
 {
-	assert(output != NULL);
-	assert(outlen != 0);
+	MPDC_ASSERT(output != NULL);
+	MPDC_ASSERT(outlen != 0);
 
 	if (output != NULL && outlen != 0)
 	{
@@ -142,9 +142,9 @@ void mpdc_crypto_generate_application_salt(uint8_t* output, size_t outlen)
 
 void mpdc_crypto_generate_hash_code(char* output, const char* message, size_t msglen)
 {
-	assert(output != NULL);
-	assert(message != NULL);
-	assert(msglen != 0);
+	MPDC_ASSERT(output != NULL);
+	MPDC_ASSERT(message != NULL);
+	MPDC_ASSERT(msglen != 0);
 
 	if (output != NULL && message != NULL && msglen != 0)
 	{
@@ -154,12 +154,12 @@ void mpdc_crypto_generate_hash_code(char* output, const char* message, size_t ms
 
 void mpdc_crypto_generate_mac_code(char* output, size_t outlen, const char* message, size_t msglen, const char* key, size_t keylen)
 {
-	assert(output != NULL);
-	assert(outlen != 0);
-	assert(message != NULL);
-	assert(msglen != 0);
-	assert(key != NULL);
-	assert(keylen != 0);
+	MPDC_ASSERT(output != NULL);
+	MPDC_ASSERT(outlen != 0);
+	MPDC_ASSERT(message != NULL);
+	MPDC_ASSERT(msglen != 0);
+	MPDC_ASSERT(key != NULL);
+	MPDC_ASSERT(keylen != 0);
 
 	if (output != NULL && outlen != 0 && message != NULL && msglen != 0 && key != NULL && keylen != 0)
 	{
@@ -169,12 +169,12 @@ void mpdc_crypto_generate_mac_code(char* output, size_t outlen, const char* mess
 
 void mpdc_crypto_hash_password(char* output, size_t outlen, const char* username, size_t userlen, const char* password, size_t passlen)
 {
-	assert(output != NULL);
-	assert(outlen != 0);
-	assert(username != NULL);
-	assert(userlen != 0);
-	assert(password != NULL);
-	assert(passlen != 0);
+	MPDC_ASSERT(output != NULL);
+	MPDC_ASSERT(outlen != 0);
+	MPDC_ASSERT(username != NULL);
+	MPDC_ASSERT(userlen != 0);
+	MPDC_ASSERT(password != NULL);
+	MPDC_ASSERT(passlen != 0);
 
 	if (output != NULL && outlen != 0 && username != NULL && userlen != 0 && password != NULL && passlen != 0)
 	{
@@ -187,8 +187,8 @@ void mpdc_crypto_hash_password(char* output, size_t outlen, const char* username
 
 bool mpdc_crypto_password_minimum_check(const char* password, size_t passlen)
 {
-	assert(password != NULL);
-	assert(passlen != 0);
+	MPDC_ASSERT(password != NULL);
+	MPDC_ASSERT(passlen != 0);
 
 	bool res;
 	uint8_t hsp;
@@ -236,12 +236,12 @@ bool mpdc_crypto_password_minimum_check(const char* password, size_t passlen)
 
 bool mpdc_crypto_password_verify(const char* username, size_t userlen, const char* password, size_t passlen, const char* hash, size_t hashlen)
 {
-	assert(username != NULL);
-	assert(userlen != 0);
-	assert(password != NULL);
-	assert(passlen != 0);
-	assert(hash != NULL);
-	assert(hashlen != 0);
+	MPDC_ASSERT(username != NULL);
+	MPDC_ASSERT(userlen != 0);
+	MPDC_ASSERT(password != NULL);
+	MPDC_ASSERT(passlen != 0);
+	MPDC_ASSERT(hash != NULL);
+	MPDC_ASSERT(hashlen != 0);
 
 	bool res;
 

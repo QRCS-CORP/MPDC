@@ -34,7 +34,7 @@
  * in the LICENSE.txt file distributed with this software.
  *
  * Written by: John G. Underhill
- * Contact: john.underhill@protonmail.com
+ * Contact: contact@qrcscorp.ca
  */
 
 #ifndef MPDC_CLIENT_H
@@ -103,7 +103,7 @@ bool mpdc_client_connect_callback(const mpdc_topology_node_state* rnode);
  *
  * Temporarily pause the MPDC client server, suspending network operations and the user command loop.
  */
-MPDC_EXPORT_API void mpdc_client_pause_server();
+MPDC_EXPORT_API void mpdc_client_pause_server(void);
 
 /**
  * \brief Start the Client server.
@@ -114,14 +114,13 @@ MPDC_EXPORT_API void mpdc_client_pause_server();
  *
  * \return Returns zero on success; a non-zero value indicates an initialization error.
  */
-MPDC_EXPORT_API int32_t mpdc_client_start_server();
+MPDC_EXPORT_API int32_t mpdc_client_start_server(void);
 
 /**
  * \brief Stop the Client server.
  *
  * Terminates the MPDC client server, closing all active network connections and stopping the command loop.
  */
-MPDC_EXPORT_API void mpdc_client_stop_server();
-
+MPDC_EXPORT_API void mpdc_client_stop_server(void);
 
 #endif

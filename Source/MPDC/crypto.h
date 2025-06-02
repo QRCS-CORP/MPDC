@@ -34,7 +34,7 @@
  * in the LICENSE.txt file distributed with this software.
  *
  * Written by: John G. Underhill
- * Contact: john.underhill@protonmail.com
+ * Contact: contact@qrcscorp.ca
  */
 
 #ifndef MPDC_CRYPTO_H
@@ -225,6 +225,5 @@ MPDC_EXPORT_API uint8_t* mpdc_crypto_secure_memory_allocate(size_t length);
  * \param length The length of the memory block.
  */
 MPDC_EXPORT_API void mpdc_crypto_secure_memory_deallocate(uint8_t* block, size_t length);
-
 
 #endif

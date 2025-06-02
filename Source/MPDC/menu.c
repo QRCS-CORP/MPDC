@@ -13,7 +13,7 @@ const char* mpdc_menu_get_prompt(mpdc_console_modes mode)
 
 void mpdc_menu_print_error(mpdc_protocol_errors error, mpdc_console_modes mode, const char* host)
 {
-	assert(host != NULL);
+	MPDC_ASSERT(host != NULL);
 
 	const char* msg;
 
@@ -31,8 +31,8 @@ void mpdc_menu_print_error(mpdc_protocol_errors error, mpdc_console_modes mode, 
 
 void mpdc_menu_print_message(const char* message, mpdc_console_modes mode, const char* host)
 {
-	assert(message != NULL);
-	assert(host != NULL);
+	MPDC_ASSERT(message != NULL);
+	MPDC_ASSERT(host != NULL);
 
 	if (message != NULL && host != NULL)
 	{
@@ -47,8 +47,8 @@ void mpdc_menu_print_message(const char* message, mpdc_console_modes mode, const
 
 bool mpdc_menu_print_message_confirm(const char* message, mpdc_console_modes mode, const char* host)
 {
-	assert(message != NULL);
-	assert(host != NULL);
+	MPDC_ASSERT(message != NULL);
+	MPDC_ASSERT(host != NULL);
 
 	char ans;
 	bool res;
@@ -72,8 +72,8 @@ bool mpdc_menu_print_message_confirm(const char* message, mpdc_console_modes mod
 
 void mpdc_menu_print_prompt_text(const char* message, mpdc_console_modes mode, const char* host)
 {
-	assert(message != NULL);
-	assert(host != NULL);
+	MPDC_ASSERT(message != NULL);
+	MPDC_ASSERT(host != NULL);
 
 	if (message != NULL && host != NULL)
 	{
@@ -88,7 +88,7 @@ void mpdc_menu_print_prompt_text(const char* message, mpdc_console_modes mode, c
 
 void mpdc_menu_print_text(const char* message)
 {
-	assert(message != NULL);
+	MPDC_ASSERT(message != NULL);
 
 	if (message != NULL)
 	{
@@ -101,7 +101,7 @@ void mpdc_menu_print_text(const char* message)
 
 void mpdc_menu_print_text_line(const char* message)
 {
-	assert(message != NULL);
+	MPDC_ASSERT(message != NULL);
 
 	if (message != NULL)
 	{
@@ -114,7 +114,7 @@ void mpdc_menu_print_text_line(const char* message)
 
 bool mpdc_menu_print_predefined_message_confirm(mpdc_application_messages msgnum, mpdc_console_modes mode, const char* host)
 {
-	assert(host != NULL);
+	MPDC_ASSERT(host != NULL);
 
 	char ans[8] = { 0 };
 	bool res;
@@ -140,7 +140,7 @@ bool mpdc_menu_print_predefined_message_confirm(mpdc_application_messages msgnum
 
 void mpdc_menu_print_predefined_message(mpdc_application_messages msgnum, mpdc_console_modes mode, const char* host)
 {
-	assert(host != NULL);
+	MPDC_ASSERT(host != NULL);
 
 	if (host != NULL)
 	{
@@ -151,7 +151,7 @@ void mpdc_menu_print_predefined_message(mpdc_application_messages msgnum, mpdc_c
 
 void mpdc_menu_print_predefined_text(mpdc_application_messages msgnum, mpdc_console_modes mode, const char* host)
 {
-	assert(host != NULL);
+	MPDC_ASSERT(host != NULL);
 
 	if (host != NULL)
 	{
@@ -162,7 +162,7 @@ void mpdc_menu_print_predefined_text(mpdc_application_messages msgnum, mpdc_cons
 
 void mpdc_menu_print_prompt(mpdc_console_modes mode, const char* host)
 {
-	assert(host != NULL);
+	MPDC_ASSERT(host != NULL);
 
 	char pmt[MPDC_STORAGE_PROMPT_MAX + 1] = { 0 };
 
@@ -173,7 +173,7 @@ void mpdc_menu_print_prompt(mpdc_console_modes mode, const char* host)
 	}
 }
 
-void mpdc_menu_print_prompt_empty()
+void mpdc_menu_print_prompt_empty(void)
 {
 	qsc_consoleutils_print_safe("mpdc> ");
 }

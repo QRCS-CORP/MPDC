@@ -34,19 +34,13 @@
  * in the LICENSE.txt file distributed with this software.
  *
  * Written by: John G. Underhill
- * Contact: john.underhill@protonmail.com
+ * Contact: contact@qrcscorp.ca
  */
 
 
 #ifndef MPDC_APPDLA_H
 #define MPDC_APPDLA_H
 
-#include <assert.h>
-#include <errno.h>
-#include <stdbool.h>
-#include <stdint.h>
-#include <limits.h>
-#include <string.h>
 #include "mpdccommon.h"
 
 #endif

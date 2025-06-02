@@ -13,7 +13,7 @@
 
 mpdc_configuration_sets mpdc_certificate_algorithm_decode(const char* name)
 {
-	assert(name != NULL);
+	MPDC_ASSERT(name != NULL);
 
 	mpdc_configuration_sets cset;
 
@@ -88,7 +88,7 @@ mpdc_configuration_sets mpdc_certificate_algorithm_decode(const char* name)
 
 void mpdc_certificate_algorithm_encode(char* name, mpdc_configuration_sets conf)
 {
-	assert(name != NULL);
+	MPDC_ASSERT(name != NULL);
 
 	if (name != NULL)
 	{
@@ -153,15 +153,15 @@ void mpdc_certificate_algorithm_encode(char* name, mpdc_configuration_sets conf)
 
 bool mpdc_certificate_algorithm_enabled(mpdc_configuration_sets conf)
 {
-	assert(conf != 0);
+	MPDC_ASSERT(conf != 0);
 
 	return (conf == MPDC_CONFIGURATION_SET);
 }
 
 bool mpdc_certificate_child_are_equal(const mpdc_child_certificate* a, const mpdc_child_certificate* b)
 {
-	assert(a != NULL);
-	assert(b != NULL);
+	MPDC_ASSERT(a != NULL);
+	MPDC_ASSERT(b != NULL);
 
 	bool res;
 
@@ -193,8 +193,8 @@ bool mpdc_certificate_child_are_equal(const mpdc_child_certificate* a, const mpd
 
 void mpdc_certificate_child_copy(mpdc_child_certificate* output, const mpdc_child_certificate* input)
 {
-	assert(output != NULL);
-	assert(input != NULL);
+	MPDC_ASSERT(output != NULL);
+	MPDC_ASSERT(input != NULL);
 
 	if (output != NULL && input != NULL)
 	{
@@ -212,10 +212,10 @@ void mpdc_certificate_child_copy(mpdc_child_certificate* output, const mpdc_chil
 
 void mpdc_certificate_child_create(mpdc_child_certificate* child, const uint8_t* pubkey, const mpdc_certificate_expiration* expiration, const char* issuer, mpdc_network_designations designation)
 {
-	assert(child != NULL);
-	assert(pubkey != NULL);
-	assert(expiration != NULL);
-	assert(issuer != NULL);
+	MPDC_ASSERT(child != NULL);
+	MPDC_ASSERT(pubkey != NULL);
+	MPDC_ASSERT(expiration != NULL);
+	MPDC_ASSERT(issuer != NULL);
 
 	if (child != NULL && pubkey != NULL && expiration != NULL && issuer != NULL)
 	{
@@ -232,8 +232,8 @@ void mpdc_certificate_child_create(mpdc_child_certificate* child, const uint8_t*
 
 bool mpdc_certificate_child_decode(mpdc_child_certificate* child, const char enck[MPDC_CHILD_CERTIFICATE_STRING_SIZE])
 {
-	assert(child != NULL);
-	assert(enck != NULL);
+	MPDC_ASSERT(child != NULL);
+	MPDC_ASSERT(enck != NULL);
 
 	bool res;
 
@@ -314,8 +314,8 @@ bool mpdc_certificate_child_decode(mpdc_child_certificate* child, const char enc
 
 void mpdc_certificate_child_deserialize(mpdc_child_certificate* child, const uint8_t* input)
 {
-	assert(child != NULL);
-	assert(input != NULL);
+	MPDC_ASSERT(child != NULL);
+	MPDC_ASSERT(input != NULL);
 
 	size_t pos;
 
@@ -343,8 +343,8 @@ void mpdc_certificate_child_deserialize(mpdc_child_certificate* child, const uin
 
 size_t mpdc_certificate_child_encode(char enck[MPDC_CHILD_CERTIFICATE_STRING_SIZE], const mpdc_child_certificate* child)
 {
-	assert(enck != NULL);
-	assert(child != NULL);
+	MPDC_ASSERT(enck != NULL);
+	MPDC_ASSERT(child != NULL);
 
 	size_t slen;
 	size_t spos;
@@ -484,7 +484,7 @@ size_t mpdc_certificate_child_encode(char enck[MPDC_CHILD_CERTIFICATE_STRING_SIZ
 
 void mpdc_certificate_child_erase(mpdc_child_certificate* child)
 {
-	assert(child != NULL);
+	MPDC_ASSERT(child != NULL);
 
 	if (child != NULL)
 	{
@@ -502,8 +502,8 @@ void mpdc_certificate_child_erase(mpdc_child_certificate* child)
 
 bool mpdc_certificate_child_file_to_struct(const char* fpath, mpdc_child_certificate* child)
 {
-	assert(fpath != NULL);
-	assert(child != NULL);
+	MPDC_ASSERT(fpath != NULL);
+	MPDC_ASSERT(child != NULL);
 
 	bool res;
 
@@ -528,8 +528,8 @@ bool mpdc_certificate_child_file_to_struct(const char* fpath, mpdc_child_certifi
 
 void mpdc_certificate_child_hash(uint8_t* output, const mpdc_child_certificate* child)
 {
-	assert(output != NULL);
-	assert(child != NULL);
+	MPDC_ASSERT(output != NULL);
+	MPDC_ASSERT(child != NULL);
 
 	if (output != NULL && child != NULL)
 	{
@@ -556,7 +556,7 @@ void mpdc_certificate_child_hash(uint8_t* output, const mpdc_child_certificate* 
 
 bool mpdc_certificate_child_is_valid(const mpdc_child_certificate* child)
 {
-	assert(child != NULL);
+	MPDC_ASSERT(child != NULL);
 
 	bool res;
 
@@ -588,11 +588,11 @@ bool mpdc_certificate_child_is_valid(const mpdc_child_certificate* child)
 
 bool mpdc_certificate_child_message_verify(uint8_t* message, size_t* msglen, const uint8_t* signature, size_t siglen, const mpdc_child_certificate* child)
 {
-	assert(message != NULL);
-	assert(msglen != NULL);
-	assert(signature != NULL);
-	assert(siglen != 0);
-	assert(child != NULL);
+	MPDC_ASSERT(message != NULL);
+	MPDC_ASSERT(msglen != NULL);
+	MPDC_ASSERT(signature != NULL);
+	MPDC_ASSERT(siglen != 0);
+	MPDC_ASSERT(child != NULL);
 
 	bool res;
 
@@ -609,8 +609,8 @@ bool mpdc_certificate_child_message_verify(uint8_t* message, size_t* msglen, con
 
 void mpdc_certificate_child_serialize(uint8_t* output, const mpdc_child_certificate* child)
 {
-	assert(output != NULL);
-	assert(child != NULL);
+	MPDC_ASSERT(output != NULL);
+	MPDC_ASSERT(child != NULL);
 
 	size_t pos;
 
@@ -638,11 +638,11 @@ void mpdc_certificate_child_serialize(uint8_t* output, const mpdc_child_certific
 
 bool mpdc_certificate_signature_hash_verify(const uint8_t* signature, size_t siglen, const uint8_t* message, size_t msglen, const mpdc_child_certificate* lcert)
 {
-	assert(signature != NULL);
-	assert(siglen != 0);
-	assert(message != NULL);
-	assert(msglen != 0);
-	assert(lcert != NULL);
+	MPDC_ASSERT(signature != NULL);
+	MPDC_ASSERT(siglen != 0);
+	MPDC_ASSERT(message != NULL);
+	MPDC_ASSERT(msglen != 0);
+	MPDC_ASSERT(lcert != NULL);
 
 	size_t mlen;
 	bool res;
@@ -670,8 +670,8 @@ bool mpdc_certificate_signature_hash_verify(const uint8_t* signature, size_t sig
 
 bool mpdc_certificate_child_struct_to_file(const char* fpath, const mpdc_child_certificate* child)
 {
-	assert(fpath != NULL);
-	assert(child != NULL);
+	MPDC_ASSERT(fpath != NULL);
+	MPDC_ASSERT(child != NULL);
 
 	bool res;
 
@@ -695,7 +695,7 @@ bool mpdc_certificate_child_struct_to_file(const char* fpath, const mpdc_child_c
 
 mpdc_network_designations mpdc_certificate_designation_decode(const char* sdsg)
 {
-	assert(sdsg != NULL);
+	MPDC_ASSERT(sdsg != NULL);
 
 	mpdc_network_designations dsg;
 
@@ -742,7 +742,7 @@ mpdc_network_designations mpdc_certificate_designation_decode(const char* sdsg)
 
 size_t mpdc_certificate_designation_encode(char* sdsg, mpdc_network_designations designation)
 {
-	assert(sdsg != NULL);
+	MPDC_ASSERT(sdsg != NULL);
 
 	if (sdsg != NULL)
 	{
@@ -785,7 +785,7 @@ size_t mpdc_certificate_designation_encode(char* sdsg, mpdc_network_designations
 
 void mpdc_certificate_expiration_set_days(mpdc_certificate_expiration* expiration, uint16_t start, uint16_t duration)
 {
-	assert(expiration != NULL);
+	MPDC_ASSERT(expiration != NULL);
 
 	if (expiration != NULL)
 	{
@@ -796,7 +796,7 @@ void mpdc_certificate_expiration_set_days(mpdc_certificate_expiration* expiratio
 
 void mpdc_certificate_expiration_set_seconds(mpdc_certificate_expiration* expiration, uint64_t start, uint64_t period)
 {
-	assert(expiration != NULL);
+	MPDC_ASSERT(expiration != NULL);
 
 	if (expiration != NULL)
 	{
@@ -807,7 +807,7 @@ void mpdc_certificate_expiration_set_seconds(mpdc_certificate_expiration* expira
 
 bool mpdc_certificate_expiration_time_verify(const mpdc_certificate_expiration* expiration)
 {
-	assert(expiration != NULL);
+	MPDC_ASSERT(expiration != NULL);
 
 	uint64_t nsec;
 	bool res;
@@ -828,10 +828,10 @@ bool mpdc_certificate_expiration_time_verify(const mpdc_certificate_expiration* 
 
 size_t mpdc_certificate_message_hash_sign(uint8_t* signature, const uint8_t* sigkey, const uint8_t* message, size_t msglen)
 {
-	assert(signature != NULL);
-	assert(sigkey != NULL);
-	assert(message != NULL);
-	assert(msglen != 0);
+	MPDC_ASSERT(signature != NULL);
+	MPDC_ASSERT(sigkey != NULL);
+	MPDC_ASSERT(message != NULL);
+	MPDC_ASSERT(msglen != 0);
 
 	size_t slen;
 
@@ -850,8 +850,8 @@ size_t mpdc_certificate_message_hash_sign(uint8_t* signature, const uint8_t* sig
 
 bool mpdc_certificate_root_compare(const mpdc_root_certificate* a, const mpdc_root_certificate* b)
 {
-	assert(a != NULL);
-	assert(b != NULL);
+	MPDC_ASSERT(a != NULL);
+	MPDC_ASSERT(b != NULL);
 
 	bool res;
 
@@ -877,10 +877,10 @@ bool mpdc_certificate_root_compare(const mpdc_root_certificate* a, const mpdc_ro
 
 void mpdc_certificate_root_create(mpdc_root_certificate* root, const uint8_t* pubkey, const mpdc_certificate_expiration* expiration, const char* issuer)
 {
-	assert(root != NULL);
-	assert(pubkey != NULL);
-	assert(expiration != NULL);
-	assert(issuer != NULL);
+	MPDC_ASSERT(root != NULL);
+	MPDC_ASSERT(pubkey != NULL);
+	MPDC_ASSERT(expiration != NULL);
+	MPDC_ASSERT(issuer != NULL);
 
 	if (root != NULL && pubkey != NULL && expiration != NULL && issuer != NULL)
 	{
@@ -895,8 +895,8 @@ void mpdc_certificate_root_create(mpdc_root_certificate* root, const uint8_t* pu
 
 bool mpdc_certificate_root_decode(mpdc_root_certificate* root, const char* enck)
 {
-	assert(root != NULL);
-	assert(enck != NULL);
+	MPDC_ASSERT(root != NULL);
+	MPDC_ASSERT(enck != NULL);
 
 	const char* penc;
 	size_t slen;
@@ -961,8 +961,8 @@ bool mpdc_certificate_root_decode(mpdc_root_certificate* root, const char* enck)
 
 void mpdc_certificate_root_deserialize(mpdc_root_certificate* root, const uint8_t* input)
 {
-	assert(root != NULL);
-	assert(input != NULL);
+	MPDC_ASSERT(root != NULL);
+	MPDC_ASSERT(input != NULL);
 
 	size_t pos;
 
@@ -984,8 +984,8 @@ void mpdc_certificate_root_deserialize(mpdc_root_certificate* root, const uint8_
 
 size_t mpdc_certificate_root_encode(char* enck, const mpdc_root_certificate* root)
 {
-	assert(enck != NULL);
-	assert(root != NULL);
+	MPDC_ASSERT(enck != NULL);
+	MPDC_ASSERT(root != NULL);
 
 	size_t slen;
 	size_t spos;
@@ -1080,7 +1080,7 @@ size_t mpdc_certificate_root_encode(char* enck, const mpdc_root_certificate* roo
 
 void mpdc_certificate_root_erase(mpdc_root_certificate* root)
 {
-	assert(root != NULL);
+	MPDC_ASSERT(root != NULL);
 
 	if (root != NULL)
 	{
@@ -1095,8 +1095,8 @@ void mpdc_certificate_root_erase(mpdc_root_certificate* root)
 
 bool mpdc_certificate_root_file_to_struct(const char* fpath, mpdc_root_certificate* root)
 {
-	assert(fpath != NULL);
-	assert(root != NULL);
+	MPDC_ASSERT(fpath != NULL);
+	MPDC_ASSERT(root != NULL);
 
 	bool res;
 
@@ -1121,8 +1121,8 @@ bool mpdc_certificate_root_file_to_struct(const char* fpath, mpdc_root_certifica
 
 void mpdc_certificate_root_hash(uint8_t* output, const mpdc_root_certificate* root)
 {
-	assert(output != NULL);
-	assert(root != NULL);
+	MPDC_ASSERT(output != NULL);
+	MPDC_ASSERT(root != NULL);
 
 	if (output != NULL && root != NULL)
 	{
@@ -1148,7 +1148,7 @@ void mpdc_certificate_root_hash(uint8_t* output, const mpdc_root_certificate* ro
 
 bool mpdc_certificate_root_is_valid(const mpdc_root_certificate* root)
 {
-	assert(root != NULL);
+	MPDC_ASSERT(root != NULL);
 
 	bool res;
 
@@ -1178,8 +1178,8 @@ bool mpdc_certificate_root_is_valid(const mpdc_root_certificate* root)
 
 void mpdc_certificate_root_serialize(uint8_t* output, const mpdc_root_certificate* root)
 {
-	assert(output != NULL);
-	assert(root != NULL);
+	MPDC_ASSERT(output != NULL);
+	MPDC_ASSERT(root != NULL);
 
 	size_t pos;
 
@@ -1201,9 +1201,9 @@ void mpdc_certificate_root_serialize(uint8_t* output, const mpdc_root_certificat
 
 size_t mpdc_certificate_root_sign(mpdc_child_certificate* child, const mpdc_root_certificate* root, const uint8_t* rsigkey)
 {
-	assert(child != NULL);
-	assert(root != NULL);
-	assert(rsigkey != NULL);
+	MPDC_ASSERT(child != NULL);
+	MPDC_ASSERT(root != NULL);
+	MPDC_ASSERT(rsigkey != NULL);
 
 	size_t slen;
 
@@ -1223,8 +1223,8 @@ size_t mpdc_certificate_root_sign(mpdc_child_certificate* child, const mpdc_root
 
 bool mpdc_certificate_root_signature_verify(const mpdc_child_certificate* child, const mpdc_root_certificate* root)
 {
-	assert(child != NULL);
-	assert(root != NULL);
+	MPDC_ASSERT(child != NULL);
+	MPDC_ASSERT(root != NULL);
 
 	size_t mlen;
 	bool res;
@@ -1253,8 +1253,8 @@ bool mpdc_certificate_root_signature_verify(const mpdc_child_certificate* child,
 
 bool mpdc_certificate_root_struct_to_file(const char* fpath, const mpdc_root_certificate* root)
 {
-	assert(fpath != NULL);
-	assert(root != NULL);
+	MPDC_ASSERT(fpath != NULL);
+	MPDC_ASSERT(root != NULL);
 
 	bool res;
 
@@ -1273,7 +1273,7 @@ bool mpdc_certificate_root_struct_to_file(const char* fpath, const mpdc_root_cer
 
 void mpdc_certificate_signature_generate_keypair(mpdc_signature_keypair* keypair)
 {
-	assert(keypair != NULL);
+	MPDC_ASSERT(keypair != NULL);
 
 	if (keypair != NULL)
 	{
@@ -1283,10 +1283,10 @@ void mpdc_certificate_signature_generate_keypair(mpdc_signature_keypair* keypair
 
 size_t mpdc_certificate_signature_sign_message(uint8_t* signature, const uint8_t* message, size_t msglen, const uint8_t* prikey)
 {
-	assert(signature != NULL);
-	assert(message != NULL);
-	assert(msglen != 0);
-	assert(prikey != NULL);
+	MPDC_ASSERT(signature != NULL);
+	MPDC_ASSERT(message != NULL);
+	MPDC_ASSERT(msglen != 0);
+	MPDC_ASSERT(prikey != NULL);
 
 	size_t slen;
 
@@ -1303,10 +1303,10 @@ size_t mpdc_certificate_signature_sign_message(uint8_t* signature, const uint8_t
 
 bool mpdc_certificate_signature_verify_message(const uint8_t* message, size_t msglen, const uint8_t* signature, size_t siglen, const uint8_t* pubkey)
 {
-	assert(message != NULL);
-	assert(msglen != 0);
-	assert(signature != NULL);
-	assert(pubkey != NULL);
+	MPDC_ASSERT(message != NULL);
+	MPDC_ASSERT(msglen != 0);
+	MPDC_ASSERT(signature != NULL);
+	MPDC_ASSERT(pubkey != NULL);
 
 	size_t mlen;
 	bool res;
@@ -1381,7 +1381,7 @@ static void get_encoded_sizes()
 
 static void certificate_child_print(const mpdc_child_certificate* child)
 {
-	assert(child != NULL);
+	MPDC_ASSERT(child != NULL);
 
 	char cenc[MPDC_CHILD_CERTIFICATE_STRING_SIZE] = { 0 };
 
@@ -1392,7 +1392,7 @@ static void certificate_child_print(const mpdc_child_certificate* child)
 
 static void certificate_root_print(const mpdc_root_certificate* root)
 {
-	assert(root != NULL);
+	MPDC_ASSERT(root != NULL);
 
 	char cenc[MPDC_ROOT_CERTIFICATE_STRING_SIZE] = { 0 };
 

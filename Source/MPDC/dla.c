@@ -35,7 +35,7 @@ static uint64_t m_dla_idle_timer;
 
 static bool dla_certificate_generate(const char* cmsg)
 {
-	assert(cmsg != NULL);
+	MPDC_ASSERT(cmsg != NULL);
 
 	uint64_t period;
 	size_t nlen;
@@ -128,8 +128,8 @@ static bool dla_certificate_generate(const char* cmsg)
 
 static mpdc_protocol_errors dla_announce_broadcast(const char* fpath, const char* address)
 {
-	assert(fpath != NULL);
-	assert(address != NULL);
+	MPDC_ASSERT(fpath != NULL);
+	MPDC_ASSERT(address != NULL);
 
 	qsc_mutex mtx;
 	mpdc_protocol_errors merr;
@@ -218,7 +218,7 @@ static mpdc_protocol_errors dla_announce_broadcast(const char* fpath, const char
 
 static void dla_converge_reset(mpdc_topology_list_state* list)
 {
-	assert(list != NULL);
+	MPDC_ASSERT(list != NULL);
 
 	mpdc_topology_list_state clst = { 0 };
 
@@ -257,7 +257,7 @@ static void dla_converge_reset(mpdc_topology_list_state* list)
 	mpdc_topology_list_dispose(&clst);
 }
 
-static void dla_converge_broadcast()
+static void dla_converge_broadcast(void)
 {
 	mpdc_topology_list_state clst = { 0 };
 	qsc_mutex mtx;
@@ -350,8 +350,8 @@ static void dla_converge_broadcast()
 
 static mpdc_protocol_errors dla_incremental_update_response(const qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_node_state rnode = { 0 };
 	mpdc_protocol_errors merr;
@@ -386,8 +386,8 @@ static mpdc_protocol_errors dla_incremental_update_response(const qsc_socket* cs
 
 static mpdc_protocol_errors dla_register_response(const qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_child_certificate rcert = { 0 };
 	qsc_mutex mtx;
@@ -447,8 +447,8 @@ static mpdc_protocol_errors dla_register_response(const qsc_socket* csock, const
 
 static mpdc_protocol_errors dla_register_update_response(const qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_child_certificate rcert = { 0 };
 	qsc_mutex mtx;
@@ -499,7 +499,7 @@ static mpdc_protocol_errors dla_register_update_response(const qsc_socket* csock
 
 static bool dla_remote_certificate_verify(mpdc_child_certificate* child)
 {
-	assert(child != NULL);
+	MPDC_ASSERT(child != NULL);
 
 	bool res;
 
@@ -529,7 +529,7 @@ static bool dla_remote_certificate_verify(mpdc_child_certificate* child)
 
 static mpdc_protocol_errors dla_remote_signing_request(const char* fpath)
 {
-	assert(fpath != NULL);
+	MPDC_ASSERT(fpath != NULL);
 	
 	mpdc_topology_node_state root = { 0 };
 	mpdc_protocol_errors merr;
@@ -584,7 +584,7 @@ static mpdc_protocol_errors dla_remote_signing_request(const char* fpath)
 	return merr;
 }
 
-static void dla_resign_command()
+static void dla_resign_command(void)
 {
 	/* reset topology, certificates, and signing key */
 	mpdc_server_topology_reset(&m_dla_application_state);
@@ -597,8 +597,8 @@ static void dla_resign_command()
 
 static mpdc_protocol_errors dla_resign_response(const qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_node_state rnode = { 0 };
 	qsc_mutex mtx;
@@ -657,7 +657,7 @@ static mpdc_protocol_errors dla_resign_response(const qsc_socket* csock, const m
 
 static mpdc_protocol_errors dla_revoke_broadcast(const char* cmsg)
 {
-	assert(cmsg != NULL);
+	MPDC_ASSERT(cmsg != NULL);
 	
 	qsc_mutex mtx;
 	size_t mlen;
@@ -724,7 +724,7 @@ static mpdc_protocol_errors dla_revoke_broadcast(const char* cmsg)
 
 static mpdc_protocol_errors dla_topological_status_request(const mpdc_topology_node_state* rnode)
 {
-	assert(rnode != NULL);
+	MPDC_ASSERT(rnode != NULL);
 
 	mpdc_topology_node_state lnode = { 0 };
 	mpdc_child_certificate rcert = { 0 };
@@ -759,8 +759,8 @@ static mpdc_protocol_errors dla_topological_status_request(const mpdc_topology_n
 
 static mpdc_protocol_errors dla_topological_query_response(const qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_node_state cnode = { 0 };
 	mpdc_topology_node_state rnode = { 0 };
@@ -818,7 +818,7 @@ static mpdc_protocol_errors dla_topological_query_response(const qsc_socket* cso
 
 static void dla_receive_loop(void* ras)
 {
-	assert(ras != NULL);
+	MPDC_ASSERT(ras != NULL);
 
 	mpdc_network_packet pkt = { 0 };
 	uint8_t* buff;
@@ -1040,7 +1040,7 @@ static void dla_receive_loop(void* ras)
 	}
 }
 
-static mpdc_protocol_errors dla_ipv4_server_start()
+static mpdc_protocol_errors dla_ipv4_server_start(void)
 {
 	qsc_socket lsock = { 0 };
 	qsc_ipinfo_ipv4_address addt = { 0 };
@@ -1118,7 +1118,7 @@ static mpdc_protocol_errors dla_ipv4_server_start()
 	return merr;
 }
 
-static mpdc_protocol_errors dla_ipv6_server_start()
+static mpdc_protocol_errors dla_ipv6_server_start(void)
 {
 	qsc_socket lsock = { 0 };
 	qsc_ipinfo_ipv6_address addt = { 0 };
@@ -1197,7 +1197,7 @@ static mpdc_protocol_errors dla_ipv6_server_start()
 	return merr;
 }
 
-static void dla_server_dispose()
+static void dla_server_dispose(void)
 {
 	m_dla_command_loop_status = mpdc_server_loop_status_stopped;
 	mpdc_server_state_unload(&m_dla_application_state);
@@ -1208,7 +1208,7 @@ static void dla_server_dispose()
 	m_dla_idle_timer = 0;
 }
 
-static bool dla_server_load_root()
+static bool dla_server_load_root(void)
 {
 	bool res;
 
@@ -1223,7 +1223,7 @@ static bool dla_server_load_root()
 	return res;
 }
 
-static bool dla_server_load_local()
+static bool dla_server_load_local(void)
 {
 	bool res;
 
@@ -1243,13 +1243,13 @@ static bool dla_server_load_local()
 	return res;
 }
 
-static bool dla_server_start()
+static bool dla_server_start(void)
 {
 #if defined(MPDC_NETWORK_PROTOCOL_IPV6)
 	/* start the main receive loop on a new thread */
-	if (qsc_async_thread_create(&dla_ipv6_server_start, NULL) != NULL)
+	if (qsc_async_thread_create_noargs(&dla_ipv6_server_start) != NULL)
 #else
-	if (qsc_async_thread_create(&dla_ipv4_server_start, NULL) != NULL)
+	if (qsc_async_thread_create_noargs(&dla_ipv4_server_start) != NULL)
 #endif
 	{
 		m_dla_server_loop_status = mpdc_server_loop_status_started;
@@ -1260,7 +1260,7 @@ static bool dla_server_start()
 
 static bool dla_certificate_export(const char* cmsg)
 {
-	assert(cmsg != NULL);
+	MPDC_ASSERT(cmsg != NULL);
 
 	bool res;
 
@@ -1271,7 +1271,7 @@ static bool dla_certificate_export(const char* cmsg)
 
 static bool dla_certificate_import(const char* cmsg)
 {
-	assert(cmsg != NULL);
+	MPDC_ASSERT(cmsg != NULL);
 
 	qsc_mutex mtx;
 	bool res;
@@ -1308,7 +1308,7 @@ static bool dla_certificate_import(const char* cmsg)
 
 static void dla_get_command_mode(const char* command)
 {
-	assert(command != NULL);
+	MPDC_ASSERT(command != NULL);
 
 	mpdc_console_modes nmode;
 
@@ -1390,7 +1390,7 @@ static void dla_get_command_mode(const char* command)
 
 static void dla_set_command_action(const char* command)
 {
-	assert(command != NULL);
+	MPDC_ASSERT(command != NULL);
 
 	mpdc_command_actions res;
 	size_t clen;
@@ -1590,7 +1590,7 @@ static void dla_set_command_action(const char* command)
 
 static void dla_command_execute(const char* command)
 {
-	assert(command != NULL);
+	MPDC_ASSERT(command != NULL);
 
 	const char* cmsg;
 	size_t slen;
@@ -2275,7 +2275,7 @@ static void dla_command_execute(const char* command)
 	}
 }
 
-static void dla_idle_timer()
+static void dla_idle_timer(void)
 {
 	const uint32_t MMSEC = 60 * 1000;
 
@@ -2304,7 +2304,7 @@ static void dla_idle_timer()
 
 static void dla_command_loop(char* command)
 {
-	assert(command != NULL);
+	MPDC_ASSERT(command != NULL);
 
 	m_dla_command_loop_status = mpdc_server_loop_status_started;
 
@@ -2339,12 +2339,12 @@ static void dla_command_loop(char* command)
 
 /* dla functions */
 
-void mpdc_dla_pause_server()
+void mpdc_dla_pause_server(void)
 {
 	m_dla_command_loop_status = mpdc_server_loop_status_paused;
 }
 
-int32_t mpdc_dla_start_server()
+int32_t mpdc_dla_start_server(void)
 {
 	char command[QSC_CONSOLE_MAX_LINE] = { 0 };
 	qsc_thread idle;
@@ -2368,7 +2368,7 @@ int32_t mpdc_dla_start_server()
 
 	/* start the idle timer */
 	m_dla_idle_timer = 0;
-	idle = qsc_async_thread_create(&dla_idle_timer, NULL);
+	idle = qsc_async_thread_create_noargs(&dla_idle_timer);
 	
 	if (idle != NULL)
 	{
@@ -2385,8 +2385,7 @@ int32_t mpdc_dla_start_server()
 	return (ret == 0);
 }
 
-void mpdc_dla_stop_server()
+void mpdc_dla_stop_server(void)
 {
 	m_dla_command_loop_status = mpdc_server_loop_status_stopped;
 }
-

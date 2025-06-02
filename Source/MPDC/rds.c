@@ -35,7 +35,7 @@ static uint64_t m_rds_idle_timer;
 
 static bool rds_certificate_export(const char* dpath)
 {
-	assert(dpath != NULL);
+	MPDC_ASSERT(dpath != NULL);
 
 	bool res;
 
@@ -44,7 +44,7 @@ static bool rds_certificate_export(const char* dpath)
 	return res;
 }
 
-static bool rds_server_load_root()
+static bool rds_server_load_root(void)
 {
 	bool res;
 
@@ -61,7 +61,7 @@ static bool rds_server_load_root()
 
 static bool rds_certificate_generate_root(const char* sprd)
 {
-	assert(sprd != NULL); 
+	MPDC_ASSERT(sprd != NULL); 
 
 	uint64_t period;
 	bool res;
@@ -121,7 +121,7 @@ static bool rds_certificate_generate_root(const char* sprd)
 
 static bool rds_certificate_sign(const char* fpath)
 {
-	assert(fpath != NULL);
+	MPDC_ASSERT(fpath != NULL);
 
 	bool res;
 
@@ -146,8 +146,8 @@ static bool rds_certificate_sign(const char* fpath)
 
 static mpdc_protocol_errors dla_remote_signing_response(qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_node_state dnode = { 0 };
 	mpdc_protocol_errors merr;
@@ -188,7 +188,7 @@ static mpdc_protocol_errors dla_remote_signing_response(qsc_socket* csock, const
 	return merr;
 }
 
-static void rds_server_dispose()
+static void rds_server_dispose(void)
 {
 	mpdc_server_state_initialize(&m_rds_application_state, mpdc_network_designation_rds);
 	m_rds_command_loop_status = mpdc_server_loop_status_stopped;
@@ -196,7 +196,7 @@ static void rds_server_dispose()
 	m_rds_idle_timer = 0;
 }
 
-static bool rds_server_load_dla()
+static bool rds_server_load_dla(void)
 {
 	bool res;
 
@@ -220,7 +220,7 @@ static bool rds_server_load_dla()
 	return res;
 }
 
-static bool rds_server_dla_dialogue()
+static bool rds_server_dla_dialogue(void)
 {
 	char cmsg[MPDC_STORAGE_PATH_MAX] = { 0 };
 	char fpath[MPDC_STORAGE_PATH_MAX] = { 0 };
@@ -324,7 +324,7 @@ static bool rds_server_dla_dialogue()
 
 static void rds_receive_loop(void* ras)
 {
-	assert(ras != NULL);
+	MPDC_ASSERT(ras != NULL);
 
 	mpdc_network_packet pkt = { 0 };
 	uint8_t* buff;
@@ -450,7 +450,7 @@ static void rds_receive_loop(void* ras)
 	}
 }
 
-static mpdc_protocol_errors rds_ipv4_server_start()
+static mpdc_protocol_errors rds_ipv4_server_start(void)
 {
 	qsc_socket lsock = { 0 };
 	qsc_ipinfo_ipv4_address addt = { 0 };
@@ -532,7 +532,7 @@ static mpdc_protocol_errors rds_ipv4_server_start()
 	return merr;
 }
 
-static mpdc_protocol_errors rds_ipv6_server_start()
+static mpdc_protocol_errors rds_ipv6_server_start(void)
 {
 	qsc_socket lsock = { 0 };
 	qsc_ipinfo_ipv6_address addt = { 0 };
@@ -620,13 +620,13 @@ static mpdc_protocol_errors rds_ipv6_server_start()
 	return merr;
 }
 
-static bool rds_server_service_start()
+static bool rds_server_service_start(void)
 {
 #if defined(MPDC_NETWORK_PROTOCOL_IPV6)
 	/* start the main receive loop on a new thread */
-	if (qsc_async_thread_create(&rds_ipv6_server_start, NULL) != NULL)
+	if (qsc_async_thread_create_noargs(&rds_ipv6_server_start) != NULL)
 #else
-	if (qsc_async_thread_create(&rds_ipv4_server_start, NULL) != NULL)
+	if (qsc_async_thread_create_noargs(&rds_ipv4_server_start) != NULL)
 #endif
 	{
 		m_rds_server_loop_status = mpdc_server_loop_status_started;
@@ -639,7 +639,7 @@ static bool rds_server_service_start()
 
 static void rds_get_command_mode(const char* command)
 {
-	assert(command != NULL);
+	MPDC_ASSERT(command != NULL);
 
 	mpdc_console_modes nmode;
 
@@ -718,7 +718,7 @@ static void rds_get_command_mode(const char* command)
 
 static void rds_set_command_action(const char* command)
 {
-	assert(command != NULL);
+	MPDC_ASSERT(command != NULL);
 
 	mpdc_command_actions res;
 	size_t clen;
@@ -890,7 +890,7 @@ static void rds_set_command_action(const char* command)
 
 static void rds_command_execute(const char* command)
 {
-	assert(command != NULL);
+	MPDC_ASSERT(command != NULL);
 
 	const char* cmsg;
 	size_t slen;
@@ -1427,7 +1427,7 @@ static void rds_command_execute(const char* command)
 	}
 }
 
-static void rds_idle_timer()
+static void rds_idle_timer(void)
 {
 	const uint32_t MMSEC = 60 * 1000;
 
@@ -1456,7 +1456,7 @@ static void rds_idle_timer()
 
 static void rds_command_loop(char* command)
 {
-	assert(command != NULL);
+	MPDC_ASSERT(command != NULL);
 
 	m_rds_command_loop_status = mpdc_server_loop_status_started;
 
@@ -1491,12 +1491,12 @@ static void rds_command_loop(char* command)
 	rds_server_dispose();
 }
 
-void mpdc_rds_pause_server()
+void mpdc_rds_pause_server(void)
 {
 	m_rds_command_loop_status = mpdc_server_loop_status_paused;
 }
 
-void mpdc_rds_start_server()
+void mpdc_rds_start_server(void)
 {
 	char command[QSC_CONSOLE_MAX_LINE] = { 0 };
 	qsc_thread idle;
@@ -1518,19 +1518,19 @@ void mpdc_rds_start_server()
 
 	/* start the idle timer */
 	m_rds_idle_timer = 0;
-	idle = qsc_async_thread_create(&rds_idle_timer, NULL);
+	idle = qsc_async_thread_create_noargs(&rds_idle_timer);
 
 	/* command loop */
 	rds_command_loop(command);
 }
 
-void mpdc_rds_stop_server()
+void mpdc_rds_stop_server(void)
 {
 	m_rds_command_loop_status = mpdc_server_loop_status_stopped;
 }
 
 #if defined(MPDC_DEBUG_TESTS_RUN)
-bool mpdc_rds_appserv_test()
+bool mpdc_rds_appserv_test(void)
 {
 	return false;
 }

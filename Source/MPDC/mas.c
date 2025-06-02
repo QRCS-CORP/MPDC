@@ -39,7 +39,7 @@ static uint64_t m_mas_idle_timer;
 
 static mpdc_protocol_errors mas_mfk_request(const mpdc_topology_node_state* rnode)
 {
-	assert(rnode != NULL);
+	MPDC_ASSERT(rnode != NULL);
 
 	mpdc_child_certificate rcert = { 0 };
 	char fpath[MPDC_STORAGE_PATH_MAX] = { 0 };
@@ -92,8 +92,8 @@ static mpdc_protocol_errors mas_mfk_request(const mpdc_topology_node_state* rnod
 
 static mpdc_protocol_errors mas_mfk_response(qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_child_certificate rcert = { 0 };
 	const uint8_t* pcert;
@@ -143,7 +143,7 @@ static mpdc_protocol_errors mas_mfk_response(qsc_socket* csock, const mpdc_netwo
 
 static mpdc_protocol_errors mas_register_device(const mpdc_topology_node_state* rnode)
 {
-	assert(rnode != NULL);
+	MPDC_ASSERT(rnode != NULL);
 
 	qsc_mutex mtx;
 	mpdc_protocol_errors merr;
@@ -213,8 +213,8 @@ static mpdc_protocol_errors mas_register_device(const mpdc_topology_node_state* 
 
 static mpdc_protocol_errors mas_announce_broadcast_response(const qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_node_state rnode = { 0 };
 	mpdc_protocol_errors merr;
@@ -251,7 +251,7 @@ static mpdc_protocol_errors mas_announce_broadcast_response(const qsc_socket* cs
 
 static bool mas_certificate_generate(const char* cmsg)
 {
-	assert(cmsg != NULL);
+	MPDC_ASSERT(cmsg != NULL);
 
 	uint64_t period;
 	size_t nlen;
@@ -340,8 +340,8 @@ static bool mas_certificate_generate(const char* cmsg)
 
 static mpdc_protocol_errors mas_converge_response(const qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_node_state lnode = { 0 };
 	mpdc_protocol_errors merr;
@@ -368,8 +368,8 @@ static mpdc_protocol_errors mas_converge_response(const qsc_socket* csock, const
 
 static mpdc_protocol_errors mas_incremental_update_response(const qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_node_state rnode = { 0 };
 	mpdc_protocol_errors merr;
@@ -403,7 +403,7 @@ static mpdc_protocol_errors mas_incremental_update_response(const qsc_socket* cs
 	return merr;
 }
 
-static void mas_reset_topology()
+static void mas_reset_topology(void)
 {
 	mpdc_topology_node_state node = { 0 };
 	qsc_list_state lstate = { 0 };
@@ -436,7 +436,7 @@ static void mas_reset_topology()
 
 static mpdc_protocol_errors mas_register_update_request(const char* address)
 {
-	assert(address != NULL);
+	MPDC_ASSERT(address != NULL);
 	
 	qsc_mutex mtx;
 	mpdc_protocol_errors merr;
@@ -544,7 +544,7 @@ static mpdc_protocol_errors mas_register_update_request(const char* address)
 
 static mpdc_protocol_errors mas_resign_request(const char* address)
 {
-	assert(address != NULL);
+	MPDC_ASSERT(address != NULL);
 
 	/* resigning removes the dla from the topology, 
 	   and deletes the dla certificate and database entry */
@@ -586,7 +586,7 @@ static mpdc_protocol_errors mas_resign_request(const char* address)
 
 static mpdc_protocol_errors mas_revoke_response(const mpdc_network_packet* packetin)
 {
-	assert(packetin != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_node_state rnode = { 0 };
 	qsc_mutex mtx;
@@ -619,8 +619,8 @@ static mpdc_protocol_errors mas_revoke_response(const mpdc_network_packet* packe
 
 static mpdc_protocol_errors mas_topological_status_response(const qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_node_state lnode = { 0 };
 	mpdc_child_certificate rcert = { 0 };
@@ -658,8 +658,8 @@ static mpdc_protocol_errors mas_topological_status_response(const qsc_socket* cs
 
 static void mas_tunnel_initialize(mpdc_connection_state* pcns, const uint8_t* hfks)
 {
-	assert(pcns != NULL);
-	assert(hfks != NULL);
+	MPDC_ASSERT(pcns != NULL);
+	MPDC_ASSERT(hfks != NULL);
 
 	qsc_keccak_state kstate = { 0 };
 
@@ -729,8 +729,8 @@ static void mas_tunnel_initialize(mpdc_connection_state* pcns, const uint8_t* hf
 
 static void mas_tunnel_send_echo(mpdc_connection_state* pcns, const char* message, size_t msglen)
 {
-	assert(pcns != NULL);
-	assert(message != NULL);
+	MPDC_ASSERT(pcns != NULL);
+	MPDC_ASSERT(message != NULL);
 
 	/* This function can be modified to send data to a remote host. */
 
@@ -771,8 +771,8 @@ static void mas_tunnel_send_echo(mpdc_connection_state* pcns, const char* messag
 
 static void mas_tunnel_callback(mpdc_connection_state* pcns, const char* message, size_t msglen)
 {
-	assert(pcns != NULL);
-	assert(message != NULL);
+	MPDC_ASSERT(pcns != NULL);
+	MPDC_ASSERT(message != NULL);
 
 	/* Envelope data in an application header, in a request->response model.
 	   Parse that header here, process requests from the client, and transmit the response. */
@@ -782,7 +782,7 @@ static void mas_tunnel_callback(mpdc_connection_state* pcns, const char* message
 
 static mpdc_protocol_errors mas_tunnel_receive_loop(mpdc_connection_state* pcns)
 {
-	assert(pcns != NULL);
+	MPDC_ASSERT(pcns != NULL);
 	
 	size_t plen;
 	size_t rlen;
@@ -890,8 +890,8 @@ static mpdc_protocol_errors mas_tunnel_receive_loop(mpdc_connection_state* pcns)
 
 static mpdc_protocol_errors mas_tunnel_connection_response(const qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -963,7 +963,7 @@ static mpdc_protocol_errors mas_tunnel_connection_response(const qsc_socket* cso
 
 static void mas_receive_loop(void* ras)
 {
-	assert(ras != NULL);
+	MPDC_ASSERT(ras != NULL);
 
 	mpdc_network_packet pkt = { 0 };
 	uint8_t* buff;
@@ -1215,7 +1215,7 @@ static void mas_receive_loop(void* ras)
 	}
 }
 
-static mpdc_protocol_errors mas_ipv4_server_start()
+static mpdc_protocol_errors mas_ipv4_server_start(void)
 {
 	qsc_socket lsock = { 0 };
 	qsc_ipinfo_ipv4_address addt = { 0 };
@@ -1297,7 +1297,7 @@ static mpdc_protocol_errors mas_ipv4_server_start()
 	return merr;
 }
 
-static mpdc_protocol_errors mas_ipv6_server_start()
+static mpdc_protocol_errors mas_ipv6_server_start(void)
 {
 	qsc_socket lsock = { 0 };
 	qsc_ipinfo_ipv6_address addt = { 0 };
@@ -1385,7 +1385,7 @@ static mpdc_protocol_errors mas_ipv6_server_start()
 	return merr;
 }
 
-static void mas_server_dispose()
+static void mas_server_dispose(void)
 {
 	m_mas_command_loop_status = mpdc_server_loop_status_stopped;
 	mpdc_server_state_unload(&m_mas_application_state);
@@ -1398,7 +1398,7 @@ static void mas_server_dispose()
 	m_mas_idle_timer = 0;
 }
 
-static bool mas_server_load_root()
+static bool mas_server_load_root(void)
 {
 	bool res;
 
@@ -1413,7 +1413,7 @@ static bool mas_server_load_root()
 	return res;
 }
 
-static bool mas_server_load_dla()
+static bool mas_server_load_dla(void)
 {
 	bool res;
 
@@ -1437,7 +1437,7 @@ static bool mas_server_load_dla()
 	return res;
 }
 
-static bool mas_server_load_local()
+static bool mas_server_load_local(void)
 {
 	bool res;
 
@@ -1461,7 +1461,7 @@ static bool mas_server_load_local()
 	return res;
 }
 
-static bool mas_server_service_start()
+static bool mas_server_service_start(void)
 {
 	/* initialize the mfk array */
 	qsc_collection_initialize(&m_mas_mfk_collection, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
@@ -1469,9 +1469,9 @@ static bool mas_server_service_start()
 
 #if defined(MPDC_NETWORK_PROTOCOL_IPV6)
 	/* start the main receive loop on a new thread */
-	if (qsc_async_thread_create(&mas_ipv6_server_start, NULL) != NULL)
+	if (qsc_async_thread_create_noargs(&mas_ipv6_server_start) != NULL)
 #else
-	if (qsc_async_thread_create(&mas_ipv4_server_start, NULL) != NULL)
+	if (qsc_async_thread_create_noargs(&mas_ipv4_server_start) != NULL)
 #endif
 	{
 		m_mas_server_loop_status = mpdc_server_loop_status_started;
@@ -1482,7 +1482,7 @@ static bool mas_server_service_start()
 
 static bool mas_certificate_export(const char* cmsg)
 {
-	assert(cmsg != NULL);
+	MPDC_ASSERT(cmsg != NULL);
 
 	bool res;
 
@@ -1493,7 +1493,7 @@ static bool mas_certificate_export(const char* cmsg)
 
 static bool mas_certificate_import(const char* cmsg)
 {
-	assert(cmsg != NULL);
+	MPDC_ASSERT(cmsg != NULL);
 
 	bool res;
 
@@ -1516,7 +1516,7 @@ static bool mas_certificate_import(const char* cmsg)
 
 static void mas_get_command_mode(const char* command)
 {
-	assert(command != NULL);
+	MPDC_ASSERT(command != NULL);
 
 	mpdc_console_modes nmode;
 
@@ -1598,7 +1598,7 @@ static void mas_get_command_mode(const char* command)
 
 static void mas_set_command_action(const char* command)
 {
-	assert(command != NULL);
+	MPDC_ASSERT(command != NULL);
 
 	mpdc_command_actions res;
 	size_t clen;
@@ -1782,7 +1782,7 @@ static void mas_set_command_action(const char* command)
 
 static void mas_command_execute(const char* command)
 {
-	assert(command != NULL);
+	MPDC_ASSERT(command != NULL);
 
 	const char* cmsg;
 	size_t slen;
@@ -2425,7 +2425,7 @@ static void mas_command_execute(const char* command)
 	}
 }
 
-static void mas_idle_timer()
+static void mas_idle_timer(void)
 {
 	const uint32_t MMSEC = 60 * 1000;
 
@@ -2455,7 +2455,7 @@ static void mas_idle_timer()
 
 static void mas_command_loop(char* command)
 {
-	assert(command != NULL);
+	MPDC_ASSERT(command != NULL);
 
 	m_mas_command_loop_status = mpdc_server_loop_status_started;
 
@@ -2490,12 +2490,12 @@ static void mas_command_loop(char* command)
 
 /* server public functions */
 
-void mpdc_mas_pause_server()
+void mpdc_mas_pause_server(void)
 {
 	m_mas_command_loop_status = mpdc_server_loop_status_paused;
 }
 
-int32_t mpdc_mas_start_server()
+int32_t mpdc_mas_start_server(void)
 {
 	char command[QSC_CONSOLE_MAX_LINE] = { 0 };
 	qsc_thread idle;
@@ -2518,7 +2518,7 @@ int32_t mpdc_mas_start_server()
 
 	/* start the idle timer */
 	m_mas_idle_timer = 0;
-	idle = qsc_async_thread_create(&mas_idle_timer, NULL);
+	idle = qsc_async_thread_create_noargs(&mas_idle_timer);
 	
 	if (idle != NULL)
 	{
@@ -2535,7 +2535,7 @@ int32_t mpdc_mas_start_server()
 	return (ret == 0);
 }
 
-void mpdc_mas_stop_server()
+void mpdc_mas_stop_server(void)
 {
 	m_mas_command_loop_status = mpdc_server_loop_status_stopped;
 }

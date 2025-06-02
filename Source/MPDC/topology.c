@@ -5,15 +5,15 @@
 #include "memutils.h"
 #include "sha3.h"
 #include "stringutils.h"
-#if defined(QSC_DEBUG_MODE)
+#if defined(MPDC_DEBUG_MODE)
 #	include "acp.h"
 #endif
 
 void mpdc_topology_address_from_issuer(char* address, const char* issuer, const mpdc_topology_list_state* list)
 {
-	assert(address != NULL);
-	assert(issuer != NULL);
-	assert(list != NULL);
+	MPDC_ASSERT(address != NULL);
+	MPDC_ASSERT(issuer != NULL);
+	MPDC_ASSERT(list != NULL);
 
 	size_t clen;
 
@@ -42,7 +42,7 @@ void mpdc_topology_address_from_issuer(char* address, const char* issuer, const 
 
 uint8_t* mpdc_topology_child_add_empty_node(mpdc_topology_list_state* list)
 {
-	assert(list != NULL);
+	MPDC_ASSERT(list != NULL);
 
 	uint8_t* nptr;
 	uint8_t* ttmp;
@@ -86,8 +86,8 @@ uint8_t* mpdc_topology_child_add_empty_node(mpdc_topology_list_state* list)
 
 void mpdc_topology_child_add_item(mpdc_topology_list_state* list, const mpdc_topology_node_state* node)
 {
-	assert(list != NULL);
-	assert(node != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(node != NULL);
 
 	uint8_t* nptr;
 
@@ -108,10 +108,10 @@ void mpdc_topology_child_add_item(mpdc_topology_list_state* list, const mpdc_top
 
 bool mpdc_topology_canonical_to_issuer_name(char* issuer, size_t isslen, const char* domain, const char* cname)
 {
-	assert(issuer != NULL);
-	assert(isslen != 0);
-	assert(domain != NULL);
-	assert(cname != NULL);
+	MPDC_ASSERT(issuer != NULL);
+	MPDC_ASSERT(isslen != 0);
+	MPDC_ASSERT(domain != NULL);
+	MPDC_ASSERT(cname != NULL);
 
 	size_t len;
 	int64_t pos;
@@ -146,9 +146,9 @@ bool mpdc_topology_canonical_to_issuer_name(char* issuer, size_t isslen, const c
 
 bool mpdc_topology_issuer_to_canonical_name(char* cname, size_t namelen, const char* issuer)
 {
-	assert(cname != NULL);
-	assert(namelen != 0);
-	assert(issuer != NULL);
+	MPDC_ASSERT(cname != NULL);
+	MPDC_ASSERT(namelen != 0);
+	MPDC_ASSERT(issuer != NULL);
 
 	size_t len;
 	int64_t pos;
@@ -186,9 +186,9 @@ bool mpdc_topology_issuer_to_canonical_name(char* cname, size_t namelen, const c
 
 void mpdc_topology_child_register(mpdc_topology_list_state* list, const mpdc_child_certificate* ccert, const char* address)
 {
-	assert(list != NULL);
-	assert(ccert != NULL);
-	assert(address != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(ccert != NULL);
+	MPDC_ASSERT(address != NULL);
 
 	mpdc_topology_node_state node = { 0 };
 	uint8_t* nptr;
@@ -234,8 +234,8 @@ void mpdc_topology_list_clone(const mpdc_topology_list_state* tlist, mpdc_topolo
 
 void mpdc_topology_list_deserialize(mpdc_topology_list_state* list, const uint8_t* input, size_t inplen)
 {
-	assert(list != NULL);
-	assert(input != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(input != NULL);
 
 	size_t cnt;
 	size_t pos;
@@ -266,7 +266,7 @@ void mpdc_topology_list_deserialize(mpdc_topology_list_state* list, const uint8_
  
 void mpdc_topology_list_dispose(mpdc_topology_list_state* list)
 {
-	assert(list != NULL);
+	MPDC_ASSERT(list != NULL);
 
 	if (list != NULL)
 	{
@@ -282,7 +282,7 @@ void mpdc_topology_list_dispose(mpdc_topology_list_state* list)
 
 void mpdc_topology_list_initialize(mpdc_topology_list_state* list)
 {
-	assert(list != NULL);
+	MPDC_ASSERT(list != NULL);
 
 	if (list != NULL)
 	{
@@ -293,8 +293,8 @@ void mpdc_topology_list_initialize(mpdc_topology_list_state* list)
 
 bool mpdc_topology_list_item(const mpdc_topology_list_state* list, mpdc_topology_node_state* node, size_t index)
 {
-	assert(list != NULL);
-	assert(node != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(node != NULL);
 
 	bool res;
 
@@ -319,7 +319,7 @@ bool mpdc_topology_list_item(const mpdc_topology_list_state* list, mpdc_topology
 
 size_t mpdc_topology_list_remove_duplicates(mpdc_topology_list_state* list)
 {
-	assert(list != NULL);
+	MPDC_ASSERT(list != NULL);
 
 	uint8_t* np1;
 	uint8_t* np2;
@@ -392,7 +392,7 @@ size_t mpdc_topology_list_remove_duplicates(mpdc_topology_list_state* list)
 
 size_t mpdc_topology_list_server_count(const mpdc_topology_list_state* list, mpdc_network_designations ntype)
 {
-	assert(list != NULL);
+	MPDC_ASSERT(list != NULL);
 
 	size_t cnt;
 
@@ -419,8 +419,8 @@ size_t mpdc_topology_list_server_count(const mpdc_topology_list_state* list, mpd
 
 size_t mpdc_topology_list_serialize(uint8_t* output, const mpdc_topology_list_state* list)
 {
-	assert(output != NULL);
-	assert(list != NULL);
+	MPDC_ASSERT(output != NULL);
+	MPDC_ASSERT(list != NULL);
 
 	size_t pos;
 
@@ -448,7 +448,7 @@ size_t mpdc_topology_list_serialize(uint8_t* output, const mpdc_topology_list_st
 
 size_t mpdc_topology_list_size(const mpdc_topology_list_state* list)
 {
-	assert(list != NULL);
+	MPDC_ASSERT(list != NULL);
 
 	size_t rlen;
 
@@ -467,8 +467,8 @@ size_t mpdc_topology_list_size(const mpdc_topology_list_state* list)
 
 size_t mpdc_topology_list_update_pack(uint8_t* output, const mpdc_topology_list_state* list, mpdc_network_designations ntype)
 {
-	assert(output != NULL);
-	assert(list != NULL);
+	MPDC_ASSERT(output != NULL);
+	MPDC_ASSERT(list != NULL);
 
 	size_t pos;
 
@@ -496,8 +496,8 @@ size_t mpdc_topology_list_update_pack(uint8_t* output, const mpdc_topology_list_
 
 size_t mpdc_topology_list_update_unpack(mpdc_topology_list_state* list, const uint8_t* input, size_t inplen)
 {
-	assert(list != NULL);
-	assert(input != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(input != NULL);
 
 	size_t cnt;
 	size_t pos;
@@ -526,8 +526,8 @@ size_t mpdc_topology_list_update_unpack(mpdc_topology_list_state* list, const ui
 
 size_t mpdc_topology_ordered_server_list(mpdc_topology_list_state* olist, const mpdc_topology_list_state* tlist, mpdc_network_designations ntype)
 {
-	assert(olist != NULL);
-	assert(tlist != NULL);
+	MPDC_ASSERT(olist != NULL);
+	MPDC_ASSERT(tlist != NULL);
 
 	size_t dcnt;
 	size_t scnt;
@@ -584,8 +584,8 @@ size_t mpdc_topology_ordered_server_list(mpdc_topology_list_state* olist, const 
 
 void mpdc_topology_node_add_alias(mpdc_topology_node_state* node, const char* alias)
 {
-	assert(node != NULL);
-	assert(alias != NULL);
+	MPDC_ASSERT(node != NULL);
+	MPDC_ASSERT(alias != NULL);
 
 	size_t apos;
 	size_t ilen;
@@ -617,8 +617,8 @@ void mpdc_topology_node_add_alias(mpdc_topology_node_state* node, const char* al
 
 bool mpdc_topology_nodes_are_equal(const mpdc_topology_node_state* a, const mpdc_topology_node_state* b)
 {
-	assert(a != NULL);
-	assert(b != NULL);
+	MPDC_ASSERT(a != NULL);
+	MPDC_ASSERT(b != NULL);
 
 	bool res;
 
@@ -652,7 +652,7 @@ bool mpdc_topology_nodes_are_equal(const mpdc_topology_node_state* a, const mpdc
 
 void mpdc_topology_node_clear(mpdc_topology_node_state* node)
 {
-	assert(node != NULL);
+	MPDC_ASSERT(node != NULL);
 
 	if (node != NULL)
 	{
@@ -668,8 +668,8 @@ void mpdc_topology_node_clear(mpdc_topology_node_state* node)
 
 void mpdc_topology_node_copy(const mpdc_topology_node_state* source, mpdc_topology_node_state* destination)
 {
-	assert(source != NULL);
-	assert(destination != NULL);
+	MPDC_ASSERT(source != NULL);
+	MPDC_ASSERT(destination != NULL);
 
 	if (source != NULL && destination != NULL)
 	{
@@ -685,8 +685,8 @@ void mpdc_topology_node_copy(const mpdc_topology_node_state* source, mpdc_topolo
 
 void mpdc_topology_node_deserialize(mpdc_topology_node_state* node, const uint8_t* input)
 {
-	assert(node != NULL);
-	assert(input != NULL);
+	MPDC_ASSERT(node != NULL);
+	MPDC_ASSERT(input != NULL);
 
 	size_t pos;
 	
@@ -710,9 +710,9 @@ void mpdc_topology_node_deserialize(mpdc_topology_node_state* node, const uint8_
 
 bool mpdc_topology_node_find(const mpdc_topology_list_state* list, mpdc_topology_node_state* node, const uint8_t* serial)
 {
-	assert(list != NULL);
-	assert(node != NULL);
-	assert(serial != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(node != NULL);
+	MPDC_ASSERT(serial != NULL);
 
 	bool res;
 
@@ -747,9 +747,9 @@ bool mpdc_topology_node_find(const mpdc_topology_list_state* list, mpdc_topology
 
 bool mpdc_topology_node_find_address(const mpdc_topology_list_state* list, mpdc_topology_node_state* node, const char* address)
 {
-	assert(list != NULL);
-	assert(node != NULL);
-	assert(address != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(node != NULL);
+	MPDC_ASSERT(address != NULL);
 
 	bool res;
 
@@ -784,9 +784,9 @@ bool mpdc_topology_node_find_address(const mpdc_topology_list_state* list, mpdc_
 
 bool mpdc_topology_node_find_alias(const mpdc_topology_list_state* list, mpdc_topology_node_state* node, const char* alias)
 {
-	assert(list != NULL);
-	assert(node != NULL);
-	assert(alias != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(node != NULL);
+	MPDC_ASSERT(alias != NULL);
 
 	bool res;
 
@@ -821,8 +821,8 @@ bool mpdc_topology_node_find_alias(const mpdc_topology_list_state* list, mpdc_to
 
 bool mpdc_topology_node_find_dla(const mpdc_topology_list_state* list, mpdc_topology_node_state* node)
 {
-	assert(list != NULL);
-	assert(node != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(node != NULL);
 
 	bool res;
 
@@ -857,9 +857,9 @@ bool mpdc_topology_node_find_dla(const mpdc_topology_list_state* list, mpdc_topo
 
 bool mpdc_topology_node_find_issuer(const mpdc_topology_list_state* list, mpdc_topology_node_state* node, const char* issuer)
 {
-	assert(list != NULL);
-	assert(node != NULL);
-	assert(issuer != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(node != NULL);
+	MPDC_ASSERT(issuer != NULL);
 
 	size_t clen;
 	bool res;
@@ -904,8 +904,8 @@ bool mpdc_topology_node_find_issuer(const mpdc_topology_list_state* list, mpdc_t
 
 bool mpdc_topology_node_find_root(const mpdc_topology_list_state* list, mpdc_topology_node_state* node)
 {
-	assert(list != NULL);
-	assert(node != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(node != NULL);
 	
 	bool res;
 
@@ -940,8 +940,8 @@ bool mpdc_topology_node_find_root(const mpdc_topology_list_state* list, mpdc_top
 
 bool mpdc_topology_node_exists(const mpdc_topology_list_state* list, const uint8_t* serial)
 {
-	assert(list != NULL);
-	assert(serial != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(serial != NULL);
 
 	bool res;
 
@@ -957,8 +957,8 @@ bool mpdc_topology_node_exists(const mpdc_topology_list_state* list, const uint8
 
 int32_t mpdc_topology_node_get_index(const mpdc_topology_list_state* list, const uint8_t* serial)
 {
-	assert(list != NULL);
-	assert(serial != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(serial != NULL);
 
 	int32_t res;
 
@@ -986,8 +986,8 @@ int32_t mpdc_topology_node_get_index(const mpdc_topology_list_state* list, const
 
 void mpdc_topology_node_remove(mpdc_topology_list_state* list, const uint8_t* serial)
 {
-	assert(list != NULL);
-	assert(serial != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(serial != NULL);
 
 	int32_t lpos;
 	int32_t npos;
@@ -1034,8 +1034,8 @@ void mpdc_topology_node_remove(mpdc_topology_list_state* list, const uint8_t* se
 
 void mpdc_topology_node_remove_duplicate(mpdc_topology_list_state* list, const char* issuer)
 {
-	assert(list != NULL);
-	assert(issuer != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(issuer != NULL);
 
 	if (list != NULL && issuer != NULL)
 	{
@@ -1051,8 +1051,8 @@ void mpdc_topology_node_remove_duplicate(mpdc_topology_list_state* list, const c
 
 size_t mpdc_topology_node_serialize(uint8_t* output, const mpdc_topology_node_state* node)
 {
-	assert(output != NULL);
-	assert(node != NULL);
+	MPDC_ASSERT(output != NULL);
+	MPDC_ASSERT(node != NULL);
 
 	size_t pos;
 	
@@ -1081,8 +1081,8 @@ size_t mpdc_topology_node_serialize(uint8_t* output, const mpdc_topology_node_st
 
 bool mpdc_topology_node_verify_dla(const mpdc_topology_list_state* list, const mpdc_child_certificate* ccert)
 {
-	assert(list != NULL);
-	assert(ccert != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(ccert != NULL);
 
 	bool res;
 
@@ -1106,9 +1106,9 @@ bool mpdc_topology_node_verify_dla(const mpdc_topology_list_state* list, const m
 
 bool mpdc_topology_node_verify_issuer(const mpdc_topology_list_state* list, const mpdc_child_certificate* ccert, const char* issuer)
 {
-	assert(list != NULL);
-	assert(ccert != NULL);
-	assert(issuer != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(ccert != NULL);
+	MPDC_ASSERT(issuer != NULL);
 
 	bool res;
 
@@ -1132,8 +1132,8 @@ bool mpdc_topology_node_verify_issuer(const mpdc_topology_list_state* list, cons
 
 bool mpdc_topology_node_verify_root(const mpdc_topology_list_state* list, const mpdc_root_certificate* rcert)
 {
-	assert(list != NULL);
-	assert(rcert != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(rcert != NULL);
 
 	bool res; 
 
@@ -1157,9 +1157,9 @@ bool mpdc_topology_node_verify_root(const mpdc_topology_list_state* list, const 
 
 void mpdc_topology_root_register(mpdc_topology_list_state* list, const mpdc_root_certificate* rcert, const char* address)
 {
-	assert(list != NULL);
-	assert(rcert != NULL);
-	assert(address != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(rcert != NULL);
+	MPDC_ASSERT(address != NULL);
 
 	mpdc_topology_node_state node = { 0 };
 	uint8_t* nptr;
@@ -1180,9 +1180,9 @@ void mpdc_topology_root_register(mpdc_topology_list_state* list, const mpdc_root
 
 size_t mpdc_topology_list_to_string(const mpdc_topology_list_state* list, char* output, size_t outlen)
 {
-	assert(list != NULL);
-	assert(output != NULL);
-	assert(outlen != 0);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(output != NULL);
+	MPDC_ASSERT(outlen != 0);
 
 	size_t slen;
 	size_t spos;
@@ -1298,8 +1298,8 @@ size_t mpdc_topology_node_encode(const mpdc_topology_node_state* node, char outp
 
 void mpdc_topology_from_file(const char* fpath, mpdc_topology_list_state* list)
 {
-	assert(fpath != NULL);
-	assert(list != NULL);
+	MPDC_ASSERT(fpath != NULL);
+	MPDC_ASSERT(list != NULL);
 
 	uint8_t* lbuf;
 	size_t flen;
@@ -1327,8 +1327,8 @@ void mpdc_topology_from_file(const char* fpath, mpdc_topology_list_state* list)
 
 void mpdc_topology_to_file(const mpdc_topology_list_state* list, const char* fpath)
 {
-	assert(list != NULL);
-	assert(fpath != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(fpath != NULL);
 
 	uint8_t* pbuf;
 	size_t flen;
@@ -1347,7 +1347,7 @@ void mpdc_topology_to_file(const mpdc_topology_list_state* list, const char* fpa
 	}
 }
 
-#if defined(QSC_DEBUG_MODE)
+#if defined(MPDC_DEBUG_MODE)
 typedef struct topology_device_package
 {
 	mpdc_signature_keypair akp;
@@ -1575,7 +1575,7 @@ static bool topology_sorted_list_test(topology_device_package* spkg)
 	return res;
 }
 
-bool mpdc_topology_functions_test()
+bool mpdc_topology_functions_test(void)
 {
 	topology_device_package spkg = { 0 };
 	bool res;

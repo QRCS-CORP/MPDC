@@ -34,7 +34,7 @@
  * in the LICENSE.txt file distributed with this software.
  *
  * Written by: John G. Underhill
- * Contact: john.underhill@protonmail.com
+ * Contact: contact@qrcscorp.ca
  */
 
 #ifndef MPDC_NETWORK_H
@@ -815,8 +815,8 @@ MPDC_EXPORT_API mpdc_protocol_errors mpdc_network_topological_status_verify(cons
 */
 MPDC_EXPORT_API mpdc_protocol_errors mpdc_network_topological_status_response(const mpdc_network_topological_status_response_state* state, const mpdc_network_packet* packetin);
 
-#if defined(QSC_DEBUG_MODE)
-MPDC_EXPORT_API bool mpdc_network_protocols_test();
+#if defined(MPDC_DEBUG_MODE)
+MPDC_EXPORT_API bool mpdc_network_protocols_test(void);
 #endif
 
 #endif

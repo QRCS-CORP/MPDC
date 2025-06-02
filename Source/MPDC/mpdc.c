@@ -9,7 +9,7 @@
 
 void mpdc_connection_close(qsc_socket* rsock, mpdc_network_errors err, bool notify)
 {
-	assert(rsock != NULL);
+	MPDC_ASSERT(rsock != NULL);
 
 	if (rsock != NULL)
 	{
@@ -40,10 +40,10 @@ void mpdc_connection_close(qsc_socket* rsock, mpdc_network_errors err, bool noti
 
 mpdc_protocol_errors mpdc_decrypt_packet(mpdc_connection_state* pcns, uint8_t* message, size_t* msglen, const mpdc_network_packet* packetin)
 {
-	assert(pcns != NULL);
-	assert(packetin != NULL);
-	assert(message != NULL);
-	assert(msglen != NULL);
+	MPDC_ASSERT(pcns != NULL);
+	MPDC_ASSERT(packetin != NULL);
+	MPDC_ASSERT(message != NULL);
+	MPDC_ASSERT(msglen != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -101,9 +101,9 @@ mpdc_protocol_errors mpdc_decrypt_packet(mpdc_connection_state* pcns, uint8_t* m
 
 mpdc_protocol_errors mpdc_encrypt_packet(mpdc_connection_state* pcns, mpdc_network_packet* packetout, const uint8_t* message, size_t msglen)
 {
-	assert(pcns != NULL);
-	assert(message != NULL);
-	assert(packetout != NULL);
+	MPDC_ASSERT(pcns != NULL);
+	MPDC_ASSERT(message != NULL);
+	MPDC_ASSERT(packetout != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -179,7 +179,7 @@ void mpdc_packet_clear(mpdc_network_packet* packet)
 
 void mpdc_packet_error_message(mpdc_network_packet* packet, mpdc_protocol_errors error)
 {
-	assert(packet != NULL);
+	MPDC_ASSERT(packet != NULL);
 
 	if (packet != NULL)
 	{
@@ -192,8 +192,8 @@ void mpdc_packet_error_message(mpdc_network_packet* packet, mpdc_protocol_errors
 
 void mpdc_packet_header_deserialize(const uint8_t* header, mpdc_network_packet* packet)
 {
-	assert(header != NULL);
-	assert(packet != NULL);
+	MPDC_ASSERT(header != NULL);
+	MPDC_ASSERT(packet != NULL);
 
 	if (header != NULL && packet != NULL)
 	{
@@ -211,8 +211,8 @@ void mpdc_packet_header_deserialize(const uint8_t* header, mpdc_network_packet* 
 
 void mpdc_packet_header_serialize(const mpdc_network_packet* packet, uint8_t* header)
 {
-	assert(header != NULL);
-	assert(packet != NULL);
+	MPDC_ASSERT(header != NULL);
+	MPDC_ASSERT(packet != NULL);
 
 	if (header != NULL && packet != NULL)
 	{
@@ -244,8 +244,8 @@ bool mpdc_packet_time_valid(const mpdc_network_packet* packet)
 
 size_t mpdc_packet_to_stream(const mpdc_network_packet* packet, uint8_t* pstream)
 {
-	assert(packet != NULL);
-	assert(pstream != NULL);
+	MPDC_ASSERT(packet != NULL);
+	MPDC_ASSERT(pstream != NULL);
 
 	size_t res;
 
@@ -276,8 +276,8 @@ size_t mpdc_packet_to_stream(const mpdc_network_packet* packet, uint8_t* pstream
 
 void mpdc_stream_to_packet(const uint8_t* pstream, mpdc_network_packet* packet)
 {
-	assert(packet != NULL);
-	assert(pstream != NULL);
+	MPDC_ASSERT(packet != NULL);
+	MPDC_ASSERT(pstream != NULL);
 
 	if (packet != NULL && pstream != NULL)
 	{
@@ -301,7 +301,7 @@ void mpdc_stream_to_packet(const uint8_t* pstream, mpdc_network_packet* packet)
 
 void mpdc_connection_state_dispose(mpdc_connection_state* pcns)
 {
-	assert(pcns != NULL);
+	MPDC_ASSERT(pcns != NULL);
 
 	if (pcns != NULL)
 	{
@@ -314,4 +314,3 @@ void mpdc_connection_state_dispose(mpdc_connection_state* pcns)
 		pcns->exflag = mpdc_network_flag_none;
 	}
 }
-

@@ -37,7 +37,7 @@ static uint64_t m_client_idle_timer;
 
 static mpdc_protocol_errors client_mfk_request(const mpdc_topology_node_state* rnode)
 {
-	assert(rnode != NULL);
+	MPDC_ASSERT(rnode != NULL);
 
 	mpdc_child_certificate rcert = { 0 };
 	char fpath[MPDC_STORAGE_PATH_MAX] = { 0 };
@@ -91,8 +91,8 @@ static mpdc_protocol_errors client_mfk_request(const mpdc_topology_node_state* r
 
 static mpdc_protocol_errors client_mfk_response(qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_child_certificate rcert = { 0 };
 	const uint8_t* pcert;
@@ -137,7 +137,7 @@ static mpdc_protocol_errors client_mfk_response(qsc_socket* csock, const mpdc_ne
 
 static mpdc_protocol_errors client_register_device(const mpdc_topology_node_state* rnode)
 {
-	assert(rnode != NULL);
+	MPDC_ASSERT(rnode != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -200,7 +200,7 @@ static mpdc_protocol_errors client_register_device(const mpdc_topology_node_stat
 
 static bool client_certificate_generate(const char* cmsg)
 {
-	assert(cmsg != NULL);
+	MPDC_ASSERT(cmsg != NULL);
 
 	uint64_t period;
 	size_t nlen;
@@ -288,8 +288,8 @@ static bool client_certificate_generate(const char* cmsg)
 
 static mpdc_protocol_errors client_converge_response(const qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_node_state lnode = { 0 };
 	mpdc_protocol_errors merr;
@@ -316,8 +316,8 @@ static mpdc_protocol_errors client_converge_response(const qsc_socket* csock, co
 
 static mpdc_protocol_errors client_announce_broadcast_response(const qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_node_state rnode = { 0 };
 	mpdc_protocol_errors merr;
@@ -352,8 +352,8 @@ static mpdc_protocol_errors client_announce_broadcast_response(const qsc_socket*
 
 static mpdc_protocol_errors client_incremental_update_response(const qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_node_state rnode = { 0 };
 	mpdc_protocol_errors merr;
@@ -386,7 +386,7 @@ static mpdc_protocol_errors client_incremental_update_response(const qsc_socket*
 	return merr;
 }
 
-static void client_reset_topology()
+static void client_reset_topology(void)
 {
 	mpdc_topology_node_state node = { 0 };
 	qsc_list_state lstate = { 0 };
@@ -419,7 +419,7 @@ static void client_reset_topology()
 
 static mpdc_protocol_errors client_register_update_request(const char* address)
 {
-	assert(address != NULL);
+	MPDC_ASSERT(address != NULL);
 	
 	mpdc_protocol_errors merr;
 	bool dres;
@@ -524,7 +524,7 @@ static mpdc_protocol_errors client_register_update_request(const char* address)
 
 static mpdc_protocol_errors client_resign_request(const char* address)
 {
-	assert(address != NULL);
+	MPDC_ASSERT(address != NULL);
 
 	/* resigning removes the dla from the topology, 
 	   and deletes the dla certificate and database entry */
@@ -567,7 +567,7 @@ static mpdc_protocol_errors client_resign_request(const char* address)
 
 static mpdc_protocol_errors client_revoke_response(const mpdc_network_packet* packetin)
 {
-	assert(packetin != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_node_state rnode = { 0 };
 	mpdc_protocol_errors merr;
@@ -595,7 +595,7 @@ static mpdc_protocol_errors client_revoke_response(const mpdc_network_packet* pa
 
 static mpdc_protocol_errors client_topological_query_request(const char* cname)
 {
-	assert(cname != NULL);
+	MPDC_ASSERT(cname != NULL);
 
 	char rish[MPDC_CERTIFICATE_ISSUER_SIZE] = { 0 };
 	mpdc_protocol_errors merr;
@@ -648,8 +648,8 @@ static mpdc_protocol_errors client_topological_query_request(const char* cname)
 
 static mpdc_protocol_errors client_topological_status_response(const qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_node_state lnode = { 0 };
 	mpdc_child_certificate rcert = { 0 };
@@ -687,8 +687,8 @@ static mpdc_protocol_errors client_topological_status_response(const qsc_socket*
 
 static void client_tunnel_callback(const mpdc_connection_state* pcns, const char* pmsg, size_t msglen)
 {
-	assert(pcns != NULL);
-	assert(pmsg != NULL);
+	MPDC_ASSERT(pcns != NULL);
+	MPDC_ASSERT(pmsg != NULL);
 
 	qsc_mutex mtx;
 
@@ -701,7 +701,7 @@ static void client_tunnel_callback(const mpdc_connection_state* pcns, const char
 
 static void client_tunnel_receive_loop(void* pcns)
 {
-	assert(pcns != NULL);
+	MPDC_ASSERT(pcns != NULL);
 
 	mpdc_connection_state* ppcns;
 	qsc_mutex mtx;
@@ -807,8 +807,8 @@ static void client_tunnel_receive_loop(void* pcns)
 
 static void client_tunnel_rxinit(mpdc_connection_state* pcns, const uint8_t* hfks)
 {
-	assert(pcns != NULL);
-	assert(hfks != NULL);
+	MPDC_ASSERT(pcns != NULL);
+	MPDC_ASSERT(hfks != NULL);
 
 	qsc_keccak_state kstate = { 0 };
 
@@ -878,8 +878,8 @@ static void client_tunnel_rxinit(mpdc_connection_state* pcns, const uint8_t* hfk
 
 static void client_tunnel_txinit(mpdc_connection_state* pcns, const uint8_t* hfks)
 {
-	assert(pcns != NULL);
-	assert(hfks != NULL);
+	MPDC_ASSERT(pcns != NULL);
+	MPDC_ASSERT(hfks != NULL);
 
 	qsc_keccak_state kstate = { 0 };
 
@@ -951,7 +951,7 @@ static void client_tunnel_txinit(mpdc_connection_state* pcns, const uint8_t* hfk
 
 static void client_tunnel_send_loop(mpdc_connection_state* pcns)
 {
-	assert(pcns != NULL);
+	MPDC_ASSERT(pcns != NULL);
 	
 	mpdc_network_packet pkt = { 0 };
 	char cinp[MPDC_STORAGE_MESSAGE_MAX + 1] = { 0 };
@@ -1017,7 +1017,7 @@ static void client_tunnel_send_loop(mpdc_connection_state* pcns)
 
 static mpdc_protocol_errors client_tunnel_connection_request(const char* cname)
 {
-	assert(cname != NULL);
+	MPDC_ASSERT(cname != NULL);
 
 	char rish[MPDC_CERTIFICATE_ISSUER_SIZE] = { 0 };
 	mpdc_protocol_errors merr;
@@ -1107,11 +1107,11 @@ static mpdc_protocol_errors client_tunnel_connection_request(const char* cname)
 
 static mpdc_protocol_errors client_tunnel_connection_response(const qsc_socket* csock, const mpdc_network_packet* packetin)
 {
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
-	assert(csock != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -1200,7 +1200,7 @@ static mpdc_protocol_errors client_tunnel_connection_response(const qsc_socket* 
 
 static void client_receive_loop(void* ras)
 {
-	assert(ras != NULL);
+	MPDC_ASSERT(ras != NULL);
 
 	mpdc_network_packet pkt = { 0 };
 	client_receive_state* pras;
@@ -1453,7 +1453,7 @@ static void client_receive_loop(void* ras)
 	}
 }
 
-static mpdc_protocol_errors client_ipv4_server_start()
+static mpdc_protocol_errors client_ipv4_server_start(void)
 {
 	qsc_socket lsock = { 0 };
 	qsc_ipinfo_ipv4_address addt = { 0 };
@@ -1535,7 +1535,7 @@ static mpdc_protocol_errors client_ipv4_server_start()
 	return merr;
 }
 
-static mpdc_protocol_errors client_ipv6_server_start()
+static mpdc_protocol_errors client_ipv6_server_start(void)
 {
 	qsc_socket lsock = { 0 };
 	qsc_ipinfo_ipv6_address addt = { 0 };
@@ -1623,7 +1623,7 @@ static mpdc_protocol_errors client_ipv6_server_start()
 	return merr;
 }
 
-static void client_server_dispose()
+static void client_server_dispose(void)
 {
 	m_client_command_loop_status = mpdc_server_loop_status_stopped;
 	mpdc_server_state_unload(&m_client_application_state);
@@ -1636,7 +1636,7 @@ static void client_server_dispose()
 	m_client_idle_timer = 0;
 }
 
-static bool client_server_load_root()
+static bool client_server_load_root(void)
 {
 	bool res;
 
@@ -1651,7 +1651,7 @@ static bool client_server_load_root()
 	return res;
 }
 
-static bool client_server_load_dla()
+static bool client_server_load_dla(void)
 {
 	bool res;
 
@@ -1675,7 +1675,7 @@ static bool client_server_load_dla()
 	return res;
 }
 
-static bool client_server_load_local()
+static bool client_server_load_local(void)
 {
 	bool res;
 
@@ -1699,7 +1699,7 @@ static bool client_server_load_local()
 	return res;
 }
 
-static bool client_server_service_start()
+static bool client_server_service_start(void)
 {
 	/* initialize the mfk array */
 	qsc_collection_initialize(&m_client_mfk_collection, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
@@ -1707,9 +1707,9 @@ static bool client_server_service_start()
 
 #if defined(MPDC_NETWORK_PROTOCOL_IPV6)
 	/* start the main receive loop on a new thread */
-	if (qsc_async_thread_create(&client_ipv6_server_start, NULL) != NULL)
+	if (qsc_async_thread_create_noargs(&client_ipv6_server_start) != NULL)
 #else
-	if (qsc_async_thread_create(&client_ipv4_server_start, NULL) != NULL)
+	if (qsc_async_thread_create_noargs(&client_ipv4_server_start) != NULL)
 #endif
 	{
 		m_client_server_loop_status = mpdc_server_loop_status_started;
@@ -1720,7 +1720,7 @@ static bool client_server_service_start()
 
 static bool client_certificate_export(const char* cmsg)
 {
-	assert(cmsg != NULL);
+	MPDC_ASSERT(cmsg != NULL);
 
 	bool res;
 
@@ -1731,7 +1731,7 @@ static bool client_certificate_export(const char* cmsg)
 
 static bool client_certificate_import(const char* cmsg)
 {
-	assert(cmsg != NULL);
+	MPDC_ASSERT(cmsg != NULL);
 
 	bool res;
 
@@ -1754,7 +1754,7 @@ static bool client_certificate_import(const char* cmsg)
 
 static void client_get_command_mode(const char* command)
 {
-	assert(command != NULL);
+	MPDC_ASSERT(command != NULL);
 
 	mpdc_console_modes nmode;
 
@@ -1845,7 +1845,7 @@ static void client_get_command_mode(const char* command)
 
 static void client_set_command_action(const char* command)
 {
-	assert(command != NULL);
+	MPDC_ASSERT(command != NULL);
 
 	mpdc_command_actions res;
 	size_t clen;
@@ -2044,7 +2044,7 @@ static void client_set_command_action(const char* command)
 
 static void client_command_execute(const char* command)
 {
-	assert(command != NULL);
+	MPDC_ASSERT(command != NULL);
 
 	const char* cmsg;
 	size_t slen;
@@ -2760,7 +2760,7 @@ static void client_command_execute(const char* command)
 	}
 }
 
-static void client_idle_timer()
+static void client_idle_timer(void)
 {
 	const uint32_t MMSEC = 60 * 1000;
 
@@ -2795,7 +2795,7 @@ static void client_idle_timer()
 
 static void client_command_loop(char* command)
 {
-	assert(command != NULL);
+	MPDC_ASSERT(command != NULL);
 
 	m_client_command_loop_status = mpdc_server_loop_status_started;
 
@@ -2838,12 +2838,12 @@ static void client_command_loop(char* command)
 
 /* server public functions */
 
-void mpdc_client_pause_server()
+void mpdc_client_pause_server(void)
 {
 	m_client_command_loop_status = mpdc_server_loop_status_paused;
 }
 
-int32_t mpdc_client_start_server()
+int32_t mpdc_client_start_server(void)
 {
 	char command[QSC_CONSOLE_MAX_LINE] = { 0 };
 	qsc_thread idle;
@@ -2883,7 +2883,7 @@ int32_t mpdc_client_start_server()
 	return (ret == 0);
 }
 
-void mpdc_client_stop_server()
+void mpdc_client_stop_server(void)
 {
 	m_client_command_loop_status = mpdc_server_loop_status_stopped;
 }

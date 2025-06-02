@@ -34,7 +34,7 @@
  * in the LICENSE.txt file distributed with this software.
  *
  * Written by: John G. Underhill
- * Contact: john.underhill@protonmail.com
+ * Contact: contact@qrcscorp.ca
  */
 
 #ifndef MPDC_DLA_H
@@ -76,7 +76,7 @@
  *
  * Temporarily suspends the DLA server's processing of incoming network requests and command loop.
  */
-MPDC_EXPORT_API void mpdc_dla_pause_server();
+MPDC_EXPORT_API void mpdc_dla_pause_server(void);
 
 /**
  * \brief Start the DLA server.
@@ -87,7 +87,7 @@ MPDC_EXPORT_API void mpdc_dla_pause_server();
  *
  * \return Returns zero on success; a non-zero value indicates an error during initialization.
  */
-MPDC_EXPORT_API int32_t mpdc_dla_start_server();
+MPDC_EXPORT_API int32_t mpdc_dla_start_server(void);
 
 /**
  * \brief Stop the DLA server.
@@ -95,7 +95,6 @@ MPDC_EXPORT_API int32_t mpdc_dla_start_server();
  * Terminates the DLA server by shutting down the network socket, stopping the command loop, and releasing
  * all allocated resources.
  */
-MPDC_EXPORT_API void mpdc_dla_stop_server();
-
+MPDC_EXPORT_API void mpdc_dla_stop_server(void);
 
 #endif

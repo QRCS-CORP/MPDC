@@ -34,25 +34,30 @@
  * in the LICENSE.txt file distributed with this software.
  *
  * Written by: John G. Underhill
- * Contact: john.underhill@protonmail.com
+ * Contact: contact@qrcscorp.ca
  */
 
 #ifndef MPDC_COMMON_H
 #define MPDC_COMMON_H
 
+#include "qsccommon.h"
 #include <assert.h>
 #include <errno.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <limits.h>
 #include <string.h>
-#include "qsccommon.h"
 
 /**
 * \internal
 * \file common.h
 * \brief The MPDC common includes
 */
+
+/** \cond DOXYGEN_IGNORE */
+
+static const char MPDC_DEFAULT_APP_PATH[] = "C:\\";
+static const char MPDC_LOG_FILENAME[] = "\\userlog.mlog";
 
 /*!
 * \def MPDC_CONFIG_DILITHIUM_KYBER
@@ -86,39 +91,39 @@
 #endif
 
 /* application constants */
-#define MPDC_CRYPTO_PASSWORD_HASH 32
-#define MPDC_DEFAULT_AUTH_RETRIES 3
-#define MPDC_DEFAULT_PORT 8022
-#define MPDC_DEFAULT_SESSION_TIMEOUT 5
-#define MPDC_STORAGE_ADDRESS_MIN 7
-#define MPDC_STORAGE_ADDRESS_MAX 65
-#define MPDC_STORAGE_ASSOCIATION_HOSTS_MAX 16
-#define MPDC_STORAGE_CERTIFICATE_NAME 128
-#define MPDC_STORAGE_DEVICENAME_MAX 16
-#define MPDC_STORAGE_DEVICENAME_MIN 2
-#define MPDC_STORAGE_DOMAINNAME_MAX 260
-#define MPDC_STORAGE_DOMAINNAME_MIN 2
-#define MPDC_STORAGE_FILEPATH_MAX 256
-#define MPDC_STORAGE_FILEPATH_MIN 8
-#define MPDC_STORAGE_HOSTNAME_MIN 2
-#define MPDC_STORAGE_HOSTNAME_MAX 128
-#define MPDC_STORAGE_INPUT_MAX 256
-#define MPDC_STORAGE_MAC_SIZE 32
-#define MPDC_STORAGE_MAX_PATH 260
-#define MPDC_STORAGE_MESSAGE_MAX 8192
-#define MPDC_STORAGE_PASSWORD_MAX 256
-#define MPDC_STORAGE_PASSWORD_MIN 8
-#define MPDC_STORAGE_PASSWORD_RETRY 3
-#define MPDC_STORAGE_PATH_MAX 260
-#define MPDC_STORAGE_PROMPT_MAX 64
-#define MPDC_STORAGE_RETRIES_MIN 1
-#define MPDC_STORAGE_RETRIES_MAX 5
-#define MPDC_STORAGE_SERVER_PAUSE_INTERVAL 250
-#define MPDC_STORAGE_TIMEOUT_MIN 1
-#define MPDC_STORAGE_TIMEOUT_MAX 60
-#define MPDC_STORAGE_USERNAME_MAX 128
-#define MPDC_STORAGE_USERNAME_MIN 6
-#define MPDC_STORAGE_USERNAME_RETRY 3
+#define MPDC_CRYPTO_PASSWORD_HASH 32U
+#define MPDC_DEFAULT_AUTH_RETRIES 3U
+#define MPDC_DEFAULT_PORT 8022U
+#define MPDC_DEFAULT_SESSION_TIMEOUT 5U
+#define MPDC_STORAGE_ADDRESS_MIN 7U
+#define MPDC_STORAGE_ADDRESS_MAX 65U
+#define MPDC_STORAGE_ASSOCIATION_HOSTS_MAX 16U
+#define MPDC_STORAGE_CERTIFICATE_NAME 128U
+#define MPDC_STORAGE_DEVICENAME_MAX 16U
+#define MPDC_STORAGE_DEVICENAME_MIN 2U
+#define MPDC_STORAGE_DOMAINNAME_MAX 260U
+#define MPDC_STORAGE_DOMAINNAME_MIN 2U
+#define MPDC_STORAGE_FILEPATH_MAX 256U
+#define MPDC_STORAGE_FILEPATH_MIN 8U
+#define MPDC_STORAGE_HOSTNAME_MIN 2U
+#define MPDC_STORAGE_HOSTNAME_MAX 128U
+#define MPDC_STORAGE_INPUT_MAX 256U
+#define MPDC_STORAGE_MAC_SIZE 32U
+#define MPDC_STORAGE_MAX_PATH 260U
+#define MPDC_STORAGE_MESSAGE_MAX 8192U
+#define MPDC_STORAGE_PASSWORD_MAX 256U
+#define MPDC_STORAGE_PASSWORD_MIN 8U
+#define MPDC_STORAGE_PASSWORD_RETRY 3U
+#define MPDC_STORAGE_PATH_MAX 260U
+#define MPDC_STORAGE_PROMPT_MAX 64U
+#define MPDC_STORAGE_RETRIES_MIN 1U
+#define MPDC_STORAGE_RETRIES_MAX 5U
+#define MPDC_STORAGE_SERVER_PAUSE_INTERVAL 250U
+#define MPDC_STORAGE_TIMEOUT_MIN 1U
+#define MPDC_STORAGE_TIMEOUT_MAX 60U
+#define MPDC_STORAGE_USERNAME_MAX 128U
+#define MPDC_STORAGE_USERNAME_MIN 6U
+#define MPDC_STORAGE_USERNAME_RETRY 3U
 
 /*!
 \def MPDC_DLL_API
@@ -162,7 +167,24 @@
 #	define MPDC_EXPORT_API
 #endif
 
-static const char MPDC_DEFAULT_APP_PATH[] = "C:\\";
-static const char MPDC_LOG_FILENAME[] = "\\userlog.mlog";
+#if defined(DEBUG) || defined(_DEBUG) || defined(__DEBUG__) || (defined(__GNUC__) && !defined(__OPTIMIZE__))
+  /*!
+   * \def MPDC_DEBUG_MODE
+   * \brief Defined when the build is in debug mode.
+   */
+#	define MPDC_DEBUG_MODE
+#endif
+
+#ifdef MPDC_DEBUG_MODE
+  /*!
+   * \def MPDC_ASSERT
+   * \brief Define the MPDC_ASSERT function and guarantee it as debug only.
+   */
+#  define MPDC_ASSERT(expr) assert(expr)
+#else
+#  define MPDC_ASSERT(expr) ((void)0)
+#endif
+
+/** \endcond DOXYGEN_IGNORE */
 
 #endif

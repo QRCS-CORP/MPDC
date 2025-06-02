@@ -26,7 +26,7 @@
 #define NETWORK_CONVERGE_UPDATE_MESSAGE_SIZE (MPDC_PACKET_SUBHEADER_SIZE + MPDC_NETWORK_TOPOLOGY_NODE_SIZE + MPDC_CERTIFICATE_SIGNED_HASH_SIZE)
 #define NETWORK_CONVERGE_UPDATE_PACKET_SIZE (MPDC_PACKET_HEADER_SIZE + NETWORK_CONVERGE_UPDATE_MESSAGE_SIZE)
 
-#define NETWORK_ERROR_MESSAGE_SIZE 1
+#define NETWORK_ERROR_MESSAGE_SIZE 1U
 #define NETWORK_ERROR_PACKET_SIZE (MPDC_PACKET_HEADER_SIZE + NETWORK_ERROR_MESSAGE_SIZE)
 
 #define NETWORK_FRAGMENT_FKEY_REQUEST_SEQUENCE 0xFFFFFF03UL
@@ -117,8 +117,8 @@
 
 static size_t network_compress_node(uint8_t* snode, const mpdc_topology_node_state* lnode)
 {
-	assert(snode != NULL);
-	assert(lnode != NULL);
+	MPDC_ASSERT(snode != NULL);
+	MPDC_ASSERT(lnode != NULL);
 
 	size_t pos;
 
@@ -134,7 +134,7 @@ static size_t network_compress_node(uint8_t* snode, const mpdc_topology_node_sta
 
 static void network_header_create(mpdc_network_packet* packetout, mpdc_network_flags flag, uint64_t sequence, uint32_t msglen)
 {
-	assert(packetout != NULL);
+	MPDC_ASSERT(packetout != NULL);
 
 	packetout->flag = flag;
 	packetout->sequence = sequence;
@@ -145,7 +145,7 @@ static void network_header_create(mpdc_network_packet* packetout, mpdc_network_f
 
 static mpdc_protocol_errors network_header_validate(const mpdc_network_packet* packetin, mpdc_network_flags flag, uint64_t sequence, uint32_t msglen)
 {
-	assert(packetin != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -191,8 +191,8 @@ static mpdc_protocol_errors network_header_validate(const mpdc_network_packet* p
 
 static void network_subheader_serialize(uint8_t* pstream, const mpdc_network_packet* packetin)
 {
-	assert(pstream != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(pstream != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	qsc_intutils_le64to8(pstream, packetin->sequence);
 	qsc_intutils_le64to8(pstream + sizeof(uint64_t), packetin->utctime);
@@ -200,7 +200,7 @@ static void network_subheader_serialize(uint8_t* pstream, const mpdc_network_pac
 
 static mpdc_protocol_errors network_unpack_error(uint8_t* pmsg)
 {
-	assert(pmsg != NULL);
+	MPDC_ASSERT(pmsg != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -225,9 +225,9 @@ static mpdc_protocol_errors network_unpack_error(uint8_t* pmsg)
 
 static mpdc_protocol_errors network_certificate_hash_sign(const mpdc_network_packet* packetout, const uint8_t* sigkey, const mpdc_child_certificate* ccert)
 {
-	assert(packetout != NULL);
-	assert(sigkey != NULL);
-	assert(ccert != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(sigkey != NULL);
+	MPDC_ASSERT(ccert != NULL);
 
 	size_t mlen;
 	size_t mpos;
@@ -258,10 +258,10 @@ static mpdc_protocol_errors network_certificate_hash_sign(const mpdc_network_pac
 
 static mpdc_protocol_errors network_certificate_signed_hash_verify(mpdc_child_certificate* ccert, const mpdc_network_packet* packetin, const mpdc_child_certificate* rcert, const mpdc_root_certificate* root)
 {
-	assert(ccert != NULL);
-	assert(packetin != NULL);
-	assert(rcert != NULL);
-	assert(root != NULL);
+	MPDC_ASSERT(ccert != NULL);
+	MPDC_ASSERT(packetin != NULL);
+	MPDC_ASSERT(rcert != NULL);
+	MPDC_ASSERT(root != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -300,8 +300,8 @@ static mpdc_protocol_errors network_certificate_signed_hash_verify(mpdc_child_ce
 
 static void network_hash_cycle_mfk(const uint8_t* serial, qsc_collection_state* mfkcol)
 {
-	assert(serial != NULL);
-	assert(mfkcol != NULL);
+	MPDC_ASSERT(serial != NULL);
+	MPDC_ASSERT(mfkcol != NULL);
 
 	uint8_t mfkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
 
@@ -317,11 +317,11 @@ static void network_hash_cycle_mfk(const uint8_t* serial, qsc_collection_state* 
 
 static void network_derive_fkey(uint8_t* ckey, const uint8_t* mfk, const uint8_t* lhash, const uint8_t* rhash, const uint8_t* token)
 {
-	assert(ckey != NULL);
-	assert(mfk != NULL);
-	assert(lhash != NULL);
-	assert(rhash != NULL);
-	assert(token != NULL);
+	MPDC_ASSERT(ckey != NULL);
+	MPDC_ASSERT(mfk != NULL);
+	MPDC_ASSERT(lhash != NULL);
+	MPDC_ASSERT(rhash != NULL);
+	MPDC_ASSERT(token != NULL);
 
 	qsc_keccak_state fks = { 0 };
 
@@ -336,11 +336,11 @@ static void network_derive_fkey(uint8_t* ckey, const uint8_t* mfk, const uint8_t
 
 static void network_derive_mkey(uint8_t* mkey, const uint8_t* mfk, const uint8_t* lhash, const uint8_t* rhash, const uint8_t* token)
 {
-	assert(mkey != NULL);
-	assert(mfk != NULL);
-	assert(lhash != NULL);
-	assert(rhash != NULL);
-	assert(token != NULL);
+	MPDC_ASSERT(mkey != NULL);
+	MPDC_ASSERT(mfk != NULL);
+	MPDC_ASSERT(lhash != NULL);
+	MPDC_ASSERT(rhash != NULL);
+	MPDC_ASSERT(token != NULL);
 
 	qsc_keccak_state fks = { 0 };
 
@@ -355,11 +355,11 @@ static void network_derive_mkey(uint8_t* mkey, const uint8_t* mfk, const uint8_t
 
 static void network_mac_message(uint8_t* mtag, const uint8_t* ckey, const uint8_t* ctxt, size_t ctxlen, const uint8_t* adata)
 {
-	assert(mtag != NULL);
-	assert(ckey != NULL);
-	assert(ctxt != NULL);
-	assert(ctxlen != 0);
-	assert(adata != NULL);
+	MPDC_ASSERT(mtag != NULL);
+	MPDC_ASSERT(ckey != NULL);
+	MPDC_ASSERT(ctxt != NULL);
+	MPDC_ASSERT(ctxlen != 0);
+	MPDC_ASSERT(adata != NULL);
 
 	qsc_keccak_state fks = { 0 };
 
@@ -373,10 +373,10 @@ static void network_mac_message(uint8_t* mtag, const uint8_t* ckey, const uint8_
 
 static mpdc_protocol_errors network_message_hash_sign(const mpdc_network_packet* packetout, const uint8_t* sigkey, const uint8_t* message, size_t msglen)
 {
-	assert(packetout != NULL);
-	assert(sigkey != NULL);
-	assert(message != NULL);
-	assert(msglen != 0);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(sigkey != NULL);
+	MPDC_ASSERT(message != NULL);
+	MPDC_ASSERT(msglen != 0);
 
 	size_t mlen;
 	size_t mpos;
@@ -407,9 +407,9 @@ static mpdc_protocol_errors network_message_hash_sign(const mpdc_network_packet*
 
 static mpdc_protocol_errors network_message_signed_hash_verify(uint8_t* message, const mpdc_network_packet* packetin, const mpdc_child_certificate* rcert)
 {
-	assert(message != NULL);
-	assert(packetin != NULL);
-	assert(rcert != NULL);
+	MPDC_ASSERT(message != NULL);
+	MPDC_ASSERT(packetin != NULL);
+	MPDC_ASSERT(rcert != NULL);
 
 	mpdc_protocol_errors merr;
 	size_t mlen;
@@ -450,8 +450,8 @@ static mpdc_protocol_errors network_message_signed_hash_verify(uint8_t* message,
 
 static mpdc_protocol_errors network_announce_broadcast_packet(mpdc_network_packet* packetout, const mpdc_network_announce_request_state* state)
 {
-	assert(packetout != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	uint8_t snode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0 };
 	mpdc_protocol_errors merr;
@@ -470,7 +470,7 @@ static mpdc_protocol_errors network_announce_broadcast_packet(mpdc_network_packe
 
 mpdc_protocol_errors mpdc_network_announce_broadcast(mpdc_network_announce_request_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -519,8 +519,8 @@ mpdc_protocol_errors mpdc_network_announce_broadcast(mpdc_network_announce_reque
 
 mpdc_protocol_errors mpdc_network_announce_response(mpdc_network_announce_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -568,9 +568,9 @@ mpdc_protocol_errors mpdc_network_announce_response(mpdc_network_announce_respon
 
 static mpdc_protocol_errors network_converge_request_packet(mpdc_network_packet* packetout, const mpdc_network_converge_request_state* state, const uint8_t* snode)
 {
-	assert(packetout != NULL);
-	assert(state != NULL);
-	assert(snode != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(snode != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -592,8 +592,8 @@ static mpdc_protocol_errors network_converge_request_packet(mpdc_network_packet*
 
 static mpdc_protocol_errors network_converge_response_verify(const mpdc_network_converge_request_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -639,7 +639,7 @@ static mpdc_protocol_errors network_converge_response_verify(const mpdc_network_
 
 mpdc_protocol_errors mpdc_network_converge_request(const mpdc_network_converge_request_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	/* the dla loops through MAS and Agent nodes in the topology, 
 	sending them the signed topological node entry of that device for verification */
@@ -730,8 +730,8 @@ mpdc_protocol_errors mpdc_network_converge_request(const mpdc_network_converge_r
 
 static mpdc_protocol_errors network_converge_response_packet(mpdc_network_packet* packetout, const mpdc_network_converge_response_state* state)
 {
-	assert(packetout != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -803,8 +803,8 @@ static mpdc_protocol_errors network_converge_request_verify(const mpdc_network_c
 
 mpdc_protocol_errors mpdc_network_converge_response(const mpdc_network_converge_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	/* the MAS, Client, or Agent response to a converge request */
 
@@ -864,8 +864,8 @@ mpdc_protocol_errors mpdc_network_converge_response(const mpdc_network_converge_
 
 static void network_fkey_request_packet(mpdc_network_packet* packetout, mpdc_network_fkey_request_state* state)
 {
-	assert(packetout != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	/* the MAS/Client sends the local serial number and a random token */
 
@@ -881,8 +881,8 @@ static void network_fkey_request_packet(mpdc_network_packet* packetout, mpdc_net
 
 static mpdc_protocol_errors network_fkey_response_verify(mpdc_network_fkey_request_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -927,7 +927,7 @@ static mpdc_protocol_errors network_fkey_response_verify(mpdc_network_fkey_reque
 
 mpdc_protocol_errors mpdc_network_fkey_request(mpdc_network_fkey_request_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 	
 	qsc_socket csock = { 0 };
 	mpdc_protocol_errors merr;
@@ -1009,9 +1009,9 @@ mpdc_protocol_errors mpdc_network_fkey_request(mpdc_network_fkey_request_state* 
 
 static mpdc_protocol_errors network_fkey_response_packet(mpdc_network_packet* packetout, const mpdc_network_packet* packetin, mpdc_network_fkey_response_state* state)
 {
-	assert(packetout != NULL);
-	assert(packetin != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -1058,8 +1058,8 @@ static mpdc_protocol_errors network_fkey_response_packet(mpdc_network_packet* pa
 
 mpdc_protocol_errors mpdc_network_fkey_response(mpdc_network_fkey_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -1144,8 +1144,8 @@ mpdc_protocol_errors mpdc_network_fkey_response(mpdc_network_fkey_response_state
 
 static mpdc_protocol_errors network_fragment_collection_request_packet(mpdc_network_packet* packetout, mpdc_network_fragment_collection_request_state* state)
 {
-	assert(packetout != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	uint8_t mfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
 	size_t mpos;
@@ -1192,8 +1192,8 @@ static mpdc_protocol_errors network_fragment_collection_request_packet(mpdc_netw
 
 static mpdc_protocol_errors network_fragment_collection_request_derive(mpdc_network_fragment_collection_request_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	qsc_keccak_state fkhs = { 0 };
 	uint8_t mmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
@@ -1316,7 +1316,7 @@ static mpdc_protocol_errors network_fragment_collection_request_derive(mpdc_netw
 
 mpdc_protocol_errors mpdc_network_fragment_collection_request(mpdc_network_fragment_collection_request_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	mpdc_protocol_errors merr;
 	mpdc_network_packet reqt = { 0 };
@@ -1417,9 +1417,9 @@ mpdc_protocol_errors mpdc_network_fragment_collection_request(mpdc_network_fragm
 
 static mpdc_protocol_errors network_fragment_collection_query_request_packet(mpdc_network_packet* packetout, const mpdc_network_packet* packetin, const mpdc_network_fragment_query_request_state* state)
 {
-	assert(packetout != NULL);
-	assert(packetin != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	uint8_t mmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
 	const uint8_t* cser;
@@ -1479,9 +1479,9 @@ static mpdc_protocol_errors network_fragment_collection_query_request_packet(mpd
 
 static mpdc_protocol_errors network_fragment_collection_response_packet(mpdc_network_packet* packetout, const qsc_list_state* flist, const mpdc_network_fragment_collection_response_state* state)
 {
-	assert(packetout != NULL);
-	assert(flist != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(flist != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	uint8_t mmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
 	size_t mlen;
@@ -1531,8 +1531,8 @@ static mpdc_protocol_errors network_fragment_collection_response_packet(mpdc_net
 
 static mpdc_protocol_errors network_fragment_collection_request_verify(const mpdc_network_fragment_collection_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -1584,9 +1584,9 @@ static mpdc_protocol_errors network_fragment_collection_request_verify(const mpd
 
 static mpdc_protocol_errors network_fragment_collection_response_derive(qsc_keccak_state* fkhs, const mpdc_network_fragment_collection_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(fkhs != NULL);
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(fkhs != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_node_state rnode = { 0 };
 	const uint8_t* ctxt;
@@ -1648,8 +1648,8 @@ static mpdc_protocol_errors network_fragment_collection_response_derive(qsc_kecc
 
 mpdc_protocol_errors mpdc_network_fragment_collection_response(mpdc_network_fragment_collection_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_topology_list_state olst = { 0 };
 	size_t ncnt;
@@ -1861,8 +1861,8 @@ mpdc_protocol_errors mpdc_network_fragment_collection_response(mpdc_network_frag
 
 static mpdc_protocol_errors network_fragment_query_request_verify(const mpdc_network_fragment_query_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 	
@@ -1912,9 +1912,9 @@ static mpdc_protocol_errors network_fragment_query_request_verify(const mpdc_net
 
 static mpdc_protocol_errors network_fragment_query_response_packet(mpdc_network_packet* packetout, const mpdc_network_packet* packetin, const mpdc_network_fragment_query_response_state* state)
 {
-	assert(packetout != NULL);
-	assert(packetin != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	mpdc_topology_node_state cnode = { 0 };
 	mpdc_topology_node_state mnode = { 0 };
@@ -2003,8 +2003,8 @@ static mpdc_protocol_errors network_fragment_query_response_packet(mpdc_network_
 
 mpdc_protocol_errors mpdc_network_fragment_query_response(const mpdc_network_fragment_query_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	size_t slen;
 	mpdc_protocol_errors merr;
@@ -2064,8 +2064,8 @@ mpdc_protocol_errors mpdc_network_fragment_query_response(const mpdc_network_fra
 
 static void network_incremental_update_request_packet(mpdc_network_packet* packetout, const mpdc_network_incremental_update_request_state* state)
 {
-	assert(packetout != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	/* create the packet header */
 	network_header_create(packetout, mpdc_network_flag_incremental_update_request, NETWORK_INCREMENTAL_UPDATE_REQUEST_SEQUENCE, NETWORK_INCREMENTAL_UPDATE_REQUEST_MESSAGE_SIZE);
@@ -2075,8 +2075,8 @@ static void network_incremental_update_request_packet(mpdc_network_packet* packe
 
 static mpdc_protocol_errors network_incremental_update_verify(const mpdc_network_incremental_update_request_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -2099,7 +2099,7 @@ static mpdc_protocol_errors network_incremental_update_verify(const mpdc_network
 
 mpdc_protocol_errors mpdc_network_incremental_update_request(const mpdc_network_incremental_update_request_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 	
 	size_t slen;
 	mpdc_protocol_errors merr;
@@ -2176,9 +2176,9 @@ mpdc_protocol_errors mpdc_network_incremental_update_request(const mpdc_network_
 
 static mpdc_protocol_errors network_incremental_update_response_packet(mpdc_network_packet* packetout, const mpdc_network_packet* packetin, const mpdc_network_incremental_update_response_state* state)
 {
-	assert(packetout != NULL);
-	assert(packetin != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -2200,8 +2200,8 @@ static mpdc_protocol_errors network_incremental_update_response_packet(mpdc_netw
 
 mpdc_protocol_errors mpdc_network_incremental_update_response(const mpdc_network_incremental_update_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -2261,8 +2261,8 @@ mpdc_protocol_errors mpdc_network_incremental_update_response(const mpdc_network
 
 static mpdc_protocol_errors network_mfk_request_packet(mpdc_network_packet* packetout, const mpdc_network_mfk_request_state* state)
 {
-	assert(packetout != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -2279,9 +2279,9 @@ static mpdc_protocol_errors network_mfk_request_packet(mpdc_network_packet* pack
 
 static mpdc_protocol_errors network_mfk_establish_packet(mpdc_network_packet* packetout, const mpdc_network_packet* packetin, mpdc_network_mfk_request_state* state)
 {
-	assert(packetout != NULL);
-	assert(packetin != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -2321,7 +2321,7 @@ static mpdc_protocol_errors network_mfk_establish_packet(mpdc_network_packet* pa
 
 mpdc_protocol_errors mpdc_network_mfk_exchange_request(mpdc_network_mfk_request_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 	
 	qsc_socket csock = { 0 };
 	mpdc_network_packet reqt = { 0 };
@@ -2424,9 +2424,9 @@ mpdc_protocol_errors mpdc_network_mfk_exchange_request(mpdc_network_mfk_request_
 
 static mpdc_protocol_errors network_mfk_response_packet(mpdc_network_packet* packetout, const mpdc_network_packet* packetin, mpdc_network_mfk_response_state* state)
 {
-	assert(packetout != NULL);
-	assert(packetin != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -2473,8 +2473,8 @@ static mpdc_protocol_errors network_mfk_response_packet(mpdc_network_packet* pac
 
 static mpdc_protocol_errors network_mfk_verify_packet(const mpdc_network_packet* packetin, mpdc_network_mfk_response_state* state)
 {
-	assert(packetin != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -2508,8 +2508,8 @@ static mpdc_protocol_errors network_mfk_verify_packet(const mpdc_network_packet*
 
 mpdc_protocol_errors mpdc_network_mfk_exchange_response(mpdc_network_mfk_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	size_t rlen;
 	size_t slen;
@@ -2589,8 +2589,8 @@ mpdc_protocol_errors mpdc_network_mfk_exchange_response(mpdc_network_mfk_respons
 
 static mpdc_protocol_errors network_register_request_packet(mpdc_network_packet* packetout, const mpdc_network_register_request_state* state)
 {
-	assert(packetout != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -2605,8 +2605,8 @@ static mpdc_protocol_errors network_register_request_packet(mpdc_network_packet*
 
 static mpdc_protocol_errors network_register_verify(mpdc_network_register_request_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -2628,7 +2628,7 @@ static mpdc_protocol_errors network_register_verify(mpdc_network_register_reques
 
 mpdc_protocol_errors mpdc_network_register_request(mpdc_network_register_request_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 	
 	/* Send an agent network join request to the DLA.
 	   The message is the callers root-signed certificate. */
@@ -2708,9 +2708,9 @@ mpdc_protocol_errors mpdc_network_register_request(mpdc_network_register_request
 
 static mpdc_protocol_errors network_register_response_packet(mpdc_network_packet* packetout, mpdc_network_register_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(packetout != NULL);
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -2743,8 +2743,8 @@ static mpdc_protocol_errors network_register_response_packet(mpdc_network_packet
 
 mpdc_protocol_errors mpdc_network_register_response(mpdc_network_register_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	/* The DLA network join response.
 	   When the requests comes from an agent, the DLA verifies the root signature of the agent,
@@ -2806,8 +2806,8 @@ mpdc_protocol_errors mpdc_network_register_response(mpdc_network_register_respon
 
 static mpdc_protocol_errors network_register_update_request_packet(mpdc_network_packet* packetout, const mpdc_network_register_update_request_state* state)
 {
-	assert(packetout != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -2822,8 +2822,8 @@ static mpdc_protocol_errors network_register_update_request_packet(mpdc_network_
 
 static mpdc_protocol_errors network_register_update_verify(mpdc_network_register_update_request_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -2891,7 +2891,7 @@ static mpdc_protocol_errors network_register_update_verify(mpdc_network_register
 
 mpdc_protocol_errors mpdc_network_register_update_request(mpdc_network_register_update_request_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 	
 	/* Send a MAS or client network join request to the DLA.
 	   The message is the callers root-signed certificate. */
@@ -2994,10 +2994,10 @@ mpdc_protocol_errors mpdc_network_register_update_request(mpdc_network_register_
 
 static mpdc_protocol_errors network_register_update_response_packet(mpdc_network_packet* packetout, mpdc_network_register_update_response_state* state, uint8_t* buffer, const mpdc_network_packet* packetin)
 {
-	assert(packetout != NULL);
-	assert(state != NULL);
-	assert(buffer != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(buffer != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -3092,8 +3092,8 @@ static mpdc_protocol_errors network_register_update_response_packet(mpdc_network
 
 mpdc_protocol_errors mpdc_network_register_update_response(mpdc_network_register_update_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	/* The DLA network join response.
 	   When the requestor is a server, the DLA packages a list of agent node descriptions,
@@ -3166,8 +3166,8 @@ mpdc_protocol_errors mpdc_network_register_update_response(mpdc_network_register
 
 static mpdc_protocol_errors network_remote_signing_request_packet(mpdc_network_remote_signing_request_state* state, mpdc_network_packet* packetout)
 {
-	assert(state != NULL);
-	assert(packetout != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -3182,8 +3182,8 @@ static mpdc_protocol_errors network_remote_signing_request_packet(mpdc_network_r
 
 static mpdc_protocol_errors network_remote_signing_request_verify(const mpdc_network_remote_signing_request_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -3203,7 +3203,7 @@ static mpdc_protocol_errors network_remote_signing_request_verify(const mpdc_net
 
 mpdc_protocol_errors mpdc_network_remote_signing_request(mpdc_network_remote_signing_request_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 	
 	mpdc_network_packet reqt = { 0 };
 	uint8_t sbuf[NETWORK_REMOTE_SIGNING_REQUEST_PACKET_SIZE] = { 0 };
@@ -3282,8 +3282,8 @@ mpdc_protocol_errors mpdc_network_remote_signing_request(mpdc_network_remote_sig
 
 static mpdc_protocol_errors network_remote_signing_response_packet(mpdc_network_remote_signing_response_state* state, mpdc_network_packet* packetout)
 {
-	assert(state != NULL);
-	assert(packetout != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -3307,8 +3307,8 @@ static mpdc_protocol_errors network_remote_signing_response_packet(mpdc_network_
 
 static mpdc_protocol_errors network_remote_signing_response_verify(const mpdc_network_remote_signing_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -3352,7 +3352,7 @@ static mpdc_protocol_errors network_remote_signing_response_verify(const mpdc_ne
 
 mpdc_protocol_errors mpdc_network_remote_signing_response(mpdc_network_remote_signing_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 	
 	mpdc_protocol_errors merr;
 
@@ -3409,8 +3409,8 @@ mpdc_protocol_errors mpdc_network_remote_signing_response(mpdc_network_remote_si
 
 static mpdc_protocol_errors network_resign_request_packet(mpdc_network_packet* packetout, const mpdc_network_resign_request_state* state)
 {
-	assert(packetout != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -3424,7 +3424,7 @@ static mpdc_protocol_errors network_resign_request_packet(mpdc_network_packet* p
 
 mpdc_protocol_errors mpdc_network_resign_request(const mpdc_network_resign_request_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 	
 	mpdc_protocol_errors merr;
 
@@ -3483,8 +3483,8 @@ mpdc_protocol_errors mpdc_network_resign_request(const mpdc_network_resign_reque
 
 mpdc_protocol_errors mpdc_network_resign_response(mpdc_network_resign_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -3542,8 +3542,8 @@ mpdc_protocol_errors mpdc_network_resign_response(mpdc_network_resign_response_s
 
 static mpdc_protocol_errors network_revoke_packet(mpdc_network_packet* packetout, const mpdc_network_revoke_request_state* state)
 {
-	assert(packetout != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	/* The message is the certificate number and a time-stamp, both hashed and signed.
 	* loop through topology and send to each mpdc network member.
@@ -3563,7 +3563,7 @@ static mpdc_protocol_errors network_revoke_packet(mpdc_network_packet* packetout
 
 mpdc_protocol_errors mpdc_network_revoke_broadcast(mpdc_network_revoke_request_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 	
 	/* The message is the certificate serial number and a time-stamp, both signed.
 	* loop through topology and send to each relative member.
@@ -3633,8 +3633,8 @@ mpdc_protocol_errors mpdc_network_revoke_broadcast(mpdc_network_revoke_request_s
 
 mpdc_protocol_errors mpdc_network_revoke_response(mpdc_network_revoke_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -3678,8 +3678,8 @@ mpdc_protocol_errors mpdc_network_revoke_response(mpdc_network_revoke_response_s
 
 static mpdc_protocol_errors network_topological_query_request_packet(mpdc_network_packet* packetout, const mpdc_network_topological_query_request_state* state)
 {
-	assert(packetout != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	uint8_t msg[NETWORK_TOPOLOGY_QUERY_SIZE] = { 0 };
 	mpdc_protocol_errors merr;
@@ -3697,8 +3697,8 @@ static mpdc_protocol_errors network_topological_query_request_packet(mpdc_networ
 
 static mpdc_protocol_errors network_topological_query_request_verify(const mpdc_network_topological_query_request_state* state, const mpdc_network_packet* packetin)
 {
-	assert(packetin != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -3723,7 +3723,7 @@ static mpdc_protocol_errors network_topological_query_request_verify(const mpdc_
 
 mpdc_protocol_errors mpdc_network_topological_query_request(const mpdc_network_topological_query_request_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 	
 	mpdc_protocol_errors merr;
 
@@ -3801,9 +3801,9 @@ mpdc_protocol_errors mpdc_network_topological_query_request(const mpdc_network_t
 
 static mpdc_protocol_errors network_topological_query_response_packet(mpdc_network_packet* packetout, const mpdc_network_topological_query_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(packetout != NULL);
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 	uint8_t snode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0 };
@@ -3834,9 +3834,9 @@ static mpdc_protocol_errors network_topological_query_response_packet(mpdc_netwo
 
 static mpdc_protocol_errors network_topological_query_response_verify(uint8_t* query, const mpdc_network_topological_query_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(query != NULL);
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(query != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -3854,8 +3854,8 @@ static mpdc_protocol_errors network_topological_query_response_verify(uint8_t* q
 
 mpdc_protocol_errors mpdc_network_topological_query_response(const mpdc_network_topological_query_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -3921,8 +3921,8 @@ mpdc_protocol_errors mpdc_network_topological_query_response(const mpdc_network_
 
 static mpdc_protocol_errors network_topological_status_request_packet(mpdc_network_packet* packetout, const mpdc_network_topological_status_request_state* state)
 {
-	assert(packetout != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	/* copy the remote node serial number and sign it with the local signing key */
 
@@ -3939,8 +3939,8 @@ static mpdc_protocol_errors network_topological_status_request_packet(mpdc_netwo
 
 mpdc_protocol_errors mpdc_network_topological_status_request_verify(const mpdc_network_topological_status_request_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -3975,7 +3975,7 @@ mpdc_protocol_errors mpdc_network_topological_status_request_verify(const mpdc_n
 
 mpdc_protocol_errors mpdc_network_topological_status_request(const mpdc_network_topological_status_request_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -4052,9 +4052,9 @@ mpdc_protocol_errors mpdc_network_topological_status_request(const mpdc_network_
 
 static mpdc_protocol_errors network_topological_status_response_packet(mpdc_network_packet* packetout, const mpdc_network_topological_status_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(packetout != NULL);
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(packetout != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -4069,8 +4069,8 @@ static mpdc_protocol_errors network_topological_status_response_packet(mpdc_netw
 
 static mpdc_protocol_errors network_topological_status_response_verify(const mpdc_network_topological_status_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -4106,8 +4106,8 @@ static mpdc_protocol_errors network_topological_status_response_verify(const mpd
 
 mpdc_protocol_errors mpdc_network_topological_status_response(const mpdc_network_topological_status_response_state* state, const mpdc_network_packet* packetin)
 {
-	assert(state != NULL);
-	assert(packetin != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -4157,8 +4157,8 @@ mpdc_protocol_errors mpdc_network_topological_status_response(const mpdc_network
 
 mpdc_protocol_errors mpdc_network_certificate_verify(const mpdc_child_certificate* ccert, const mpdc_root_certificate* root)
 {
-	assert(ccert != NULL);
-	assert(root != NULL);
+	MPDC_ASSERT(ccert != NULL);
+	MPDC_ASSERT(root != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -4264,8 +4264,8 @@ uint16_t mpdc_network_application_to_port(mpdc_network_designations tnode)
 
 void mpdc_network_broadcast_message(const mpdc_topology_list_state* list, const uint8_t* message, size_t msglen, mpdc_network_designations tnode)
 {
-	assert(list != NULL);
-	assert(message != NULL);
+	MPDC_ASSERT(list != NULL);
+	MPDC_ASSERT(message != NULL);
 
 	size_t i;
 	uint16_t port;
@@ -4297,8 +4297,8 @@ void mpdc_network_broadcast_message(const mpdc_topology_list_state* list, const 
 
 qsc_socket_exceptions mpdc_network_connect_to_device(qsc_socket* csock, const char* address, mpdc_network_designations designation)
 {
-	assert(csock != NULL);
-	assert(address != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(address != NULL);
 
 	qsc_socket_exceptions serr;
 	qsc_ipinfo_address_types tadd;
@@ -4354,8 +4354,8 @@ qsc_socket_exceptions mpdc_network_connect_to_device(qsc_socket* csock, const ch
 
 qsc_socket_exceptions mpdc_network_connect_to_address(qsc_socket* csock, const char* address, uint16_t port)
 {
-	assert(csock != NULL);
-	assert(address != NULL);
+	MPDC_ASSERT(csock != NULL);
+	MPDC_ASSERT(address != NULL);
 
 	qsc_socket_exceptions serr;
 	qsc_ipinfo_address_types tadd;
@@ -4436,7 +4436,7 @@ bool mpdc_network_get_local_address(char address[MPDC_CERTIFICATE_ADDRESS_SIZE])
 
 mpdc_protocol_errors mpdc_network_send_error(const qsc_socket* csock, mpdc_protocol_errors error)
 {
-	assert(csock != NULL);
+	MPDC_ASSERT(csock != NULL);
 	
 	mpdc_network_packet resp = { 0 };
 	uint8_t ebuf[NETWORK_ERROR_PACKET_SIZE] = { 0 };
@@ -4478,7 +4478,7 @@ mpdc_protocol_errors mpdc_network_send_error(const qsc_socket* csock, mpdc_proto
 
 void mpdc_network_socket_dispose(qsc_socket* csock)
 {
-	assert(csock != NULL);
+	MPDC_ASSERT(csock != NULL);
 
 	if (csock != NULL)
 	{
@@ -4486,7 +4486,7 @@ void mpdc_network_socket_dispose(qsc_socket* csock)
 	}
 }
 
-#if defined(QSC_DEBUG_MODE)
+#if defined(MPDC_DEBUG_MODE)
 typedef struct network_test_device_package
 {
 	mpdc_signature_keypair akp;
@@ -4653,7 +4653,7 @@ static void network_test_device_instantiate(network_test_device_package* spkg)
 	network_test_load_node(&spkg->list, &spkg->ande4, &spkg->acrt4);
 }
 
-static bool network_test_announce_test()
+static bool network_test_announce_test(void)
 {
 	mpdc_topology_node_state rnode = { 0 };
 	mpdc_child_certificate rcert = { 0 };
@@ -4693,7 +4693,7 @@ static bool network_test_announce_test()
 	return (merr == mpdc_protocol_error_none);
 }
 
-static bool network_test_converge()
+static bool network_test_converge(void)
 {
 	network_test_device_package spkg = { 0 };
 	mpdc_network_packet reqt = { 0 };
@@ -4749,7 +4749,7 @@ static bool network_test_converge()
 	return (merr == mpdc_protocol_error_none);
 }
 
-static bool network_test_fkey_exchange()
+static bool network_test_fkey_exchange(void)
 {
 	network_test_device_package spkg = { 0 };
 	mpdc_network_packet reqt = { 0 };
@@ -4813,7 +4813,7 @@ static bool network_test_fkey_exchange()
 	return res;
 }
 
-static bool network_test_fragment_collection()
+static bool network_test_fragment_collection(void)
 {
 	network_test_device_package spkg = { 0 };
 	qsc_list_state clst = { 0 };
@@ -4957,7 +4957,7 @@ static bool network_test_fragment_collection()
 	return (merr == mpdc_protocol_error_none);
 }
 
-static bool network_test_fkey_encryption()
+static bool network_test_fkey_encryption(void)
 {
 	network_test_device_package spkg = { 0 };
 	uint8_t data[MPDC_PACKET_SUBHEADER_SIZE] = { 0 };
@@ -5019,7 +5019,7 @@ static bool network_test_fkey_encryption()
 	return res;
 }
 
-static bool network_test_incremental_update()
+static bool network_test_incremental_update(void)
 {
 	network_test_device_package spkg = { 0 };
 	mpdc_network_packet reqt = { 0 };
@@ -5079,7 +5079,7 @@ static bool network_test_incremental_update()
 	return (merr == mpdc_protocol_error_none);
 }
 
-static bool network_test_join()
+static bool network_test_join(void)
 {
 	network_test_device_package spkg = { 0 };
 	mpdc_network_packet reqt = { 0 };
@@ -5130,7 +5130,7 @@ static bool network_test_join()
 	return (merr == mpdc_protocol_error_none);
 }
 
-static bool network_test_mfk_exchange()
+static bool network_test_mfk_exchange(void)
 {
 	network_test_device_package spkg = { 0 };
 	mpdc_network_packet esta = { 0 };
@@ -5200,7 +5200,7 @@ static bool network_test_mfk_exchange()
 	return res;
 }
 
-static bool network_test_register_update()
+static bool network_test_register_update(void)
 {
 	network_test_device_package spkg = { 0 };
 	mpdc_network_packet reqt = { 0 };
@@ -5261,7 +5261,7 @@ static bool network_test_register_update()
 	return (merr == mpdc_protocol_error_none);
 }
 
-static bool network_test_remote_signing()
+static bool network_test_remote_signing(void)
 {
 	network_test_device_package spkg = { 0 };
 	mpdc_signature_keypair ckp3 = { 0 };
@@ -5321,7 +5321,7 @@ static bool network_test_remote_signing()
 	return (merr == mpdc_protocol_error_none);
 }
 
-static bool network_test_topological_query()
+static bool network_test_topological_query(void)
 {
 	network_test_device_package spkg = { 0 };
 	mpdc_network_packet reqt = { 0 };
@@ -5372,7 +5372,7 @@ static bool network_test_topological_query()
 	return (merr == mpdc_protocol_error_none);
 }
 
-static bool network_test_topological_status()
+static bool network_test_topological_status(void)
 {
 	network_test_device_package spkg = { 0 };
 	mpdc_network_packet reqt = { 0 };
@@ -5426,7 +5426,7 @@ static bool network_test_topological_status()
 	return (merr == mpdc_protocol_error_none);
 }
 
-bool mpdc_network_protocols_test()
+bool mpdc_network_protocols_test(void)
 {
 	bool res;
 

@@ -3,8 +3,8 @@
 
 static void help_print_line(const char* prompt, const char* line)
 {
-	assert(prompt != NULL);
-	assert(line != NULL);
+	MPDC_ASSERT(prompt != NULL);
+	MPDC_ASSERT(line != NULL);
 
 	qsc_consoleutils_print_safe(prompt);
 	qsc_consoleutils_print_line(line);
@@ -12,7 +12,7 @@ static void help_print_line(const char* prompt, const char* line)
 
 void mpdc_help_print_context(const char* prompt, mpdc_command_actions command)
 {
-	assert(prompt != NULL);
+	MPDC_ASSERT(prompt != NULL);
 
 	if (prompt != NULL)
 	{
@@ -22,7 +22,7 @@ void mpdc_help_print_context(const char* prompt, mpdc_command_actions command)
 
 void mpdc_help_print_mode(const char* prompt, mpdc_console_modes mode, mpdc_network_designations designation)
 {
-	assert(prompt != NULL);
+	MPDC_ASSERT(prompt != NULL);
 
 	if (prompt != NULL)
 	{

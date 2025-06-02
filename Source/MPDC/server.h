@@ -34,7 +34,7 @@
  * in the LICENSE.txt file distributed with this software.
  *
  * Written by: John G. Underhill
- * Contact: john.underhill@protonmail.com
+ * Contact: contact@qrcscorp.ca
  */
 
 #ifndef MPDC_SERVER_H
@@ -67,7 +67,7 @@
  * \def MPDC_SERVER_MINIMUM_COMMAND_LENGTH
  * \brief The minimum valid length for a server command.
  */
-#define MPDC_SERVER_MINIMUM_COMMAND_LENGTH 4
+#define MPDC_SERVER_MINIMUM_COMMAND_LENGTH 4U
 
 /**
  * \def MPDC_SERVER_APPLICATION_STATE_SIZE
@@ -93,9 +93,9 @@
  */
 MPDC_EXPORT_API typedef enum mpdc_server_server_loop_status
 {
-    mpdc_server_loop_status_stopped = 0x00,      /*!< The server is stopped. */
-    mpdc_server_loop_status_started = 0x01,      /*!< The server is running. */
-    mpdc_server_loop_status_paused  = 0x02,      /*!< The server is paused. */
+    mpdc_server_loop_status_stopped = 0x00U,        /*!< The server is stopped. */
+    mpdc_server_loop_status_started = 0x01U,        /*!< The server is running. */
+    mpdc_server_loop_status_paused  = 0x02U,        /*!< The server is paused. */
 } mpdc_server_server_loop_status;
 
 /*---------------------------------------------------------------------------

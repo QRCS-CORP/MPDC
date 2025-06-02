@@ -34,7 +34,7 @@
  * in the LICENSE.txt file distributed with this software.
  *
  * Written by: John G. Underhill
- * Contact: john.underhill@protonmail.com
+ * Contact: contact@qrcscorp.ca
  */
 
 #ifndef MPDC_LOG_H
@@ -74,17 +74,17 @@
 /*! \def MPDC_LOGGING_MESSAGE_MAX
  *  \brief The maximum length (in characters) for a logging message.
  */
-#define MPDC_LOGGING_MESSAGE_MAX 256
+#define MPDC_LOGGING_MESSAGE_MAX 256U
 
 /*! \def MPDC_LOG_STRING_DEPTH
  *  \brief The number of predefined log strings.
  */
-#define MPDC_LOG_STRING_DEPTH 69
+#define MPDC_LOG_STRING_DEPTH 69U
 
 /*! \def MPDC_LOG_STRING_SIZE
  *  \brief The maximum size (in characters) for a single log string.
  */
-#define MPDC_LOG_STRING_SIZE 64
+#define MPDC_LOG_STRING_SIZE 64U
 
 /*! \var static const char MPDC_LOGGER_PATH[]
  *  \brief The default directory name for MPDC logs.
@@ -262,6 +262,5 @@ MPDC_EXPORT_API int64_t mpdc_logger_read_line(const char* path, char* output, si
  * \return Returns the number of characters in the timestamp string.
  */
 MPDC_EXPORT_API size_t mpdc_logger_time_stamp(char* output, size_t outlen);
-
 
 #endif

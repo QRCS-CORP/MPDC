@@ -2,7 +2,7 @@
 
 void mpdc_trust_clear(mpdc_device_trust* device)
 {
-	assert(device != NULL);
+	MPDC_ASSERT(device != NULL);
 
 	if (device != NULL)
 	{
@@ -18,8 +18,8 @@ void mpdc_trust_clear(mpdc_device_trust* device)
 
 void mpdc_trust_deserialize(mpdc_device_trust* device, const uint8_t* input)
 {
-	assert(device != NULL);
-	assert(input != NULL);
+	MPDC_ASSERT(device != NULL);
+	MPDC_ASSERT(input != NULL);
 
 	size_t len;
 	size_t pos;
@@ -51,9 +51,9 @@ void mpdc_trust_deserialize(mpdc_device_trust* device, const uint8_t* input)
 
 void mpdc_trust_serialize(uint8_t* output, size_t outlen, const mpdc_device_trust* device)
 {
-	assert(output != NULL);
-	assert(outlen != 0);
-	assert(device != NULL);
+	MPDC_ASSERT(output != NULL);
+	MPDC_ASSERT(outlen != 0);
+	MPDC_ASSERT(device != NULL);
 
 	if (device != NULL && output != NULL)
 	{

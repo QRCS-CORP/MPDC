@@ -34,7 +34,7 @@
  * in the LICENSE.txt file distributed with this software.
  *
  * Written by: John G. Underhill
- * Contact: john.underhill@protonmail.com
+ * Contact: contact@qrcscorp.ca
  */
 
 #ifndef MPDC_CERTIFICATE_H
@@ -545,7 +545,7 @@ MPDC_EXPORT_API bool mpdc_certificate_signature_verify_message(const uint8_t* me
  *
  * \return Returns true if all certificate function tests pass.
  */
-MPDC_EXPORT_API bool mpdc_certificate_functions_test();
+MPDC_EXPORT_API bool mpdc_certificate_functions_test(void);
 #endif
 
 #endif

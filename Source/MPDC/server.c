@@ -22,12 +22,12 @@
 #include "timerex.h"
 #include "timestamp.h"
 
-#define SERVER_KEYCHAIN_DEPTH 4
-#define SERVER_KEYCHAIN_WIDTH 64
-#define SERVER_KEYCHAIN_STATE_INDEX 0
-#define SERVER_KEYCHAIN_LOG_INDEX 1
-#define SERVER_KEYCHAIN_TOPOLOGY_INDEX 2
-#define SERVER_KEYCHAIN_MFKCOL_INDEX 3
+#define SERVER_KEYCHAIN_DEPTH 4U
+#define SERVER_KEYCHAIN_WIDTH 64U
+#define SERVER_KEYCHAIN_STATE_INDEX 0U
+#define SERVER_KEYCHAIN_LOG_INDEX 1U
+#define SERVER_KEYCHAIN_TOPOLOGY_INDEX 2U
+#define SERVER_KEYCHAIN_MFKCOL_INDEX 3U
 
 static const char AGENT_APPLICATION_BANNER[] = "Agent v1.0 \n"
 "QRCS Corp. 2024, All rights reserved. \n"
@@ -116,7 +116,7 @@ static const char MAS_WINDOW_TITLE[] = "MPDC Application Server v1.0a";
 
 static void server_child_certificate_issuer(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	if (state != NULL)
 	{
@@ -130,9 +130,9 @@ static void server_child_certificate_issuer(mpdc_server_application_state* state
 
 static void server_storage_directory(const mpdc_server_application_state* state, char* dpath, size_t pathlen)
 {
-	assert(state != NULL);
-	assert(dpath != NULL);
-	assert(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(dpath != NULL);
+	MPDC_ASSERT(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
 
 	if (state != NULL && dpath != NULL && pathlen >= MPDC_MINIMUM_PATH_LENGTH)
 	{
@@ -159,9 +159,9 @@ static void server_storage_directory(const mpdc_server_application_state* state,
 
 static void server_backup_directory(const mpdc_server_application_state* state, char* dpath, size_t pathlen)
 {
-	assert(state != NULL);
-	assert(dpath != NULL);
-	assert(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(dpath != NULL);
+	MPDC_ASSERT(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
 
 	if (state != NULL && dpath != NULL && pathlen >= MPDC_MINIMUM_PATH_LENGTH)
 	{
@@ -181,9 +181,9 @@ static void server_backup_directory(const mpdc_server_application_state* state, 
 
 static void server_config_path(const mpdc_server_application_state* state, char* fpath, size_t pathlen)
 {
-	assert(state != NULL);
-	assert(fpath != NULL);
-	assert(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(fpath != NULL);
+	MPDC_ASSERT(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
 
 	if (state != NULL && fpath != NULL && pathlen >= MPDC_MINIMUM_PATH_LENGTH)
 	{
@@ -194,9 +194,9 @@ static void server_config_path(const mpdc_server_application_state* state, char*
 
 static void server_logging_path(const mpdc_server_application_state* state, char* fpath, size_t pathlen)
 {
-	assert(state != NULL);
-	assert(fpath != NULL);
-	assert(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(fpath != NULL);
+	MPDC_ASSERT(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
 
 	if (state != NULL && fpath != NULL && pathlen >= MPDC_MINIMUM_PATH_LENGTH)
 	{
@@ -207,9 +207,9 @@ static void server_logging_path(const mpdc_server_application_state* state, char
 
 static void server_topology_directory(const mpdc_server_application_state* state, char* dpath, size_t pathlen)
 {
-	assert(state != NULL);
-	assert(dpath != NULL);
-	assert(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(dpath != NULL);
+	MPDC_ASSERT(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
 
 	if (state != NULL && dpath != NULL && pathlen >= MPDC_MINIMUM_PATH_LENGTH)
 	{
@@ -225,9 +225,9 @@ static void server_topology_directory(const mpdc_server_application_state* state
 
 static void server_topology_path(const mpdc_server_application_state* state, char* fpath, size_t pathlen)
 {
-	assert(state != NULL);
-	assert(fpath != NULL);
-	assert(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(fpath != NULL);
+	MPDC_ASSERT(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
 
 	if (state != NULL && fpath != NULL && pathlen >= MPDC_MINIMUM_PATH_LENGTH)
 	{
@@ -239,11 +239,11 @@ static void server_topology_path(const mpdc_server_application_state* state, cha
 
 static void server_initialize_key_chain(mpdc_server_application_state* state, const char* password, size_t passlen, const char* username, size_t userlen)
 {
-	assert(state != NULL);
-	assert(password != NULL);
-	assert(username != NULL);
-	assert(passlen != 0);
-	assert(userlen != 0);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(password != NULL);
+	MPDC_ASSERT(username != NULL);
+	MPDC_ASSERT(passlen != 0);
+	MPDC_ASSERT(userlen != 0);
 
 	if (state != NULL && password != NULL && username != NULL && passlen != 0 && userlen != 0)
 	{
@@ -254,7 +254,7 @@ static void server_initialize_key_chain(mpdc_server_application_state* state, co
 
 static void server_load_key_chain(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	if (state != NULL)
 	{
@@ -271,7 +271,7 @@ static void server_load_key_chain(mpdc_server_application_state* state)
 
 static bool server_log_decrypt(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	bool res;
 
@@ -303,7 +303,7 @@ static bool server_log_decrypt(mpdc_server_application_state* state)
 					{
 						const uint8_t* pkey = state->kchain + (SERVER_KEYCHAIN_LOG_INDEX * SERVER_KEYCHAIN_WIDTH);
 
-						assert(qsc_memutils_zeroed(pkey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE) == false);
+						MPDC_ASSERT(qsc_memutils_zeroed(pkey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE) == false);
 
 						res = mpdc_crypto_decrypt_stream(pdec, pkey, penc, mlen - MPDC_STORAGE_MAC_SIZE);
 
@@ -339,7 +339,7 @@ static bool server_log_decrypt(mpdc_server_application_state* state)
 
 static void server_log_encrypt(const mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	if (state != NULL)
 	{
@@ -365,7 +365,7 @@ static void server_log_encrypt(const mpdc_server_application_state* state)
 					{
 						const uint8_t* pkey = state->kchain + (SERVER_KEYCHAIN_LOG_INDEX * SERVER_KEYCHAIN_WIDTH);
 
-						assert(qsc_memutils_zeroed(pkey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE) == false);
+						MPDC_ASSERT(qsc_memutils_zeroed(pkey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE) == false);
 
 						mpdc_crypto_encrypt_stream(penc, pkey, ptxt, flen);
 						qsc_fileutils_erase(state->logpath);
@@ -389,7 +389,7 @@ static void server_log_encrypt(const mpdc_server_application_state* state)
 
 static void server_log_initialize(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	if (state != NULL)
 	{
@@ -409,7 +409,7 @@ static void server_log_initialize(mpdc_server_application_state* state)
 
 static void server_root_certificate_issuer(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	if (state != NULL)
 	{
@@ -423,9 +423,9 @@ static void server_root_certificate_issuer(mpdc_server_application_state* state)
 
 static void server_state_deserialize(mpdc_server_application_state* state, const uint8_t* input, size_t inlen)
 {
-	assert(state != NULL);
-	assert(input != NULL);
-	assert(inlen >= MPDC_SERVER_APPLICATION_STATE_SIZE);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(input != NULL);
+	MPDC_ASSERT(inlen >= MPDC_SERVER_APPLICATION_STATE_SIZE);
 
 	size_t pos;
 
@@ -472,7 +472,7 @@ static void server_state_deserialize(mpdc_server_application_state* state, const
 
 static bool mpdc_server_configuration_load(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	bool res;
 
@@ -498,7 +498,7 @@ static bool mpdc_server_configuration_load(mpdc_server_application_state* state)
 
 				pkey = state->kchain + (SERVER_KEYCHAIN_STATE_INDEX * SERVER_KEYCHAIN_WIDTH);
 
-				assert(qsc_memutils_zeroed(pkey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE) == false);
+				MPDC_ASSERT(qsc_memutils_zeroed(pkey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE) == false);
 
 				res = mpdc_crypto_decrypt_stream(decs, pkey, encs, sizeof(decs));
 
@@ -516,7 +516,7 @@ static bool mpdc_server_configuration_load(mpdc_server_application_state* state)
 
 static bool server_state_load(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	bool res;
 
@@ -542,7 +542,7 @@ static bool server_state_load(mpdc_server_application_state* state)
 
 static bool server_state_reset(const mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	bool res;
 
@@ -567,8 +567,8 @@ static bool server_state_reset(const mpdc_server_application_state* state)
 
 static size_t server_state_serialize(const mpdc_server_application_state* state, uint8_t* output)
 {
-	assert(state != NULL);
-	assert(output != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(output != NULL);
 
 	size_t pos;
 
@@ -607,7 +607,7 @@ static size_t server_state_serialize(const mpdc_server_application_state* state,
 
 static void server_unload_key_chain(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	if (state != NULL && state->kchain != NULL)
 	{
@@ -618,7 +618,7 @@ static void server_unload_key_chain(mpdc_server_application_state* state)
 
 static void server_unload_signature_key(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	if (state != NULL && state->kchain != NULL)
 	{
@@ -630,9 +630,9 @@ static void server_unload_signature_key(mpdc_server_application_state* state)
 
 void mpdc_server_certificate_directory(const mpdc_server_application_state* state, char* dpath, size_t pathlen)
 {
-	assert(state != NULL);
-	assert(dpath != NULL);
-	assert(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(dpath != NULL);
+	MPDC_ASSERT(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
 
 	if (state != NULL && dpath != NULL && pathlen >= MPDC_MINIMUM_PATH_LENGTH)
 	{
@@ -650,10 +650,10 @@ void mpdc_server_certificate_directory(const mpdc_server_application_state* stat
 
 void mpdc_server_certificate_path(const mpdc_server_application_state* state, char* fpath, size_t pathlen, const char* issuer)
 {
-	assert(state != NULL);
-	assert(fpath != NULL);
-	assert(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
-	assert(issuer != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(fpath != NULL);
+	MPDC_ASSERT(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
+	MPDC_ASSERT(issuer != NULL);
 
 	if (state != NULL && fpath != NULL && pathlen >= MPDC_MINIMUM_PATH_LENGTH && issuer != NULL)
 	{
@@ -664,8 +664,8 @@ void mpdc_server_certificate_path(const mpdc_server_application_state* state, ch
 
 bool mpdc_server_child_certificate_export(const mpdc_server_application_state* state, const char* dpath)
 {
-	assert(state != NULL);
-	assert(dpath != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(dpath != NULL);
 
 	bool res;
 
@@ -741,9 +741,9 @@ bool mpdc_server_child_certificate_from_serial(mpdc_child_certificate* ccert, co
 
 void mpdc_server_child_certificate_generate(mpdc_server_application_state* state, mpdc_child_certificate* ccert, uint64_t period)
 {
-	assert(state != NULL);
-	assert(ccert != NULL);
-	assert(period != 0);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(ccert != NULL);
+	MPDC_ASSERT(period != 0);
 
 	if (state != NULL && ccert != NULL && period != 0)
 	{
@@ -768,9 +768,9 @@ void mpdc_server_child_certificate_generate(mpdc_server_application_state* state
 
 bool mpdc_server_child_certificate_import(mpdc_child_certificate* lcert, mpdc_server_application_state* state, const char* fpath)
 {
-	assert(lcert != NULL);
-	assert(state != NULL);
-	assert(fpath != NULL);
+	MPDC_ASSERT(lcert != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(fpath != NULL);
 
 	bool res;
 
@@ -824,9 +824,9 @@ bool mpdc_server_child_certificate_import(mpdc_child_certificate* lcert, mpdc_se
 
 void mpdc_server_child_certificate_path(const mpdc_server_application_state* state, char* fpath, size_t pathlen)
 {
-	assert(state != NULL);
-	assert(fpath != NULL);
-	assert(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(fpath != NULL);
+	MPDC_ASSERT(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
 
 	if (state != NULL && fpath != NULL && pathlen >= MPDC_MINIMUM_PATH_LENGTH)
 	{
@@ -837,10 +837,10 @@ void mpdc_server_child_certificate_path(const mpdc_server_application_state* sta
 
 void mpdc_server_child_certificate_path_from_issuer(const mpdc_server_application_state* state, char* fpath, size_t pathlen, const char* issuer)
 {
-	assert(state != NULL);
-	assert(fpath != NULL);
-	assert(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
-	assert(issuer != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(fpath != NULL);
+	MPDC_ASSERT(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
+	MPDC_ASSERT(issuer != NULL);
 
 	if (state != NULL && fpath != NULL && issuer != NULL && pathlen >= MPDC_MINIMUM_PATH_LENGTH)
 	{
@@ -851,8 +851,8 @@ void mpdc_server_child_certificate_path_from_issuer(const mpdc_server_applicatio
 
 bool mpdc_server_child_certificate_print(const char* fpath, size_t pathlen)
 {
-	assert(fpath != NULL);
-	assert(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
+	MPDC_ASSERT(fpath != NULL);
+	MPDC_ASSERT(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
 
 	bool res;
 
@@ -886,9 +886,9 @@ bool mpdc_server_child_certificate_print(const char* fpath, size_t pathlen)
 
 void mpdc_server_local_certificate_store(mpdc_server_application_state* state, const mpdc_child_certificate* ccert, const char* address)
 {
-	assert(state != NULL);
-	assert(ccert != NULL);
-	assert(address != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(ccert != NULL);
+	MPDC_ASSERT(address != NULL);
 
 	if (state != NULL && ccert != NULL && address != NULL)
 	{
@@ -918,7 +918,7 @@ void mpdc_server_local_certificate_store(mpdc_server_application_state* state, c
 
 void mpdc_server_clear_config(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	if (state != NULL)
 	{
@@ -929,7 +929,7 @@ void mpdc_server_clear_config(mpdc_server_application_state* state)
 
 void mpdc_server_clear_log(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	if (state != NULL)
 	{
@@ -943,7 +943,7 @@ void mpdc_server_clear_log(mpdc_server_application_state* state)
 
 void mpdc_server_erase_all(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	if (state != NULL)
 	{
@@ -955,7 +955,7 @@ void mpdc_server_erase_all(mpdc_server_application_state* state)
 
 void mpdc_server_log_host(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	size_t slen;
 
@@ -983,7 +983,7 @@ void mpdc_server_log_host(mpdc_server_application_state* state)
 
 void mpdc_server_log_print(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	if (state != NULL)
 	{
@@ -1027,7 +1027,7 @@ void mpdc_server_log_print(mpdc_server_application_state* state)
 
 bool mpdc_server_log_write_message(mpdc_server_application_state* state, mpdc_application_messages msgtype, const char* message, size_t msglen)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	bool res;
 
@@ -1057,9 +1057,9 @@ bool mpdc_server_log_write_message(mpdc_server_application_state* state, mpdc_ap
 
 void mpdc_server_mfkcol_path(const mpdc_server_application_state* state, char* fpath, size_t pathlen)
 {
-	assert(state != NULL);
-	assert(fpath != NULL);
-	assert(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(fpath != NULL);
+	MPDC_ASSERT(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
 
 	if (state != NULL && fpath != NULL && pathlen >= MPDC_MINIMUM_PATH_LENGTH)
 	{
@@ -1071,8 +1071,8 @@ void mpdc_server_mfkcol_path(const mpdc_server_application_state* state, char* f
 
 bool mpdc_server_mfkcol_from_file(qsc_collection_state* mfkcol, const mpdc_server_application_state* state)
 {
-	assert(mfkcol != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(mfkcol != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	bool res;
 
@@ -1108,7 +1108,7 @@ bool mpdc_server_mfkcol_from_file(qsc_collection_state* mfkcol, const mpdc_serve
 					{
 						const uint8_t* pkey = state->kchain + (SERVER_KEYCHAIN_MFKCOL_INDEX * SERVER_KEYCHAIN_WIDTH);
 
-						assert(qsc_memutils_zeroed(pkey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE) == false);
+						MPDC_ASSERT(qsc_memutils_zeroed(pkey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE) == false);
 
 						res = mpdc_crypto_decrypt_stream(pdec, pkey, penc, mlen - MPDC_STORAGE_MAC_SIZE);
 
@@ -1137,8 +1137,8 @@ bool mpdc_server_mfkcol_from_file(qsc_collection_state* mfkcol, const mpdc_serve
 
 void mpdc_server_mfkcol_to_file(const qsc_collection_state* mfkcol, const mpdc_server_application_state* state)
 {
-	assert(mfkcol != NULL);
-	assert(state != NULL);
+	MPDC_ASSERT(mfkcol != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	size_t clen;
 
@@ -1159,7 +1159,7 @@ void mpdc_server_mfkcol_to_file(const qsc_collection_state* mfkcol, const mpdc_s
 				char fpath[MPDC_STORAGE_PATH_MAX] = { 0 };
 				const uint8_t* pkey = state->kchain + (SERVER_KEYCHAIN_MFKCOL_INDEX * SERVER_KEYCHAIN_WIDTH);
 
-				assert(qsc_memutils_zeroed(pkey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE) == false);
+				MPDC_ASSERT(qsc_memutils_zeroed(pkey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE) == false);
 
 				mpdc_server_mfkcol_path(state, fpath, sizeof(fpath));
 
@@ -1181,7 +1181,7 @@ void mpdc_server_mfkcol_to_file(const qsc_collection_state* mfkcol, const mpdc_s
 
 void mpdc_server_print_banner(const mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	if (state != NULL)
 	{
@@ -1192,8 +1192,8 @@ void mpdc_server_print_banner(const mpdc_server_application_state* state)
 
 void mpdc_server_print_error(const mpdc_server_application_state* state, mpdc_application_messages appmsg, const char* message, mpdc_protocol_errors error)
 {
-	assert(state != NULL);
-	assert(message != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(message != NULL);
 
 	if (state != NULL && message != NULL)
 	{
@@ -1207,7 +1207,7 @@ void mpdc_server_print_error(const mpdc_server_application_state* state, mpdc_ap
 
 void mpdc_server_print_configuration(const mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	const char DEFVAL[] = "NOT-SET";
 	char ib[6] = { 0 };
@@ -1275,8 +1275,8 @@ void mpdc_server_print_configuration(const mpdc_server_application_state* state)
 
 bool mpdc_server_root_certificate_export(const mpdc_server_application_state* state, const char* dpath)
 {
-	assert(state != NULL);
-	assert(dpath != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(dpath != NULL);
 
 	bool res;
 
@@ -1313,7 +1313,7 @@ bool mpdc_server_root_certificate_export(const mpdc_server_application_state* st
 
 bool mpdc_server_root_import_dialogue(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	size_t slen;
 	bool res;
@@ -1359,9 +1359,9 @@ bool mpdc_server_root_import_dialogue(mpdc_server_application_state* state)
 
 void mpdc_server_root_certificate_generate(mpdc_server_application_state* state, mpdc_root_certificate* rcert, uint64_t period)
 {
-	assert(state != NULL);
-	assert(rcert != NULL);
-	assert(period != 0);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(rcert != NULL);
+	MPDC_ASSERT(period != 0);
 
 	if (state != NULL && rcert != NULL && period != 0)
 	{
@@ -1386,9 +1386,9 @@ void mpdc_server_root_certificate_generate(mpdc_server_application_state* state,
 
 bool mpdc_server_root_certificate_load(const mpdc_server_application_state* state, mpdc_root_certificate* root, const mpdc_topology_list_state* tlist)
 {
-	assert(state != NULL);
-	assert(root != NULL);
-	assert(tlist != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(root != NULL);
+	MPDC_ASSERT(tlist != NULL);
 
 	bool res;
 
@@ -1431,9 +1431,9 @@ bool mpdc_server_root_certificate_load(const mpdc_server_application_state* stat
 
 void mpdc_server_root_certificate_path(const mpdc_server_application_state* state, char* fpath, size_t pathlen)
 {
-	assert(state != NULL);
-	assert(fpath != NULL);
-	assert(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(fpath != NULL);
+	MPDC_ASSERT(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
 
 	if (state != NULL && fpath != NULL && pathlen >= MPDC_MINIMUM_PATH_LENGTH)
 	{
@@ -1444,8 +1444,8 @@ void mpdc_server_root_certificate_path(const mpdc_server_application_state* stat
 
 bool mpdc_server_root_certificate_print(const char* fpath, size_t pathlen)
 {
-	assert(fpath != NULL);
-	assert(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
+	MPDC_ASSERT(fpath != NULL);
+	MPDC_ASSERT(pathlen >= MPDC_MINIMUM_PATH_LENGTH);
 
 	bool res;
 
@@ -1479,8 +1479,8 @@ bool mpdc_server_root_certificate_print(const char* fpath, size_t pathlen)
 
 void mpdc_server_root_certificate_store(mpdc_server_application_state* state, const mpdc_root_certificate* rcert)
 {
-	assert(state != NULL);
-	assert(rcert != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(rcert != NULL);
 
 	bool res;
 	
@@ -1541,7 +1541,7 @@ void mpdc_server_root_certificate_store(mpdc_server_application_state* state, co
 
 void mpdc_server_set_command_prompt(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	if (state != NULL)
 	{
@@ -1593,9 +1593,9 @@ void mpdc_server_set_command_prompt(mpdc_server_application_state* state)
 
 bool mpdc_server_set_console_timeout(mpdc_server_application_state* state, const char* snum, size_t numlen)
 {
-	assert(state != NULL);
-	assert(snum != NULL);
-	assert(numlen != 0);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(snum != NULL);
+	MPDC_ASSERT(numlen != 0);
 
 	bool res;
 
@@ -1630,9 +1630,9 @@ bool mpdc_server_set_console_timeout(mpdc_server_application_state* state, const
 
 bool mpdc_server_set_domain_name(mpdc_server_application_state* state, const char* name, size_t namelen)
 {
-	assert(state != NULL);
-	assert(name != NULL);
-	assert(namelen != 0);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(name != NULL);
+	MPDC_ASSERT(namelen != 0);
 
 	bool res;
 
@@ -1688,9 +1688,9 @@ bool mpdc_server_set_domain_name(mpdc_server_application_state* state, const cha
 
 bool mpdc_server_set_host_name(mpdc_server_application_state* state, const char* name, size_t namelen)
 {
-	assert(state != NULL);
-	assert(name != NULL);
-	assert(namelen != 0);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(name != NULL);
+	MPDC_ASSERT(namelen != 0);
 
 	bool res;
 
@@ -1745,9 +1745,9 @@ bool mpdc_server_set_host_name(mpdc_server_application_state* state, const char*
 
 bool mpdc_server_set_ip_address(mpdc_server_application_state* state, const char* address, size_t addlen)
 {
-	assert(state != NULL);
-	assert(address != NULL);
-	assert(addlen != 0);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(address != NULL);
+	MPDC_ASSERT(addlen != 0);
 
 	bool res;
 
@@ -1786,9 +1786,9 @@ bool mpdc_server_set_ip_address(mpdc_server_application_state* state, const char
 
 bool mpdc_server_set_password_retries(mpdc_server_application_state* state, const char* snum, size_t numlen)
 {
-	assert(state != NULL);
-	assert(snum != NULL);
-	assert(numlen != 0);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(snum != NULL);
+	MPDC_ASSERT(numlen != 0);
 
 	uint8_t val;
 	bool res;
@@ -1822,7 +1822,7 @@ bool mpdc_server_set_password_retries(mpdc_server_application_state* state, cons
 
 void mpdc_server_erase_signature_key(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	if (state != NULL && state->kchain != NULL)
 	{
@@ -1936,8 +1936,8 @@ void mpdc_server_state_backup_save(const mpdc_server_application_state* state)
 
 void mpdc_server_state_initialize(mpdc_server_application_state* state, mpdc_network_designations srvtype)
 {
-	assert(state != NULL);
-	assert(srvtype != mpdc_network_designation_none);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(srvtype != mpdc_network_designation_none);
 
 	if (state != NULL && srvtype != mpdc_network_designation_none)
 	{
@@ -2059,7 +2059,7 @@ void mpdc_server_state_initialize(mpdc_server_application_state* state, mpdc_net
 
 bool mpdc_server_state_store(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	bool res;
 
@@ -2075,7 +2075,7 @@ bool mpdc_server_state_store(mpdc_server_application_state* state)
 		server_state_serialize(state, tmps);
 		const uint8_t* pkey = state->kchain + (SERVER_KEYCHAIN_STATE_INDEX * SERVER_KEYCHAIN_WIDTH);
 
-		assert(qsc_memutils_zeroed(pkey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE) == false);
+		MPDC_ASSERT(qsc_memutils_zeroed(pkey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE) == false);
 
 		res = qsc_memutils_zeroed(pkey, SERVER_KEYCHAIN_WIDTH);
 
@@ -2091,7 +2091,7 @@ bool mpdc_server_state_store(mpdc_server_application_state* state)
 
 void mpdc_server_state_unload(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	if (state != NULL)
 	{
@@ -2103,8 +2103,8 @@ void mpdc_server_state_unload(mpdc_server_application_state* state)
 
 bool mpdc_server_topology_dla_fetch(const mpdc_server_application_state* state, mpdc_child_certificate* dcert)
 {
-	assert(state != NULL);
-	assert(dcert != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(dcert != NULL);
 
 	bool res;
 
@@ -2133,7 +2133,7 @@ bool mpdc_server_topology_dla_fetch(const mpdc_server_application_state* state, 
 
 bool mpdc_server_topology_load(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	bool res;
 
@@ -2169,7 +2169,7 @@ bool mpdc_server_topology_load(mpdc_server_application_state* state)
 					{
 						const uint8_t* pkey = state->kchain + (SERVER_KEYCHAIN_TOPOLOGY_INDEX * SERVER_KEYCHAIN_WIDTH);
 
-						assert(qsc_memutils_zeroed(pkey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE) == false);
+						MPDC_ASSERT(qsc_memutils_zeroed(pkey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE) == false);
 
 						res = mpdc_crypto_decrypt_stream(pdec, pkey, penc, mlen - MPDC_STORAGE_MAC_SIZE);
 
@@ -2198,8 +2198,8 @@ bool mpdc_server_topology_load(mpdc_server_application_state* state)
 
 bool mpdc_server_topology_local_fetch(const mpdc_server_application_state* state, mpdc_child_certificate* ccert)
 {
-	assert(state != NULL);
-	assert(ccert != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(ccert != NULL);
 
 	bool res;
 
@@ -2228,7 +2228,7 @@ bool mpdc_server_topology_local_fetch(const mpdc_server_application_state* state
 
 void mpdc_server_topology_print_list(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	char* lstr;
 	size_t rlen;
@@ -2285,8 +2285,8 @@ void mpdc_server_topology_purge_externals(mpdc_server_application_state* state)
 
 void mpdc_server_topology_remove_certificate(mpdc_server_application_state* state, const char* issuer)
 {
-	assert(state != NULL);
-	assert(issuer != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(issuer != NULL);
 
 	if (state != NULL && issuer != NULL)
 	{
@@ -2309,8 +2309,8 @@ void mpdc_server_topology_remove_certificate(mpdc_server_application_state* stat
 
 void mpdc_server_topology_remove_node(mpdc_server_application_state* state, const char* issuer)
 {
-	assert(state != NULL);
-	assert(issuer != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(issuer != NULL);
 
 	if (state != NULL && issuer != NULL)
 	{
@@ -2326,7 +2326,7 @@ void mpdc_server_topology_remove_node(mpdc_server_application_state* state, cons
 
 void mpdc_server_topology_reset(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	if (state != NULL)
 	{
@@ -2344,7 +2344,7 @@ void mpdc_server_topology_reset(mpdc_server_application_state* state)
 
 bool mpdc_server_topology_root_exists(const mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	bool res;
 
@@ -2362,8 +2362,8 @@ bool mpdc_server_topology_root_exists(const mpdc_server_application_state* state
 
 bool mpdc_server_topology_root_fetch(const mpdc_server_application_state* state, mpdc_root_certificate* rcert)
 {
-	assert(state != NULL);
-	assert(rcert != NULL);
+	MPDC_ASSERT(state != NULL);
+	MPDC_ASSERT(rcert != NULL);
 
 	bool res;
 
@@ -2392,7 +2392,7 @@ bool mpdc_server_topology_root_fetch(const mpdc_server_application_state* state,
 
 void mpdc_server_topology_to_file(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	size_t tlen;
 	qsc_mutex mtx;
@@ -2416,7 +2416,7 @@ void mpdc_server_topology_to_file(mpdc_server_application_state* state)
 				char fpath[MPDC_STORAGE_PATH_MAX] = { 0 };
 				const uint8_t* pkey = state->kchain + (SERVER_KEYCHAIN_TOPOLOGY_INDEX * SERVER_KEYCHAIN_WIDTH);
 
-				assert(qsc_memutils_zeroed(pkey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE) == false);
+				MPDC_ASSERT(qsc_memutils_zeroed(pkey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE) == false);
 
 				server_topology_path(state, fpath, sizeof(fpath));
 
@@ -2442,7 +2442,7 @@ void mpdc_server_topology_to_file(mpdc_server_application_state* state)
 
 bool mpdc_server_user_login(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	size_t plen;
 	size_t slen;
@@ -2726,7 +2726,7 @@ bool mpdc_server_user_login(mpdc_server_application_state* state)
 
 void mpdc_server_user_logout(mpdc_server_application_state* state)
 {
-	assert(state != NULL);
+	MPDC_ASSERT(state != NULL);
 
 	if (state != NULL)
 	{
