@@ -646,6 +646,8 @@ mpdc_protocol_errors mpdc_network_converge_request(const mpdc_network_converge_r
 
 	mpdc_protocol_errors merr;
 
+	merr = mpdc_protocol_error_memory_allocation;
+
 	if (state != NULL)
 	{
 		mpdc_network_packet reqt = { 0 };

@@ -29,7 +29,7 @@ void mpdc_topology_address_from_issuer(char* address, const char* issuer, const 
 
 				if (mpdc_topology_list_item(list, &node, i) == true)
 				{
-					if (qsc_memutils_are_equal(node.issuer, issuer, clen) == true)
+					if (qsc_memutils_are_equal((const uint8_t*)node.issuer, (const uint8_t*)issuer, clen) == true)
 					{
 						qsc_memutils_copy(address, node.address, MPDC_CERTIFICATE_ADDRESS_SIZE);
 						break;

@@ -234,7 +234,7 @@ bool mpdc_crypto_password_minimum_check(const char* password, size_t passlen)
 	return res;
 }
 
-bool mpdc_crypto_password_verify(const char* username, size_t userlen, const char* password, size_t passlen, const uint8_t* hash, size_t hashlen)
+bool mpdc_crypto_password_verify(const uint8_t* username, size_t userlen, const uint8_t* password, size_t passlen, const uint8_t* hash, size_t hashlen)
 {
 	MPDC_ASSERT(username != NULL);
 	MPDC_ASSERT(userlen != 0);
@@ -251,7 +251,7 @@ bool mpdc_crypto_password_verify(const char* username, size_t userlen, const cha
 	{
 		uint8_t tmph[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0 };
 
-		mpdc_crypto_hash_password(tmph, sizeof(tmph), username, userlen, password, passlen);
+		mpdc_crypto_hash_password(tmph, sizeof(tmph), (const uint8_t*)username, userlen, (const uint8_t*)password, passlen);
 		res = qsc_memutils_are_equal(tmph, hash, hashlen);
 	}
 

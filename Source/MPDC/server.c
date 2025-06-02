@@ -572,6 +572,8 @@ static size_t server_state_serialize(const mpdc_server_application_state* state,
 
 	size_t pos;
 
+	pos = 0;
+
 	if (state != NULL && output != NULL)
 	{
 		qsc_memutils_copy(output, state->domain, sizeof(state->domain));
