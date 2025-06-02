@@ -63,7 +63,7 @@ static bool dla_certificate_generate(const char* cmsg)
 			res = mpdc_server_root_import_dialogue(&m_dla_application_state);
 		}
 
-		if (res == true && period >= MPDC_CERTIFICATE_MINIMUM_PERIOD || period <= MPDC_CERTIFICATE_MAXIMUM_PERIOD)
+		if (res == true && (period >= MPDC_CERTIFICATE_MINIMUM_PERIOD || period <= MPDC_CERTIFICATE_MAXIMUM_PERIOD))
 		{
 			char sadd[MPDC_CERTIFICATE_ADDRESS_SIZE] = { 0 };
 
@@ -216,6 +216,7 @@ static mpdc_protocol_errors dla_announce_broadcast(const char* fpath, const char
 	return merr;
 }
 
+#if defined(MPDC_FUTURE_FEATURE)
 static void dla_converge_reset(mpdc_topology_list_state* list)
 {
 	MPDC_ASSERT(list != NULL);
@@ -256,6 +257,7 @@ static void dla_converge_reset(mpdc_topology_list_state* list)
 
 	mpdc_topology_list_dispose(&clst);
 }
+#endif
 
 static void dla_converge_broadcast(void)
 {
@@ -826,7 +828,6 @@ static void dla_receive_loop(void* ras)
 	const char* cmsg;
 	size_t mlen;
 	size_t plen;
-	size_t slen;
 	mpdc_protocol_errors merr;
 
 	merr = mpdc_protocol_error_none;
@@ -843,7 +844,6 @@ static void dla_receive_loop(void* ras)
 				uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0 };
 
 				mlen = 0;
-				slen = 0;
 				plen = qsc_socket_peek(&pras->csock, hdr, MPDC_PACKET_HEADER_SIZE);
 
 				if (plen == MPDC_PACKET_HEADER_SIZE)
@@ -879,7 +879,7 @@ static void dla_receive_loop(void* ras)
 						if (pkt.flag == mpdc_network_flag_tunnel_connection_terminate)
 						{
 							mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_connection_terminated, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
-							mpdc_connection_close(&pras->csock, mpdc_protocol_error_none, true);
+							mpdc_connection_close(&pras->csock, mpdc_network_error_none, true);
 						}
 						else if (pkt.flag == mpdc_network_flag_incremental_update_request)
 						{
@@ -1211,9 +1211,9 @@ static bool dla_server_start(void)
 {
 #if defined(MPDC_NETWORK_PROTOCOL_IPV6)
 	/* start the main receive loop on a new thread */
-	if (qsc_async_thread_create_noargs(&dla_ipv6_server_start) != NULL)
+	if (qsc_async_thread_create_noargs(&dla_ipv6_server_start))
 #else
-	if (qsc_async_thread_create_noargs(&dla_ipv4_server_start) != NULL)
+	if (qsc_async_thread_create_noargs(&dla_ipv4_server_start))
 #endif
 	{
 		m_dla_server_loop_status = mpdc_server_loop_status_started;
@@ -2155,10 +2155,7 @@ static void dla_command_execute(const char* command)
 
 		if (cmsg != NULL)
 		{
-			qsc_ipinfo_address_types tadd;
-
 			slen = qsc_stringutils_string_size(cmsg);
-			tadd = qsc_ipinfo_get_address_type(cmsg);
 
 			res = mpdc_server_set_ip_address(&m_dla_application_state, cmsg, slen);
 
@@ -2334,7 +2331,7 @@ int32_t mpdc_dla_start_server(void)
 	m_dla_idle_timer = 0;
 	idle = qsc_async_thread_create_noargs(&dla_idle_timer);
 	
-	if (idle != NULL)
+	if (idle)
 	{
 		/* command loop */
 		dla_command_loop(command);

@@ -41,7 +41,6 @@ static const char AGENT_TOPOLOGY_NAME[] = "\\agent_topology";
 static const char AGENT_PUBKEY_NAME[] = "agent_public_key.acpkey";
 static const char AGENT_PRIKEY_NAME[] = "agent_secret_key.acskey";
 static const char AGENT_PROMPT_DEFAULT[] = "Agent> ";
-static const char AGENT_ROOT_PATH[] = "\\MPDC";
 static const char AGENT_WINDOW_TITLE[] = "Agent v1.0a";
 
 static const char CLIENT_APPLICATION_BANNER[] = "Client v1.0 \n"

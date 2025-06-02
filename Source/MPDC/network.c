@@ -115,6 +115,7 @@
 #define NETWORK_TOPOLOGY_STATUS_RESPONSE_MESSAGE_SIZE (MPDC_PACKET_SUBHEADER_SIZE + MPDC_CERTIFICATE_SERIAL_SIZE + MPDC_CERTIFICATE_SIGNED_HASH_SIZE)
 #define NETWORK_TOPOLOGY_STATUS_RESPONSE_PACKET_SIZE (MPDC_PACKET_HEADER_SIZE + NETWORK_TOPOLOGY_STATUS_RESPONSE_MESSAGE_SIZE)
 
+#if defined(MPDC_NETWORK_COMPRESS_NODE)
 static size_t network_compress_node(uint8_t* snode, const mpdc_topology_node_state* lnode)
 {
 	MPDC_ASSERT(snode != NULL);
@@ -131,6 +132,7 @@ static size_t network_compress_node(uint8_t* snode, const mpdc_topology_node_sta
 
 	return pos;
 }
+#endif
 
 static void network_header_create(mpdc_network_packet* packetout, mpdc_network_flags flag, uint64_t sequence, uint32_t msglen)
 {
@@ -298,6 +300,7 @@ static mpdc_protocol_errors network_certificate_signed_hash_verify(mpdc_child_ce
 	return merr;
 }
 
+#if defined(MPDC_NETWORK_MFK_HASH_CYCLED)
 static void network_hash_cycle_mfk(const uint8_t* serial, qsc_collection_state* mfkcol)
 {
 	MPDC_ASSERT(serial != NULL);
@@ -314,6 +317,7 @@ static void network_hash_cycle_mfk(const uint8_t* serial, qsc_collection_state* 
 		qsc_collection_add(mfkcol, ckey, serial);
 	}
 }
+#endif
 
 static void network_derive_fkey(uint8_t* ckey, const uint8_t* mfk, const uint8_t* lhash, const uint8_t* rhash, const uint8_t* token)
 {
@@ -1655,7 +1659,6 @@ mpdc_protocol_errors mpdc_network_fragment_collection_response(mpdc_network_frag
 
 	mpdc_topology_list_state olst = { 0 };
 	size_t ncnt;
-	size_t mpos;
 	mpdc_protocol_errors merr;
 
 	if (state != NULL && packetin != NULL)
@@ -1673,156 +1676,158 @@ mpdc_protocol_errors mpdc_network_fragment_collection_response(mpdc_network_frag
 			/* the device creates a sorted list of available agents on the network */
 			ncnt = mpdc_topology_ordered_server_list(&olst, state->list, mpdc_network_designation_agent);
 
-			/* initialize the client keychain */
-			qsc_list_initialize(&clst, NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE);
-
-			/* generate the fragment and token */
-			qsc_acp_generate(state->frag, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
-			qsc_acp_generate(state->mtok, MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE);
-
-			/* update the servers key hash with the mas-client key fragment */
-			qsc_sha3_initialize(&fkhs);
-			qsc_sha3_update(&fkhs, qsc_keccak_rate_256, state->frag, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
-			mpos = 0;
-
-			/* iterate through the list of agents, connect and collect fragments */
-			for (size_t i = 0; i < olst.count; ++i)
+			if (ncnt > 0)
 			{
-				mpdc_network_packet qreq = { 0 };
-				mpdc_topology_node_state rnode = { 0 };
-				uint8_t sbuf[NETWORK_FRAGMENT_QUERY_REQUEST_PACKET_SIZE] = { 0 };
+				/* initialize the client keychain */
+				qsc_list_initialize(&clst, NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE);
 
-				mpdc_topology_list_item(&olst, &rnode, i);
+				/* generate the fragment and token */
+				qsc_acp_generate(state->frag, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
+				qsc_acp_generate(state->mtok, MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE);
 
-				/* create fragment query: cser|ctok, mser|mtok */
-				const mpdc_network_fragment_query_request_state qrs = {
-					.list = state->list,
-					.lmfk = state->lmfk,
-					.lnode = state->lnode,
-					.rnode = &rnode,
-					.token = state->mtok
-				};
+				/* update the servers key hash with the mas-client key fragment */
+				qsc_sha3_initialize(&fkhs);
+				qsc_sha3_update(&fkhs, qsc_keccak_rate_256, state->frag, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
 
-				/* create the fragment request packet */
-				qreq.pmessage = sbuf + MPDC_PACKET_HEADER_SIZE;
-				merr = network_fragment_collection_query_request_packet(&qreq, packetin, &qrs);
-				mpdc_packet_header_serialize(&qreq, sbuf);
-
-				if (merr == mpdc_protocol_error_none)
+				/* iterate through the list of agents, connect and collect fragments */
+				for (size_t i = 0; i < olst.count; ++i)
 				{
-					/* connect to the agent */
-					qsc_socket csock = { 0 };
+					mpdc_network_packet qreq = { 0 };
+					mpdc_topology_node_state rnode = { 0 };
+					uint8_t sbuf[NETWORK_FRAGMENT_QUERY_REQUEST_PACKET_SIZE] = { 0 };
 
-					if (mpdc_network_connect_to_device(&csock, rnode.address, mpdc_network_designation_agent) == qsc_socket_exception_success)
-					{
-						size_t slen;
+					mpdc_topology_list_item(&olst, &rnode, i);
 
-						/* send the fragment request query */
-						slen = qsc_socket_client_send(&csock, sbuf, NETWORK_FRAGMENT_QUERY_REQUEST_PACKET_SIZE, qsc_socket_send_flag_none);
+					/* create fragment query: cser|ctok, mser|mtok */
+					const mpdc_network_fragment_query_request_state qrs = {
+						.list = state->list,
+						.lmfk = state->lmfk,
+						.lnode = state->lnode,
+						.rnode = &rnode,
+						.token = state->mtok
+					};
 
-						if (slen == NETWORK_FRAGMENT_QUERY_REQUEST_PACKET_SIZE)
-						{
-							uint8_t rbuf[NETWORK_FRAGMENT_QUERY_RESPONSE_PACKET_SIZE] = { 0 };
-							size_t rlen;
-
-							/* wait for the reply */
-							rlen = qsc_socket_receive(&csock, rbuf, sizeof(rbuf), qsc_socket_receive_flag_wait_all);
-
-							if (rlen == NETWORK_FRAGMENT_QUERY_RESPONSE_PACKET_SIZE)
-							{
-								mpdc_network_packet qrsp = { 0 };
-
-								mpdc_packet_header_deserialize(rbuf, &qrsp);
-								qrsp.pmessage = rbuf + MPDC_PACKET_HEADER_SIZE;
-
-								/* process the agent message */
-								merr = network_fragment_collection_response_derive(&fkhs, state, &qrsp);
-
-								if (merr == mpdc_protocol_error_none)
-								{
-									/* copy the client portion to response message */
-									qsc_list_add(&clst, qrsp.pmessage);
-								}
-								else
-								{
-									break;
-								}
-							}
-							else if (rlen == NETWORK_ERROR_PACKET_SIZE)
-							{
-								/* get the server error from the packet */
-								merr = network_unpack_error(rbuf);
-							}
-							else
-							{
-								merr = mpdc_protocol_error_receive_failure;
-							}
-						}
-
-						mpdc_network_socket_dispose(&csock);
-					}
-					else
-					{
-						merr = mpdc_protocol_error_connect_failure;
-					}
-				}
-
-				/* zero tolerance for agent failure */
-				if (merr != mpdc_protocol_error_none)
-				{
-					break;
-				}
-			}
-
-			if (merr == mpdc_protocol_error_none && clst.count > 0)
-			{
-				/* send response to client */
-				mpdc_network_packet resp = { 0 };
-				uint8_t* pbuf;
-				size_t mlen;
-				size_t slen;
-
-				mlen = MPDC_PACKET_HEADER_SIZE + ((clst.count + 1) * NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE) + MPDC_CRYPTO_SYMMETRIC_HASH_SIZE;
-				pbuf = qsc_memutils_malloc(mlen + MPDC_PACKET_HEADER_SIZE);
-
-				if (pbuf != NULL)
-				{
-					/* create the client fragment collection response packet */
-					resp.pmessage = pbuf + MPDC_PACKET_HEADER_SIZE;
-					merr = network_fragment_collection_response_packet(&resp, &clst, state);
-					mpdc_packet_header_serialize(&resp, pbuf);
+					/* create the fragment request packet */
+					qreq.pmessage = sbuf + MPDC_PACKET_HEADER_SIZE;
+					merr = network_fragment_collection_query_request_packet(&qreq, packetin, &qrs);
+					mpdc_packet_header_serialize(&qreq, sbuf);
 
 					if (merr == mpdc_protocol_error_none)
 					{
-						/* send the encrypted key bundle to the client */
-						slen = qsc_socket_client_send(state->csock, pbuf, mlen, qsc_socket_send_flag_none);
+						/* connect to the agent */
+						qsc_socket csock = { 0 };
 
-						if (slen == mlen)
+						if (mpdc_network_connect_to_device(&csock, rnode.address, mpdc_network_designation_agent) == qsc_socket_exception_success)
 						{
-#if defined(MPDC_EXTENDED_SESSION_SECURITY)
-							/* create the fragment hash key and store in state */
-							qsc_sha3_finalize(&fkhs, qsc_keccak_rate_512, state->hfkey);
-#else
-							/* create the fragment hash key and store in state */
-							qsc_sha3_finalize(&fkhs, qsc_keccak_rate_256, state->hfkey);
-#endif
-							merr = mpdc_protocol_error_none;
+							size_t slen;
+
+							/* send the fragment request query */
+							slen = qsc_socket_client_send(&csock, sbuf, NETWORK_FRAGMENT_QUERY_REQUEST_PACKET_SIZE, qsc_socket_send_flag_none);
+
+							if (slen == NETWORK_FRAGMENT_QUERY_REQUEST_PACKET_SIZE)
+							{
+								uint8_t rbuf[NETWORK_FRAGMENT_QUERY_RESPONSE_PACKET_SIZE] = { 0 };
+								size_t rlen;
+
+								/* wait for the reply */
+								rlen = qsc_socket_receive(&csock, rbuf, sizeof(rbuf), qsc_socket_receive_flag_wait_all);
+
+								if (rlen == NETWORK_FRAGMENT_QUERY_RESPONSE_PACKET_SIZE)
+								{
+									mpdc_network_packet qrsp = { 0 };
+
+									mpdc_packet_header_deserialize(rbuf, &qrsp);
+									qrsp.pmessage = rbuf + MPDC_PACKET_HEADER_SIZE;
+
+									/* process the agent message */
+									merr = network_fragment_collection_response_derive(&fkhs, state, &qrsp);
+
+									if (merr == mpdc_protocol_error_none)
+									{
+										/* copy the client portion to response message */
+										qsc_list_add(&clst, qrsp.pmessage);
+									}
+									else
+									{
+										break;
+									}
+								}
+								else if (rlen == NETWORK_ERROR_PACKET_SIZE)
+								{
+									/* get the server error from the packet */
+									merr = network_unpack_error(rbuf);
+								}
+								else
+								{
+									merr = mpdc_protocol_error_receive_failure;
+								}
+							}
+
+							mpdc_network_socket_dispose(&csock);
 						}
 						else
 						{
-							merr = mpdc_protocol_error_transmit_failure;
+							merr = mpdc_protocol_error_connect_failure;
 						}
 					}
 
-					qsc_memutils_alloc_free(pbuf);
+					/* zero tolerance for agent failure */
+					if (merr != mpdc_protocol_error_none)
+					{
+						break;
+					}
 				}
-				else
-				{
-					merr = mpdc_protocol_error_memory_allocation;
-				}
-			}
 
-			qsc_list_dispose(&clst);
+				if (merr == mpdc_protocol_error_none && clst.count > 0)
+				{
+					/* send response to client */
+					mpdc_network_packet resp = { 0 };
+					uint8_t* pbuf;
+					size_t mlen;
+					size_t slen;
+
+					mlen = MPDC_PACKET_HEADER_SIZE + ((clst.count + 1) * NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE) + MPDC_CRYPTO_SYMMETRIC_HASH_SIZE;
+					pbuf = qsc_memutils_malloc(mlen + MPDC_PACKET_HEADER_SIZE);
+
+					if (pbuf != NULL)
+					{
+						/* create the client fragment collection response packet */
+						resp.pmessage = pbuf + MPDC_PACKET_HEADER_SIZE;
+						merr = network_fragment_collection_response_packet(&resp, &clst, state);
+						mpdc_packet_header_serialize(&resp, pbuf);
+
+						if (merr == mpdc_protocol_error_none)
+						{
+							/* send the encrypted key bundle to the client */
+							slen = qsc_socket_client_send(state->csock, pbuf, mlen, qsc_socket_send_flag_none);
+
+							if (slen == mlen)
+							{
+#if defined(MPDC_EXTENDED_SESSION_SECURITY)
+								/* create the fragment hash key and store in state */
+								qsc_sha3_finalize(&fkhs, qsc_keccak_rate_512, state->hfkey);
+#else
+								/* create the fragment hash key and store in state */
+								qsc_sha3_finalize(&fkhs, qsc_keccak_rate_256, state->hfkey);
+#endif
+								merr = mpdc_protocol_error_none;
+							}
+							else
+							{
+								merr = mpdc_protocol_error_transmit_failure;
+							}
+						}
+
+						qsc_memutils_alloc_free(pbuf);
+					}
+					else
+					{
+						merr = mpdc_protocol_error_memory_allocation;
+					}
+				}
+
+				qsc_list_dispose(&clst);
+			}
 		}
 
 #if defined(MPDC_NETWORK_MFK_HASH_CYCLED)
@@ -4332,8 +4337,11 @@ qsc_socket_exceptions mpdc_network_connect_to_device(qsc_socket* csock, const ch
 		else if (tadd == qsc_ipinfo_address_type_ipv6)
 		{
 			qsc_ipinfo_ipv6_address ipv6 = { 0 };
+			char tmpa[QSC_IPINFO_IPV6_STRNLEN] = { 0 };
 
-			ipv6 = qsc_ipinfo_ipv6_address_from_string(address);
+			qsc_stringutils_copy_string(tmpa, sizeof(tmpa), address);
+			ipv6 = qsc_ipinfo_ipv6_address_from_string(tmpa);
+
 
 			if (qsc_ipinfo_ipv6_address_is_valid(&ipv6) == true)
 			{

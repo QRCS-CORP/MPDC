@@ -332,7 +332,6 @@ static void rds_receive_loop(void* ras)
 	const char* cmsg;
 	size_t mlen;
 	size_t plen;
-	size_t slen;
 	mpdc_protocol_errors merr;
 
 	merr = mpdc_protocol_error_none;
@@ -347,7 +346,6 @@ static void rds_receive_loop(void* ras)
 			uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0U };
 
 			mlen = 0U;
-			slen = 0U;
 			plen = qsc_socket_peek(&pras->csock, hdr, MPDC_PACKET_HEADER_SIZE);
 
 			if (plen == MPDC_PACKET_HEADER_SIZE)
@@ -588,9 +586,9 @@ static bool rds_server_service_start(void)
 {
 #if defined(MPDC_NETWORK_PROTOCOL_IPV6)
 	/* start the main receive loop on a new thread */
-	if (qsc_async_thread_create_noargs(&rds_ipv6_server_start) != NULL)
+	if (qsc_async_thread_create_noargs(&rds_ipv6_server_start))
 #else
-	if (qsc_async_thread_create_noargs(&rds_ipv4_server_start) != NULL)
+	if (qsc_async_thread_create_noargs(&rds_ipv4_server_start))
 #endif
 	{
 		m_rds_server_loop_status = mpdc_server_loop_status_started;
@@ -1484,8 +1482,11 @@ void mpdc_rds_start_server(void)
 	m_rds_idle_timer = 0U;
 	idle = qsc_async_thread_create_noargs(&rds_idle_timer);
 
-	/* command loop */
-	rds_command_loop(command);
+	if(idle)
+	{
+		/* command loop */
+		rds_command_loop(command);
+	}
 }
 
 void mpdc_rds_stop_server(void)

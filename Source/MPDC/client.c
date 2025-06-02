@@ -226,7 +226,7 @@ static bool client_certificate_generate(const char* cmsg)
 			res = mpdc_server_root_import_dialogue(&m_client_application_state);
 		}
 
-		if (res == true && period >= MPDC_CERTIFICATE_MINIMUM_PERIOD || period <= MPDC_CERTIFICATE_MAXIMUM_PERIOD)
+		if (res == true && (period >= MPDC_CERTIFICATE_MINIMUM_PERIOD || period <= MPDC_CERTIFICATE_MAXIMUM_PERIOD))
 		{
 			char tadd[MPDC_CERTIFICATE_ADDRESS_SIZE] = { 0 };
 
@@ -971,7 +971,7 @@ static void client_tunnel_send_loop(mpdc_connection_state* pcns)
 	{
 		if (qsc_consoleutils_line_equals(cinp, "quit"))
 		{
-			mpdc_connection_close(&pcns->target, mpdc_protocol_error_none, true);
+			mpdc_connection_close(&pcns->target, mpdc_network_error_none, true);
 			break;
 		}
 		else if (qsc_consoleutils_line_equals(cinp, "help"))
@@ -1006,7 +1006,7 @@ static void client_tunnel_send_loop(mpdc_connection_state* pcns)
 
 		mlen = qsc_consoleutils_get_line(cinp, sizeof(cinp)) - 1;
 
-		if (mlen == 0 || mlen > 0 && (cinp[0] == '\n' || cinp[0] == '\r'))
+		if (mlen == 0 || (mlen > 0 && (cinp[0] == '\n' || cinp[0] == '\r')))
 		{
 			mpdc_menu_print_prompt(m_client_application_state.mode, m_client_application_state.hostname);
 			mlen = 0;
@@ -1209,7 +1209,6 @@ static void client_receive_loop(void* ras)
 	const char* cmsg;
 	size_t mlen;
 	size_t plen;
-	size_t slen;
 	mpdc_protocol_errors merr;
 
 	merr = mpdc_protocol_error_none;
@@ -1224,7 +1223,6 @@ static void client_receive_loop(void* ras)
 			uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0 };
 
 			mlen = 0;
-			slen = 0;
 			plen = qsc_socket_peek(&pras->csock, hdr, MPDC_PACKET_HEADER_SIZE);
 
 			if (plen == MPDC_PACKET_HEADER_SIZE)
@@ -1672,9 +1670,9 @@ static bool client_server_service_start(void)
 
 #if defined(MPDC_NETWORK_PROTOCOL_IPV6)
 	/* start the main receive loop on a new thread */
-	if (qsc_async_thread_create_noargs(&client_ipv6_server_start) != NULL)
+	if (qsc_async_thread_create_noargs(&client_ipv6_server_start))
 #else
-	if (qsc_async_thread_create_noargs(&client_ipv4_server_start) != NULL)
+	if (qsc_async_thread_create_noargs(&client_ipv4_server_start))
 #endif
 	{
 		m_client_server_loop_status = mpdc_server_loop_status_started;
@@ -2833,7 +2831,7 @@ int32_t mpdc_client_start_server(void)
 	m_client_idle_timer = 0;
 	idle = qsc_async_thread_create_noargs(&client_idle_timer);
 	
-	if (idle != NULL)
+	if (idle)
 	{
 		/* command loop */
 		client_command_loop(command);

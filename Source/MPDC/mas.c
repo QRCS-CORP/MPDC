@@ -277,7 +277,7 @@ static bool mas_certificate_generate(const char* cmsg)
 			res = mpdc_server_root_import_dialogue(&m_mas_application_state);
 		}
 
-		if (res == true && period >= MPDC_CERTIFICATE_MINIMUM_PERIOD || period <= MPDC_CERTIFICATE_MAXIMUM_PERIOD)
+		if (res == true && (period >= MPDC_CERTIFICATE_MINIMUM_PERIOD || period <= MPDC_CERTIFICATE_MAXIMUM_PERIOD))
 		{
 			char tadd[MPDC_CERTIFICATE_ADDRESS_SIZE] = { 0 };
 
@@ -971,7 +971,6 @@ static void mas_receive_loop(void* ras)
 	const char* cmsg;
 	size_t mlen;
 	size_t plen;
-	size_t slen;
 	mpdc_protocol_errors merr;
 
 	merr = mpdc_protocol_error_none;
@@ -986,7 +985,6 @@ static void mas_receive_loop(void* ras)
 			uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0 };
 
 			mlen = 0U;
-			slen = 0U;
 			plen = qsc_socket_peek(&pras->csock, hdr, MPDC_PACKET_HEADER_SIZE);
 
 			if (plen == MPDC_PACKET_HEADER_SIZE)
@@ -1433,9 +1431,9 @@ static bool mas_server_service_start(void)
 
 #if defined(MPDC_NETWORK_PROTOCOL_IPV6)
 	/* start the main receive loop on a new thread */
-	if (qsc_async_thread_create_noargs(&mas_ipv6_server_start) != NULL)
+	if (qsc_async_thread_create_noargs(&mas_ipv6_server_start))
 #else
-	if (qsc_async_thread_create_noargs(&mas_ipv4_server_start) != NULL)
+	if (qsc_async_thread_create_noargs(&mas_ipv4_server_start))
 #endif
 	{
 		m_mas_server_loop_status = mpdc_server_loop_status_started;
@@ -2484,7 +2482,7 @@ int32_t mpdc_mas_start_server(void)
 	m_mas_idle_timer = 0U;
 	idle = qsc_async_thread_create_noargs(&mas_idle_timer);
 	
-	if (idle != NULL)
+	if (idle)
 	{
 		/* command loop */
 		mas_command_loop(command);

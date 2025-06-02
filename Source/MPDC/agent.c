@@ -912,9 +912,9 @@ static bool agent_server_service_start(void)
 
 #if defined(MPDC_NETWORK_PROTOCOL_IPV6)
 	/* start the main receive loop on a new thread */
-	if (qsc_async_thread_create_noargs(&agent_ipv6_server_start) != NULL)
+	if (qsc_async_thread_create_noargs(&agent_ipv6_server_start))
 #else
-	if (qsc_async_thread_create_noargs(&agent_ipv4_server_start) != NULL)
+	if (qsc_async_thread_create_noargs(&agent_ipv4_server_start))
 #endif
 	{
 		m_agent_server_loop_status = mpdc_server_loop_status_started;
@@ -1961,7 +1961,7 @@ int32_t mpdc_agent_start_server(void)
 	m_agent_idle_timer = 0;
 	idle = qsc_async_thread_create_noargs(&agent_idle_timer);
 	
-	if (idle != NULL)
+	if (idle)
 	{
 		/* command loop */
 		agent_command_loop(command);
