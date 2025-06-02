@@ -193,7 +193,7 @@ static void rds_server_dispose(void)
 	mpdc_server_state_initialize(&m_rds_application_state, mpdc_network_designation_rds);
 	m_rds_command_loop_status = mpdc_server_loop_status_stopped;
 	m_rds_server_loop_status = mpdc_server_loop_status_stopped;
-	m_rds_idle_timer = 0;
+	m_rds_idle_timer = 0U;
 }
 
 static bool rds_server_load_dla(void)
@@ -229,7 +229,7 @@ static bool rds_server_dla_dialogue(void)
 	bool res;
 
 	res = false;
-	rctr = 0;
+	rctr = 0U;
 
 	while (res == false)
 	{
@@ -242,7 +242,7 @@ static bool rds_server_dla_dialogue(void)
 
 		mpdc_menu_print_predefined_message(mpdc_application_dla_certificate_path_success, mpdc_console_mode_server, m_rds_application_state.hostname);
 		mpdc_menu_print_prompt(mpdc_console_mode_server, m_rds_application_state.hostname);
-		slen = qsc_consoleutils_get_line(cmsg, sizeof(cmsg)) - 1;
+		slen = qsc_consoleutils_get_line(cmsg, sizeof(cmsg)) - 1U;
 
 		if (slen >= MPDC_STORAGE_FILEPATH_MIN && 
 			slen <= MPDC_STORAGE_FILEPATH_MAX &&
@@ -260,7 +260,7 @@ static bool rds_server_dla_dialogue(void)
 					qsc_memutils_clear(cmsg, sizeof(cmsg));
 					mpdc_menu_print_predefined_message(mpdc_application_dla_certificate_address_challenge, mpdc_console_mode_server, m_rds_application_state.hostname);
 					mpdc_menu_print_prompt(mpdc_console_mode_server, m_rds_application_state.hostname);
-					slen = qsc_consoleutils_get_line(cmsg, sizeof(cmsg)) - 1;
+					slen = qsc_consoleutils_get_line(cmsg, sizeof(cmsg)) - 1U;
 
 					if (slen >= QSC_IPINFO_IPV4_MINLEN)
 					{
@@ -344,10 +344,10 @@ static void rds_receive_loop(void* ras)
 
 		if (buff != NULL)
 		{
-			uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0 };
+			uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0U };
 
-			mlen = 0;
-			slen = 0;
+			mlen = 0U;
+			slen = 0U;
 			plen = qsc_socket_peek(&pras->csock, hdr, MPDC_PACKET_HEADER_SIZE);
 
 			if (plen == MPDC_PACKET_HEADER_SIZE)
@@ -376,7 +376,7 @@ static void rds_receive_loop(void* ras)
 					mpdc_server_log_write_message(&m_rds_application_state, mpdc_application_log_receive_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 				}
 
-				if (mlen > 0)
+				if (mlen > 0U)
 				{
 					pkt.pmessage = buff + MPDC_PACKET_HEADER_SIZE;
 
@@ -701,7 +701,7 @@ static void rds_get_command_mode(const char* command)
 			{
 				nmode = mpdc_console_mode_enable;
 			}
-			else if (qsc_stringutils_string_size(command) > 0)
+			else if (qsc_stringutils_string_size(command) > 0U)
 			{
 				nmode = mpdc_console_mode_user;
 			}
@@ -726,7 +726,7 @@ static void rds_set_command_action(const char* command)
 	res = mpdc_command_action_command_unrecognized;
 	clen = qsc_stringutils_string_size(command);
 
-	if (clen == 0 || clen > QSC_CONSOLE_MAX_LINE)
+	if (clen == 0U || clen > QSC_CONSOLE_MAX_LINE)
 	{
 		res = mpdc_command_action_none;
 	}
@@ -1429,7 +1429,7 @@ static void rds_command_execute(const char* command)
 
 static void rds_idle_timer(void)
 {
-	const uint32_t MMSEC = 60 * 1000;
+	const uint32_t MMSEC = 60U * 1000U;
 
 	while (true)
 	{
@@ -1466,7 +1466,7 @@ static void rds_command_loop(char* command)
 
 		/* lock the mutex */
 		qsc_mutex mtx = qsc_async_mutex_lock_ex();
-		m_rds_idle_timer = 0;
+		m_rds_idle_timer = 0U;
 		qsc_async_mutex_unlock_ex(mtx);
 
 		rds_set_command_action(command);
@@ -1517,7 +1517,7 @@ void mpdc_rds_start_server(void)
 	mpdc_menu_print_prompt(m_rds_application_state.mode, m_rds_application_state.hostname);
 
 	/* start the idle timer */
-	m_rds_idle_timer = 0;
+	m_rds_idle_timer = 0U;
 	idle = qsc_async_thread_create_noargs(&rds_idle_timer);
 
 	/* command loop */
