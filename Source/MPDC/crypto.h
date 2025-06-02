@@ -146,7 +146,7 @@ MPDC_EXPORT_API void mpdc_crypto_generate_application_salt(uint8_t* output, size
  * \param message [in, const] A pointer to the message array.
  * \param msglen The length of the message.
  */
-MPDC_EXPORT_API void mpdc_crypto_generate_hash_code(char* output, const char* message, size_t msglen);
+MPDC_EXPORT_API void mpdc_crypto_generate_hash_code(uint8_t* output, const uint8_t* message, size_t msglen);
 
 /**
  * \brief Compute a MAC (Message Authentication Code) for a message.
@@ -160,7 +160,7 @@ MPDC_EXPORT_API void mpdc_crypto_generate_hash_code(char* output, const char* me
  * \param key [in, const] A pointer to the key array.
  * \param keylen The length of the key array.
  */
-MPDC_EXPORT_API void mpdc_crypto_generate_mac_code(char* output, size_t outlen, const char* message, size_t msglen, const char* key, size_t keylen);
+MPDC_EXPORT_API void mpdc_crypto_generate_mac_code(uint8_t* output, size_t outlen, const uint8_t* message, size_t msglen, const uint8_t* key, size_t keylen);
 
 /**
  * \brief Hash a password and user name.

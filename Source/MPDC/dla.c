@@ -1866,11 +1866,11 @@ static void dla_command_execute(const char* command)
 	{
 		if (m_dla_server_loop_status == mpdc_server_loop_status_started)
 		{
-			uint8_t sadd[QSC_SOCKET_ADDRESS_MAX_SIZE] = { 0 };
+			char sadd[QSC_SOCKET_ADDRESS_MAX_SIZE] = { 0 };
 			char fpath[MPDC_STORAGE_PATH_MAX] = { 0 };
 
 			cmsg = qsc_stringutils_sub_string(command, " ");
-			qsc_stringutils_split_strings(fpath, (char*)sadd, sizeof(fpath), cmsg + 1, ", ");
+			qsc_stringutils_split_strings(fpath, sadd, sizeof(fpath), cmsg + 1, ", ");
 			slen = qsc_stringutils_string_size(fpath);
 
 			merr = dla_announce_broadcast(fpath, sadd);

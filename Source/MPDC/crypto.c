@@ -140,7 +140,7 @@ void mpdc_crypto_generate_application_salt(uint8_t* output, size_t outlen)
 	}
 }
 
-void mpdc_crypto_generate_hash_code(char* output, const char* message, size_t msglen)
+void mpdc_crypto_generate_hash_code(uint8_t* output, const uint8_t* message, size_t msglen)
 {
 	MPDC_ASSERT(output != NULL);
 	MPDC_ASSERT(message != NULL);
@@ -148,11 +148,11 @@ void mpdc_crypto_generate_hash_code(char* output, const char* message, size_t ms
 
 	if (output != NULL && message != NULL && msglen != 0)
 	{
-		qsc_sha3_compute256(output, (const uint8_t*)message, msglen);
+		qsc_sha3_compute256(output, message, msglen);
 	}
 }
 
-void mpdc_crypto_generate_mac_code(char* output, size_t outlen, const char* message, size_t msglen, const char* key, size_t keylen)
+void mpdc_crypto_generate_mac_code(uint8_t* output, size_t outlen, const uint8_t* message, size_t msglen, const uint8_t* key, size_t keylen)
 {
 	MPDC_ASSERT(output != NULL);
 	MPDC_ASSERT(outlen != 0);
@@ -163,7 +163,7 @@ void mpdc_crypto_generate_mac_code(char* output, size_t outlen, const char* mess
 
 	if (output != NULL && outlen != 0 && message != NULL && msglen != 0 && key != NULL && keylen != 0)
 	{
-		qsc_kmac256_compute(output, outlen, (const uint8_t*)message, msglen, (const uint8_t*)key, keylen, NULL, 0);
+		qsc_kmac256_compute(output, outlen, message, msglen, key, keylen, NULL, 0);
 	}
 }
 

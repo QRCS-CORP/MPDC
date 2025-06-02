@@ -4050,11 +4050,10 @@ mpdc_protocol_errors mpdc_network_topological_status_request(const mpdc_network_
 * If the server is offline the receiver will time out, it can also signal that it is unavailable.
 */
 
-static mpdc_protocol_errors network_topological_status_response_packet(mpdc_network_packet* packetout, const mpdc_network_topological_status_response_state* state, const mpdc_network_packet* packetin)
+static mpdc_protocol_errors network_topological_status_response_packet(mpdc_network_packet* packetout, const mpdc_network_topological_status_response_state* state)
 {
 	MPDC_ASSERT(packetout != NULL);
 	MPDC_ASSERT(state != NULL);
-	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
 
@@ -4123,7 +4122,7 @@ mpdc_protocol_errors mpdc_network_topological_status_response(const mpdc_network
 
 			/* create the update response packet */
 			resp.pmessage = sbuf + MPDC_PACKET_HEADER_SIZE;
-			merr = network_topological_status_response_packet(&resp, state, packetin);
+			merr = network_topological_status_response_packet(&resp, state);
 			mpdc_packet_header_serialize(&resp, sbuf);
 
 			/* send the response to the requestor */

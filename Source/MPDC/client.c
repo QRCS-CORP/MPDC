@@ -693,6 +693,7 @@ static void client_tunnel_callback(const mpdc_connection_state* pcns, const char
 	qsc_mutex mtx;
 
 	(void)pcns;
+	(void)msglen;
 	mtx = qsc_async_mutex_lock_ex();
 	qsc_consoleutils_print_line(pmsg);
 	mpdc_menu_print_prompt(m_client_application_state.mode, m_client_application_state.hostname);
@@ -1449,7 +1450,7 @@ static void client_receive_loop(void* ras)
 
 		/* free the socket from memory */
 		qsc_memutils_alloc_free(pras);
-		pras == NULL;
+		pras = NULL;
 	}
 }
 
@@ -2866,7 +2867,7 @@ int32_t mpdc_client_start_server(void)
 
 	/* start the idle timer */
 	m_client_idle_timer = 0;
-	idle = qsc_async_thread_create(&client_idle_timer, NULL);
+	idle = qsc_async_thread_create_noargs(&client_idle_timer);
 	
 	if (idle != NULL)
 	{
