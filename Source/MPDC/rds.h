@@ -65,7 +65,7 @@
  * This function pauses the operation of the RDS server. When called, the server will temporarily
  * suspend processing of incoming network messages and connections until it is resumed.
  */
-MPDC_EXPORT_API void mpdc_rds_pause_server();
+MPDC_EXPORT_API void mpdc_rds_pause_server(void);
 
 /**
  * \brief Start the RDS server.
@@ -73,7 +73,7 @@ MPDC_EXPORT_API void mpdc_rds_pause_server();
  * This function initializes and starts the RDS server. It sets up all necessary resources,
  * initializes the application state, and begins accepting network connections.
  */
-MPDC_EXPORT_API void mpdc_rds_start_server();
+MPDC_EXPORT_API void mpdc_rds_start_server(void);
 
 /**
  * \brief Stop the RDS server.
@@ -81,7 +81,7 @@ MPDC_EXPORT_API void mpdc_rds_start_server();
  * This function stops the RDS server by terminating its main command loop and releasing all allocated
  * resources. After calling this function, the server will no longer process incoming network messages.
  */
-MPDC_EXPORT_API void mpdc_rds_stop_server();
+MPDC_EXPORT_API void mpdc_rds_stop_server(void);
 
 #if defined(MPDC_DEBUG_TESTS_RUN)
 /**
