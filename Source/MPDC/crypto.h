@@ -174,7 +174,7 @@ MPDC_EXPORT_API void mpdc_crypto_generate_mac_code(uint8_t* output, size_t outle
  * \param password [in, const] The password.
  * \param passlen The length of the password.
  */
-MPDC_EXPORT_API void mpdc_crypto_hash_password(char* output, size_t outlen, const char* username, size_t userlen, const char* password, size_t passlen);
+MPDC_EXPORT_API void mpdc_crypto_hash_password(uint8_t* output, size_t outlen, const uint8_t* username, size_t userlen, const uint8_t* password, size_t passlen);
 
 /**
  * \brief Check a password for a minimum secure threshold.
@@ -203,7 +203,7 @@ MPDC_EXPORT_API bool mpdc_crypto_password_minimum_check(const char* password, si
  *
  * \return Returns true if the computed hash matches the stored value.
  */
-MPDC_EXPORT_API bool mpdc_crypto_password_verify(const char* username, size_t userlen, const char* password, size_t passlen, const char* hash, size_t hashlen);
+MPDC_EXPORT_API bool mpdc_crypto_password_verify(const uint8_t* username, size_t userlen, const uint8_t* password, size_t passlen, const uint8_t* hash, size_t hashlen);
 
 /**
  * \brief Allocate a block of secure memory.

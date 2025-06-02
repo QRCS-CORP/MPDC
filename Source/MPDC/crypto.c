@@ -167,7 +167,7 @@ void mpdc_crypto_generate_mac_code(uint8_t* output, size_t outlen, const uint8_t
 	}
 }
 
-void mpdc_crypto_hash_password(char* output, size_t outlen, const char* username, size_t userlen, const char* password, size_t passlen)
+void mpdc_crypto_hash_password(uint8_t* output, size_t outlen, const uint8_t* username, size_t userlen, const uint8_t* password, size_t passlen)
 {
 	MPDC_ASSERT(output != NULL);
 	MPDC_ASSERT(outlen != 0);
@@ -181,7 +181,7 @@ void mpdc_crypto_hash_password(char* output, size_t outlen, const char* username
 		uint8_t salt[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0 };
 
 		mpdc_crypto_generate_application_salt(salt, sizeof(salt));
-		qsc_kmac256_compute(output, outlen, (const uint8_t*)username, userlen, (const uint8_t*)password, passlen, salt, sizeof(salt));
+		qsc_kmac256_compute(output, outlen, username, userlen, password, passlen, salt, sizeof(salt));
 	}
 }
 
@@ -234,7 +234,7 @@ bool mpdc_crypto_password_minimum_check(const char* password, size_t passlen)
 	return res;
 }
 
-bool mpdc_crypto_password_verify(const char* username, size_t userlen, const char* password, size_t passlen, const char* hash, size_t hashlen)
+bool mpdc_crypto_password_verify(const char* username, size_t userlen, const char* password, size_t passlen, const uint8_t* hash, size_t hashlen)
 {
 	MPDC_ASSERT(username != NULL);
 	MPDC_ASSERT(userlen != 0);
@@ -249,10 +249,10 @@ bool mpdc_crypto_password_verify(const char* username, size_t userlen, const cha
 
 	if (username != NULL && userlen != 0 && password != NULL && passlen != 0 && hash != NULL && hashlen != 0)
 	{
-		char tmph[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0 };
+		uint8_t tmph[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0 };
 
 		mpdc_crypto_hash_password(tmph, sizeof(tmph), username, userlen, password, passlen);
-		res = qsc_memutils_are_equal((const uint8_t*)tmph, (const uint8_t*)hash, hashlen);
+		res = qsc_memutils_are_equal(tmph, hash, hashlen);
 	}
 
 	return res;
