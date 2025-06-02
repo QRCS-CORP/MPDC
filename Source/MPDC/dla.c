@@ -1040,14 +1040,12 @@ static void dla_receive_loop(void* ras)
 	}
 }
 
-static mpdc_protocol_errors dla_ipv4_server_start(void)
+static void dla_ipv4_server_start(void)
 {
 	qsc_socket lsock = { 0 };
 	qsc_ipinfo_ipv4_address addt = { 0 };
 	qsc_socket_exceptions serr;
-	mpdc_protocol_errors merr;
 
-	merr = mpdc_protocol_error_none;
 	addt = qsc_ipinfo_ipv4_address_from_string(m_dla_application_state.localip);
 
 	if (qsc_ipinfo_ipv4_address_is_valid(&addt) == true)
@@ -1090,32 +1088,13 @@ static mpdc_protocol_errors dla_ipv4_server_start(void)
 						else
 						{
 							/* exit on memory allocation failure */
-							merr = mpdc_protocol_error_memory_allocation;
 							mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_allocation_failure, (const char*)lsock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 						}
 					};
 				}
-				else
-				{
-					merr = mpdc_protocol_error_listener_fail;
-				}
-			}
-			else
-			{
-				merr = mpdc_protocol_error_socket_binding;
 			}
 		}
-		else
-		{
-			merr = mpdc_protocol_error_socket_creation;
-		}
 	}
-	else
-	{
-		merr = mpdc_protocol_error_no_usable_address;
-	}
-
-	return merr;
 }
 
 static mpdc_protocol_errors dla_ipv6_server_start(void)
