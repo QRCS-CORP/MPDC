@@ -63,11 +63,11 @@ add_executable(mpdc_rds ${MPDC_RDS_SOURCES})
 target_include_directories(mpdc_rds PRIVATE "Source/RDS")
 target_link_libraries(mpdc_rds PRIVATE mpdc)
 
-# Warnings -Werror
+# Warnings
 foreach(target mpdc mpdc_agent mpdc_client mpdc_dla mpdc_mas mpdc_rds)
   if (MSVC)
     target_compile_options(${target} PRIVATE /W4 /WX)
   else()
-    target_compile_options(${target} PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(${target} PRIVATE -Wall -Wextra -Wpedantic -Werror)
   endif()
 endforeach()
