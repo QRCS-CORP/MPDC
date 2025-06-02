@@ -694,66 +694,7 @@ static void agent_receive_loop(void* ras)
 	}
 }
 
-static void agent_ipv4_server_start(void)
-{
-	qsc_socket lsock = { 0 };
-	qsc_ipinfo_ipv4_address addt = { 0 };
-	qsc_socket_exceptions serr;
-
-	addt = qsc_ipinfo_ipv4_address_from_string(m_agent_application_state.localip);
-
-	if (qsc_ipinfo_ipv4_address_is_valid(&addt) == true)
-	{
-		qsc_socket_server_initialize(&lsock);
-		serr = qsc_socket_create(&lsock, qsc_socket_address_family_ipv4, qsc_socket_transport_stream, qsc_socket_protocol_tcp);
-
-		if (serr == qsc_socket_exception_success)
-		{
-			serr = qsc_socket_bind_ipv4(&lsock, &addt, MPDC_APPLICATION_AGENT_PORT);
-
-			if (serr == qsc_socket_exception_success)
-			{
-				serr = qsc_socket_listen(&lsock, QSC_SOCKET_SERVER_LISTEN_BACKLOG);
-
-				if (serr == qsc_socket_exception_success)
-				{
-					while (true)
-					{
-						agent_receive_state* ras;
-
-						ras = (agent_receive_state*)qsc_memutils_malloc(sizeof(agent_receive_state));
-
-						if (ras != NULL)
-						{
-							qsc_memutils_clear(&ras->csock, sizeof(qsc_socket));
-
-							if (serr == qsc_socket_exception_success)
-							{
-								serr = qsc_socket_accept(&lsock, &ras->csock);
-							}
-
-							if (serr == qsc_socket_exception_success)
-							{
-								qsc_async_thread_create(&agent_receive_loop, ras);
-							}
-							else
-							{
-								/* free the resources if connect fails */
-								qsc_memutils_alloc_free(ras);
-								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_allocation_failure, (const char*)lsock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
-							}
-						}
-						else
-						{
-							/* exit on memory allocation failure */
-							mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_allocation_failure, (const char*)lsock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
-						}
-					};
-				}
-			}
-		}
-	}
-}
+#if defined(MPDC_NETWORK_PROTOCOL_IPV6)
 
 static void agent_ipv6_server_start(void)
 {
@@ -821,6 +762,71 @@ static void agent_ipv6_server_start(void)
 		}
 	}
 }
+
+#else
+
+static void agent_ipv4_server_start(void)
+{
+	qsc_socket lsock = { 0 };
+	qsc_ipinfo_ipv4_address addt = { 0 };
+	qsc_socket_exceptions serr;
+
+	addt = qsc_ipinfo_ipv4_address_from_string(m_agent_application_state.localip);
+
+	if (qsc_ipinfo_ipv4_address_is_valid(&addt) == true)
+	{
+		qsc_socket_server_initialize(&lsock);
+		serr = qsc_socket_create(&lsock, qsc_socket_address_family_ipv4, qsc_socket_transport_stream, qsc_socket_protocol_tcp);
+
+		if (serr == qsc_socket_exception_success)
+		{
+			serr = qsc_socket_bind_ipv4(&lsock, &addt, MPDC_APPLICATION_AGENT_PORT);
+
+			if (serr == qsc_socket_exception_success)
+			{
+				serr = qsc_socket_listen(&lsock, QSC_SOCKET_SERVER_LISTEN_BACKLOG);
+
+				if (serr == qsc_socket_exception_success)
+				{
+					while (true)
+					{
+						agent_receive_state* ras;
+
+						ras = (agent_receive_state*)qsc_memutils_malloc(sizeof(agent_receive_state));
+
+						if (ras != NULL)
+						{
+							qsc_memutils_clear(&ras->csock, sizeof(qsc_socket));
+
+							if (serr == qsc_socket_exception_success)
+							{
+								serr = qsc_socket_accept(&lsock, &ras->csock);
+							}
+
+							if (serr == qsc_socket_exception_success)
+							{
+								qsc_async_thread_create(&agent_receive_loop, ras);
+							}
+							else
+							{
+								/* free the resources if connect fails */
+								qsc_memutils_alloc_free(ras);
+								mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_allocation_failure, (const char*)lsock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							}
+						}
+						else
+						{
+							/* exit on memory allocation failure */
+							mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_allocation_failure, (const char*)lsock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+						}
+					};
+				}
+			}
+		}
+	}
+}
+
+#endif
 
 static void agent_server_dispose(void)
 {

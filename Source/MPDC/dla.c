@@ -1040,6 +1040,68 @@ static void dla_receive_loop(void* ras)
 	}
 }
 
+#if defined(MPDC_NETWORK_PROTOCOL_IPV6)
+
+static void dla_ipv6_server_start(void)
+{
+	qsc_socket lsock = { 0 };
+	qsc_ipinfo_ipv6_address addt = { 0 };
+	qsc_socket_exceptions serr;
+
+	addt = qsc_ipinfo_ipv6_address_from_string(m_dla_application_state.localip);
+
+	if (qsc_ipinfo_ipv6_address_is_valid(&addt) == true)
+	{
+		qsc_socket_server_initialize(&lsock);
+		serr = qsc_socket_create(&lsock, qsc_socket_address_family_ipv6, qsc_socket_transport_stream, qsc_socket_protocol_tcp);
+
+		if (serr == qsc_socket_exception_success)
+		{
+			serr = qsc_socket_bind_ipv6(&lsock, &addt, MPDC_APPLICATION_DLA_PORT);
+
+			if (serr == qsc_socket_exception_success)
+			{
+				serr = qsc_socket_listen(&lsock, QSC_SOCKET_SERVER_LISTEN_BACKLOG);
+
+				if (serr == qsc_socket_exception_success)
+				{
+					while (true)
+					{
+						dla_receive_state* ras;
+
+						ras = (dla_receive_state*)qsc_memutils_malloc(sizeof(dla_receive_state));
+
+						if (ras != NULL)
+						{
+							qsc_memutils_clear(&ras->csock, sizeof(qsc_socket));
+							serr = qsc_socket_accept(&lsock, &ras->csock);
+
+							if (serr == qsc_socket_exception_success)
+							{
+								ras->csock.connection_status = qsc_socket_state_connected;
+								qsc_async_thread_create(&dla_receive_loop, ras);
+							}
+							else
+							{
+								/* free the resources if connect fails */
+								qsc_memutils_alloc_free(ras);
+								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_allocation_failure, (const char*)lsock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
+							}
+						}
+						else
+						{
+							/* exit on memory allocation failure */
+							break;
+						}
+					};
+				}
+			}
+		}
+	}
+}
+
+#else
+
 static void dla_ipv4_server_start(void)
 {
 	qsc_socket lsock = { 0 };
@@ -1097,84 +1159,7 @@ static void dla_ipv4_server_start(void)
 	}
 }
 
-static mpdc_protocol_errors dla_ipv6_server_start(void)
-{
-	qsc_socket lsock = { 0 };
-	qsc_ipinfo_ipv6_address addt = { 0 };
-	qsc_socket_exceptions serr;
-	mpdc_protocol_errors merr;
-
-	merr = mpdc_protocol_error_none;
-	addt = qsc_ipinfo_ipv6_address_from_string(m_dla_application_state.localip);
-
-	if (qsc_ipinfo_ipv6_address_is_valid(&addt) == true)
-	{
-		qsc_socket_server_initialize(&lsock);
-		serr = qsc_socket_create(&lsock, qsc_socket_address_family_ipv6, qsc_socket_transport_stream, qsc_socket_protocol_tcp);
-
-		if (serr == qsc_socket_exception_success)
-		{
-			serr = qsc_socket_bind_ipv6(&lsock, &addt, MPDC_APPLICATION_DLA_PORT);
-
-			if (serr == qsc_socket_exception_success)
-			{
-				serr = qsc_socket_listen(&lsock, QSC_SOCKET_SERVER_LISTEN_BACKLOG);
-
-				if (serr == qsc_socket_exception_success)
-				{
-					while (true)
-					{
-						dla_receive_state* ras;
-
-						ras = (dla_receive_state*)qsc_memutils_malloc(sizeof(dla_receive_state));
-
-						if (ras != NULL)
-						{
-							qsc_memutils_clear(&ras->csock, sizeof(qsc_socket));
-							serr = qsc_socket_accept(&lsock, &ras->csock);
-
-							if (serr == qsc_socket_exception_success)
-							{
-								ras->csock.connection_status = qsc_socket_state_connected;
-								qsc_async_thread_create(&dla_receive_loop, ras);
-							}
-							else
-							{
-								/* free the resources if connect fails */
-								qsc_memutils_alloc_free(ras);
-								mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_allocation_failure, (const char*)lsock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
-							}
-						}
-						else
-						{
-							/* exit on memory allocation failure */
-							merr = mpdc_protocol_error_memory_allocation;
-							break;
-						}
-					};
-				}
-				else
-				{
-					merr = mpdc_protocol_error_listener_fail;
-				}
-			}
-			else
-			{
-				merr = mpdc_protocol_error_socket_binding;
-			}
-		}
-		else
-		{
-			merr = mpdc_protocol_error_socket_creation;
-		}
-	}
-	else
-	{
-		merr = mpdc_protocol_error_no_usable_address;
-	}
-
-	return merr;
-}
+#endif
 
 static void dla_server_dispose(void)
 {
