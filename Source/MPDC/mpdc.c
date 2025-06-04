@@ -18,12 +18,12 @@ void mpdc_connection_close(qsc_socket* rsock, mpdc_network_errors err, bool noti
 			if (notify == true)
 			{
 				mpdc_network_packet resp = { 0 };
-				uint8_t spct[MPDC_PACKET_HEADER_SIZE + sizeof(uint8_t)] = {0};
+				uint8_t spct[MPDC_PACKET_HEADER_SIZE + sizeof(uint8_t)] = { 0U };
 
 				/* send a disconnect message */
 				resp.flag = mpdc_network_flag_tunnel_connection_terminate;
 				resp.sequence = MPDC_PACKET_SEQUENCE_TERMINATOR;
-				resp.msglen = 1;
+				resp.msglen = 1U;
 				mpdc_packet_header_serialize(&resp, spct);
 
 				spct[MPDC_PACKET_HEADER_SIZE] = (uint8_t)err;
@@ -49,8 +49,8 @@ mpdc_protocol_errors mpdc_decrypt_packet(mpdc_connection_state* pcns, uint8_t* m
 
 	if (pcns != NULL && message != NULL && msglen != NULL && packetin != NULL)
 	{
-		*msglen = 0;
-		pcns->rxseq += 1;
+		*msglen = 0U;
+		pcns->rxseq += 1U;
 
 		if (mpdc_packet_time_valid(packetin) == true)
 		{
@@ -58,7 +58,7 @@ mpdc_protocol_errors mpdc_decrypt_packet(mpdc_connection_state* pcns, uint8_t* m
 			{
 				if (pcns->exflag == mpdc_network_flag_tunnel_session_established)
 				{
-					uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0 };
+					uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0U };
 
 					/* serialize the header and add it to the ciphers associated data */
 					mpdc_packet_header_serialize(packetin, hdr);
@@ -72,7 +72,7 @@ mpdc_protocol_errors mpdc_decrypt_packet(mpdc_connection_state* pcns, uint8_t* m
 					}
 					else
 					{
-						*msglen = 0;
+						*msglen = 0U;
 						merr = mpdc_protocol_error_authentication_failure;
 					}
 				}
@@ -109,12 +109,12 @@ mpdc_protocol_errors mpdc_encrypt_packet(mpdc_connection_state* pcns, mpdc_netwo
 
 	if (pcns != NULL && message != NULL && packetout != NULL)
 	{
-		if (pcns->exflag == mpdc_network_flag_tunnel_session_established && msglen != 0)
+		if (pcns->exflag == mpdc_network_flag_tunnel_session_established && msglen != 0U)
 		{
-			uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0 };
+			uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0U };
 
 			/* assemble the encryption packet */
-			pcns->txseq += 1;
+			pcns->txseq += 1U;
 			packetout->flag = mpdc_network_flag_tunnel_encrypted_message;
 			packetout->msglen = (uint32_t)msglen + MPDC_CRYPTO_SYMMETRIC_MAC_SIZE;
 			packetout->sequence = pcns->txseq;
@@ -173,8 +173,8 @@ void mpdc_packet_clear(mpdc_network_packet* packet)
 {
 	qsc_memutils_clear(packet->pmessage, packet->msglen);
 	packet->flag = (uint8_t)mpdc_network_flag_none;
-	packet->msglen = 0;
-	packet->sequence = 0;
+	packet->msglen = 0U;
+	packet->sequence = 0U;
 }
 
 void mpdc_packet_error_message(mpdc_network_packet* packet, mpdc_protocol_errors error)
@@ -184,8 +184,8 @@ void mpdc_packet_error_message(mpdc_network_packet* packet, mpdc_protocol_errors
 	if (packet != NULL)
 	{
 		packet->flag = mpdc_network_flag_system_error_condition;
-		packet->pmessage[0] = (uint8_t)error;
-		packet->msglen = 1;
+		packet->pmessage[0U] = (uint8_t)error;
+		packet->msglen = 1U;
 		packet->sequence = MPDC_PACKET_SEQUENCE_TERMINATOR;
 	}
 }
@@ -199,7 +199,7 @@ void mpdc_packet_header_deserialize(const uint8_t* header, mpdc_network_packet* 
 	{
 		size_t pos;
 
-		packet->flag = header[0];
+		packet->flag = header[0U];
 		pos = sizeof(uint8_t);
 		packet->msglen = qsc_intutils_le8to32(header + pos);
 		pos += sizeof(uint32_t);
@@ -218,7 +218,7 @@ void mpdc_packet_header_serialize(const mpdc_network_packet* packet, uint8_t* he
 	{
 		size_t pos;
 
-		header[0] = packet->flag;
+		header[0U] = packet->flag;
 		pos = sizeof(uint8_t);
 		qsc_intutils_le32to8(header + pos, packet->msglen);
 		pos += sizeof(uint32_t);
@@ -249,13 +249,13 @@ size_t mpdc_packet_to_stream(const mpdc_network_packet* packet, uint8_t* pstream
 
 	size_t res;
 
-	res = 0;
+	res = 0U;
 
 	if (packet != NULL && pstream != NULL)
 	{
 		size_t pos;
 
-		pstream[0] = packet->flag;
+		pstream[0U] = packet->flag;
 		pos = sizeof(uint8_t);
 		qsc_intutils_le32to8(pstream + pos, packet->msglen);
 		pos += sizeof(uint32_t);
@@ -283,7 +283,7 @@ void mpdc_stream_to_packet(const uint8_t* pstream, mpdc_network_packet* packet)
 	{
 		size_t pos;
 
-		packet->flag = pstream[0];
+		packet->flag = pstream[0U];
 		pos = sizeof(uint8_t);
 		packet->msglen = qsc_intutils_le8to32(pstream + pos);
 		pos += sizeof(uint32_t);
@@ -308,9 +308,9 @@ void mpdc_connection_state_dispose(mpdc_connection_state* pcns)
 		mpdc_cipher_dispose(&pcns->rxcpr);
 		mpdc_cipher_dispose(&pcns->txcpr);
 		qsc_memutils_clear((uint8_t*)&pcns->target, sizeof(qsc_socket));
-		pcns->rxseq = 0;
-		pcns->txseq = 0;
-		pcns->instance = 0;
+		pcns->rxseq = 0U;
+		pcns->txseq = 0U;
+		pcns->instance = 0U;
 		pcns->exflag = mpdc_network_flag_none;
 	}
 }

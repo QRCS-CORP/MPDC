@@ -92,7 +92,7 @@ MPDC_EXPORT_API void mpdc_rds_stop_server(void);
  *
  * \return Returns true if all tests pass successfully, otherwise returns false.
  */
-MPDC_EXPORT_API bool mpdc_rds_appserv_test();
+MPDC_EXPORT_API bool mpdc_rds_appserv_test(void);
 #endif
 
 #endif

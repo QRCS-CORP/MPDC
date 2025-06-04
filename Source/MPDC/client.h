@@ -88,7 +88,7 @@
  */
 
 /**
- * \brief Callback function to evaluate an incoming connection request.
+ * \brief Callback function prototype to evaluate an incoming connection request.
  *
  * Use this callback to determine whether a remote node requesting connection should be accepted.
  *

@@ -241,10 +241,10 @@ static void server_initialize_key_chain(mpdc_server_application_state* state, co
 	MPDC_ASSERT(state != NULL);
 	MPDC_ASSERT(password != NULL);
 	MPDC_ASSERT(username != NULL);
-	MPDC_ASSERT(passlen != 0);
-	MPDC_ASSERT(userlen != 0);
+	MPDC_ASSERT(passlen != 0U);
+	MPDC_ASSERT(userlen != 0U);
 
-	if (state != NULL && password != NULL && username != NULL && passlen != 0 && userlen != 0)
+	if (state != NULL && password != NULL && username != NULL && passlen != 0 && userlen != 0U)
 	{
 		const size_t klen = (SERVER_KEYCHAIN_DEPTH * SERVER_KEYCHAIN_WIDTH);
 		mpdc_crypto_generate_application_keychain(state->kchain, klen, password, passlen, username, userlen);
@@ -284,7 +284,7 @@ static bool server_log_decrypt(mpdc_server_application_state* state)
 
 			flen = qsc_fileutils_get_size(state->logpath);
 
-			if (flen > 0)
+			if (flen > 0U)
 			{
 				uint8_t* pdec;
 				uint8_t* penc;
@@ -348,7 +348,7 @@ static void server_log_encrypt(const mpdc_server_application_state* state)
 
 			flen = qsc_fileutils_get_size(state->logpath);
 
-			if (flen > 0)
+			if (flen > 0U)
 			{
 				uint8_t* ptxt;
 				uint8_t* penc;
@@ -360,7 +360,7 @@ static void server_log_encrypt(const mpdc_server_application_state* state)
 				{
 					flen = qsc_fileutils_copy_file_to_stream(state->logpath, (char*)ptxt, flen);
 
-					if (flen > 0)
+					if (flen > 0U)
 					{
 						const uint8_t* pkey = state->kchain + (SERVER_KEYCHAIN_LOG_INDEX * SERVER_KEYCHAIN_WIDTH);
 
@@ -393,13 +393,13 @@ static void server_log_initialize(mpdc_server_application_state* state)
 	if (state != NULL)
 	{
 		if (qsc_fileutils_exists(state->logpath) == false ||
-			qsc_fileutils_get_size(state->logpath) == 0)
+			qsc_fileutils_get_size(state->logpath) == 0U)
 		{
 			size_t slen;
 
 			mpdc_logger_reset(state->logpath);
 			slen = qsc_stringutils_string_size(state->hostname);
-			mpdc_logger_write_decorated_message(state->logpath, mpdc_application_log_log_header, NULL, 0);
+			mpdc_logger_write_decorated_message(state->logpath, mpdc_application_log_log_header, NULL, 0U);
 			mpdc_logger_write_decorated_time_stamped_message(state->logpath, mpdc_application_log_log_created, state->hostname, slen);
 			server_log_encrypt(state);
 		}
@@ -486,14 +486,14 @@ static bool mpdc_server_configuration_load(mpdc_server_application_state* state)
 
 		if (res == true)
 		{
-			uint8_t encs[MPDC_SERVER_APPLICATION_STATE_SIZE + MPDC_STORAGE_MAC_SIZE] = { 0 };
+			uint8_t encs[MPDC_SERVER_APPLICATION_STATE_SIZE + MPDC_STORAGE_MAC_SIZE] = { 0U };
 			const uint8_t* pkey;
 
 			res = (qsc_fileutils_copy_file_to_stream(fpath, (char*)encs, sizeof(encs)) == sizeof(encs));
 
 			if (res == true)
 			{
-				uint8_t decs[MPDC_SERVER_APPLICATION_STATE_SIZE] = { 0 };
+				uint8_t decs[MPDC_SERVER_APPLICATION_STATE_SIZE] = { 0U };
 
 				pkey = state->kchain + (SERVER_KEYCHAIN_STATE_INDEX * SERVER_KEYCHAIN_WIDTH);
 
@@ -675,7 +675,7 @@ bool mpdc_server_child_certificate_export(const mpdc_server_application_state* s
 	if (state != NULL && dpath != NULL)
 	{
 		if (qsc_folderutils_directory_exists(dpath) == true &&
-			qsc_stringutils_string_size(state->issuer) > 0)
+			qsc_stringutils_string_size(state->issuer) > 0U)
 		{
 			char cpath[MPDC_STORAGE_PATH_MAX] = { 0 };
 
@@ -744,9 +744,9 @@ void mpdc_server_child_certificate_generate(mpdc_server_application_state* state
 {
 	MPDC_ASSERT(state != NULL);
 	MPDC_ASSERT(ccert != NULL);
-	MPDC_ASSERT(period != 0);
+	MPDC_ASSERT(period != 0U);
 
-	if (state != NULL && ccert != NULL && period != 0)
+	if (state != NULL && ccert != NULL && period != 0U)
 	{
 		mpdc_certificate_expiration exp = { 0 };
 		mpdc_signature_keypair akp = { 0 };
@@ -861,7 +861,7 @@ bool mpdc_server_child_certificate_print(const char* fpath, size_t pathlen)
 
 	if (fpath != NULL && pathlen >= MPDC_MINIMUM_PATH_LENGTH)
 	{
-		if (pathlen > 0 &&
+		if (pathlen > 0U &&
 			qsc_fileutils_exists(fpath) &&
 			qsc_stringutils_string_contains(fpath, MPDC_CERTIFICATE_CHILD_EXTENSION) == true)
 		{
@@ -996,7 +996,7 @@ void mpdc_server_log_print(mpdc_server_application_state* state)
 				int64_t len;
 				size_t ctr;
 
-				ctr = 0;
+				ctr = 0U;
 
 				while (true)
 				{
@@ -1040,7 +1040,7 @@ bool mpdc_server_log_write_message(mpdc_server_application_state* state, mpdc_ap
 
 		if (res == true)
 		{
-			if (qsc_fileutils_get_size(state->logpath) > 0)
+			if (qsc_fileutils_get_size(state->logpath) > 0U)
 			{
 				res = server_log_decrypt(state);
 			}
@@ -1091,7 +1091,7 @@ bool mpdc_server_mfkcol_from_file(qsc_collection_state* mfkcol, const mpdc_serve
 
 			flen = qsc_fileutils_get_size(fpath);
 
-			if (flen > 0)
+			if (flen > 0U)
 			{
 				uint8_t* pdec;
 				uint8_t* penc;
@@ -1105,7 +1105,7 @@ bool mpdc_server_mfkcol_from_file(qsc_collection_state* mfkcol, const mpdc_serve
 
 					mlen = qsc_fileutils_copy_file_to_stream(fpath, (char*)penc, flen);
 
-					if (mlen > 0)
+					if (mlen > 0U)
 					{
 						const uint8_t* pkey = state->kchain + (SERVER_KEYCHAIN_MFKCOL_INDEX * SERVER_KEYCHAIN_WIDTH);
 
@@ -1147,7 +1147,7 @@ void mpdc_server_mfkcol_to_file(const qsc_collection_state* mfkcol, const mpdc_s
 	{
 		clen = qsc_collection_size(mfkcol);
 
-		if (clen > 0)
+		if (clen > 0U)
 		{
 			uint8_t* ptxt;
 			uint8_t* penc;
@@ -1211,66 +1211,66 @@ void mpdc_server_print_configuration(const mpdc_server_application_state* state)
 	MPDC_ASSERT(state != NULL);
 
 	const char DEFVAL[] = "NOT-SET";
-	char ib[6] = { 0 };
+	char ib[6U] = { 0 };
 
 	if (state != NULL)
 	{
 		mpdc_menu_print_predefined_message(mpdc_application_configuration, mpdc_console_mode_enable, state->hostname);
 
-		const char* sdom[3] = {
+		const char* sdom[3U] = {
 			state->cmdprompt,
 			"Domain string: ",
-			qsc_stringutils_string_size(state->domain) > 0 ? state->domain : DEFVAL,
+			qsc_stringutils_string_size(state->domain) > 0U ? state->domain : DEFVAL,
 		};
-		qsc_consoleutils_print_concatenated_line(sdom, 3);
+		qsc_consoleutils_print_concatenated_line(sdom, 3U);
 
-		const char* shost[3] = {
+		const char* shost[3U] = {
 			state->cmdprompt,
 			"Host name: ",
-			qsc_stringutils_string_size(state->hostname) > 0 ? state->hostname : DEFVAL,
+			qsc_stringutils_string_size(state->hostname) > 0U ? state->hostname : DEFVAL,
 		};
-		qsc_consoleutils_print_concatenated_line(shost, 3);
+		qsc_consoleutils_print_concatenated_line(shost, 3U);
 
-		const char* slip[3] = {
+		const char* slip[3U] = {
 			state->cmdprompt,
 			"IP address: ",
-			qsc_stringutils_string_size(state->localip) > 0 ? state->localip : DEFVAL,
+			qsc_stringutils_string_size(state->localip) > 0U ? state->localip : DEFVAL,
 		};
-		qsc_consoleutils_print_concatenated_line(slip, 3);
+		qsc_consoleutils_print_concatenated_line(slip, 3U);
 
-		const char* slog[3] = {
+		const char* slog[3U] = {
 			state->cmdprompt,
 			"Host Logging: ",
 			state->loghost == true ? "true" : "false",
 		};
-		qsc_consoleutils_print_concatenated_line(slog, 3);
+		qsc_consoleutils_print_concatenated_line(slog, 3U);
 
 		qsc_stringutils_int_to_string(state->port, ib, sizeof(ib));
-		const char* tmpport[3] = {
+		const char* tmpport[3U] = {
 			state->cmdprompt,
 			"Port number: ",
 			ib,
 		};
-		qsc_consoleutils_print_concatenated_line(tmpport, 3);
+		qsc_consoleutils_print_concatenated_line(tmpport, 3U);
 
 		qsc_memutils_clear(ib, sizeof(ib));
 		qsc_stringutils_int_to_string(state->retries, ib, sizeof(ib));
-		const char* sretr[3] = {
+		const char* sretr[3U] = {
 			state->cmdprompt,
 			"Authentication retries: ",
 			ib,
 		};
 
-		qsc_consoleutils_print_concatenated_line(sretr, 3);
+		qsc_consoleutils_print_concatenated_line(sretr, 3U);
 		qsc_stringutils_int_to_string(state->timeout, ib, sizeof(ib));
 
-		const char* stout[3] = {
+		const char* stout[3U] = {
 			state->cmdprompt,
 			"Console timeout: ",
 			ib,
 		};
 
-		qsc_consoleutils_print_concatenated_line(stout, 3);
+		qsc_consoleutils_print_concatenated_line(stout, 3U);
 	}
 }
 
@@ -1286,7 +1286,7 @@ bool mpdc_server_root_certificate_export(const mpdc_server_application_state* st
 	if (state != NULL && dpath != NULL)
 	{
 		if (qsc_folderutils_directory_exists(dpath) == true &&
-			qsc_stringutils_string_size(state->issuer) > 0)
+			qsc_stringutils_string_size(state->issuer) > 0U)
 		{
 			char cpath[MPDC_STORAGE_PATH_MAX] = { 0 };
 
@@ -1329,7 +1329,7 @@ bool mpdc_server_root_import_dialogue(mpdc_server_application_state* state)
 		{
 			mpdc_menu_print_predefined_message(mpdc_application_challenge_root_path, mpdc_console_mode_certificate, state->hostname);
 			mpdc_menu_print_prompt(mpdc_console_mode_certificate, state->hostname);
-			slen = qsc_consoleutils_get_line(cmsg, sizeof(cmsg)) - 1;
+			slen = qsc_consoleutils_get_line(cmsg, sizeof(cmsg)) - 1U;
 
 			if (slen >= MPDC_STORAGE_FILEPATH_MIN &&
 				slen <= MPDC_STORAGE_FILEPATH_MAX &&
@@ -1362,9 +1362,9 @@ void mpdc_server_root_certificate_generate(mpdc_server_application_state* state,
 {
 	MPDC_ASSERT(state != NULL);
 	MPDC_ASSERT(rcert != NULL);
-	MPDC_ASSERT(period != 0);
+	MPDC_ASSERT(period != 0U);
 
-	if (state != NULL && rcert != NULL && period != 0)
+	if (state != NULL && rcert != NULL && period != 0U)
 	{
 		mpdc_certificate_expiration exp = { 0 };
 		mpdc_signature_keypair akp = { 0 };
@@ -1506,7 +1506,7 @@ void mpdc_server_root_certificate_store(mpdc_server_application_state* state, co
 					/* get the root address and register in the topology */
 					mpdc_menu_print_predefined_message(mpdc_application_rds_certificate_address_challenge, mpdc_console_mode_server, state->hostname);
 					mpdc_menu_print_prompt(mpdc_console_mode_server, state->hostname);
-					slen = qsc_consoleutils_get_line(cmsg, sizeof(cmsg)) - 1;
+					slen = qsc_consoleutils_get_line(cmsg, sizeof(cmsg)) - 1U;
 
 					if (slen >= QSC_IPINFO_IPV4_MINLEN)
 					{
@@ -1596,15 +1596,15 @@ bool mpdc_server_set_console_timeout(mpdc_server_application_state* state, const
 {
 	MPDC_ASSERT(state != NULL);
 	MPDC_ASSERT(snum != NULL);
-	MPDC_ASSERT(numlen != 0);
+	MPDC_ASSERT(numlen != 0U);
 
 	bool res;
 
 	res = false;
 
-	if (state != NULL && snum != NULL && numlen != 0)
+	if (state != NULL && snum != NULL && numlen != 0U)
 	{
-		if (numlen > 0)
+		if (numlen > 0U)
 		{
 			uint16_t val;
 
@@ -1633,13 +1633,13 @@ bool mpdc_server_set_domain_name(mpdc_server_application_state* state, const cha
 {
 	MPDC_ASSERT(state != NULL);
 	MPDC_ASSERT(name != NULL);
-	MPDC_ASSERT(namelen != 0);
+	MPDC_ASSERT(namelen != 0U);
 
 	bool res;
 
 	res = true;
 	
-	if (state != NULL && name != NULL && namelen != 0)
+	if (state != NULL && name != NULL && namelen != 0U)
 	{
 		char fpath[MPDC_STORAGE_PATH_MAX] = { 0 };
 
@@ -1691,13 +1691,13 @@ bool mpdc_server_set_host_name(mpdc_server_application_state* state, const char*
 {
 	MPDC_ASSERT(state != NULL);
 	MPDC_ASSERT(name != NULL);
-	MPDC_ASSERT(namelen != 0);
+	MPDC_ASSERT(namelen != 0U);
 
 	bool res;
 
 	res = true;
 
-	if (state != NULL && name != NULL && namelen != 0)
+	if (state != NULL && name != NULL && namelen != 0U)
 	{
 		char fpath[MPDC_STORAGE_PATH_MAX] = { 0 };
 
@@ -1748,13 +1748,13 @@ bool mpdc_server_set_ip_address(mpdc_server_application_state* state, const char
 {
 	MPDC_ASSERT(state != NULL);
 	MPDC_ASSERT(address != NULL);
-	MPDC_ASSERT(addlen != 0);
+	MPDC_ASSERT(addlen != 0U);
 
 	bool res;
 
 	res = false;
 
-	if (state != NULL && address != NULL && addlen != 0)
+	if (state != NULL && address != NULL && addlen != 0U)
 	{
 		if (addlen >= MPDC_STORAGE_ADDRESS_MIN && addlen <= MPDC_STORAGE_ADDRESS_MAX)
 		{
@@ -1789,18 +1789,18 @@ bool mpdc_server_set_password_retries(mpdc_server_application_state* state, cons
 {
 	MPDC_ASSERT(state != NULL);
 	MPDC_ASSERT(snum != NULL);
-	MPDC_ASSERT(numlen != 0);
+	MPDC_ASSERT(numlen != 0U);
 
 	uint8_t val;
 	bool res;
 
 	res = false;
 
-	if (state != NULL && snum != NULL && numlen != 0)
+	if (state != NULL && snum != NULL && numlen != 0U)
 	{
 		if (qsc_stringutils_is_numeric(snum, numlen) == true)
 		{
-			if (numlen != 0)
+			if (numlen != 0U)
 			{
 				val = (uint8_t)qsc_stringutils_string_to_int(snum);
 
@@ -2069,8 +2069,8 @@ bool mpdc_server_state_store(mpdc_server_application_state* state)
 	if (state != NULL)
 	{
 		char fpath[MPDC_STORAGE_PATH_MAX] = { 0 };
-		uint8_t encs[MPDC_SERVER_APPLICATION_STATE_SIZE + MPDC_STORAGE_MAC_SIZE] = { 0 };
-		uint8_t tmps[MPDC_SERVER_APPLICATION_STATE_SIZE] = { 0 };
+		uint8_t encs[MPDC_SERVER_APPLICATION_STATE_SIZE + MPDC_STORAGE_MAC_SIZE] = { 0U };
+		uint8_t tmps[MPDC_SERVER_APPLICATION_STATE_SIZE] = { 0U };
 
 		server_config_path(state, fpath, sizeof(fpath));
 		server_state_serialize(state, tmps);
@@ -2152,7 +2152,7 @@ bool mpdc_server_topology_load(mpdc_server_application_state* state)
 
 			flen = qsc_fileutils_get_size(fpath);
 
-			if (flen > 0)
+			if (flen > 0U)
 			{
 				uint8_t* pdec;
 				uint8_t* penc;
@@ -2166,7 +2166,7 @@ bool mpdc_server_topology_load(mpdc_server_application_state* state)
 
 					mlen = qsc_fileutils_copy_file_to_stream(fpath, (char*)penc, flen);
 
-					if (mlen > 0)
+					if (mlen > 0U)
 					{
 						const uint8_t* pkey = state->kchain + (SERVER_KEYCHAIN_TOPOLOGY_INDEX * SERVER_KEYCHAIN_WIDTH);
 
@@ -2239,7 +2239,7 @@ void mpdc_server_topology_print_list(mpdc_server_application_state* state)
 	{
 		slen = (state->tlist.count * MPDC_TOPOLOGY_NODE_ENCODED_SIZE);
 
-		if (slen > 0)
+		if (slen > 0U)
 		{
 			lstr = qsc_memutils_malloc(slen);
 
@@ -2248,7 +2248,7 @@ void mpdc_server_topology_print_list(mpdc_server_application_state* state)
 				qsc_memutils_clear(lstr, slen);
 				rlen = mpdc_topology_list_to_string(&state->tlist, lstr, slen);
 
-				if (rlen != 0)
+				if (rlen != 0U)
 				{
 					qsc_consoleutils_print_safe(lstr);
 				}
@@ -2265,7 +2265,7 @@ void mpdc_server_topology_purge_externals(mpdc_server_application_state* state)
 
 	mpdc_topology_list_clone(&state->tlist, &tcopy);
 
-	for (size_t i = 0; i < tcopy.count; ++i)
+	for (size_t i = 0U; i < tcopy.count; ++i)
 	{
 		mpdc_topology_node_state node = { 0 };
 
@@ -2404,7 +2404,7 @@ void mpdc_server_topology_to_file(mpdc_server_application_state* state)
 
 		tlen = mpdc_topology_list_size(&state->tlist);
 
-		if (tlen > 0)
+		if (tlen > 0U)
 		{
 			uint8_t* ptxt;
 			uint8_t* penc;
@@ -2473,7 +2473,7 @@ bool mpdc_server_user_login(mpdc_server_application_state* state)
 			{
 				mpdc_menu_print_predefined_message(mpdc_application_choose_name, mpdc_console_mode_login_message, state->hostname);
 				mpdc_menu_print_prompt(mpdc_console_mode_login_user, state->hostname);
-				slen = qsc_consoleutils_get_line(cmsg, sizeof(cmsg)) - 1;
+				slen = qsc_consoleutils_get_line(cmsg, sizeof(cmsg)) - 1U;
 
 				if (slen >= MPDC_STORAGE_USERNAME_MIN && slen <= MPDC_STORAGE_USERNAME_MAX)
 				{
@@ -2511,7 +2511,7 @@ bool mpdc_server_user_login(mpdc_server_application_state* state)
 			{
 				mpdc_menu_print_predefined_message(mpdc_application_challenge_device_name, mpdc_console_mode_login_message, state->hostname);
 				mpdc_menu_print_prompt(mpdc_console_mode_login_hostname, state->hostname);
-				slen = qsc_consoleutils_get_line(cmsg, sizeof(cmsg)) - 1;
+				slen = qsc_consoleutils_get_line(cmsg, sizeof(cmsg)) - 1U;
 
 				if (slen >= MPDC_STORAGE_DEVICENAME_MIN && slen <= MPDC_STORAGE_DEVICENAME_MAX)
 				{
@@ -2534,7 +2534,7 @@ bool mpdc_server_user_login(mpdc_server_application_state* state)
 				{
 					mpdc_menu_print_predefined_message(mpdc_application_address_change_message, mpdc_console_mode_login_message, state->hostname);
 					mpdc_menu_print_prompt(mpdc_console_mode_login_address, state->hostname);
-					slen = qsc_consoleutils_get_line(cmsg, sizeof(cmsg)) - 1;
+					slen = qsc_consoleutils_get_line(cmsg, sizeof(cmsg)) - 1U;
 
 					if (slen >= MPDC_STORAGE_ADDRESS_MIN && slen <= MPDC_STORAGE_ADDRESS_MAX)
 					{
@@ -2565,7 +2565,7 @@ bool mpdc_server_user_login(mpdc_server_application_state* state)
 				while (true)
 				{
 					mpdc_menu_print_prompt(mpdc_console_mode_login_domain, state->hostname);
-					slen = qsc_consoleutils_get_line(cmsg, sizeof(cmsg)) - 1;
+					slen = qsc_consoleutils_get_line(cmsg, sizeof(cmsg)) - 1U;
 
 					if (slen >= MPDC_STORAGE_DOMAINNAME_MIN && slen <= MPDC_STORAGE_DOMAINNAME_MAX)
 					{
@@ -2643,8 +2643,8 @@ bool mpdc_server_user_login(mpdc_server_application_state* state)
 			size_t rctr;
 
 			res = false;
-			slen = 0;
-			rctr = 0;
+			slen = 0U;
+			rctr = 0U;
 
 			while (true)
 			{
@@ -2656,7 +2656,7 @@ bool mpdc_server_user_login(mpdc_server_application_state* state)
 				++rctr;
 				mpdc_menu_print_predefined_message(mpdc_application_challenge_user, mpdc_console_mode_login_message, state->hostname);
 				mpdc_menu_print_prompt(mpdc_console_mode_login_user, state->hostname);
-				slen = qsc_consoleutils_get_line(cmsg, sizeof(cmsg)) - 1;
+				slen = qsc_consoleutils_get_line(cmsg, sizeof(cmsg)) - 1U;
 
 				if (slen >= MPDC_STORAGE_USERNAME_MIN && slen <= MPDC_STORAGE_USERNAME_MAX)
 				{
@@ -2673,7 +2673,7 @@ bool mpdc_server_user_login(mpdc_server_application_state* state)
 
 			if (res == true)
 			{
-				rctr = 0;
+				rctr = 0U;
 
 				while (true)
 				{

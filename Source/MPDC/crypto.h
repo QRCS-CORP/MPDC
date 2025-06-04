@@ -81,13 +81,13 @@
  * \def MPDC_CRYPTO_PHASH_CPU_COST
  * \brief The passphrase hash CPU cost in iterations (acceptable range: 1-100000).
  */
-#define MPDC_CRYPTO_PHASH_CPU_COST 4
+#define MPDC_CRYPTO_PHASH_CPU_COST 4U
 
 /*! 
  * \def MPDC_CRYPTO_PHASH_MEMORY_COST
  * \brief The passphrase hash memory cost in MB (acceptable range: 1-4096).
  */
-#define MPDC_CRYPTO_PHASH_MEMORY_COST 1
+#define MPDC_CRYPTO_PHASH_MEMORY_COST 1U
 
 /**
  * \brief Decrypt a stream of bytes.

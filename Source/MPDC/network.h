@@ -551,15 +551,6 @@ MPDC_EXPORT_API mpdc_protocol_errors mpdc_network_converge_request(const mpdc_ne
 MPDC_EXPORT_API mpdc_protocol_errors mpdc_network_converge_response(const mpdc_network_converge_response_state* state, const mpdc_network_packet* packetin);
 
 /**
-* \brief Process a converge response update message
-*
-* \param state: The converge update verify state structure
-* \param packetin: [const] The input packet containing the verify response
-* \return Returns the error code
-*/
-MPDC_EXPORT_API mpdc_protocol_errors mpdc_network_converge_update_verify(mpdc_network_converge_update_verify_state* state, const mpdc_network_packet* packetin);
-
-/**
 * \brief Connect a socket to a remote address and port
 *
 * \param csock: A pointer to the socket
@@ -796,15 +787,6 @@ MPDC_EXPORT_API mpdc_protocol_errors mpdc_network_topological_query_response(con
 * \return Returns the error code
 */
 MPDC_EXPORT_API mpdc_protocol_errors mpdc_network_topological_status_request(const mpdc_network_topological_status_request_state* state);
-
-/**
-* \brief Verify the status response from the DLA
-*
-* \param state: The topological status verify state
-* \param packetin: The packet containing the topological status response
-* \return Returns the error code
-*/
-MPDC_EXPORT_API mpdc_protocol_errors mpdc_network_topological_status_verify(const mpdc_network_topological_status_request_state* state, const mpdc_network_packet* packetin);
 
 /**
 * \brief Process the status response from the client device and send a response

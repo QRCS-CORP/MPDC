@@ -38,7 +38,7 @@ void mpdc_menu_print_message(const char* message, mpdc_console_modes mode, const
 	{
 		mpdc_menu_print_prompt(mode, host);
 
-		if (qsc_stringutils_string_size(message) > 0)
+		if (qsc_stringutils_string_size(message) > 0U)
 		{
 			qsc_consoleutils_print_line(message);
 		}
@@ -79,7 +79,7 @@ void mpdc_menu_print_prompt_text(const char* message, mpdc_console_modes mode, c
 	{
 		mpdc_menu_print_prompt(mode, host);
 
-		if (qsc_stringutils_string_size(message) > 0)
+		if (qsc_stringutils_string_size(message) > 0U)
 		{
 			qsc_consoleutils_print_safe(message);
 		}
@@ -92,7 +92,7 @@ void mpdc_menu_print_text(const char* message)
 
 	if (message != NULL)
 	{
-		if (qsc_stringutils_string_size(message) > 0)
+		if (qsc_stringutils_string_size(message) > 0U)
 		{
 			qsc_consoleutils_print_safe(message);
 		}
@@ -105,7 +105,7 @@ void mpdc_menu_print_text_line(const char* message)
 
 	if (message != NULL)
 	{
-		if (qsc_stringutils_string_size(message) > 0)
+		if (qsc_stringutils_string_size(message) > 0U)
 		{
 			qsc_consoleutils_print_line(message);
 		}
@@ -116,7 +116,7 @@ bool mpdc_menu_print_predefined_message_confirm(mpdc_application_messages msgnum
 {
 	MPDC_ASSERT(host != NULL);
 
-	char ans[8] = { 0 };
+	char ans[8U] = { 0 };
 	bool res;
 
 	res = false;
@@ -126,9 +126,9 @@ bool mpdc_menu_print_predefined_message_confirm(mpdc_application_messages msgnum
 		mpdc_menu_print_predefined_message(msgnum, mode, host);
 		mpdc_menu_print_prompt(mode, host);
 
-		if (qsc_consoleutils_get_line(ans, sizeof(ans)) > 0)
+		if (qsc_consoleutils_get_line(ans, sizeof(ans)) > 0U)
 		{
-			if (ans[0] == 'y' || ans[0] == 'Y')
+			if (ans[0U] == 'y' || ans[0U] == 'Y')
 			{
 				res = true;
 			}
@@ -164,7 +164,7 @@ void mpdc_menu_print_prompt(mpdc_console_modes mode, const char* host)
 {
 	MPDC_ASSERT(host != NULL);
 
-	char pmt[MPDC_STORAGE_PROMPT_MAX + 1] = { 0 };
+	char pmt[MPDC_STORAGE_PROMPT_MAX + 1U] = { 0 };
 
 	if (host != NULL)
 	{

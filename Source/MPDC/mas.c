@@ -1013,7 +1013,7 @@ static void mas_receive_loop(void* ras)
 					mpdc_server_log_write_message(&m_mas_application_state, mpdc_application_log_receive_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 				}
 
-				if (mlen > 0)
+				if (mlen > 0U)
 				{
 					pkt.pmessage = buff + MPDC_PACKET_HEADER_SIZE;
 
@@ -1146,7 +1146,7 @@ static void mas_receive_loop(void* ras)
 					else if (pkt.flag == mpdc_network_flag_system_error_condition)
 					{
 						/* log the error condition */
-						cmsg = mpdc_protocol_error_to_string((mpdc_protocol_errors)pkt.pmessage[0]);
+						cmsg = mpdc_protocol_error_to_string((mpdc_protocol_errors)pkt.pmessage[0U]);
 
 						if (cmsg != NULL)
 						{

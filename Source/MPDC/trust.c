@@ -9,8 +9,8 @@ void mpdc_trust_clear(mpdc_device_trust* device)
 		qsc_memutils_clear(device->address, MPDC_DLA_IP_MAX);
 		qsc_memutils_clear(device->domain, MPDC_NETWORK_DOMAIN_NAME_MAX_SIZE);
 		qsc_memutils_clear(device->name, MPDC_AGENT_NAME_MAX_SIZE);
-		device->dtrust = 0;
-		device->bandwidth = 0;
+		device->dtrust = 0U;
+		device->bandwidth = 0U;
 		device->isipv6 = false;
 		device->local = false;
 	}
@@ -24,7 +24,6 @@ void mpdc_trust_deserialize(mpdc_device_trust* device, const uint8_t* input)
 	size_t len;
 	size_t pos;
 
-	// TODO: check this
 	if (input != NULL && device != NULL)
 	{
 		pos = 0;
@@ -52,21 +51,19 @@ void mpdc_trust_deserialize(mpdc_device_trust* device, const uint8_t* input)
 void mpdc_trust_serialize(uint8_t* output, size_t outlen, const mpdc_device_trust* device)
 {
 	MPDC_ASSERT(output != NULL);
-	MPDC_ASSERT(outlen != 0);
+	MPDC_ASSERT(outlen != 0U);
 	MPDC_ASSERT(device != NULL);
 
 	if (device != NULL && output != NULL)
 	{
-		const size_t PLEN = MPDC_DLA_IP_MAX +
-			MPDC_NETWORK_DOMAIN_NAME_MAX_SIZE +
-			MPDC_AGENT_NAME_MAX_SIZE +
+		const size_t PLEN = MPDC_DLA_IP_MAX + MPDC_NETWORK_DOMAIN_NAME_MAX_SIZE + MPDC_AGENT_NAME_MAX_SIZE +
 			sizeof(uint64_t) + sizeof(bool) + sizeof(bool);
 		size_t len;
 		size_t pos;
 
 		if (outlen >= PLEN)
 		{
-			pos = 0;
+			pos = 0U;
 			len = MPDC_DLA_IP_MAX;
 			qsc_memutils_copy(output, device->address, len);
 			pos += len;

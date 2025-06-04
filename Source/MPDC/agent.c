@@ -105,7 +105,7 @@ static bool agent_certificate_generate(const char* cmsg)
 						/* store the state */
 						res = mpdc_server_state_store(&m_agent_application_state);
 						/* log key overwrite */
-						mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_generate_delete, NULL, 0);
+						mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_generate_delete, NULL, 0U);
 					}
 					else
 					{
@@ -220,7 +220,7 @@ static mpdc_protocol_errors agent_mfk_response(qsc_socket* csock, const mpdc_net
 
 	if (mpdc_certificate_child_is_valid(&rcert) == true)
 	{
-		uint8_t mfkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 }; 
+		uint8_t mfkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U }; 
 		
 		mpdc_network_mfk_response_state mrs = {
 			.csock = csock,
@@ -336,7 +336,7 @@ static void agent_reset_topology(void)
 {
 	mpdc_topology_node_state node = { 0 };
 	qsc_list_state lstate = { 0 };
-	uint8_t item[MPDC_CERTIFICATE_SERIAL_SIZE] = { 0 };
+	uint8_t item[MPDC_CERTIFICATE_SERIAL_SIZE] = { 0U };
 
 	mpdc_server_topology_remove_certificate(&m_agent_application_state, m_agent_application_state.dla.issuer);
 	qsc_memutils_clear(&m_agent_application_state.dla, sizeof(mpdc_child_certificate));
@@ -344,7 +344,7 @@ static void agent_reset_topology(void)
 	qsc_list_initialize(&lstate, MPDC_CERTIFICATE_SERIAL_SIZE);
 
 	/* remove topological nodes except for root and local */
-	for (size_t i = 0; i < m_agent_application_state.tlist.count; ++i)
+	for (size_t i = 0U; i < m_agent_application_state.tlist.count; ++i)
 	{
 		if (mpdc_topology_list_item(&m_agent_application_state.tlist, &node, i) == true)
 		{
@@ -356,7 +356,7 @@ static void agent_reset_topology(void)
 		}
 	}
 
-	for (size_t i = 0; i < lstate.count; ++i)
+	for (size_t i = 0U; i < lstate.count; ++i)
 	{
 		qsc_list_item(&lstate, item, i);
 		mpdc_topology_node_remove(&m_agent_application_state.tlist, item);
@@ -496,16 +496,16 @@ static void agent_receive_loop(void* ras)
 		{
 			if (pras->csock.connection_status == qsc_socket_state_connected)
 			{
-				uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0 };
+				uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0U };
 
-				mlen = 0;
+				mlen = 0U;
 				plen = qsc_socket_peek(&pras->csock, hdr, sizeof(hdr));
 
 				if (plen == sizeof(hdr))
 				{
 					mpdc_packet_header_deserialize(hdr, &pkt);
 
-					if (pkt.msglen > 0 && pkt.msglen <= MPDC_MESSAGE_MAX_SIZE)
+					if (pkt.msglen > 0U && pkt.msglen <= MPDC_MESSAGE_MAX_SIZE)
 					{
 						plen = pkt.msglen + MPDC_PACKET_HEADER_SIZE;
 						buff = (uint8_t*)qsc_memutils_realloc(buff, plen);
@@ -527,7 +527,7 @@ static void agent_receive_loop(void* ras)
 						mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_receive_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 					}
 
-					if (mlen > 0)
+					if (mlen > 0U)
 					{
 						pkt.pmessage = buff + MPDC_PACKET_HEADER_SIZE;
 
@@ -838,7 +838,7 @@ static void agent_server_dispose(void)
 	qsc_memutils_clear(&m_agent_local_certificate, sizeof(mpdc_child_certificate));
 	m_agent_command_loop_status = mpdc_server_loop_status_stopped;
 	m_agent_server_loop_status = mpdc_server_loop_status_stopped;
-	m_agent_idle_timer = 0;
+	m_agent_idle_timer = 0U;
 }
 
 static bool agent_server_load_root(void)
@@ -1024,7 +1024,7 @@ static void agent_get_command_mode(const char* command)
 			{
 				nmode = mpdc_console_mode_enable;
 			}
-			else if (qsc_stringutils_string_size(command) > 0)
+			else if (qsc_stringutils_string_size(command) > 0U)
 			{
 				nmode = mpdc_console_mode_user;
 			}
@@ -1049,7 +1049,7 @@ static void agent_set_command_action(const char* command)
 	res = mpdc_command_action_command_unrecognized;
 	clen = qsc_stringutils_string_size(command);
 
-	if (clen == 0 || clen > QSC_CONSOLE_MAX_LINE)
+	if (clen == 0U || clen > QSC_CONSOLE_MAX_LINE)
 	{
 		res = mpdc_command_action_none;
 	}
@@ -1426,7 +1426,7 @@ static void agent_command_execute(const char* command)
 			else
 			{
 				mpdc_menu_print_predefined_message(mpdc_application_generate_key_failure, m_agent_application_state.mode, m_agent_application_state.hostname);
-				mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_generate_failure, NULL, 0);
+				mpdc_server_log_write_message(&m_agent_application_state, mpdc_application_log_generate_failure, NULL, 0U);
 			}
 		}
 
@@ -1536,7 +1536,7 @@ static void agent_command_execute(const char* command)
 			{
 				slen = qsc_stringutils_string_size(cmsg);
 
-				if (slen > 0)
+				if (slen > 0U)
 				{
 					merr = agent_register_request(cmsg);
 
@@ -1585,7 +1585,7 @@ static void agent_command_execute(const char* command)
 			{
 				slen = qsc_stringutils_string_size(cmsg);
 
-				if (slen > 0)
+				if (slen > 0U)
 				{
 					merr = agent_resign_request(cmsg);
 
@@ -1870,7 +1870,7 @@ static void agent_command_execute(const char* command)
 
 static void agent_idle_timer(void)
 {
-	const uint32_t MMSEC = 60 * 1000;
+	const uint32_t MMSEC = 60U * 1000U;
 
 	while (true)
 	{
@@ -1885,7 +1885,7 @@ static void agent_idle_timer(void)
 			if (m_agent_idle_timer >= m_agent_application_state.timeout)
 			{
 				mpdc_server_user_logout(&m_agent_application_state);
-				m_agent_idle_timer = 0;
+				m_agent_idle_timer = 0U;
 				qsc_consoleutils_print_line("");
 				mpdc_menu_print_predefined_message(mpdc_application_console_timeout_expired, m_agent_application_state.mode, m_agent_application_state.hostname);
 				mpdc_menu_print_prompt(m_agent_application_state.mode, m_agent_application_state.hostname);
@@ -1906,7 +1906,7 @@ static void agent_command_loop(char* command)
 
 		/* lock the mutex */
 		qsc_mutex mtx = qsc_async_mutex_lock_ex();
-		m_agent_idle_timer = 0;
+		m_agent_idle_timer = 0U;
 		qsc_async_mutex_unlock_ex(mtx);
 
 		agent_set_command_action(command);
@@ -1947,7 +1947,7 @@ int32_t mpdc_agent_start_server(void)
 
 	/* set the window parameters */
 	qsc_consoleutils_set_virtual_terminal();
-	qsc_consoleutils_set_window_size(1000, 600);
+	qsc_consoleutils_set_window_size(1000U, 600U);
 	qsc_consoleutils_set_window_title(m_agent_application_state.wtitle);
 
 	/* application banner */
@@ -1958,7 +1958,7 @@ int32_t mpdc_agent_start_server(void)
 	mpdc_menu_print_prompt(m_agent_application_state.mode, m_agent_application_state.hostname);
 
 	/* start the idle timer */
-	m_agent_idle_timer = 0;
+	m_agent_idle_timer = 0U;
 	idle = qsc_async_thread_create_noargs(&agent_idle_timer);
 	
 	if (idle)

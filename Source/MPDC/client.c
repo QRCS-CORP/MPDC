@@ -49,7 +49,7 @@ static mpdc_protocol_errors client_mfk_request(const mpdc_topology_node_state* r
 	{
 		if (mpdc_certificate_child_file_to_struct(fpath, &rcert) == true)
 		{
-			uint8_t mfkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
+			uint8_t mfkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
 
 			mpdc_network_mfk_request_state mrs = {
 				.lcert = &m_client_local_certificate,
@@ -103,7 +103,7 @@ static mpdc_protocol_errors client_mfk_response(qsc_socket* csock, const mpdc_ne
 
 	if (mpdc_certificate_child_is_valid(&rcert) == true)
 	{
-		uint8_t mfkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
+		uint8_t mfkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
 
 		mpdc_network_mfk_response_state mrs = {
 			.csock = csock,
@@ -158,7 +158,7 @@ static mpdc_protocol_errors client_register_device(const mpdc_topology_node_stat
 
 		if (merr == mpdc_protocol_error_none)
 		{
-			uint8_t chash[MPDC_CERTIFICATE_HASH_SIZE] = { 0 };
+			uint8_t chash[MPDC_CERTIFICATE_HASH_SIZE] = { 0U };
 
 			mpdc_certificate_child_hash(chash, &rcert);
 
@@ -390,7 +390,7 @@ static void client_reset_topology(void)
 {
 	mpdc_topology_node_state node = { 0 };
 	qsc_list_state lstate = { 0 };
-	uint8_t item[MPDC_CERTIFICATE_SERIAL_SIZE] = { 0 };
+	uint8_t item[MPDC_CERTIFICATE_SERIAL_SIZE] = { 0U };
 
 	mpdc_server_topology_remove_certificate(&m_client_application_state, m_client_application_state.dla.issuer);
 	qsc_memutils_clear(&m_client_application_state.dla, sizeof(mpdc_child_certificate));
@@ -398,7 +398,7 @@ static void client_reset_topology(void)
 	qsc_list_initialize(&lstate, MPDC_CERTIFICATE_SERIAL_SIZE);
 
 	/* remove topological nodes except for root and local */
-	for (size_t i = 0; i < m_client_application_state.tlist.count; ++i)
+	for (size_t i = 0U; i < m_client_application_state.tlist.count; ++i)
 	{
 		if (mpdc_topology_list_item(&m_client_application_state.tlist, &node, i) == true)
 		{
@@ -410,7 +410,7 @@ static void client_reset_topology(void)
 		}
 	}
 
-	for (size_t i = 0; i < lstate.count; ++i)
+	for (size_t i = 0U; i < lstate.count; ++i)
 	{
 		qsc_list_item(&lstate, item, i);
 		mpdc_topology_node_remove(&m_client_application_state.tlist, item);
@@ -718,7 +718,7 @@ static void client_tunnel_receive_loop(void* pcns)
 		while (qsc_socket_is_connected(&ppcns->target) == true)
 		{
 			mpdc_network_packet pktin = { 0 };
-			uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0 };
+			uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0U };
 
 			plen = qsc_socket_peek(&ppcns->target, hdr, MPDC_PACKET_HEADER_SIZE);
 
@@ -814,18 +814,18 @@ static void client_tunnel_rxinit(mpdc_connection_state* pcns, const uint8_t* hfk
 	qsc_keccak_state kstate = { 0 };
 
 	pcns->exflag = mpdc_network_flag_none;
-	pcns->instance = 0;
-	pcns->rxseq = 0;
-	pcns->txseq = 0;
+	pcns->instance = 0U;
+	pcns->rxseq = 0U;
+	pcns->txseq = 0U;
 
 #if defined(MPDC_EXTENDED_SESSION_SECURITY)
 
-	uint8_t prnd[3 * QSC_KECCAK_512_RATE] = { 0 };
+	uint8_t prnd[3U * QSC_KECCAK_512_RATE] = { 0U };
 
 	/* initialize cSHAKE k = H(sec, sch) */
 	qsc_keccak_initialize_state(&kstate);
 	qsc_shake_initialize(&kstate, qsc_keccak_rate_512, hfks, MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE);
-	qsc_shake_squeezeblocks(&kstate, qsc_keccak_rate_512, prnd, 3);
+	qsc_shake_squeezeblocks(&kstate, qsc_keccak_rate_512, prnd, 3U);
 
 	/* initialize the symmetric cipher, and raise client channel-1 rx */
 	mpdc_cipher_keyparams kp1;
@@ -833,7 +833,7 @@ static void client_tunnel_rxinit(mpdc_connection_state* pcns, const uint8_t* hfk
 	kp1.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.info = NULL;
-	kp1.infolen = 0;
+	kp1.infolen = 0U;
 	mpdc_cipher_initialize(&pcns->rxcpr, &kp1, false);
 
 	/* initialize the symmetric cipher, and raise client channel-1 tx */
@@ -842,18 +842,18 @@ static void client_tunnel_rxinit(mpdc_connection_state* pcns, const uint8_t* hfk
 	kp2.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE + MPDC_CRYPTO_SYMMETRIC_NONCE_SIZE + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.info = NULL;
-	kp2.infolen = 0;
+	kp2.infolen = 0U;
 	mpdc_cipher_initialize(&pcns->txcpr, &kp2, true);
 	pcns->exflag = mpdc_network_flag_tunnel_session_established;
 
 #else
 
-	uint8_t prnd[QSC_KECCAK_256_RATE] = { 0 };
+	uint8_t prnd[QSC_KECCAK_256_RATE] = { 0U };
 
 	/* initialize cSHAKE k = H(sec, sch) */
 	qsc_keccak_initialize_state(&kstate);
 	qsc_shake_initialize(&kstate, qsc_keccak_rate_256, hfks, MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE);
-	qsc_shake_squeezeblocks(&kstate, qsc_keccak_rate_256, prnd, 1);
+	qsc_shake_squeezeblocks(&kstate, qsc_keccak_rate_256, prnd, 1U);
 
 	/* initialize the symmetric cipher, and raise client channel-1 rx */
 	mpdc_cipher_keyparams kp1;
@@ -861,7 +861,7 @@ static void client_tunnel_rxinit(mpdc_connection_state* pcns, const uint8_t* hfk
 	kp1.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.info = NULL;
-	kp1.infolen = 0;
+	kp1.infolen = 0U;
 	mpdc_cipher_initialize(&pcns->rxcpr, &kp1, false);
 
 	/* initialize the symmetric cipher, and raise client channel-1 tx */
@@ -870,7 +870,7 @@ static void client_tunnel_rxinit(mpdc_connection_state* pcns, const uint8_t* hfk
 	kp2.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE + MPDC_CRYPTO_SYMMETRIC_NONCE_SIZE + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.info = NULL;
-	kp2.infolen = 0;
+	kp2.infolen = 0U;
 	mpdc_cipher_initialize(&pcns->txcpr, &kp2, true);
 	pcns->exflag = mpdc_network_flag_tunnel_session_established;
 
@@ -885,18 +885,18 @@ static void client_tunnel_txinit(mpdc_connection_state* pcns, const uint8_t* hfk
 	qsc_keccak_state kstate = { 0 };
 
 	pcns->exflag = mpdc_network_flag_none;
-	pcns->instance = 0;
-	pcns->rxseq = 0;
-	pcns->txseq = 0;
+	pcns->instance = 0U;
+	pcns->rxseq = 0U;
+	pcns->txseq = 0U;
 
 #if defined(MPDC_EXTENDED_SESSION_SECURITY)
 
-	uint8_t prnd[3 * QSC_KECCAK_512_RATE] = { 0 };
+	uint8_t prnd[3U * QSC_KECCAK_512_RATE] = { 0U };
 
 	/* initialize cSHAKE k = H(sec, sch) */
 	qsc_keccak_initialize_state(&kstate);
 	qsc_shake_initialize(&kstate, qsc_keccak_rate_512, hfks, MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE);
-	qsc_shake_squeezeblocks(&kstate, qsc_keccak_rate_512, prnd, 3);
+	qsc_shake_squeezeblocks(&kstate, qsc_keccak_rate_512, prnd, 3U);
 
 	/* initialize the symmetric cipher, and raise client channel-1 tx */
 	mpdc_cipher_keyparams kp1;
@@ -904,7 +904,7 @@ static void client_tunnel_txinit(mpdc_connection_state* pcns, const uint8_t* hfk
 	kp1.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.info = NULL;
-	kp1.infolen = 0;
+	kp1.infolen = 0U;
 	mpdc_cipher_initialize(&pcns->txcpr, &kp1, true);
 
 	/* initialize the symmetric cipher, and raise client channel-1 rx */
@@ -913,18 +913,18 @@ static void client_tunnel_txinit(mpdc_connection_state* pcns, const uint8_t* hfk
 	kp2.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE + MPDC_CRYPTO_SYMMETRIC_NONCE_SIZE + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.info = NULL;
-	kp2.infolen = 0;
+	kp2.infolen = 0U;
 	mpdc_cipher_initialize(&pcns->rxcpr, &kp2, false);
 	pcns->exflag = mpdc_network_flag_tunnel_session_established;
 
 #else
 
-	uint8_t prnd[QSC_KECCAK_256_RATE] = { 0 };
+	uint8_t prnd[QSC_KECCAK_256_RATE] = { 0U };
 
 	/* initialize cSHAKE k = H(sec, sch) */
 	qsc_keccak_initialize_state(&kstate);
 	qsc_shake_initialize(&kstate, qsc_keccak_rate_256, hfks, MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE);
-	qsc_shake_squeezeblocks(&kstate, qsc_keccak_rate_256, prnd, 1);
+	qsc_shake_squeezeblocks(&kstate, qsc_keccak_rate_256, prnd, 1U);
 	/* permute the state so we are distance+1 and not storing the current keys */
 	qsc_keccak_permute(&kstate, QSC_KECCAK_PERMUTATION_ROUNDS);
 
@@ -934,7 +934,7 @@ static void client_tunnel_txinit(mpdc_connection_state* pcns, const uint8_t* hfk
 	kp1.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp1.info = NULL;
-	kp1.infolen = 0;
+	kp1.infolen = 0U;
 	mpdc_cipher_initialize(&pcns->txcpr, &kp1, true);
 
 	/* initialize the symmetric cipher, and raise client channel-1 rx */
@@ -943,7 +943,7 @@ static void client_tunnel_txinit(mpdc_connection_state* pcns, const uint8_t* hfk
 	kp2.keylen = MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.nonce = prnd + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE + MPDC_CRYPTO_SYMMETRIC_NONCE_SIZE + MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE;
 	kp2.info = NULL;
-	kp2.infolen = 0;
+	kp2.infolen = 0U;
 	mpdc_cipher_initialize(&pcns->rxcpr, &kp2, false);
 	pcns->exflag = mpdc_network_flag_tunnel_session_established;
 
@@ -955,11 +955,11 @@ static void client_tunnel_send_loop(mpdc_connection_state* pcns)
 	MPDC_ASSERT(pcns != NULL);
 	
 	mpdc_network_packet pkt = { 0 };
-	char cinp[MPDC_STORAGE_MESSAGE_MAX + 1] = { 0 };
-	uint8_t pmsg[MPDC_STORAGE_MESSAGE_MAX] = { 0 };
+	char cinp[MPDC_STORAGE_MESSAGE_MAX + 1U] = { 0 };
+	uint8_t pmsg[MPDC_STORAGE_MESSAGE_MAX] = { 0U };
 	size_t mlen;
 
-	mlen = 0;
+	mlen = 0U;
 	qsc_consoleutils_send_enter();
 	m_client_application_state.mode = mpdc_console_mode_client_connected;
 	mpdc_server_set_command_prompt(&m_client_application_state);
@@ -981,7 +981,7 @@ static void client_tunnel_send_loop(mpdc_connection_state* pcns)
 		}
 		else
 		{
-			if (mlen > 0)
+			if (mlen > 0U)
 			{
 				mpdc_menu_print_prompt(m_client_application_state.mode, m_client_application_state.hostname);
 
@@ -1004,12 +1004,12 @@ static void client_tunnel_send_loop(mpdc_connection_state* pcns)
 			}
 		}
 
-		mlen = qsc_consoleutils_get_line(cinp, sizeof(cinp)) - 1;
+		mlen = qsc_consoleutils_get_line(cinp, sizeof(cinp)) - 1U;
 
-		if (mlen == 0 || (mlen > 0 && (cinp[0] == '\n' || cinp[0] == '\r')))
+		if (mlen == 0U || (mlen > 0 && (cinp[0U] == '\n' || cinp[0U] == '\r')))
 		{
 			mpdc_menu_print_prompt(m_client_application_state.mode, m_client_application_state.hostname);
-			mlen = 0;
+			mlen = 0U;
 		}
 	}
 
@@ -1037,8 +1037,8 @@ static mpdc_protocol_errors client_tunnel_connection_request(const char* cname)
 				if (mpdc_certificate_expiration_time_verify(&rnode.expiration) == true &&
 					mpdc_certificate_expiration_time_verify(&lnode.expiration) == true)
 				{
-					uint8_t ctok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0 };
-					uint8_t hfks[MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE] = { 0 };
+					uint8_t ctok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0U };
+					uint8_t hfks[MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE] = { 0U };
 					mpdc_connection_state* pcns;
 
 					pcns = (mpdc_connection_state*)qsc_memutils_malloc(sizeof(mpdc_connection_state));
@@ -1127,10 +1127,10 @@ static mpdc_protocol_errors client_tunnel_connection_response(const qsc_socket* 
 			if (mpdc_certificate_expiration_time_verify(&rnode.expiration) == true && 
 				mpdc_certificate_expiration_time_verify(&lnode.expiration) == true)
 			{
-				uint8_t frag[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
-				uint8_t hfks[MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE] = { 0 };
-				uint8_t ctok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0 };
-				uint8_t mtok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0 };
+				uint8_t frag[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
+				uint8_t hfks[MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE] = { 0U };
+				uint8_t ctok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0U };
+				uint8_t mtok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0U };
 
 				mpdc_network_fragment_collection_response_state crs = {
 					.csock = csock,
@@ -1220,16 +1220,16 @@ static void client_receive_loop(void* ras)
 
 		if (buff != NULL)
 		{
-			uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0 };
+			uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0U };
 
-			mlen = 0;
+			mlen = 0U;
 			plen = qsc_socket_peek(&pras->csock, hdr, MPDC_PACKET_HEADER_SIZE);
 
 			if (plen == MPDC_PACKET_HEADER_SIZE)
 			{
 				mpdc_packet_header_deserialize(hdr, &pkt);
 
-				if (pkt.msglen > 0 && pkt.msglen <= MPDC_MESSAGE_MAX_SIZE)
+				if (pkt.msglen > 0U && pkt.msglen <= MPDC_MESSAGE_MAX_SIZE)
 				{
 					plen = pkt.msglen + MPDC_PACKET_HEADER_SIZE;
 					buff = (uint8_t*)qsc_memutils_realloc(buff, plen);
@@ -1251,7 +1251,7 @@ static void client_receive_loop(void* ras)
 					mpdc_server_log_write_message(&m_client_application_state, mpdc_application_log_receive_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 				}
 
-				if (mlen > 0)
+				if (mlen > 0U)
 				{
 					pkt.pmessage = buff + MPDC_PACKET_HEADER_SIZE;
 
@@ -1404,7 +1404,7 @@ static void client_receive_loop(void* ras)
 					else if (pkt.flag == mpdc_network_flag_system_error_condition)
 					{
 						/* log the error condition */
-						cmsg = mpdc_protocol_error_to_string((mpdc_protocol_errors)pkt.pmessage[0]);
+						cmsg = mpdc_protocol_error_to_string((mpdc_protocol_errors)pkt.pmessage[0U]);
 
 						if (cmsg != NULL)
 						{
@@ -1596,7 +1596,7 @@ static void client_server_dispose(void)
 	qsc_memutils_clear(&m_client_local_certificate, sizeof(mpdc_child_certificate));
 	m_client_command_loop_status = mpdc_server_loop_status_stopped;
 	m_client_server_loop_status = mpdc_server_loop_status_stopped;
-	m_client_idle_timer = 0;
+	m_client_idle_timer = 0U;
 }
 
 static bool client_server_load_root(void)
@@ -1791,7 +1791,7 @@ static void client_get_command_mode(const char* command)
 			{
 				nmode = mpdc_console_mode_enable;
 			}
-			else if (qsc_stringutils_string_size(command) > 0)
+			else if (qsc_stringutils_string_size(command) > 0U)
 			{
 				nmode = mpdc_console_mode_user;
 			}
@@ -1816,7 +1816,7 @@ static void client_set_command_action(const char* command)
 	res = mpdc_command_action_command_unrecognized;
 	clen = qsc_stringutils_string_size(command);
 
-	if (clen == 0 || clen > QSC_CONSOLE_MAX_LINE)
+	if (clen == 0U || clen > QSC_CONSOLE_MAX_LINE)
 	{
 		res = mpdc_command_action_none;
 	}
@@ -2207,7 +2207,7 @@ static void client_command_execute(const char* command)
 			else
 			{
 				mpdc_menu_print_predefined_message(mpdc_application_generate_key_failure, m_client_application_state.mode, m_client_application_state.hostname);
-				mpdc_server_log_write_message(&m_client_application_state, mpdc_application_log_generate_failure, NULL, 0);
+				mpdc_server_log_write_message(&m_client_application_state, mpdc_application_log_generate_failure, NULL, 0U);
 			}
 		}
 
@@ -2388,7 +2388,7 @@ static void client_command_execute(const char* command)
 			{
 				slen = qsc_stringutils_string_size(cmsg);
 
-				if (slen > 0)
+				if (slen > 0U)
 				{
 					merr = client_register_update_request(cmsg);
 
@@ -2438,7 +2438,7 @@ static void client_command_execute(const char* command)
 			{
 				slen = qsc_stringutils_string_size(cmsg);
 
-				if (slen > 0)
+				if (slen > 0U)
 				{
 					merr = client_resign_request(cmsg);
 
@@ -2766,7 +2766,7 @@ static void client_command_loop(char* command)
 	{
 		/* lock the mutex */
 		qsc_mutex mtx = qsc_async_mutex_lock_ex();
-		m_client_idle_timer = 0;
+		m_client_idle_timer = 0U;
 		qsc_async_mutex_unlock_ex(mtx);
 
 		if (m_client_command_loop_status == mpdc_server_loop_status_started)
@@ -2817,7 +2817,7 @@ int32_t mpdc_client_start_server(void)
 
 	/* set the window parameters */
 	qsc_consoleutils_set_virtual_terminal();
-	qsc_consoleutils_set_window_size(1000, 600);
+	qsc_consoleutils_set_window_size(1000U, 600U);
 	qsc_consoleutils_set_window_title(m_client_application_state.wtitle);
 
 	/* application banner */
@@ -2828,7 +2828,7 @@ int32_t mpdc_client_start_server(void)
 	mpdc_menu_print_prompt(m_client_application_state.mode, m_client_application_state.hostname);
 
 	/* start the idle timer */
-	m_client_idle_timer = 0;
+	m_client_idle_timer = 0U;
 	idle = qsc_async_thread_create_noargs(&client_idle_timer);
 	
 	if (idle)

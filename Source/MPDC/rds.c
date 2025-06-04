@@ -235,7 +235,7 @@ static bool rds_server_dla_dialogue(void)
 	{
 		++rctr;
 
-		if (rctr > 3)
+		if (rctr > 3U)
 		{
 			break;
 		}
@@ -401,7 +401,7 @@ static void rds_receive_loop(void* ras)
 					else if (pkt.flag == mpdc_network_flag_system_error_condition)
 					{
 						/* log the error condition */
-						cmsg = mpdc_protocol_error_to_string((mpdc_protocol_errors)pkt.pmessage[0]);
+						cmsg = mpdc_protocol_error_to_string((mpdc_protocol_errors)pkt.pmessage[0U]);
 
 						if (cmsg != NULL)
 						{

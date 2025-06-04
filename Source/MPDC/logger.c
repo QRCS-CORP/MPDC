@@ -7,14 +7,14 @@
 #include "stringutils.h"
 #include "timestamp.h"
 
-static const char NLINE[2u] = { 10, 0 };
+static const char NLINE[2U] = { 10U, 0U };
 
 void logger_default_path(char* path, size_t pathlen)
 {
 	MPDC_ASSERT(path != NULL);
-	MPDC_ASSERT(pathlen != 0);
+	MPDC_ASSERT(pathlen != 0U);
 
-	if (path != NULL && pathlen != 0)
+	if (path != NULL && pathlen != 0U)
 	{
 		bool res;
 
@@ -116,7 +116,7 @@ size_t mpdc_logger_get_size(const char* path)
 
 	size_t len;
 
-	len = 0;
+	len = 0U;
 
 	if (path != NULL)
 	{
@@ -150,13 +150,13 @@ size_t mpdc_logger_write_message(const char* path, const char* message, size_t m
 {
 	MPDC_ASSERT(path != NULL);
 	MPDC_ASSERT(message != NULL);
-	MPDC_ASSERT(msglen != 0);
+	MPDC_ASSERT(msglen != 0U);
 
 	size_t len;
 
-	len = 0;
+	len = 0U;
 
-	if (path != NULL && message != NULL && msglen != 0)
+	if (path != NULL && message != NULL && msglen != 0U)
 	{
 		if (qsc_fileutils_exists(path) == true)
 		{
@@ -166,7 +166,7 @@ size_t mpdc_logger_write_message(const char* path, const char* message, size_t m
 
 			if (qsc_fileutils_append_to_file(path, message, msglen) == true)
 			{
-				qsc_fileutils_append_to_file(path, NLINE, 1);
+				qsc_fileutils_append_to_file(path, NLINE, 1U);
 				len = msglen + 1;
 			}
 
@@ -184,7 +184,7 @@ size_t mpdc_logger_write_decorated_message(const char* path, mpdc_application_me
 	size_t idx;
 	size_t len;
 
-	len = 0;
+	len = 0U;
 
 	if (path != NULL)
 	{
@@ -195,7 +195,7 @@ size_t mpdc_logger_write_decorated_message(const char* path, mpdc_application_me
 			idx = (size_t)msgtype;
 			qsc_stringutils_copy_string(lmsg, sizeof(lmsg), MPDC_APPLICATION_MESSAGE_STRINGS[idx]);
 
-			if (message != NULL && msglen != 0)
+			if (message != NULL && msglen != 0U)
 			{
 				qsc_stringutils_concat_strings(lmsg, sizeof(lmsg), message);
 			}
@@ -213,7 +213,7 @@ size_t mpdc_logger_write_decorated_time_stamped_message(const char* path, mpdc_a
 
 	size_t len;
 
-	len = 0;
+	len = 0U;
 
 	if (path != NULL)
 	{
@@ -224,7 +224,7 @@ size_t mpdc_logger_write_decorated_time_stamped_message(const char* path, mpdc_a
 		len = mpdc_logger_time_stamp(lmsg, sizeof(lmsg));
 		qsc_stringutils_concat_strings(lmsg, sizeof(lmsg), MPDC_APPLICATION_MESSAGE_STRINGS[idx]);
 
-		if (message != NULL && msglen != 0)
+		if (message != NULL && msglen != 0U)
 		{
 			qsc_stringutils_concat_strings(lmsg, sizeof(lmsg), message);
 		}
@@ -241,7 +241,7 @@ size_t mpdc_logger_write_time_stamped_message(const char* path, const char* mess
 
 	size_t len;
 
-	len = 0;
+	len = 0U;
 
 	if (path != NULL)
 	{
@@ -249,12 +249,12 @@ size_t mpdc_logger_write_time_stamped_message(const char* path, const char* mess
 
 		len = mpdc_logger_time_stamp(lmsg, sizeof(lmsg));
 
-		if (len > 0)
+		if (len > 0U)
 		{
 			qsc_stringutils_concat_strings(lmsg, sizeof(lmsg), message);
 		}
 
-		if (message != NULL && msglen != 0)
+		if (message != NULL && msglen != 0U)
 		{
 			qsc_stringutils_concat_strings(lmsg, sizeof(lmsg), message);
 		}
@@ -269,13 +269,13 @@ size_t mpdc_logger_read_all(const char* path, char* output, size_t outlen)
 {
 	MPDC_ASSERT(path != NULL);
 	MPDC_ASSERT(output != NULL);
-	MPDC_ASSERT(outlen != 0);
+	MPDC_ASSERT(outlen != 0U);
 
 	size_t len;
 
-	len = 0;
+	len = 0U;
 
-	if (path != NULL && output != NULL && outlen != 0)
+	if (path != NULL && output != NULL && outlen != 0U)
 	{
 		if (qsc_fileutils_exists(path) == true)
 		{
@@ -294,13 +294,13 @@ int64_t mpdc_logger_read_line(const char* path, char* output, size_t outlen, siz
 {
 	MPDC_ASSERT(path != NULL);
 	MPDC_ASSERT(output != NULL);
-	MPDC_ASSERT(outlen != 0);
+	MPDC_ASSERT(outlen != 0U);
 
 	int64_t len;
 
 	len = 0;
 
-	if (path != NULL && output != NULL && outlen != 0)
+	if (path != NULL && output != NULL && outlen != 0U)
 	{
 		if (qsc_fileutils_exists(path) == true)
 		{
@@ -318,20 +318,20 @@ int64_t mpdc_logger_read_line(const char* path, char* output, size_t outlen, siz
 size_t mpdc_logger_time_stamp(char* output, size_t outlen)
 {
 	MPDC_ASSERT(output != NULL);
-	MPDC_ASSERT(outlen != 0);
+	MPDC_ASSERT(outlen != 0U);
 
 	size_t len;
 
-	len = 0;
+	len = 0U;
 
-	if (output != NULL && outlen != 0)
+	if (output != NULL && outlen != 0U)
 	{
 		char tsc[QSC_TIMESTAMP_STRING_SIZE] = { 0 };
 
 		qsc_timestamp_current_datetime(tsc);
 		len = qsc_stringutils_string_size(tsc);
 
-		if (len > 0)
+		if (len > 0U)
 		{
 			len = len <= outlen ? len : outlen;
 			qsc_memutils_copy(output, tsc, len);

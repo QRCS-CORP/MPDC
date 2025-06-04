@@ -17,13 +17,13 @@ void mpdc_topology_address_from_issuer(char* address, const char* issuer, const 
 
 	size_t clen;
 
-	if (address != NULL && issuer != NULL && list != NULL && list->topology != NULL && list->count > 0)
+	if (address != NULL && issuer != NULL && list != NULL && list->topology != NULL && list->count > 0U)
 	{
 		for (size_t i = 0; i < list->count; ++i)
 		{
 			clen = qsc_stringutils_string_size(issuer);
 
-			if (clen > 0)
+			if (clen > 0U)
 			{
 				mpdc_topology_node_state node = { 0 };
 
@@ -57,7 +57,7 @@ uint8_t* mpdc_topology_child_add_empty_node(mpdc_topology_list_state* list)
 
 		mtx = qsc_async_mutex_lock_ex();
 
-		nctx = list->count + 1;
+		nctx = list->count + 1U;
 
 		if (list->topology != NULL)
 		{
@@ -109,7 +109,7 @@ void mpdc_topology_child_add_item(mpdc_topology_list_state* list, const mpdc_top
 bool mpdc_topology_canonical_to_issuer_name(char* issuer, size_t isslen, const char* domain, const char* cname)
 {
 	MPDC_ASSERT(issuer != NULL);
-	MPDC_ASSERT(isslen != 0);
+	MPDC_ASSERT(isslen != 0U);
 	MPDC_ASSERT(domain != NULL);
 	MPDC_ASSERT(cname != NULL);
 
@@ -147,7 +147,7 @@ bool mpdc_topology_canonical_to_issuer_name(char* issuer, size_t isslen, const c
 bool mpdc_topology_issuer_to_canonical_name(char* cname, size_t namelen, const char* issuer)
 {
 	MPDC_ASSERT(cname != NULL);
-	MPDC_ASSERT(namelen != 0);
+	MPDC_ASSERT(namelen != 0U);
 	MPDC_ASSERT(issuer != NULL);
 
 	size_t len;
@@ -156,7 +156,7 @@ bool mpdc_topology_issuer_to_canonical_name(char* cname, size_t namelen, const c
 
 	res = false;
 
-	if (cname != NULL && namelen != 0 && issuer != NULL)
+	if (cname != NULL && namelen != 0U && issuer != NULL)
 	{
 		len = qsc_stringutils_string_size(issuer);
 
@@ -170,7 +170,7 @@ bool mpdc_topology_issuer_to_canonical_name(char* cname, size_t namelen, const c
 				qsc_stringutils_concat_strings(cname, namelen, ".");
 				len = qsc_stringutils_find_string(issuer, ".");
 
-				if (len > 0)
+				if (len > 0U)
 				{
 					++pos;
 					qsc_stringutils_copy_substring(cname + pos, namelen, issuer + pos, len - pos);
@@ -219,7 +219,7 @@ void mpdc_topology_child_register(mpdc_topology_list_state* list, const mpdc_chi
 
 void mpdc_topology_list_clone(const mpdc_topology_list_state* tlist, mpdc_topology_list_state* tcopy)
 {
-	for (size_t i = 0; i < tlist->count; ++i)
+	for (size_t i = 0U; i < tlist->count; ++i)
 	{
 		mpdc_topology_node_state node = { 0 };
 		uint8_t* nptr;
@@ -245,7 +245,7 @@ void mpdc_topology_list_deserialize(mpdc_topology_list_state* list, const uint8_
 		cnt = (size_t)qsc_intutils_le8to32(input);
 		pos = sizeof(uint32_t);
 
-		for (size_t i = 0; i < cnt; ++i)
+		for (size_t i = 0U; i < cnt; ++i)
 		{
 			mpdc_topology_node_state node = { 0 };
 			uint8_t* nptr;
@@ -275,7 +275,7 @@ void mpdc_topology_list_dispose(mpdc_topology_list_state* list)
 			qsc_memutils_clear(list->topology, list->count * MPDC_NETWORK_TOPOLOGY_NODE_SIZE);
 			qsc_memutils_alloc_free(list->topology);
 			list->topology = NULL;
-			list->count = 0;
+			list->count = 0U;
 		}
 	}
 }
@@ -286,7 +286,7 @@ void mpdc_topology_list_initialize(mpdc_topology_list_state* list)
 
 	if (list != NULL)
 	{
-		list->count = 0;
+		list->count = 0U;
 		list->topology = NULL;
 	}
 }
@@ -329,13 +329,13 @@ size_t mpdc_topology_list_remove_duplicates(mpdc_topology_list_state* list)
 	size_t pos;
 	qsc_mutex mtx;
 
-	ctr = 0;
+	ctr = 0U;
 
 	if (list != NULL)
 	{
 		mtx = qsc_async_mutex_lock_ex();
 
-		pos = 0;
+		pos = 0U;
 		len = list->count * MPDC_NETWORK_TOPOLOGY_NODE_SIZE;
 		ntop = (uint8_t*)qsc_memutils_malloc(len);
 
@@ -345,7 +345,7 @@ size_t mpdc_topology_list_remove_duplicates(mpdc_topology_list_state* list)
 
 			qsc_memutils_clear(ntop, len);
 
-			for (size_t i = 0; i < list->count; ++i)
+			for (size_t i = 0U; i < list->count; ++i)
 			{
 				bool res;
 
@@ -353,7 +353,7 @@ size_t mpdc_topology_list_remove_duplicates(mpdc_topology_list_state* list)
 				np2 = NULL;
 				res = false;
 
-				for (size_t j = i + 1; j < list->count; ++j)
+				for (size_t j = i + 1U; j < list->count; ++j)
 				{
 					np2 = (uint8_t*)(list->topology + (j * MPDC_NETWORK_TOPOLOGY_NODE_SIZE));
 
@@ -396,11 +396,11 @@ size_t mpdc_topology_list_server_count(const mpdc_topology_list_state* list, mpd
 
 	size_t cnt;
 
-	cnt = 0;
+	cnt = 0U;
 
 	if (list != NULL)
 	{
-		for (size_t i = 0; i < list->count; ++i)
+		for (size_t i = 0U; i < list->count; ++i)
 		{
 			mpdc_topology_node_state ntmp = { 0 };
 
@@ -424,14 +424,14 @@ size_t mpdc_topology_list_serialize(uint8_t* output, const mpdc_topology_list_st
 
 	size_t pos;
 
-	pos = 0;
+	pos = 0U;
 
 	if (output != NULL && list != NULL)
 	{
 		qsc_intutils_le32to8(output, list->count);
 		pos += sizeof(uint32_t);
 
-		for (size_t i = 0; i < list->count; ++i)
+		for (size_t i = 0U; i < list->count; ++i)
 		{
 			mpdc_topology_node_state node = { 0 };
 
@@ -452,11 +452,11 @@ size_t mpdc_topology_list_size(const mpdc_topology_list_state* list)
 
 	size_t rlen;
 
-	rlen = 0;
+	rlen = 0U;
 
 	if (list != NULL)
 	{
-		if (list->count > 0)
+		if (list->count > 0U)
 		{
 			rlen = sizeof(uint32_t) + (list->count * MPDC_NETWORK_TOPOLOGY_NODE_SIZE);
 		}
@@ -472,11 +472,11 @@ size_t mpdc_topology_list_update_pack(uint8_t* output, const mpdc_topology_list_
 
 	size_t pos;
 
-	pos = 0;
+	pos = 0U;
 
 	if (output != NULL && list != NULL)
 	{
-		for (size_t i = 0; i < list->count; ++i)
+		for (size_t i = 0U; i < list->count; ++i)
 		{
 			mpdc_topology_node_state ntmp = { 0 };
 
@@ -502,14 +502,14 @@ size_t mpdc_topology_list_update_unpack(mpdc_topology_list_state* list, const ui
 	size_t cnt;
 	size_t pos;
 
-	cnt = 0;
+	cnt = 0U;
 
 	if (list != NULL && input != NULL && inplen >= MPDC_NETWORK_TOPOLOGY_NODE_SIZE)
 	{
-		pos = 0;
+		pos = 0U;
 		cnt = inplen / MPDC_NETWORK_TOPOLOGY_NODE_SIZE;
 
-		for (size_t i = 0; i < cnt; ++i)
+		for (size_t i = 0U; i < cnt; ++i)
 		{
 			mpdc_topology_node_state node = { 0 };
 			uint8_t* nptr;
@@ -532,7 +532,7 @@ size_t mpdc_topology_ordered_server_list(mpdc_topology_list_state* olist, const 
 	size_t dcnt;
 	size_t scnt;
 
-	scnt = 0;
+	scnt = 0U;
 
 	if (olist != NULL && tlist != NULL)
 	{
@@ -541,12 +541,12 @@ size_t mpdc_topology_ordered_server_list(mpdc_topology_list_state* olist, const 
 
 		dcnt = mpdc_topology_list_server_count(tlist, ntype);
 
-		if (dcnt > 0)
+		if (dcnt > 0U)
 		{
 			/* iterate through the topology list and add nodes of the device type */
 			qsc_list_initialize(&slst, MPDC_CERTIFICATE_SERIAL_SIZE);
 
-			for (size_t i = 0; i < tlist->count; ++i)
+			for (size_t i = 0U; i < tlist->count; ++i)
 			{
 				mpdc_topology_list_item(tlist, &node, i);
 
@@ -556,9 +556,9 @@ size_t mpdc_topology_ordered_server_list(mpdc_topology_list_state* olist, const 
 				}
 			}
 
-			if (slst.count > 0)
+			if (slst.count > 0U)
 			{
-				uint8_t sern[MPDC_CERTIFICATE_SERIAL_SIZE] = { 0 };
+				uint8_t sern[MPDC_CERTIFICATE_SERIAL_SIZE] = { 0U };
 
 				scnt = slst.count;
 
@@ -566,7 +566,7 @@ size_t mpdc_topology_ordered_server_list(mpdc_topology_list_state* olist, const 
 				qsc_list_sort(&slst);
 
 				/* fill the output topology state with nodes ordered by serial number  */
-				for (size_t i = 0; i < slst.count; ++i)
+				for (size_t i = 0U; i < slst.count; ++i)
 				{
 					qsc_list_item(&slst, sern, i);
 
@@ -602,7 +602,7 @@ void mpdc_topology_node_add_alias(mpdc_topology_node_state* node, const char* al
 		{
 			apos = qsc_stringutils_find_string(node->issuer, MPDC_TOPOLOGY_ALIAS_DELIMITER);
 
-			if (apos > 0)
+			if (apos > 0U)
 			{
 				qsc_memutils_clear(node->issuer + apos, ilen - apos);
 				qsc_stringutils_concat_strings(node->issuer, MPDC_CERTIFICATE_ISSUER_SIZE, MPDC_TOPOLOGY_ALIAS_DELIMITER);
@@ -660,8 +660,8 @@ void mpdc_topology_node_clear(mpdc_topology_node_state* node)
 		qsc_memutils_clear(node->address, MPDC_CERTIFICATE_ADDRESS_SIZE);
 		qsc_memutils_clear(node->chash, MPDC_CRYPTO_SYMMETRIC_HASH_SIZE);
 		qsc_memutils_clear(node->serial, MPDC_CERTIFICATE_SERIAL_SIZE);
-		node->expiration.from = 0;
-		node->expiration.to = 0;
+		node->expiration.from = 0U;
+		node->expiration.to = 0U;
 		node->designation = mpdc_network_designation_none;
 	}
 }
@@ -724,7 +724,7 @@ bool mpdc_topology_node_find(const mpdc_topology_list_state* list, mpdc_topology
 
 		mtx = qsc_async_mutex_lock_ex();
 
-		for (size_t i = 0; i < list->count; ++i)
+		for (size_t i = 0U; i < list->count; ++i)
 		{
 			mpdc_topology_node_state ntmp = { 0 };
 
@@ -761,7 +761,7 @@ bool mpdc_topology_node_find_address(const mpdc_topology_list_state* list, mpdc_
 
 		mtx = qsc_async_mutex_lock_ex();
 
-		for (size_t i = 0; i < list->count; ++i)
+		for (size_t i = 0U; i < list->count; ++i)
 		{
 			mpdc_topology_node_state ntmp = { 0 };
 
@@ -798,7 +798,7 @@ bool mpdc_topology_node_find_alias(const mpdc_topology_list_state* list, mpdc_to
 
 		mtx = qsc_async_mutex_lock_ex();
 
-		for (size_t i = 0; i < list->count; ++i)
+		for (size_t i = 0U; i < list->count; ++i)
 		{
 			mpdc_topology_node_state ntmp = { 0 };
 
@@ -834,7 +834,7 @@ bool mpdc_topology_node_find_dla(const mpdc_topology_list_state* list, mpdc_topo
 
 		mtx = qsc_async_mutex_lock_ex();
 
-		for (size_t i = 0; i < list->count; ++i)
+		for (size_t i = 0U; i < list->count; ++i)
 		{
 			mpdc_topology_node_state ntmp = { 0 };
 
@@ -880,7 +880,7 @@ bool mpdc_topology_node_find_issuer(const mpdc_topology_list_state* list, mpdc_t
 			nlen = qsc_stringutils_find_string(issuer, MPDC_TOPOLOGY_ALIAS_DELIMITER);
 			clen = (nlen > 0 && nlen < (int64_t)clen) ? (size_t)nlen : clen;
 
-			for (size_t i = 0; i < list->count; ++i)
+			for (size_t i = 0U; i < list->count; ++i)
 			{
 				mpdc_topology_node_state ntmp = { 0 };
 
@@ -966,7 +966,7 @@ int32_t mpdc_topology_node_get_index(const mpdc_topology_list_state* list, const
 
 	if (list != NULL && serial != NULL)
 	{
-		for (size_t i = 0; i < list->count; ++i)
+		for (size_t i = 0U; i < list->count; ++i)
 		{
 			mpdc_topology_node_state ntmp = { 0 };
 
@@ -994,7 +994,7 @@ void mpdc_topology_node_remove(mpdc_topology_list_state* list, const uint8_t* se
 
 	if (list != NULL && serial != NULL)
 	{
-		if (list->count > 0)
+		if (list->count > 0U)
 		{
 			npos = mpdc_topology_node_get_index(list, serial);
 
@@ -1010,9 +1010,9 @@ void mpdc_topology_node_remove(mpdc_topology_list_state* list, const uint8_t* se
 				}
 
 				qsc_memutils_clear(list->topology + (lpos * MPDC_NETWORK_TOPOLOGY_NODE_SIZE), MPDC_NETWORK_TOPOLOGY_NODE_SIZE);
-				list->count -= 1;
+				list->count -= 1U;
 
-				if (list->count > 0)
+				if (list->count > 0U)
 				{
 					/* resize the array */
 					ttmp = qsc_memutils_realloc(list->topology, list->count * MPDC_NETWORK_TOPOLOGY_NODE_SIZE);
@@ -1056,7 +1056,7 @@ size_t mpdc_topology_node_serialize(uint8_t* output, const mpdc_topology_node_st
 
 	size_t pos;
 	
-	pos = 0;
+	pos = 0U;
 
 	if (output != NULL && node != NULL)
 	{
@@ -1094,7 +1094,7 @@ bool mpdc_topology_node_verify_dla(const mpdc_topology_list_state* list, const m
 
 		if (mpdc_topology_node_find_dla(list, &node) == true)
 		{
-			uint8_t lhash[MPDC_CERTIFICATE_HASH_SIZE] = { 0 };
+			uint8_t lhash[MPDC_CERTIFICATE_HASH_SIZE] = { 0U };
 
 			mpdc_certificate_child_hash(lhash, ccert);
 			res = (qsc_memutils_are_equal(lhash, node.chash, MPDC_CERTIFICATE_HASH_SIZE) == true);
@@ -1120,7 +1120,7 @@ bool mpdc_topology_node_verify_issuer(const mpdc_topology_list_state* list, cons
 
 		if (mpdc_topology_node_find_issuer(list, &node, issuer) == true)
 		{
-			uint8_t lhash[MPDC_CERTIFICATE_HASH_SIZE] = { 0 };
+			uint8_t lhash[MPDC_CERTIFICATE_HASH_SIZE] = { 0U };
 
 			mpdc_certificate_child_hash(lhash, ccert);
 			res = (qsc_memutils_are_equal(lhash, node.chash, MPDC_CERTIFICATE_HASH_SIZE) == true);
@@ -1145,7 +1145,7 @@ bool mpdc_topology_node_verify_root(const mpdc_topology_list_state* list, const 
 
 		if (mpdc_topology_node_find_root(list, &node) == true)
 		{
-			uint8_t lhash[MPDC_CERTIFICATE_HASH_SIZE] = { 0 };
+			uint8_t lhash[MPDC_CERTIFICATE_HASH_SIZE] = { 0U };
 
 			mpdc_certificate_root_hash(lhash, rcert);
 			res = (qsc_memutils_are_equal(lhash, node.chash, MPDC_CERTIFICATE_HASH_SIZE) == true);
@@ -1187,13 +1187,13 @@ size_t mpdc_topology_list_to_string(const mpdc_topology_list_state* list, char* 
 	size_t slen;
 	size_t spos;
 
-	spos = 0;
+	spos = 0U;
 
-	if (list != NULL && output != NULL && outlen != 0)
+	if (list != NULL && output != NULL && outlen != 0U)
 	{
 		if (list->count * MPDC_TOPOLOGY_NODE_ENCODED_SIZE <= outlen)
 		{
-			for (size_t i = 0; i < list->count; ++i)
+			for (size_t i = 0U; i < list->count; ++i)
 			{
 				mpdc_topology_node_state ntmp = { 0 };
 
@@ -1212,7 +1212,7 @@ size_t mpdc_topology_node_encode(const mpdc_topology_node_state* node, char outp
 	size_t slen;
 	size_t spos;
 
-	spos = 0;
+	spos = 0U;
 
 	if (node != NULL)
 	{
@@ -1253,7 +1253,7 @@ size_t mpdc_topology_node_encode(const mpdc_topology_node_state* node, char outp
 		spos += slen;
 		qsc_intutils_bin_to_hex(node->chash, output + spos, MPDC_CERTIFICATE_HASH_SIZE);
 		qsc_stringutils_to_uppercase(output + spos);
-		slen = MPDC_CERTIFICATE_HASH_SIZE * 2;
+		slen = MPDC_CERTIFICATE_HASH_SIZE * 2U;
 		spos += slen;
 		output[spos] = '\n';
 		++spos;
@@ -1263,7 +1263,7 @@ size_t mpdc_topology_node_encode(const mpdc_topology_node_state* node, char outp
 		spos += slen;
 		qsc_intutils_bin_to_hex(node->serial, output + spos, MPDC_CERTIFICATE_SERIAL_SIZE);
 		qsc_stringutils_to_uppercase(output + spos);
-		slen = MPDC_CERTIFICATE_SERIAL_SIZE * 2;
+		slen = MPDC_CERTIFICATE_SERIAL_SIZE * 2U;
 		spos += slen;
 		output[spos] = '\n';
 		++spos;
@@ -1279,14 +1279,14 @@ size_t mpdc_topology_node_encode(const mpdc_topology_node_state* node, char outp
 		qsc_memutils_copy(output + spos, MPDC_CHILD_CERTIFICATE_VALID_FROM_PREFIX, slen);
 		spos += slen;
 		qsc_timestamp_seconds_to_datetime(node->expiration.from, dtm);
-		slen = sizeof(dtm) - 1;
+		slen = sizeof(dtm) - 1U;
 		qsc_memutils_copy(output + spos, dtm, slen);
 		spos += slen;
 		slen = qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_EXPIRATION_TO_PREFIX);
 		qsc_memutils_copy(output + spos, MPDC_CHILD_CERTIFICATE_EXPIRATION_TO_PREFIX, slen);
 		spos += slen;
 		qsc_timestamp_seconds_to_datetime(node->expiration.to, dtm);
-		slen = sizeof(dtm) - 1;
+		slen = sizeof(dtm) - 1U;
 		qsc_memutils_copy(output + spos, dtm, slen);
 		spos += slen;
 		output[spos] = '\n';
@@ -1310,7 +1310,7 @@ void mpdc_topology_from_file(const char* fpath, mpdc_topology_list_state* list)
 		{
 			flen = qsc_fileutils_get_size(fpath);
 
-			if (flen > 0)
+			if (flen > 0U)
 			{
 				lbuf = (uint8_t*)qsc_memutils_malloc(flen);
 
@@ -1376,9 +1376,9 @@ typedef struct topology_device_package
 
 static void topology_load_child_node(mpdc_topology_list_state* list, mpdc_topology_node_state* node, const mpdc_child_certificate* ccert)
 {
-	uint8_t ipa[MPDC_CERTIFICATE_ADDRESS_SIZE] = { 192, 168, 1 };
+	uint8_t ipa[MPDC_CERTIFICATE_ADDRESS_SIZE] = { 192U, 168U, 1U };
 
-	qsc_acp_generate(ipa + 3, 1);
+	qsc_acp_generate(ipa + 3U, 1U);
 	mpdc_topology_child_register(list, ccert, ipa);
 	mpdc_topology_node_find(list, node, (const uint8_t*)ccert->serial);
 }
@@ -1394,12 +1394,12 @@ static void topology_device_instantiate(topology_device_package* spkg)
 
 	/* generate the root certificate */
 	mpdc_certificate_signature_generate_keypair(&spkg->rkp);
-	mpdc_certificate_expiration_set_days(&exp, 0, 30);
+	mpdc_certificate_expiration_set_days(&exp, 0U, 30U);
 	mpdc_certificate_root_create(&spkg->root, spkg->rkp.pubkey, &exp, "XYZ/RDS-1:rds1.xyz.com");
 	
 	/* create the agent responder */
 	mpdc_certificate_signature_generate_keypair(&spkg->akp);
-	mpdc_certificate_expiration_set_days(&exp, 0, 100);
+	mpdc_certificate_expiration_set_days(&exp, 0U, 100U);
 	mpdc_certificate_child_create(&spkg->acrt, spkg->akp.pubkey, &exp, "XYZ/Agent-1:agent1.xyz.com", mpdc_network_designation_agent);
 	mpdc_certificate_root_sign(&spkg->acrt, &spkg->root, spkg->rkp.prikey);
 	topology_load_child_node(&spkg->list, &spkg->ande, &spkg->acrt);
@@ -1422,21 +1422,21 @@ static void topology_device_instantiate(topology_device_package* spkg)
 
 	/* create a client */
 	mpdc_certificate_signature_generate_keypair(&spkg->ckp);
-	mpdc_certificate_expiration_set_days(&exp, 0, 100);
+	mpdc_certificate_expiration_set_days(&exp, 0U, 100U);
 	mpdc_certificate_child_create(&spkg->ccrt, spkg->ckp.pubkey, &exp, "XYZ/Client-1:client1.xyz.com", mpdc_network_designation_client);
 	mpdc_certificate_root_sign(&spkg->ccrt, &spkg->root, spkg->rkp.prikey);
 	topology_load_child_node(&spkg->list, &spkg->cnde, &spkg->ccrt);
 
 	/* create the dla */
 	mpdc_certificate_signature_generate_keypair(&spkg->dkp);
-	mpdc_certificate_expiration_set_days(&exp, 0, 100);
+	mpdc_certificate_expiration_set_days(&exp, 0U, 100U);
 	mpdc_certificate_child_create(&spkg->dcrt, spkg->dkp.pubkey, &exp, "XYZ/DLA-1:dla1.xyz.com", mpdc_network_designation_dla);
 	mpdc_certificate_root_sign(&spkg->dcrt, &spkg->root, spkg->rkp.prikey);
 	topology_load_child_node(&spkg->list, &spkg->dnde, &spkg->dcrt);
 
 	/* create the server requestor */
 	mpdc_certificate_signature_generate_keypair(&spkg->mkp);
-	mpdc_certificate_expiration_set_days(&exp, 0, 100);
+	mpdc_certificate_expiration_set_days(&exp, 0U, 100U);
 	mpdc_certificate_child_create(&spkg->mcrt, spkg->mkp.pubkey, &exp, "XYZ/MAS-1:mas1.xyz.com", mpdc_network_designation_mas);
 	mpdc_certificate_root_sign(&spkg->mcrt, &spkg->root, spkg->rkp.prikey);
 	topology_load_child_node(&spkg->list, &spkg->mnde, &spkg->mcrt);
@@ -1450,24 +1450,27 @@ static bool topology_find_test(topology_device_package* spkg)
 
 	res = false;
 
-	/* test find related functions */
-	mpdc_topology_node_find(&spkg->list, &tand, spkg->ande.serial);
-
-	if (mpdc_topology_nodes_are_equal(&tand, &spkg->ande) == true)
+	if (spkg != NULL)
 	{
-		mpdc_topology_node_find_alias(&spkg->list, &tmnd, "mas1.xyz.com");
+		/* test find related functions */
+		mpdc_topology_node_find(&spkg->list, &tand, spkg->ande.serial);
 
-		if (mpdc_topology_nodes_are_equal(&tmnd, &spkg->mnde) == true)
+		if (mpdc_topology_nodes_are_equal(&tand, &spkg->ande) == true)
 		{
-			mpdc_topology_node_find_issuer(&spkg->list, &tand, spkg->ande.issuer);
+			mpdc_topology_node_find_alias(&spkg->list, &tmnd, "mas1.xyz.com");
 
-			if (mpdc_topology_nodes_are_equal(&tand, &spkg->ande) == true)
+			if (mpdc_topology_nodes_are_equal(&tmnd, &spkg->mnde) == true)
 			{
-				mpdc_topology_node_add_alias(&spkg->cnde, "client.xyz.com");
+				mpdc_topology_node_find_issuer(&spkg->list, &tand, spkg->ande.issuer);
 
-				if (qsc_stringutils_string_contains(spkg->cnde.issuer, "client.xyz.com") == true)
+				if (mpdc_topology_nodes_are_equal(&tand, &spkg->ande) == true)
 				{
-					res = true;
+					mpdc_topology_node_add_alias(&spkg->cnde, "client.xyz.com");
+
+					if (qsc_stringutils_string_contains(spkg->cnde.issuer, "client.xyz.com") == true)
+					{
+						res = true;
+					}
 				}
 			}
 		}
@@ -1486,54 +1489,58 @@ static bool topology_serialization_test(topology_device_package* spkg)
 	bool res;
 	
 	res = false;
-	mlen = sizeof(uint32_t) + (spkg->list.count * MPDC_NETWORK_TOPOLOGY_NODE_SIZE);
-	lbuf = (uint8_t*)qsc_memutils_malloc(mlen);
 
-	if (lbuf != NULL)
+	if (spkg != NULL)
 	{
-		mpdc_topology_list_serialize(lbuf, &spkg->list);
-		mpdc_topology_list_initialize(&lstc);
-		mpdc_topology_list_deserialize(&lstc, lbuf, mlen);
-		qsc_memutils_alloc_free(lbuf);
-		res = true;
+		mlen = sizeof(uint32_t) + (spkg->list.count * MPDC_NETWORK_TOPOLOGY_NODE_SIZE);
+		lbuf = (uint8_t*)qsc_memutils_malloc(mlen);
 
-		for (size_t i = 0; i < lstc.count; ++i)
+		if (lbuf != NULL)
 		{
-			if (mpdc_topology_list_item(&lstc, &itma, i) == true)
-			{
-				if (mpdc_topology_list_item(&spkg->list, &itmb, i) == true)
-				{
-					if (mpdc_topology_nodes_are_equal(&itma, &itmb) == false)
-					{
-						res = false;
-						break;
-					}				
-				}
-			}
-		}
-
-		if (res == true)
-		{
-			mpdc_topology_node_state ncpy = { 0 };
-			uint8_t nser[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0 };
+			mpdc_topology_list_serialize(lbuf, &spkg->list);
+			mpdc_topology_list_initialize(&lstc);
+			mpdc_topology_list_deserialize(&lstc, lbuf, mlen);
+			qsc_memutils_alloc_free(lbuf);
+			res = true;
 
 			for (size_t i = 0; i < lstc.count; ++i)
 			{
 				if (mpdc_topology_list_item(&lstc, &itma, i) == true)
 				{
-					mpdc_topology_node_serialize(nser, &itma);
-					mpdc_topology_node_deserialize(&ncpy, nser);
-
-					if (mpdc_topology_nodes_are_equal(&itma, &ncpy) == false)
+					if (mpdc_topology_list_item(&spkg->list, &itmb, i) == true)
 					{
-						res = false;
-						break;
+						if (mpdc_topology_nodes_are_equal(&itma, &itmb) == false)
+						{
+							res = false;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		mpdc_topology_list_dispose(&lstc);
+			if (res == true)
+			{
+				mpdc_topology_node_state ncpy = { 0 };
+				uint8_t nser[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0U };
+
+				for (size_t i = 0U; i < lstc.count; ++i)
+				{
+					if (mpdc_topology_list_item(&lstc, &itma, i) == true)
+					{
+						mpdc_topology_node_serialize(nser, &itma);
+						mpdc_topology_node_deserialize(&ncpy, nser);
+
+						if (mpdc_topology_nodes_are_equal(&itma, &ncpy) == false)
+						{
+							res = false;
+							break;
+						}
+					}
+				}
+			}
+
+			mpdc_topology_list_dispose(&lstc);
+		}
 	}
 
 	return res;
@@ -1557,10 +1564,10 @@ static bool topology_sorted_list_test(topology_device_package* spkg)
 	if (res == true)
 	{
 		/* test the sort */
-		for (size_t i = 0; i < olst.count - 1; ++i)
+		for (size_t i = 0U; i < olst.count - 1U; ++i)
 		{
 			mpdc_topology_list_item(&olst, &itma, i);
-			mpdc_topology_list_item(&olst, &itmb, i + 1);
+			mpdc_topology_list_item(&olst, &itmb, i + 1U);
 
 			if (qsc_memutils_greater_than_le128(itma.serial, itmb.serial) == false)
 			{

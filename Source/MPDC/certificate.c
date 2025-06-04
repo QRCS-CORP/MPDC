@@ -167,7 +167,7 @@ bool mpdc_certificate_child_are_equal(const mpdc_child_certificate* a, const mpd
 
 	res = false;
 
-	if (a != NULL)
+	if (a != NULL && b != NULL)
 	{
 		if (a->algorithm == b->algorithm && a->version == b->version && a->designation == b->designation &&
 			a->expiration.from == b->expiration.from && a->expiration.to == b->expiration.to)
@@ -243,38 +243,38 @@ bool mpdc_certificate_child_decode(mpdc_child_certificate* child, const char enc
 	{
 		char tmpvk[MPDC_VERIFICATION_KEY_ENCODING_SIZE] = { 0 };
 		char dtm[QSC_TIMESTAMP_STRING_SIZE] = { 0 };
-		char tmpsg[MPDC_SIGNATURE_ENCODING_SIZE + ((MPDC_SIGNATURE_ENCODING_SIZE / 64) + 1)] = { 0 };
+		char tmpsg[MPDC_SIGNATURE_ENCODING_SIZE + ((MPDC_SIGNATURE_ENCODING_SIZE / 64U) + 1U)] = { 0 };
 		const char* penc;
 		size_t slen;
 
 		penc = enck;
-		penc += qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_HEADER) + qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_SERIAL_PREFIX) + 1;
-		qsc_intutils_hex_to_bin(penc, child->serial, MPDC_CERTIFICATE_SERIAL_SIZE * 2);
-		penc += (MPDC_CERTIFICATE_SERIAL_SIZE * 2);
+		penc += qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_HEADER) + qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_SERIAL_PREFIX) + 1U;
+		qsc_intutils_hex_to_bin(penc, child->serial, MPDC_CERTIFICATE_SERIAL_SIZE * 2U);
+		penc += (MPDC_CERTIFICATE_SERIAL_SIZE * 2U);
 
-		penc += qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_ISSUER_PREFIX) + 1;
+		penc += qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_ISSUER_PREFIX) + 1U;
 		slen = qsc_stringutils_find_string(penc, "\n");
 		qsc_memutils_copy(child->issuer, penc, slen);
 		penc += slen;
 
-		penc += qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_VALID_FROM_PREFIX) + 1;
+		penc += qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_VALID_FROM_PREFIX) + 1U;
 		slen = QSC_TIMESTAMP_STRING_SIZE;
 		qsc_memutils_copy(dtm, penc, slen);
 		child->expiration.from = qsc_timestamp_datetime_to_seconds(dtm);
 		penc += slen;
 
-		penc += qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_EXPIRATION_TO_PREFIX) - 1;
+		penc += qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_EXPIRATION_TO_PREFIX) - 1U;
 		slen = QSC_TIMESTAMP_STRING_SIZE;
 		qsc_memutils_copy(dtm, penc, slen);
 		child->expiration.to = qsc_timestamp_datetime_to_seconds(dtm);
 		penc += slen;
 
-		penc += qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_ALGORITHM_PREFIX) + 1;
+		penc += qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_ALGORITHM_PREFIX) + 1U;
 		slen = qsc_stringutils_find_string(penc, "\n");
 		child->algorithm = mpdc_certificate_algorithm_decode(penc);
 		penc += slen;
 
-		penc += qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_VERSION_PREFIX) + 1;
+		penc += qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_VERSION_PREFIX) + 1U;
 		slen = qsc_stringutils_find_string(penc, "\n");
 
 		if (qsc_stringutils_compare_strings(penc, MPDC_ACTIVE_VERSION_STRING, slen) == true)
@@ -287,7 +287,7 @@ bool mpdc_certificate_child_decode(mpdc_child_certificate* child, const char enc
 		}
 
 		penc += slen;
-		penc += qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_DESIGNATION_PREFIX) + 1;
+		penc += qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_DESIGNATION_PREFIX) + 1U;
 		slen = qsc_stringutils_find_string(penc, "\n");
 		child->designation = mpdc_certificate_designation_decode(penc);
 		penc += slen;
@@ -298,7 +298,7 @@ bool mpdc_certificate_child_decode(mpdc_child_certificate* child, const char enc
 		penc += slen;
 		++penc;
 
-		penc += qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_ROOT_HASH_PREFIX) + 1;
+		penc += qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_ROOT_HASH_PREFIX) + 1U;
 		slen = sizeof(tmpsg);
 		qsc_stringutils_remove_line_breaks(tmpsg, sizeof(tmpsg), penc, slen);
 		res = qsc_encoding_base64_decode(child->csig, MPDC_CERTIFICATE_SIGNED_HASH_SIZE, tmpsg, MPDC_SIGNATURE_ENCODING_SIZE);
@@ -349,12 +349,12 @@ size_t mpdc_certificate_child_encode(char enck[MPDC_CHILD_CERTIFICATE_STRING_SIZ
 	size_t slen;
 	size_t spos;
 
-	spos = 0;
+	spos = 0U;
 
 	if (enck != NULL && child != NULL)
 	{
 		char dtm[QSC_TIMESTAMP_STRING_SIZE] = { 0 };
-		char hexid[MPDC_CERTIFICATE_SERIAL_SIZE * 2] = { 0 };
+		char hexid[MPDC_CERTIFICATE_SERIAL_SIZE * 2U] = { 0 };
 		char tmpvk[MPDC_VERIFICATION_KEY_ENCODING_SIZE] = { 0 };
 		char tmpsg[MPDC_SIGNATURE_ENCODING_SIZE] = { 0 };
 
@@ -388,14 +388,14 @@ size_t mpdc_certificate_child_encode(char enck[MPDC_CHILD_CERTIFICATE_STRING_SIZ
 		qsc_memutils_copy((enck + spos), MPDC_CHILD_CERTIFICATE_VALID_FROM_PREFIX, slen);
 		spos += slen;
 		qsc_timestamp_seconds_to_datetime(child->expiration.from, dtm);
-		slen = sizeof(dtm) - 1;
+		slen = sizeof(dtm) - 1U;
 		qsc_memutils_copy((enck + spos), dtm, slen);
 		spos += slen;
 		slen = qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_EXPIRATION_TO_PREFIX);
 		qsc_memutils_copy((enck + spos), MPDC_CHILD_CERTIFICATE_EXPIRATION_TO_PREFIX, slen);
 		spos += slen;
 		qsc_timestamp_seconds_to_datetime(child->expiration.to, dtm);
-		slen = sizeof(dtm) - 1;
+		slen = sizeof(dtm) - 1U;
 		qsc_memutils_copy((enck + spos), dtm, slen);
 		spos += slen;
 		enck[spos] = '\n';
@@ -513,7 +513,7 @@ bool mpdc_certificate_child_file_to_struct(const char* fpath, mpdc_child_certifi
 	{
 		if (qsc_fileutils_exists(fpath) == true)
 		{
-			uint8_t schild[MPDC_CERTIFICATE_CHILD_SIZE] = { 0 };
+			uint8_t schild[MPDC_CERTIFICATE_CHILD_SIZE] = { 0U };
 
 			if (qsc_fileutils_copy_file_to_stream(fpath, (char*)schild, MPDC_CERTIFICATE_CHILD_SIZE) == MPDC_CERTIFICATE_CHILD_SIZE)
 			{
@@ -534,14 +534,14 @@ void mpdc_certificate_child_hash(uint8_t* output, const mpdc_child_certificate* 
 	if (output != NULL && child != NULL)
 	{
 		qsc_keccak_state hstate = { 0 };
-		uint8_t nbuf[sizeof(uint64_t)] = { 0 };
+		uint8_t nbuf[sizeof(uint64_t)] = { 0U };
 
 		qsc_sha3_initialize(&hstate);
-		nbuf[0] = child->algorithm;
+		nbuf[0U] = child->algorithm;
 		qsc_sha3_update(&hstate, qsc_keccak_rate_256, nbuf, sizeof(uint8_t));
-		nbuf[0] = child->designation;
+		nbuf[0U] = child->designation;
 		qsc_sha3_update(&hstate, qsc_keccak_rate_256, nbuf, sizeof(uint8_t));
-		nbuf[0] = child->version;
+		nbuf[0U] = child->version;
 		qsc_sha3_update(&hstate, qsc_keccak_rate_256, nbuf, sizeof(uint8_t));
 		qsc_intutils_le64to8(nbuf, child->expiration.from);
 		qsc_sha3_update(&hstate, qsc_keccak_rate_256, nbuf, sizeof(uint64_t));
@@ -591,13 +591,13 @@ bool mpdc_certificate_child_message_verify(uint8_t* message, size_t* msglen, con
 	MPDC_ASSERT(message != NULL);
 	MPDC_ASSERT(msglen != NULL);
 	MPDC_ASSERT(signature != NULL);
-	MPDC_ASSERT(siglen != 0);
+	MPDC_ASSERT(siglen != 0U);
 	MPDC_ASSERT(child != NULL);
 
 	bool res;
 
 	res = false;
-	*msglen = 0;
+	*msglen = 0U;
 
 	if (message != NULL && msglen != NULL && signature != NULL && siglen != 0 && child != NULL)
 	{
@@ -639,20 +639,20 @@ void mpdc_certificate_child_serialize(uint8_t* output, const mpdc_child_certific
 bool mpdc_certificate_signature_hash_verify(const uint8_t* signature, size_t siglen, const uint8_t* message, size_t msglen, const mpdc_child_certificate* lcert)
 {
 	MPDC_ASSERT(signature != NULL);
-	MPDC_ASSERT(siglen != 0);
+	MPDC_ASSERT(siglen != 0U);
 	MPDC_ASSERT(message != NULL);
-	MPDC_ASSERT(msglen != 0);
+	MPDC_ASSERT(msglen != 0U);
 	MPDC_ASSERT(lcert != NULL);
 
 	size_t mlen;
 	bool res;
 
-	mlen = 0;
+	mlen = 0U;
 	res = false;
 
 	if (signature != NULL && siglen != 0 && message != NULL && msglen != 0 && lcert != NULL)
 	{
-		uint8_t rhash[MPDC_CERTIFICATE_HASH_SIZE] = { 0 };
+		uint8_t rhash[MPDC_CERTIFICATE_HASH_SIZE] = { 0U };
 
 		res = mpdc_signature_verify(rhash, &mlen, signature, siglen, lcert->verkey);
 
@@ -679,7 +679,7 @@ bool mpdc_certificate_child_struct_to_file(const char* fpath, const mpdc_child_c
 
 	if (fpath != NULL && child != NULL)
 	{
-		uint8_t schild[MPDC_CERTIFICATE_CHILD_SIZE] = { 0 };
+		uint8_t schild[MPDC_CERTIFICATE_CHILD_SIZE] = { 0U };
 
 		if (qsc_fileutils_exists(fpath) == true)
 		{
@@ -789,8 +789,8 @@ void mpdc_certificate_expiration_set_days(mpdc_certificate_expiration* expiratio
 
 	if (expiration != NULL)
 	{
-		expiration->from = qsc_timestamp_datetime_utc() + (start * 24 * 60 * 60);
-		expiration->to = expiration->from + (duration * 24 * 60 * 60);
+		expiration->from = qsc_timestamp_datetime_utc() + (start * 24U * 60U * 60U);
+		expiration->to = expiration->from + (duration * 24U * 60U * 60U);
 	}
 }
 
@@ -812,15 +812,16 @@ bool mpdc_certificate_expiration_time_verify(const mpdc_certificate_expiration* 
 	uint64_t nsec;
 	bool res;
 
-	nsec = qsc_timestamp_datetime_utc();
+	res = false;
 
-	if (nsec >= expiration->from && nsec <= expiration->to)
+	if (expiration != NULL)
 	{
-		res = true;
-	}
-	else
-	{
-		res = false;
+		nsec = qsc_timestamp_datetime_utc();
+
+		if (nsec >= expiration->from && nsec <= expiration->to)
+		{
+			res = true;
+		}
 	}
 
 	return res;
@@ -831,15 +832,15 @@ size_t mpdc_certificate_message_hash_sign(uint8_t* signature, const uint8_t* sig
 	MPDC_ASSERT(signature != NULL);
 	MPDC_ASSERT(sigkey != NULL);
 	MPDC_ASSERT(message != NULL);
-	MPDC_ASSERT(msglen != 0);
+	MPDC_ASSERT(msglen != 0U);
 
 	size_t slen;
 
 	slen = 0;
 
-	if (signature != NULL)
+	if (signature != NULL && sigkey != NULL && message != NULL && msglen != 0U)
 	{
-		uint8_t hash[MPDC_CERTIFICATE_HASH_SIZE] = { 0 };
+		uint8_t hash[MPDC_CERTIFICATE_HASH_SIZE] = { 0U };
 
 		qsc_sha3_compute256(hash, message, msglen);
 		mpdc_signature_sign(signature, &slen, hash, sizeof(hash), sigkey, qsc_acp_generate);
@@ -910,35 +911,35 @@ bool mpdc_certificate_root_decode(mpdc_root_certificate* root, const char* enck)
 		char dtm[QSC_TIMESTAMP_STRING_SIZE] = { 0 };
 
 		penc = enck;
-		penc += qsc_stringutils_string_size(MPDC_ROOT_CERTIFICATE_HEADER) + qsc_stringutils_string_size(MPDC_ROOT_CERTIFICATE_SERIAL_PREFIX) + 1;
+		penc += qsc_stringutils_string_size(MPDC_ROOT_CERTIFICATE_HEADER) + qsc_stringutils_string_size(MPDC_ROOT_CERTIFICATE_SERIAL_PREFIX) + 1U;
 		slen = MPDC_CERTIFICATE_SERIAL_SIZE;
 
-		qsc_intutils_hex_to_bin(penc, root->serial, MPDC_CERTIFICATE_SERIAL_SIZE * 2);
-		penc += (MPDC_CERTIFICATE_SERIAL_SIZE * 2);
+		qsc_intutils_hex_to_bin(penc, root->serial, MPDC_CERTIFICATE_SERIAL_SIZE * 2U);
+		penc += (MPDC_CERTIFICATE_SERIAL_SIZE * 2U);
 
-		penc += qsc_stringutils_string_size(MPDC_ROOT_CERTIFICATE_ISSUER_PREFIX) + 1;
+		penc += qsc_stringutils_string_size(MPDC_ROOT_CERTIFICATE_ISSUER_PREFIX) + 1U;
 		slen = qsc_stringutils_find_string(penc, "\n");
 		qsc_memutils_copy(root->issuer, penc, slen);
 		penc += slen;
 
-		penc += qsc_stringutils_string_size(MPDC_ROOT_CERTIFICATE_VALID_FROM_PREFIX) + 1;
+		penc += qsc_stringutils_string_size(MPDC_ROOT_CERTIFICATE_VALID_FROM_PREFIX) + 1U;
 		slen = QSC_TIMESTAMP_STRING_SIZE;
 		qsc_memutils_copy(dtm, penc, slen);
 		root->expiration.from = qsc_timestamp_datetime_to_seconds(dtm);
 		penc += slen;
 
-		penc += qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_EXPIRATION_TO_PREFIX) - 1;
+		penc += qsc_stringutils_string_size(MPDC_CHILD_CERTIFICATE_EXPIRATION_TO_PREFIX) - 1U;
 		slen = QSC_TIMESTAMP_STRING_SIZE;
 		qsc_memutils_copy(dtm, penc, slen);
 		root->expiration.to = qsc_timestamp_datetime_to_seconds(dtm);
 		penc += slen;
 
-		penc += qsc_stringutils_string_size(MPDC_ROOT_CERTIFICATE_ALGORITHM_PREFIX) + 1;
+		penc += qsc_stringutils_string_size(MPDC_ROOT_CERTIFICATE_ALGORITHM_PREFIX) + 1U;
 		slen = qsc_stringutils_find_string(penc, "\n");
 		root->algorithm = mpdc_certificate_algorithm_decode(penc);
 		penc += slen;
 
-		penc += qsc_stringutils_string_size(MPDC_ROOT_CERTIFICATE_VERSION_PREFIX) + 1;
+		penc += qsc_stringutils_string_size(MPDC_ROOT_CERTIFICATE_VERSION_PREFIX) + 1U;
 		slen = qsc_stringutils_find_string(penc, "\n");
 
 		if (qsc_stringutils_compare_strings(penc, MPDC_ACTIVE_VERSION_STRING, slen) == true)
@@ -951,7 +952,7 @@ bool mpdc_certificate_root_decode(mpdc_root_certificate* root, const char* enck)
 		}
 		penc += slen;
 
-		penc += qsc_stringutils_string_size(MPDC_ROOT_CERTIFICATE_PUBLICKEY_PREFIX) + 1;
+		penc += qsc_stringutils_string_size(MPDC_ROOT_CERTIFICATE_PUBLICKEY_PREFIX) + 1U;
 		qsc_stringutils_remove_line_breaks(tmpvk, sizeof(tmpvk), penc, MPDC_ROOT_CERTIFICATE_STRING_SIZE);
 		res = qsc_encoding_base64_decode(root->verkey, MPDC_ASYMMETRIC_VERIFICATION_KEY_SIZE, tmpvk, MPDC_VERIFICATION_KEY_ENCODING_SIZE);
 	}
@@ -990,12 +991,12 @@ size_t mpdc_certificate_root_encode(char* enck, const mpdc_root_certificate* roo
 	size_t slen;
 	size_t spos;
 
-	spos = 0;
+	spos = 0U;
 
 	if (enck != NULL && root != NULL)
 	{
 		char dtm[QSC_TIMESTAMP_STRING_SIZE] = { 0 };
-		char hexid[MPDC_CERTIFICATE_SERIAL_SIZE * 2] = { 0 };
+		char hexid[MPDC_CERTIFICATE_SERIAL_SIZE * 2U] = { 0 };
 		char tmpvk[MPDC_VERIFICATION_KEY_ENCODING_SIZE] = { 0 };
 
 		slen = qsc_stringutils_string_size(MPDC_ROOT_CERTIFICATE_HEADER);
@@ -1028,14 +1029,14 @@ size_t mpdc_certificate_root_encode(char* enck, const mpdc_root_certificate* roo
 		qsc_memutils_copy((enck + spos), MPDC_ROOT_CERTIFICATE_VALID_FROM_PREFIX, slen);
 		spos += slen;
 		qsc_timestamp_seconds_to_datetime(root->expiration.from, dtm);
-		slen = sizeof(dtm) - 1;
+		slen = sizeof(dtm) - 1U;
 		qsc_memutils_copy((enck + spos), dtm, slen);
 		spos += slen;
 		slen = qsc_stringutils_string_size(MPDC_ROOT_CERTIFICATE_EXPIRATION_TO_PREFIX);
 		qsc_memutils_copy((enck + spos), MPDC_ROOT_CERTIFICATE_EXPIRATION_TO_PREFIX, slen);
 		spos += slen;
 		qsc_timestamp_seconds_to_datetime(root->expiration.to, dtm);
-		slen = sizeof(dtm) - 1;
+		slen = sizeof(dtm) - 1U;
 		qsc_memutils_copy((enck + spos), dtm, slen);
 		spos += slen;
 		enck[spos] = '\n';
@@ -1106,7 +1107,7 @@ bool mpdc_certificate_root_file_to_struct(const char* fpath, mpdc_root_certifica
 	{
 		if (qsc_fileutils_exists(fpath) == true)
 		{
-			uint8_t sroot[MPDC_CERTIFICATE_ROOT_SIZE] = { 0 };
+			uint8_t sroot[MPDC_CERTIFICATE_ROOT_SIZE] = { 0U };
 
 			if (qsc_fileutils_copy_file_to_stream(fpath, (char*)sroot, MPDC_CERTIFICATE_ROOT_SIZE) == MPDC_CERTIFICATE_ROOT_SIZE)
 			{
@@ -1127,12 +1128,12 @@ void mpdc_certificate_root_hash(uint8_t* output, const mpdc_root_certificate* ro
 	if (output != NULL && root != NULL)
 	{
 		qsc_keccak_state hstate = { 0 };
-		uint8_t nbuf[sizeof(uint64_t)] = { 0 };
+		uint8_t nbuf[sizeof(uint64_t)] = { 0U };
 
 		qsc_sha3_initialize(&hstate);
-		nbuf[0] = root->algorithm;
+		nbuf[0U] = root->algorithm;
 		qsc_sha3_update(&hstate, qsc_keccak_rate_256, nbuf, sizeof(uint8_t));
-		nbuf[0] = root->version;
+		nbuf[0U] = root->version;
 		qsc_sha3_update(&hstate, qsc_keccak_rate_256, nbuf, sizeof(uint8_t));
 		qsc_intutils_le64to8(nbuf, root->expiration.from);
 		qsc_sha3_update(&hstate, qsc_keccak_rate_256, nbuf, sizeof(uint64_t));
@@ -1207,11 +1208,11 @@ size_t mpdc_certificate_root_sign(mpdc_child_certificate* child, const mpdc_root
 
 	size_t slen;
 
-	slen = 0;
+	slen = 0U;
 
 	if (child != NULL && root != NULL && rsigkey != NULL)
 	{
-		uint8_t hash[MPDC_CERTIFICATE_HASH_SIZE] = { 0 };
+		uint8_t hash[MPDC_CERTIFICATE_HASH_SIZE] = { 0U };
 
 		qsc_memutils_copy(child->rootser, root->serial, MPDC_CERTIFICATE_SERIAL_SIZE);
 		mpdc_certificate_child_hash(hash, child);
@@ -1230,17 +1231,17 @@ bool mpdc_certificate_root_signature_verify(const mpdc_child_certificate* child,
 	bool res;
 
 	res = false;
-	mlen = 0;
+	mlen = 0U;
 
 	if (child != NULL && root != NULL)
 	{
-		uint8_t msg[MPDC_CERTIFICATE_HASH_SIZE] = { 0 };
+		uint8_t msg[MPDC_CERTIFICATE_HASH_SIZE] = { 0U };
 
 		res = mpdc_signature_verify(msg, &mlen, child->csig, MPDC_CERTIFICATE_SIGNED_HASH_SIZE, root->verkey);
 
 		if (res == true)
 		{
-			uint8_t hash[MPDC_CERTIFICATE_HASH_SIZE] = { 0 };
+			uint8_t hash[MPDC_CERTIFICATE_HASH_SIZE] = { 0U };
 
 			mpdc_certificate_child_hash(hash, child);
 
@@ -1262,7 +1263,7 @@ bool mpdc_certificate_root_struct_to_file(const char* fpath, const mpdc_root_cer
 
 	if (fpath != NULL)
 	{
-		uint8_t sroot[MPDC_CERTIFICATE_ROOT_SIZE] = { 0 };
+		uint8_t sroot[MPDC_CERTIFICATE_ROOT_SIZE] = { 0U };
 
 		mpdc_certificate_root_serialize(sroot, root);
 		res = qsc_fileutils_copy_stream_to_file(fpath, (const char*)sroot, sizeof(sroot));
@@ -1285,12 +1286,12 @@ size_t mpdc_certificate_signature_sign_message(uint8_t* signature, const uint8_t
 {
 	MPDC_ASSERT(signature != NULL);
 	MPDC_ASSERT(message != NULL);
-	MPDC_ASSERT(msglen != 0);
+	MPDC_ASSERT(msglen != 0U);
 	MPDC_ASSERT(prikey != NULL);
 
 	size_t slen;
 
-	slen = 0;
+	slen = 0U;
 
 	if (signature != NULL && message != NULL && msglen != 0 && prikey != NULL)
 	{
@@ -1304,7 +1305,7 @@ size_t mpdc_certificate_signature_sign_message(uint8_t* signature, const uint8_t
 bool mpdc_certificate_signature_verify_message(const uint8_t* message, size_t msglen, const uint8_t* signature, size_t siglen, const uint8_t* pubkey)
 {
 	MPDC_ASSERT(message != NULL);
-	MPDC_ASSERT(msglen != 0);
+	MPDC_ASSERT(msglen != 0U);
 	MPDC_ASSERT(signature != NULL);
 	MPDC_ASSERT(pubkey != NULL);
 
@@ -1313,9 +1314,9 @@ bool mpdc_certificate_signature_verify_message(const uint8_t* message, size_t ms
 
 	res = false;
 
-	if (message != NULL && msglen != 0 && signature != NULL && pubkey != NULL)
+	if (message != NULL && msglen != 0U && signature != NULL && pubkey != NULL)
 	{
-		uint8_t tmsg[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0 };
+		uint8_t tmsg[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0U };
 
 		mlen = MPDC_CRYPTO_SYMMETRIC_HASH_SIZE;
 
@@ -1421,7 +1422,7 @@ bool mpdc_certificate_functions_test()
 	if (res == true)
 	{
 		mpdc_root_certificate rcpy = { 0 };
-		uint8_t srt[MPDC_CERTIFICATE_ROOT_SIZE] = { 0 };
+		uint8_t srt[MPDC_CERTIFICATE_ROOT_SIZE] = { 0U };
 		
 		mpdc_certificate_root_serialize(srt, &root);
 		mpdc_certificate_root_deserialize(&rcpy, srt);
@@ -1434,7 +1435,7 @@ bool mpdc_certificate_functions_test()
 			mpdc_child_certificate ccpy = { 0 };
 
 			mpdc_certificate_signature_generate_keypair(&ckp);
-			mpdc_certificate_expiration_set_days(&exp, 0, 100);
+			mpdc_certificate_expiration_set_days(&exp, 0, 100U);
 			mpdc_certificate_child_create(&child, ckp.pubkey, &exp, "Agent 1", mpdc_network_designation_agent);
 			mpdc_certificate_root_sign(&child, &root, skp.prikey);
 			certificate_child_print(&child);
@@ -1446,7 +1447,7 @@ bool mpdc_certificate_functions_test()
 
 				if (res == true)
 				{
-					uint8_t sct[MPDC_CERTIFICATE_CHILD_SIZE] = { 0 };
+					uint8_t sct[MPDC_CERTIFICATE_CHILD_SIZE] = { 0U };
 
 					mpdc_certificate_child_serialize(sct, &child);
 					mpdc_certificate_child_deserialize(&ccpy, sct);

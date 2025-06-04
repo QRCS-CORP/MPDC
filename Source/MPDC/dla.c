@@ -225,7 +225,7 @@ static void dla_converge_reset(mpdc_topology_list_state* list)
 
 	mpdc_topology_list_initialize(&clst);
 
-	for (size_t i = 0; i < list->count; ++i)
+	for (size_t i = 0U; i < list->count; ++i)
 	{
 		mpdc_topology_node_state node = { 0 };
 
@@ -244,7 +244,7 @@ static void dla_converge_reset(mpdc_topology_list_state* list)
 	{
 		mpdc_topology_list_dispose(list);
 
-		for (size_t i = 0; i < clst.count; ++i)
+		for (size_t i = 0U; i < clst.count; ++i)
 		{
 			mpdc_topology_node_state node = { 0 };
 
@@ -265,14 +265,14 @@ static void dla_converge_broadcast(void)
 	qsc_mutex mtx;
 	mpdc_protocol_errors merr;
 	
-	if (m_dla_application_state.tlist.count > 0)
+	if (m_dla_application_state.tlist.count > 0U)
 	{
 		mpdc_topology_node_state rnode = { 0 };
 
 		mpdc_topology_list_initialize(&clst);
 
 		/* iterate through nodes in the topology list, copying their signed node to the message */
-		for (size_t i = 0; i < m_dla_application_state.tlist.count; ++i)
+		for (size_t i = 0U; i < m_dla_application_state.tlist.count; ++i)
 		{
 			if (mpdc_topology_list_item(&m_dla_application_state.tlist, &rnode, i) == true)
 			{
@@ -841,9 +841,9 @@ static void dla_receive_loop(void* ras)
 		{
 			if (pras->csock.connection_status == qsc_socket_state_connected)
 			{
-				uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0 };
+				uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0U };
 
-				mlen = 0;
+				mlen = 0U;
 				plen = qsc_socket_peek(&pras->csock, hdr, MPDC_PACKET_HEADER_SIZE);
 
 				if (plen == MPDC_PACKET_HEADER_SIZE)
@@ -872,7 +872,7 @@ static void dla_receive_loop(void* ras)
 						mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_receive_failure, (const char*)pras->csock.address, QSC_SOCKET_ADDRESS_MAX_SIZE);
 					}
 			
-					if (mlen > 0)
+					if (mlen > 0U)
 					{
 						pkt.pmessage = buff + MPDC_PACKET_HEADER_SIZE;
 
@@ -991,7 +991,7 @@ static void dla_receive_loop(void* ras)
 						else if (pkt.flag == mpdc_network_flag_system_error_condition)
 						{
 							/* log the error condition */
-							merr = (mpdc_protocol_errors)pkt.pmessage[0];
+							merr = (mpdc_protocol_errors)pkt.pmessage[0U];
 							cmsg = mpdc_protocol_error_to_string(merr);
 
 							if (cmsg != NULL)
@@ -1169,7 +1169,7 @@ static void dla_server_dispose(void)
 	qsc_memutils_clear(&m_dla_application_state.dla, sizeof(mpdc_child_certificate));
 	m_dla_command_loop_status = mpdc_server_loop_status_stopped;
 	m_dla_server_loop_status = mpdc_server_loop_status_stopped;
-	m_dla_idle_timer = 0;
+	m_dla_idle_timer = 0U;
 }
 
 static bool dla_server_load_root(void)
@@ -1337,7 +1337,7 @@ static void dla_get_command_mode(const char* command)
 			{
 				nmode = mpdc_console_mode_enable;
 			}
-			else if (qsc_stringutils_string_size(command) > 0)
+			else if (qsc_stringutils_string_size(command) > 0U)
 			{
 				nmode = mpdc_console_mode_user;
 			}
@@ -1362,7 +1362,7 @@ static void dla_set_command_action(const char* command)
 	res = mpdc_command_action_command_unrecognized;
 	clen = qsc_stringutils_string_size(command);
 
-	if (clen == 0 || clen > QSC_CONSOLE_MAX_LINE)
+	if (clen == 0U || clen > QSC_CONSOLE_MAX_LINE)
 	{
 		res = mpdc_command_action_none;
 	}
@@ -1796,7 +1796,7 @@ static void dla_command_execute(const char* command)
 			else
 			{
 				mpdc_menu_print_predefined_message(mpdc_application_generate_key_failure, m_dla_application_state.mode, m_dla_application_state.hostname);
-				mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_generate_failure, NULL, 0);
+				mpdc_server_log_write_message(&m_dla_application_state, mpdc_application_log_generate_failure, NULL, 0U);
 			}
 		}
 
@@ -2238,7 +2238,7 @@ static void dla_command_execute(const char* command)
 
 static void dla_idle_timer(void)
 {
-	const uint32_t MMSEC = 60 * 1000;
+	const uint32_t MMSEC = 60U * 1000U;
 
 	while (true)
 	{
@@ -2275,7 +2275,7 @@ static void dla_command_loop(char* command)
 
 		/* lock the mutex */
 		qsc_mutex mtx = qsc_async_mutex_lock_ex();
-		m_dla_idle_timer = 0;
+		m_dla_idle_timer = 0U;
 		qsc_async_mutex_unlock_ex(mtx);
 
 		dla_set_command_action(command);
@@ -2316,7 +2316,7 @@ int32_t mpdc_dla_start_server(void)
 
 	/* set the window parameters */
 	qsc_consoleutils_set_virtual_terminal();
-	qsc_consoleutils_set_window_size(1000, 600);
+	qsc_consoleutils_set_window_size(1000U, 600U);
 	qsc_consoleutils_set_window_title(m_dla_application_state.wtitle);
 
 	/* application banner */
@@ -2328,7 +2328,7 @@ int32_t mpdc_dla_start_server(void)
 	m_dla_command_loop_status = mpdc_server_loop_status_started;
 
 	/* start the idle timer */
-	m_dla_idle_timer = 0;
+	m_dla_idle_timer = 0U;
 	idle = qsc_async_thread_create_noargs(&dla_idle_timer);
 	
 	if (idle)

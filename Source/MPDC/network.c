@@ -153,7 +153,7 @@ static mpdc_protocol_errors network_header_validate(const mpdc_network_packet* p
 
 	if (packetin->flag == mpdc_network_flag_system_error_condition)
 	{
-		merr = (mpdc_protocol_errors)packetin->pmessage[0];
+		merr = (mpdc_protocol_errors)packetin->pmessage[0U];
 	}
 	else
 	{
@@ -218,7 +218,7 @@ static mpdc_protocol_errors network_unpack_error(uint8_t* pmsg)
 
 		if (resp.flag == mpdc_network_flag_system_error_condition && resp.pmessage != NULL)
 		{
-			merr = (mpdc_protocol_errors)resp.pmessage[0];
+			merr = (mpdc_protocol_errors)resp.pmessage[0U];
 		}
 	}
 
@@ -270,7 +270,7 @@ static mpdc_protocol_errors network_certificate_signed_hash_verify(mpdc_child_ce
 	/* verify the message signature */
 	if (mpdc_certificate_signature_hash_verify(packetin->pmessage + NETWORK_CERTIFICATE_UPDATE_SIZE, MPDC_CERTIFICATE_SIGNED_HASH_SIZE, packetin->pmessage, NETWORK_CERTIFICATE_UPDATE_SIZE, rcert) == true)
 	{
-		uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0 };
+		uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0U };
 
 		network_subheader_serialize(shdr, packetin);
 
@@ -306,11 +306,11 @@ static void network_hash_cycle_mfk(const uint8_t* serial, qsc_collection_state* 
 	MPDC_ASSERT(serial != NULL);
 	MPDC_ASSERT(mfkcol != NULL);
 
-	uint8_t mfkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
+	uint8_t mfkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
 
 	if (qsc_collection_find(mfkcol, mfkey, serial) == true)
 	{
-		uint8_t ckey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
+		uint8_t ckey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
 
 		qsc_shake256_compute(ckey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE, mfkey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
 		qsc_collection_remove(mfkcol, serial);
@@ -362,7 +362,7 @@ static void network_mac_message(uint8_t* mtag, const uint8_t* ckey, const uint8_
 	MPDC_ASSERT(mtag != NULL);
 	MPDC_ASSERT(ckey != NULL);
 	MPDC_ASSERT(ctxt != NULL);
-	MPDC_ASSERT(ctxlen != 0);
+	MPDC_ASSERT(ctxlen != 0U);
 	MPDC_ASSERT(adata != NULL);
 
 	qsc_keccak_state fks = { 0 };
@@ -380,7 +380,7 @@ static mpdc_protocol_errors network_message_hash_sign(const mpdc_network_packet*
 	MPDC_ASSERT(packetout != NULL);
 	MPDC_ASSERT(sigkey != NULL);
 	MPDC_ASSERT(message != NULL);
-	MPDC_ASSERT(msglen != 0);
+	MPDC_ASSERT(msglen != 0U);
 
 	size_t mlen;
 	size_t mpos;
@@ -424,7 +424,7 @@ static mpdc_protocol_errors network_message_signed_hash_verify(uint8_t* message,
 	/* verify the message signature */
 	if (mpdc_certificate_signature_hash_verify(packetin->pmessage + mlen, MPDC_CERTIFICATE_SIGNED_HASH_SIZE, packetin->pmessage, mlen, rcert) == true)
 	{
-		uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0 };
+		uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0U };
 		
 		network_subheader_serialize(shdr, packetin);
 
@@ -481,7 +481,7 @@ mpdc_protocol_errors mpdc_network_announce_broadcast(mpdc_network_announce_reque
 	if (state != NULL)
 	{
 		mpdc_network_packet reqt = { 0 };
-		uint8_t sbuf[NETWORK_ANNOUNCE_REQUEST_PACKET_SIZE] = { 0 };
+		uint8_t sbuf[NETWORK_ANNOUNCE_REQUEST_PACKET_SIZE] = { 0U };
 
 		/* create the packet */
 		reqt.pmessage = sbuf + MPDC_PACKET_HEADER_SIZE;
@@ -534,7 +534,7 @@ mpdc_protocol_errors mpdc_network_announce_response(mpdc_network_announce_respon
 
 		if (merr == mpdc_protocol_error_none)
 		{
-			uint8_t snode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0 };
+			uint8_t snode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0U };
 
 			/* verify the certificate update */
 			merr = network_message_signed_hash_verify(snode, packetin, state->dcert);
@@ -608,7 +608,7 @@ static mpdc_protocol_errors network_converge_response_verify(const mpdc_network_
 
 		if (merr == mpdc_protocol_error_none)
 		{
-			uint8_t rnode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0 };
+			uint8_t rnode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0U };
 
 			/* verify the hash and signature */
 			merr = network_message_signed_hash_verify(rnode, packetin, state->rcert);
@@ -616,7 +616,7 @@ static mpdc_protocol_errors network_converge_response_verify(const mpdc_network_
 			/* check that the node descriptions are the same */
 			if (merr == mpdc_protocol_error_none)
 			{
-				uint8_t snode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0 };
+				uint8_t snode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0U };
 
 				/* serialize the local node copy */
 				mpdc_topology_node_serialize(snode, state->rnode);
@@ -656,12 +656,12 @@ mpdc_protocol_errors mpdc_network_converge_request(const mpdc_network_converge_r
 	{
 		mpdc_network_packet reqt = { 0 };
 
-		uint8_t snode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0 };
+		uint8_t snode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0U };
 
 		/* add the serialized topological node to the message */
 		if (mpdc_topology_node_serialize(snode, state->rnode) == MPDC_NETWORK_TOPOLOGY_NODE_SIZE)
 		{
-			uint8_t sbuf[NETWORK_CONVERGE_REQUEST_PACKET_SIZE] = { 0 };
+			uint8_t sbuf[NETWORK_CONVERGE_REQUEST_PACKET_SIZE] = { 0U };
 
 			reqt.pmessage = sbuf + MPDC_PACKET_HEADER_SIZE;
 			/* create a node-specific request packet */
@@ -683,7 +683,7 @@ mpdc_protocol_errors mpdc_network_converge_request(const mpdc_network_converge_r
 					if (slen == NETWORK_CONVERGE_REQUEST_PACKET_SIZE)
 					{
 						mpdc_network_packet resp = { 0 };
-						uint8_t rbuf[NETWORK_CONVERGE_RESPONSE_PACKET_SIZE] = { 0 };
+						uint8_t rbuf[NETWORK_CONVERGE_RESPONSE_PACKET_SIZE] = { 0U };
 						size_t rlen;
 
 						/* wait for the reply */
@@ -743,7 +743,7 @@ static mpdc_protocol_errors network_converge_response_packet(mpdc_network_packet
 
 	if (packetout != NULL && state != NULL)
 	{
-		uint8_t snode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0 };
+		uint8_t snode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0U };
 
 		/* create the packet header */
 		network_header_create(packetout, mpdc_network_flag_network_converge_response, NETWORK_CONVERGE_RESPONSE_SEQUENCE, NETWORK_CONVERGE_RESPONSE_MESSAGE_SIZE);
@@ -774,7 +774,7 @@ static mpdc_protocol_errors network_converge_response_packet(mpdc_network_packet
 
 static mpdc_protocol_errors network_converge_request_verify(const mpdc_network_converge_response_state* state, const mpdc_network_packet* packetin)
 {
-	uint8_t rnode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0 };
+	uint8_t rnode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0U };
 	mpdc_protocol_errors merr;
 
 	/* inspect the request packet parameters */
@@ -787,7 +787,7 @@ static mpdc_protocol_errors network_converge_request_verify(const mpdc_network_c
 
 		if (merr == mpdc_protocol_error_none)
 		{
-			uint8_t snode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0 };
+			uint8_t snode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0U };
 
 			/* serialize the node structure */
 			mpdc_topology_node_serialize(snode, state->lnode);
@@ -824,7 +824,7 @@ mpdc_protocol_errors mpdc_network_converge_response(const mpdc_network_converge_
 		if (merr == mpdc_protocol_error_none)
 		{
 			mpdc_network_packet resp = { 0 };
-			uint8_t sbuf[NETWORK_CONVERGE_RESPONSE_PACKET_SIZE] = { 0 };
+			uint8_t sbuf[NETWORK_CONVERGE_RESPONSE_PACKET_SIZE] = { 0U };
 
 			resp.pmessage = sbuf + MPDC_PACKET_HEADER_SIZE;
 
@@ -897,9 +897,9 @@ static mpdc_protocol_errors network_fkey_response_verify(mpdc_network_fkey_reque
 	/* verify the packet parameters */
 	if (merr == mpdc_protocol_error_none)
 	{
-		uint8_t ckey[QSC_SHA3_512_HASH_SIZE] = { 0 };
-		uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0 };
-		uint8_t mtag[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0 };
+		uint8_t ckey[QSC_SHA3_512_HASH_SIZE] = { 0U };
+		uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0U };
+		uint8_t mtag[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0U };
 
 		/* derive the session keys k = H(mfk | lhash | rhash | tok ) */
 		network_derive_fkey(ckey, state->mfk, state->lnode->chash, state->rnode->chash, state->token);
@@ -944,7 +944,7 @@ mpdc_protocol_errors mpdc_network_fkey_request(mpdc_network_fkey_request_state* 
 		if (mpdc_network_connect_to_device(&csock, state->rnode->address, mpdc_network_designation_agent) == qsc_socket_exception_success)
 		{
 			mpdc_network_packet reqt = { 0 };
-			uint8_t sbuf[NETWORK_FRAGMENT_FKEY_REQUEST_PACKET_SIZE] = { 0 };
+			uint8_t sbuf[NETWORK_FRAGMENT_FKEY_REQUEST_PACKET_SIZE] = { 0U };
 			size_t slen;
 
 			/* create the request packet */
@@ -959,7 +959,7 @@ mpdc_protocol_errors mpdc_network_fkey_request(mpdc_network_fkey_request_state* 
 			if (slen == NETWORK_FRAGMENT_FKEY_REQUEST_PACKET_SIZE)
 			{
 				mpdc_network_packet resp = { 0 };
-				uint8_t rbuf[NETWORK_FRAGMENT_FKEY_RESPONSE_PACKET_SIZE] = { 0 };
+				uint8_t rbuf[NETWORK_FRAGMENT_FKEY_RESPONSE_PACKET_SIZE] = { 0U };
 				size_t rlen;
 
 				/* wait for the reply */
@@ -1028,8 +1028,8 @@ static mpdc_protocol_errors network_fkey_response_packet(mpdc_network_packet* pa
 
 	if (merr == mpdc_protocol_error_none)
 	{
-		uint8_t ckey[QSC_SHA3_512_HASH_SIZE] = { 0 };
-		uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0 };
+		uint8_t ckey[QSC_SHA3_512_HASH_SIZE] = { 0U };
+		uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0U };
 		uint8_t* ptok;
 
 		ptok = packetin->pmessage + MPDC_CERTIFICATE_SERIAL_SIZE;
@@ -1071,7 +1071,7 @@ mpdc_protocol_errors mpdc_network_fkey_response(mpdc_network_fkey_response_state
 
 	if (state != NULL && packetin != NULL)
 	{
-		uint8_t sbuf[NETWORK_FRAGMENT_FKEY_RESPONSE_PACKET_SIZE] = { 0 };
+		uint8_t sbuf[NETWORK_FRAGMENT_FKEY_RESPONSE_PACKET_SIZE] = { 0U };
 		mpdc_network_packet resp = { 0 };
 
 		/* create the response packet */
@@ -1153,7 +1153,7 @@ static mpdc_protocol_errors network_fragment_collection_request_packet(mpdc_netw
 	MPDC_ASSERT(packetout != NULL);
 	MPDC_ASSERT(state != NULL);
 
-	uint8_t mfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
+	uint8_t mfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
 	size_t mpos;
 	mpdc_protocol_errors merr;
 
@@ -1164,9 +1164,9 @@ static mpdc_protocol_errors network_fragment_collection_request_packet(mpdc_netw
 	/* get the client/mas shared mfk */
 	if (qsc_collection_find(state->lmfk, mfk, state->rnode->serial) == true)
 	{
-		uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0 };
-		uint8_t mkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
-		uint8_t mtok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0 };
+		uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0U };
+		uint8_t mkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
+		uint8_t mtok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0U };
 
 		network_header_create(packetout, mpdc_network_flag_fragment_collection_request, NETWORK_FRAGMENT_COLLECTION_REQUEST_SEQUENCE, NETWORK_FRAGMENT_COLLECTION_REQUEST_MESSAGE_SIZE);
 
@@ -1202,7 +1202,7 @@ static mpdc_protocol_errors network_fragment_collection_request_derive(mpdc_netw
 	MPDC_ASSERT(packetin != NULL);
 
 	qsc_keccak_state fkhs = { 0 };
-	uint8_t mmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
+	uint8_t mmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
 	uint8_t* rcpt;
 	uint8_t* rser;
 	uint8_t* rtag;
@@ -1219,9 +1219,9 @@ static mpdc_protocol_errors network_fragment_collection_request_derive(mpdc_netw
 	/* inject mas-client fragment first */
 	if (qsc_collection_find(state->lmfk, mmfk, state->rnode->serial) == true)
 	{
-		uint8_t ckey[QSC_SHA3_512_HASH_SIZE] = { 0 };
-		uint8_t mtag[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0 };
-		uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0 };
+		uint8_t ckey[QSC_SHA3_512_HASH_SIZE] = { 0U };
+		uint8_t mtag[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0U };
+		uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0U };
 
 		/* derive the client-mas fkey */
 		network_derive_fkey(ckey, mmfk, state->lnode->chash, state->rnode->chash, state->token);
@@ -1241,7 +1241,7 @@ static mpdc_protocol_errors network_fragment_collection_request_derive(mpdc_netw
 			qsc_sha3_update(&fkhs, qsc_keccak_rate_256, ckey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
 			
 			/* decrypt each fragment, and add them to the key hash */
-			for (size_t i = 0; i < fcnt - 1; ++i)
+			for (size_t i = 0U; i < fcnt - 1U; ++i)
 			{
 				mpdc_topology_node_state node = { 0 };
 
@@ -1251,7 +1251,7 @@ static mpdc_protocol_errors network_fragment_collection_request_derive(mpdc_netw
 
 				if (mpdc_topology_node_find(state->list, &node, rser) == true)
 				{
-					uint8_t cmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
+					uint8_t cmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
 
 					if (qsc_collection_find(state->lmfk, cmfk, node.serial) == true)
 					{
@@ -1298,7 +1298,7 @@ static mpdc_protocol_errors network_fragment_collection_request_derive(mpdc_netw
 		network_hash_cycle_mfk(state->rnode->serial, state->lmfk);
 		mpos = NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE;
 
-		for (size_t i = 0; i < fcnt - 1; ++i)
+		for (size_t i = 0U; i < fcnt - 1U; ++i)
 		{
 			rser = packetin->pmessage + mpos;
 			mpos += NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE;
@@ -1326,7 +1326,7 @@ mpdc_protocol_errors mpdc_network_fragment_collection_request(mpdc_network_fragm
 
 	mpdc_protocol_errors merr;
 	mpdc_network_packet reqt = { 0 };
-	uint8_t sbuf[NETWORK_FRAGMENT_COLLECTION_REQUEST_PACKET_SIZE] = { 0 };
+	uint8_t sbuf[NETWORK_FRAGMENT_COLLECTION_REQUEST_PACKET_SIZE] = { 0U };
 	size_t slen;
 	
 	if (state != NULL)
@@ -1344,7 +1344,7 @@ mpdc_protocol_errors mpdc_network_fragment_collection_request(mpdc_network_fragm
 			if (slen == NETWORK_FRAGMENT_COLLECTION_REQUEST_PACKET_SIZE)
 			{
 				mpdc_network_packet resp = { 0 };
-				uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0 };
+				uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0U };
 				uint8_t* rbuf;
 				size_t mlen;
 				size_t rlen;
@@ -1427,7 +1427,7 @@ static mpdc_protocol_errors network_fragment_collection_query_request_packet(mpd
 	MPDC_ASSERT(packetin != NULL);
 	MPDC_ASSERT(state != NULL);
 
-	uint8_t mmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
+	uint8_t mmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
 	const uint8_t* cser;
 	const uint8_t* ctok;
 	size_t mpos;
@@ -1448,9 +1448,9 @@ static mpdc_protocol_errors network_fragment_collection_query_request_packet(mpd
 
 		if (mpdc_topology_node_find(state->list, &cnode, cser) == true)
 		{
-			uint8_t mkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
-			uint8_t mtok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0 };
-			uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0 };
+			uint8_t mkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
+			uint8_t mtok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0U };
+			uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0U };
 
 			/* copy the clients serial number and session token to the message */
 			qsc_memutils_copy(packetout->pmessage, cnode.serial, MPDC_CERTIFICATE_SERIAL_SIZE);
@@ -1462,13 +1462,13 @@ static mpdc_protocol_errors network_fragment_collection_query_request_packet(mpd
 			mpos += NETWORK_FRAGMENT_COLLECTION_REQUEST_SIZE;
 
 			/* use the hashed message to generate a unique token */
-			qsc_shake256_compute(mtok, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE, packetout->pmessage, NETWORK_FRAGMENT_COLLECTION_REQUEST_SIZE * 2);
+			qsc_shake256_compute(mtok, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE, packetout->pmessage, NETWORK_FRAGMENT_COLLECTION_REQUEST_SIZE * 2U);
 			/* combine the client-mas mfkey, token, and certificate hashes to generate a mac key */
 			network_derive_mkey(mkey, mmfk, state->rnode->chash, state->lnode->chash, mtok);
 
 			/* mac the message and timestamp, and add the tag to the message */
 			network_subheader_serialize(shdr, packetout);
-			network_mac_message(packetout->pmessage + mpos, mkey, packetout->pmessage, NETWORK_FRAGMENT_COLLECTION_REQUEST_SIZE * 2, shdr);
+			network_mac_message(packetout->pmessage + mpos, mkey, packetout->pmessage, NETWORK_FRAGMENT_COLLECTION_REQUEST_SIZE * 2U, shdr);
 		}
 		else
 		{
@@ -1489,19 +1489,19 @@ static mpdc_protocol_errors network_fragment_collection_response_packet(mpdc_net
 	MPDC_ASSERT(flist != NULL);
 	MPDC_ASSERT(state != NULL);
 
-	uint8_t mmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
+	uint8_t mmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
 	size_t mlen;
 	size_t mpos;
 	mpdc_protocol_errors merr;
 
-	mlen = ((flist->count + 1) * NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE) + MPDC_CRYPTO_SYMMETRIC_HASH_SIZE;
+	mlen = ((flist->count + 1U) * NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE) + MPDC_CRYPTO_SYMMETRIC_HASH_SIZE;
 	network_header_create(packetout, mpdc_network_flag_fragment_collection_response, NETWORK_FRAGMENT_COLLECTION_RESPONSE_SEQUENCE, (uint32_t)mlen);
 
 	/* get the client/mas mfk */
 	if (qsc_collection_find(state->lmfk, mmfk, state->rnode->serial) == true)
 	{
-		uint8_t ckey[QSC_SHA3_512_HASH_SIZE] = { 0 };
-		uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0 };
+		uint8_t ckey[QSC_SHA3_512_HASH_SIZE] = { 0U };
+		uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0U };
 
 		/* derive the client-mas fkey */
 		network_derive_fkey(ckey, mmfk, state->rnode->chash, state->lnode->chash, state->ctok);
@@ -1513,9 +1513,9 @@ static mpdc_protocol_errors network_fragment_collection_response_packet(mpdc_net
 		mpos = NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE;
 
 		/* copy the client encrypted fragment collection to the message */
-		for (size_t i = 0; i < flist->count; ++i)
+		for (size_t i = 0U; i < flist->count; ++i)
 		{
-			uint8_t item[NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE] = { 0 };
+			uint8_t item[NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE] = { 0U };
 
 			qsc_list_item(flist, item, i);
 			qsc_memutils_copy(packetout->pmessage + mpos, item, NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE);
@@ -1549,15 +1549,15 @@ static mpdc_protocol_errors network_fragment_collection_request_verify(const mpd
 
 	if (merr == mpdc_protocol_error_none)
 	{
-		uint8_t mmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
+		uint8_t mmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
 
 		/* generate an fkey, key the mac and verify the message and timestamp */
 		if (qsc_collection_find(state->lmfk, mmfk, state->rnode->serial) == true)
 		{
-			uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0 };
-			uint8_t mkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
-			uint8_t mtag[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0 };
-			uint8_t mtok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0 };
+			uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0U };
+			uint8_t mkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
+			uint8_t mtag[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0U };
+			uint8_t mtok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0U };
 			const uint8_t* ptag;
 
 			ptag = packetin->pmessage + NETWORK_FRAGMENT_COLLECTION_REQUEST_SIZE;
@@ -1604,13 +1604,13 @@ static mpdc_protocol_errors network_fragment_collection_response_derive(qsc_kecc
 
 	if (mpdc_topology_node_find(state->list, &rnode, rser) == true)
 	{
-		uint8_t amfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
+		uint8_t amfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
 
 		if (qsc_collection_find(state->lmfk, amfk, rnode.serial) == true)
 		{
-			uint8_t fkey[QSC_SHA3_512_HASH_SIZE] = { 0 };
-			uint8_t mtag[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0 };
-			uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0 };
+			uint8_t fkey[QSC_SHA3_512_HASH_SIZE] = { 0U };
+			uint8_t mtag[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0U };
+			uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0U };
 			const uint8_t* ptag;
 
 			/* derive the fkey */
@@ -1676,7 +1676,7 @@ mpdc_protocol_errors mpdc_network_fragment_collection_response(mpdc_network_frag
 			/* the device creates a sorted list of available agents on the network */
 			ncnt = mpdc_topology_ordered_server_list(&olst, state->list, mpdc_network_designation_agent);
 
-			if (ncnt > 0)
+			if (ncnt > 0U)
 			{
 				/* initialize the client keychain */
 				qsc_list_initialize(&clst, NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE);
@@ -1694,7 +1694,7 @@ mpdc_protocol_errors mpdc_network_fragment_collection_response(mpdc_network_frag
 				{
 					mpdc_network_packet qreq = { 0 };
 					mpdc_topology_node_state rnode = { 0 };
-					uint8_t sbuf[NETWORK_FRAGMENT_QUERY_REQUEST_PACKET_SIZE] = { 0 };
+					uint8_t sbuf[NETWORK_FRAGMENT_QUERY_REQUEST_PACKET_SIZE] = { 0U };
 
 					mpdc_topology_list_item(&olst, &rnode, i);
 
@@ -1726,7 +1726,7 @@ mpdc_protocol_errors mpdc_network_fragment_collection_response(mpdc_network_frag
 
 							if (slen == NETWORK_FRAGMENT_QUERY_REQUEST_PACKET_SIZE)
 							{
-								uint8_t rbuf[NETWORK_FRAGMENT_QUERY_RESPONSE_PACKET_SIZE] = { 0 };
+								uint8_t rbuf[NETWORK_FRAGMENT_QUERY_RESPONSE_PACKET_SIZE] = { 0U };
 								size_t rlen;
 
 								/* wait for the reply */
@@ -1778,7 +1778,7 @@ mpdc_protocol_errors mpdc_network_fragment_collection_response(mpdc_network_frag
 					}
 				}
 
-				if (merr == mpdc_protocol_error_none && clst.count > 0)
+				if (merr == mpdc_protocol_error_none && clst.count > 0U)
 				{
 					/* send response to client */
 					mpdc_network_packet resp = { 0 };
@@ -1786,7 +1786,7 @@ mpdc_protocol_errors mpdc_network_fragment_collection_response(mpdc_network_frag
 					size_t mlen;
 					size_t slen;
 
-					mlen = MPDC_PACKET_HEADER_SIZE + ((clst.count + 1) * NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE) + MPDC_CRYPTO_SYMMETRIC_HASH_SIZE;
+					mlen = MPDC_PACKET_HEADER_SIZE + ((clst.count + 1U) * NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE) + MPDC_CRYPTO_SYMMETRIC_HASH_SIZE;
 					pbuf = qsc_memutils_malloc(mlen + MPDC_PACKET_HEADER_SIZE);
 
 					if (pbuf != NULL)
@@ -1836,7 +1836,7 @@ mpdc_protocol_errors mpdc_network_fragment_collection_response(mpdc_network_frag
 			/* mas cycles mfk keys for agents and client here */
 			network_hash_cycle_mfk(state->rnode->serial, state->lmfk);
 
-			for (size_t i = 0; i < olst.count; ++i)
+			for (size_t i = 0U; i < olst.count; ++i)
 			{
 				mpdc_topology_node_state rnode = { 0 };
 
@@ -1879,25 +1879,25 @@ static mpdc_protocol_errors network_fragment_query_request_verify(const mpdc_net
 
 	if (merr == mpdc_protocol_error_none)
 	{
-		uint8_t mmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
+		uint8_t mmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
 
 		/* get the client/mas mfk */
 		if (qsc_collection_find(state->lmfk, mmfk, state->rnode->serial) == true)
 		{
-			uint8_t mkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
-			uint8_t mtag[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0 };
-			uint8_t mtok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0 };
-			uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0 };
+			uint8_t mkey[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
+			uint8_t mtag[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0U };
+			uint8_t mtok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0U };
+			uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0U };
 
-			const uint8_t* ptag = packetin->pmessage + NETWORK_FRAGMENT_COLLECTION_REQUEST_SIZE * 2;
+			const uint8_t* ptag = packetin->pmessage + NETWORK_FRAGMENT_COLLECTION_REQUEST_SIZE * 2U;
 			/* use the hashed message to generate a unique token */
-			qsc_shake256_compute(mtok, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE, packetin->pmessage, NETWORK_FRAGMENT_COLLECTION_REQUEST_SIZE * 2);
+			qsc_shake256_compute(mtok, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE, packetin->pmessage, NETWORK_FRAGMENT_COLLECTION_REQUEST_SIZE * 2U);
 			/* combine the client-mas mfkey, token, and certificate hashes to generate a mac key */
 			network_derive_mkey(mkey, mmfk, state->lnode->chash, state->rnode->chash, mtok);
 
 			/* mac the message and timestamp, and add the tag to the message */
 			network_subheader_serialize(shdr, packetin);
-			network_mac_message(mtag, mkey, packetin->pmessage, NETWORK_FRAGMENT_COLLECTION_REQUEST_SIZE * 2, shdr);
+			network_mac_message(mtag, mkey, packetin->pmessage, NETWORK_FRAGMENT_COLLECTION_REQUEST_SIZE * 2U, shdr);
 
 			if (qsc_memutils_are_equal_256(ptag, mtag) == true)
 			{
@@ -1945,17 +1945,17 @@ static mpdc_protocol_errors network_fragment_query_response_packet(mpdc_network_
 	if (mpdc_topology_node_find(state->list, &cnode, cser) == true && 
 		mpdc_topology_node_find(state->list, &mnode, mser) == true)
 	{
-		uint8_t cmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
-		uint8_t mmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
+		uint8_t cmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
+		uint8_t mmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
 
 		/* find the client and servers mfks */
 		if (qsc_collection_find(state->lmfk, cmfk, cser) == true && 
 			qsc_collection_find(state->lmfk, mmfk, mser) == true)
 		{
 			/* create the client portion of the message */
-			uint8_t fkey[QSC_SHA3_512_HASH_SIZE] = { 0 };
-			uint8_t frag[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
-			uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0 };
+			uint8_t fkey[QSC_SHA3_512_HASH_SIZE] = { 0U };
+			uint8_t frag[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
+			uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0U };
 			uint8_t* ptag;
 
 			/* serialize the timestamp and sequence number for additional data */
@@ -2019,7 +2019,7 @@ mpdc_protocol_errors mpdc_network_fragment_query_response(const mpdc_network_fra
 	if (state != NULL && packetin != NULL)
 	{
 		mpdc_network_packet resp = { 0 };
-		uint8_t sbuf[NETWORK_FRAGMENT_QUERY_RESPONSE_PACKET_SIZE] = { 0 };
+		uint8_t sbuf[NETWORK_FRAGMENT_QUERY_RESPONSE_PACKET_SIZE] = { 0U };
 
 		/* verify the fragment query sent by the mas */
 		merr = network_fragment_query_request_verify(state, packetin);
@@ -2128,7 +2128,7 @@ mpdc_protocol_errors mpdc_network_incremental_update_request(const mpdc_network_
 
 			if (slen == NETWORK_INCREMENTAL_UPDATE_REQUEST_PACKET_SIZE)
 			{
-				uint8_t rbuf[NETWORK_INCREMENTAL_UPDATE_RESPONSE_PACKET_SIZE] = { 0 };
+				uint8_t rbuf[NETWORK_INCREMENTAL_UPDATE_RESPONSE_PACKET_SIZE] = { 0U };
 				mpdc_network_packet resp = { 0 };
 				size_t rlen;
 
@@ -2215,7 +2215,7 @@ mpdc_protocol_errors mpdc_network_incremental_update_response(const mpdc_network
 	if (state != NULL && packetin != NULL)
 	{
 		mpdc_network_packet resp = { 0 };
-		uint8_t sbuf[NETWORK_INCREMENTAL_UPDATE_RESPONSE_PACKET_SIZE] = { 0 };
+		uint8_t sbuf[NETWORK_INCREMENTAL_UPDATE_RESPONSE_PACKET_SIZE] = { 0U };
 
 		resp.pmessage = sbuf + MPDC_PACKET_HEADER_SIZE;
 
@@ -2300,13 +2300,13 @@ static mpdc_protocol_errors network_mfk_establish_packet(mpdc_network_packet* pa
 	
 	if (merr == mpdc_protocol_error_none)
 	{
-		uint8_t pbk[MPDC_ASYMMETRIC_PUBLIC_KEY_SIZE] = { 0 };
+		uint8_t pbk[MPDC_ASYMMETRIC_PUBLIC_KEY_SIZE] = { 0U };
 
 		merr = network_message_signed_hash_verify(pbk, packetin, state->rcert);
 
 		if (merr == mpdc_protocol_error_none)
 		{
-			uint8_t cpt[MPDC_ASYMMETRIC_CIPHERTEXT_SIZE] = { 0 };
+			uint8_t cpt[MPDC_ASYMMETRIC_CIPHERTEXT_SIZE] = { 0U };
 
 			/* create the mfk establish packet */
 			network_header_create(packetout, mpdc_network_flag_mfk_establish, NETWORK_MFK_ESTABLISH_SEQUENCE, NETWORK_MFK_ESTABLISH_MESSAGE_SIZE);
@@ -2352,7 +2352,7 @@ mpdc_protocol_errors mpdc_network_mfk_exchange_request(mpdc_network_mfk_request_
 			if (slen == NETWORK_MFK_REQUEST_PACKET_SIZE)
 			{
 				/* allocate the receive buffer */
-				uint8_t rbuf[NETWORK_MFK_RESPONSE_PACKET_SIZE] = { 0 };
+				uint8_t rbuf[NETWORK_MFK_RESPONSE_PACKET_SIZE] = { 0U };
 
 				/* receive the mfk response packet */
 				rlen = qsc_socket_receive(&csock, rbuf, sizeof(rbuf), qsc_socket_receive_flag_wait_all);
@@ -2360,7 +2360,7 @@ mpdc_protocol_errors mpdc_network_mfk_exchange_request(mpdc_network_mfk_request_
 				if (rlen == NETWORK_MFK_RESPONSE_PACKET_SIZE)
 				{
 					mpdc_network_packet resp = { 0 };
-					uint8_t ebuf[NETWORK_MFK_ESTABLISH_PACKET_SIZE] = { 0 };
+					uint8_t ebuf[NETWORK_MFK_ESTABLISH_PACKET_SIZE] = { 0U };
 
 					reqt.pmessage = ebuf + MPDC_PACKET_HEADER_SIZE;
 
@@ -2493,7 +2493,7 @@ static mpdc_protocol_errors network_mfk_verify_packet(const mpdc_network_packet*
 
 	if (merr == mpdc_protocol_error_none)
 	{
-		uint8_t cpt[MPDC_ASYMMETRIC_CIPHERTEXT_SIZE] = { 0 };
+		uint8_t cpt[MPDC_ASYMMETRIC_CIPHERTEXT_SIZE] = { 0U };
 
 		merr = network_message_signed_hash_verify(cpt, packetin, state->rcert);
 
@@ -2525,7 +2525,7 @@ mpdc_protocol_errors mpdc_network_mfk_exchange_response(mpdc_network_mfk_respons
 	if (state != NULL && packetin != NULL)
 	{
 		mpdc_network_packet resp = { 0 };
-		uint8_t sbuf[NETWORK_MFK_RESPONSE_PACKET_SIZE] = { 0 };
+		uint8_t sbuf[NETWORK_MFK_RESPONSE_PACKET_SIZE] = { 0U };
 
 		resp.pmessage = sbuf + MPDC_PACKET_HEADER_SIZE;
 
@@ -2541,7 +2541,7 @@ mpdc_protocol_errors mpdc_network_mfk_exchange_response(mpdc_network_mfk_respons
 		if (slen == NETWORK_MFK_RESPONSE_PACKET_SIZE)
 		{
 			/* allocate the receive buffer */
-			uint8_t rbuf[NETWORK_MFK_ESTABLISH_PACKET_SIZE] = { 0 };
+			uint8_t rbuf[NETWORK_MFK_ESTABLISH_PACKET_SIZE] = { 0U };
 
 			/* receive the establish packet */
 			rlen = qsc_socket_receive(state->csock, rbuf, sizeof(rbuf), qsc_socket_receive_flag_wait_all);
@@ -2648,7 +2648,7 @@ mpdc_protocol_errors mpdc_network_register_request(mpdc_network_register_request
 		if (mpdc_network_connect_to_device(&csock, state->address, mpdc_network_designation_dla) == qsc_socket_exception_success)
 		{
 			mpdc_network_packet reqt = { 0 };
-			uint8_t sbuf[NETWORK_JOIN_REQUEST_PACKET_SIZE] = { 0 };
+			uint8_t sbuf[NETWORK_JOIN_REQUEST_PACKET_SIZE] = { 0U };
 			size_t mlen;
 
 			/* create the join request packet */
@@ -2661,7 +2661,7 @@ mpdc_protocol_errors mpdc_network_register_request(mpdc_network_register_request
 
 			if (mlen == NETWORK_JOIN_REQUEST_PACKET_SIZE)
 			{
-				uint8_t rbuf[NETWORK_JOIN_RESPONSE_PACKET_SIZE] = { 0 };
+				uint8_t rbuf[NETWORK_JOIN_RESPONSE_PACKET_SIZE] = { 0U };
 				mpdc_network_packet resp = { 0 };
 				size_t rlen;
 
@@ -2763,7 +2763,7 @@ mpdc_protocol_errors mpdc_network_register_response(mpdc_network_register_respon
 	if (state != NULL && packetin != NULL)
 	{
 		mpdc_network_packet resp = { 0 };
-		uint8_t sbuf[NETWORK_JOIN_RESPONSE_PACKET_SIZE] = { 0 };
+		uint8_t sbuf[NETWORK_JOIN_RESPONSE_PACKET_SIZE] = { 0U };
 
 		/* agents are sent only the root-signed dla certificate */
 		resp.pmessage = sbuf + MPDC_PACKET_HEADER_SIZE;
@@ -2912,7 +2912,7 @@ mpdc_protocol_errors mpdc_network_register_update_request(mpdc_network_register_
 		if (mpdc_network_connect_to_device(&csock, state->address, mpdc_network_designation_dla) == qsc_socket_exception_success)
 		{
 			mpdc_network_packet reqt = { 0 };
-			uint8_t sbuf[NETWORK_JOIN_REQUEST_PACKET_SIZE] = { 0 };
+			uint8_t sbuf[NETWORK_JOIN_REQUEST_PACKET_SIZE] = { 0U };
 			size_t slen;
 
 			/* create the join request packet  */
@@ -2926,7 +2926,7 @@ mpdc_protocol_errors mpdc_network_register_update_request(mpdc_network_register_
 			if (slen == NETWORK_JOIN_REQUEST_PACKET_SIZE)
 			{
 				mpdc_network_packet resp = { 0 };
-				uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0 };
+				uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0U };
 				uint8_t* rbuf;
 				size_t mlen;
 				size_t rlen;
@@ -3040,7 +3040,7 @@ static mpdc_protocol_errors network_register_update_response_packet(mpdc_network
 					ncnt += mpdc_topology_list_server_count(state->list, mpdc_network_designation_mas);
 				}
 
-				if (ncnt > 0)
+				if (ncnt > 0U)
 				{
 					mlen = NETWORK_JOIN_UPDATE_RESPONSE_PACKET_SIZE;
 					mlen += (ncnt * MPDC_NETWORK_TOPOLOGY_NODE_SIZE);
@@ -3213,7 +3213,7 @@ mpdc_protocol_errors mpdc_network_remote_signing_request(mpdc_network_remote_sig
 	MPDC_ASSERT(state != NULL);
 	
 	mpdc_network_packet reqt = { 0 };
-	uint8_t sbuf[NETWORK_REMOTE_SIGNING_REQUEST_PACKET_SIZE] = { 0 };
+	uint8_t sbuf[NETWORK_REMOTE_SIGNING_REQUEST_PACKET_SIZE] = { 0U };
 	size_t slen;
 	mpdc_protocol_errors merr;
 
@@ -3235,7 +3235,7 @@ mpdc_protocol_errors mpdc_network_remote_signing_request(mpdc_network_remote_sig
 
 				if (slen == NETWORK_REMOTE_SIGNING_REQUEST_PACKET_SIZE)
 				{
-					uint8_t rbuf[NETWORK_REMOTE_SIGNING_RESPONSE_PACKET_SIZE] = { 0 };
+					uint8_t rbuf[NETWORK_REMOTE_SIGNING_RESPONSE_PACKET_SIZE] = { 0U };
 					size_t rlen;
 
 					/* wait for the reply */
@@ -3333,7 +3333,7 @@ static mpdc_protocol_errors network_remote_signing_response_verify(const mpdc_ne
 		/* verify the message signature */
 		if (mpdc_certificate_signature_hash_verify(packetin->pmessage + NETWORK_CERTIFICATE_UPDATE_SIZE, MPDC_CERTIFICATE_SIGNED_HASH_SIZE, packetin->pmessage, NETWORK_CERTIFICATE_UPDATE_SIZE, state->dcert) == true)
 		{
-			uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0 };
+			uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0U };
 
 			network_subheader_serialize(shdr, packetin);
 
@@ -3370,7 +3370,7 @@ mpdc_protocol_errors mpdc_network_remote_signing_response(mpdc_network_remote_si
 		if (merr == mpdc_protocol_error_none)
 		{
 			mpdc_network_packet resp = { 0 };
-			uint8_t sbuf[NETWORK_REMOTE_SIGNING_RESPONSE_PACKET_SIZE] = { 0 };
+			uint8_t sbuf[NETWORK_REMOTE_SIGNING_RESPONSE_PACKET_SIZE] = { 0U };
 			size_t slen;
 
 			/* create the request packet */
@@ -3442,7 +3442,7 @@ mpdc_protocol_errors mpdc_network_resign_request(const mpdc_network_resign_reque
 		if (mpdc_network_connect_to_device(&csock, state->address, mpdc_network_designation_dla) == qsc_socket_exception_success)
 		{
 			mpdc_network_packet reqt = { 0 };
-			uint8_t sbuf[NETWORK_RESIGN_REQUEST_PACKET_SIZE] = { 0 };
+			uint8_t sbuf[NETWORK_RESIGN_REQUEST_PACKET_SIZE] = { 0U };
 			size_t mlen;
 
 			/* create the request packet */
@@ -3502,7 +3502,7 @@ mpdc_protocol_errors mpdc_network_resign_response(mpdc_network_resign_response_s
 
 		if (merr == mpdc_protocol_error_none)
 		{
-			uint8_t ser[MPDC_CERTIFICATE_SERIAL_SIZE] = { 0 };
+			uint8_t ser[MPDC_CERTIFICATE_SERIAL_SIZE] = { 0U };
 
 			merr = network_message_signed_hash_verify(ser, packetin, state->rcert);
 
@@ -3582,7 +3582,7 @@ mpdc_protocol_errors mpdc_network_revoke_broadcast(mpdc_network_revoke_request_s
 	if (state != NULL)
 	{
 		mpdc_network_packet reqt = { 0 };
-		uint8_t sbuf[NETWORK_REVOKE_REQUEST_PACKET_SIZE] = { 0 };
+		uint8_t sbuf[NETWORK_REVOKE_REQUEST_PACKET_SIZE] = { 0U };
 
 		reqt.pmessage = sbuf + MPDC_PACKET_HEADER_SIZE;
 
@@ -3688,7 +3688,7 @@ static mpdc_protocol_errors network_topological_query_request_packet(mpdc_networ
 	MPDC_ASSERT(packetout != NULL);
 	MPDC_ASSERT(state != NULL);
 
-	uint8_t msg[NETWORK_TOPOLOGY_QUERY_SIZE] = { 0 };
+	uint8_t msg[NETWORK_TOPOLOGY_QUERY_SIZE] = { 0U };
 	mpdc_protocol_errors merr;
 
 	/* create the packet header */
@@ -3714,7 +3714,7 @@ static mpdc_protocol_errors network_topological_query_request_verify(const mpdc_
 
 	if (merr == mpdc_protocol_error_none)
 	{
-		uint8_t snode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0 };
+		uint8_t snode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0U };
 
 		/* verify the certificate signature */
 		merr = network_message_signed_hash_verify(snode, packetin, state->dcert);
@@ -3741,7 +3741,7 @@ mpdc_protocol_errors mpdc_network_topological_query_request(const mpdc_network_t
 		if (mpdc_network_connect_to_device(&csock, state->dnode->address, state->dnode->designation) == qsc_socket_exception_success)
 		{
 			mpdc_network_packet reqt = { 0 };
-			uint8_t sbuf[NETWORK_TOPOLOGY_QUERY_REQUEST_PACKET_SIZE] = { 0 };
+			uint8_t sbuf[NETWORK_TOPOLOGY_QUERY_REQUEST_PACKET_SIZE] = { 0U };
 			size_t slen;
 
 			/* create the packet header */
@@ -3754,7 +3754,7 @@ mpdc_protocol_errors mpdc_network_topological_query_request(const mpdc_network_t
 
 			if (slen == NETWORK_TOPOLOGY_QUERY_REQUEST_PACKET_SIZE)
 			{
-				uint8_t rbuf[NETWORK_TOPOLOGY_QUERY_RESPONSE_PACKET_SIZE] = { 0 };
+				uint8_t rbuf[NETWORK_TOPOLOGY_QUERY_RESPONSE_PACKET_SIZE] = { 0U };
 				size_t rlen;
 
 				/* wait for the reply */
@@ -3813,7 +3813,7 @@ static mpdc_protocol_errors network_topological_query_response_packet(mpdc_netwo
 	MPDC_ASSERT(packetin != NULL);
 
 	mpdc_protocol_errors merr;
-	uint8_t snode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0 };
+	uint8_t snode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0U };
 
 	if (packetout != NULL && state != NULL && packetin != NULL)
 	{
@@ -3868,14 +3868,14 @@ mpdc_protocol_errors mpdc_network_topological_query_response(const mpdc_network_
 
 	if (state != NULL && packetin != NULL)
 	{
-		uint8_t query[NETWORK_TOPOLOGY_QUERY_SIZE] = { 0 };
+		uint8_t query[NETWORK_TOPOLOGY_QUERY_SIZE] = { 0U };
 
 		merr = network_topological_query_response_verify(query, state, packetin);
 
 		if (merr == mpdc_protocol_error_none)
 		{
 			mpdc_network_packet resp = { 0 };
-			uint8_t sbuf[NETWORK_TOPOLOGY_QUERY_RESPONSE_PACKET_SIZE] = { 0 };
+			uint8_t sbuf[NETWORK_TOPOLOGY_QUERY_RESPONSE_PACKET_SIZE] = { 0U };
 			size_t mlen;
 
 			/* create the update response packet */
@@ -3958,7 +3958,7 @@ mpdc_protocol_errors mpdc_network_topological_status_request_verify(const mpdc_n
 
 		if (merr == mpdc_protocol_error_none)
 		{
-			uint8_t rser[MPDC_CERTIFICATE_SERIAL_SIZE] = { 0 };
+			uint8_t rser[MPDC_CERTIFICATE_SERIAL_SIZE] = { 0U };
 
 			/* verify the signature */
 			merr = network_message_signed_hash_verify(rser, packetin, state->rcert);
@@ -3994,7 +3994,7 @@ mpdc_protocol_errors mpdc_network_topological_status_request(const mpdc_network_
 		if (mpdc_network_connect_to_device(&csock, state->rnode->address, state->rnode->designation) == qsc_socket_exception_success)
 		{
 			mpdc_network_packet reqt = { 0 };
-			uint8_t sbuf[NETWORK_TOPOLOGY_STATUS_REQUEST_PACKET_SIZE] = { 0 };
+			uint8_t sbuf[NETWORK_TOPOLOGY_STATUS_REQUEST_PACKET_SIZE] = { 0U };
 			size_t slen;
 
 			/* create the packet header */
@@ -4006,7 +4006,7 @@ mpdc_protocol_errors mpdc_network_topological_status_request(const mpdc_network_
 
 			if (slen == NETWORK_TOPOLOGY_STATUS_REQUEST_PACKET_SIZE)
 			{
-				uint8_t rbuf[NETWORK_TOPOLOGY_STATUS_RESPONSE_PACKET_SIZE] = { 0 };
+				uint8_t rbuf[NETWORK_TOPOLOGY_STATUS_RESPONSE_PACKET_SIZE] = { 0U };
 				mpdc_network_packet resp = { 0 };
 				size_t rlen;
 
@@ -4087,7 +4087,7 @@ static mpdc_protocol_errors network_topological_status_response_verify(const mpd
 	{
 		if (merr == mpdc_protocol_error_none)
 		{
-			uint8_t rser[MPDC_CERTIFICATE_SERIAL_SIZE] = { 0 };
+			uint8_t rser[MPDC_CERTIFICATE_SERIAL_SIZE] = { 0U };
 
 			/* verify the certificate signature */
 			merr = network_message_signed_hash_verify(rser, packetin, state->rcert);
@@ -4124,7 +4124,7 @@ mpdc_protocol_errors mpdc_network_topological_status_response(const mpdc_network
 		if (merr == mpdc_protocol_error_none)
 		{
 			mpdc_network_packet resp = { 0 };
-			uint8_t sbuf[NETWORK_TOPOLOGY_STATUS_RESPONSE_PACKET_SIZE] = { 0 };
+			uint8_t sbuf[NETWORK_TOPOLOGY_STATUS_RESPONSE_PACKET_SIZE] = { 0U };
 			size_t mlen;
 
 			/* create the update response packet */
@@ -4262,7 +4262,7 @@ uint16_t mpdc_network_application_to_port(mpdc_network_designations tnode)
 	}
 	else
 	{
-		port = 0;
+		port = 0U;
 	}
 		
 	return port;
@@ -4282,7 +4282,7 @@ void mpdc_network_broadcast_message(const mpdc_topology_list_state* list, const 
 
 		port = mpdc_network_application_to_port(tnode);
 
-		for (i = 0; i < list->count; ++i)
+		for (i = 0U; i < list->count; ++i)
 		{
 			mpdc_topology_node_state node = { 0 };
 
@@ -4448,7 +4448,7 @@ mpdc_protocol_errors mpdc_network_send_error(const qsc_socket* csock, mpdc_proto
 	MPDC_ASSERT(csock != NULL);
 	
 	mpdc_network_packet resp = { 0 };
-	uint8_t ebuf[NETWORK_ERROR_PACKET_SIZE] = { 0 };
+	uint8_t ebuf[NETWORK_ERROR_PACKET_SIZE] = { 0U };
 	size_t slen;
 	mpdc_protocol_errors merr;
 
@@ -4537,9 +4537,9 @@ typedef struct network_test_device_package
 
 static void network_test_load_node(mpdc_topology_list_state* list, mpdc_topology_node_state* node, const mpdc_child_certificate* ccert)
 {
-	uint8_t ipa[MPDC_CERTIFICATE_ADDRESS_SIZE] = { 192, 168, 1 };
+	uint8_t ipa[MPDC_CERTIFICATE_ADDRESS_SIZE] = { 192U, 168U, 1U };
 
-	qsc_acp_generate(ipa + 3, 1);
+	qsc_acp_generate(ipa + 3U, 1U);
 	mpdc_topology_child_register(list, ccert, ipa);
 	mpdc_topology_node_find(list, node, ccert->serial);
 }
@@ -4559,7 +4559,7 @@ static void network_test_device_destroy(network_test_device_package* spkg)
 static void network_test_device_instantiate(network_test_device_package* spkg)
 {
 	mpdc_certificate_expiration exp = { 0 };
-	uint8_t mfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
+	uint8_t mfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
 
 	qsc_collection_initialize(&spkg->amfk, sizeof(mfk));
 	qsc_collection_initialize(&spkg->amfk2, sizeof(mfk));
@@ -4573,26 +4573,26 @@ static void network_test_device_instantiate(network_test_device_package* spkg)
 
 	/* generate the root certificate */
 	mpdc_certificate_signature_generate_keypair(&spkg->rkp);
-	mpdc_certificate_expiration_set_days(&exp, 0, 30);
+	mpdc_certificate_expiration_set_days(&exp, 0U, 30U);
 	mpdc_certificate_root_create(&spkg->root, spkg->rkp.pubkey, &exp, "XYZ_RDS1");
 
 	/* create the dla */
 	mpdc_certificate_signature_generate_keypair(&spkg->dkp);
-	mpdc_certificate_expiration_set_days(&exp, 0, 100);
+	mpdc_certificate_expiration_set_days(&exp, 0U, 100U);
 	mpdc_certificate_child_create(&spkg->dcrt, spkg->dkp.pubkey, &exp, "XYZ_DLA1", mpdc_network_designation_dla);
 	mpdc_certificate_root_sign(&spkg->dcrt, &spkg->root, spkg->rkp.prikey);
 	network_test_load_node(&spkg->list, &spkg->dnde, &spkg->dcrt);
 
 	/* create the mas */
 	mpdc_certificate_signature_generate_keypair(&spkg->mkp);
-	mpdc_certificate_expiration_set_days(&exp, 0, 100);
+	mpdc_certificate_expiration_set_days(&exp, 0U, 100U);
 	mpdc_certificate_child_create(&spkg->mcrt, spkg->mkp.pubkey, &exp, "XYZ_MAS1", mpdc_network_designation_mas);
 	mpdc_certificate_root_sign(&spkg->mcrt, &spkg->root, spkg->rkp.prikey);
 	network_test_load_node(&spkg->list, &spkg->mnde, &spkg->mcrt);
 	
 	/* create a client 1 */
 	mpdc_certificate_signature_generate_keypair(&spkg->ckp);
-	mpdc_certificate_expiration_set_days(&exp, 0, 100);
+	mpdc_certificate_expiration_set_days(&exp, 0U, 100U);
 	mpdc_certificate_child_create(&spkg->ccrt, spkg->ckp.pubkey, &exp, "XYZ_CLT1", mpdc_network_designation_client);
 	mpdc_certificate_root_sign(&spkg->ccrt, &spkg->root, spkg->rkp.prikey);
 	qsc_acp_generate(mfk, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
@@ -4602,7 +4602,7 @@ static void network_test_device_instantiate(network_test_device_package* spkg)
 		
 	/* create a client 2 */
 	mpdc_certificate_signature_generate_keypair(&spkg->ckp2);
-	mpdc_certificate_expiration_set_days(&exp, 0, 100);
+	mpdc_certificate_expiration_set_days(&exp, 0U, 100U);
 	mpdc_certificate_child_create(&spkg->ccrt2, spkg->ckp2.pubkey, &exp, "XYZ_CLT2", mpdc_network_designation_client);
 	mpdc_certificate_root_sign(&spkg->ccrt2, &spkg->root, spkg->rkp.prikey);
 	qsc_acp_generate(mfk, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
@@ -4612,7 +4612,7 @@ static void network_test_device_instantiate(network_test_device_package* spkg)
 
 	/* create the agents */
 	mpdc_certificate_signature_generate_keypair(&spkg->akp);
-	mpdc_certificate_expiration_set_days(&exp, 0, 100);
+	mpdc_certificate_expiration_set_days(&exp, 0U, 100U);
 	mpdc_certificate_child_create(&spkg->acrt, spkg->akp.pubkey, &exp, "XYZ_AGT1", mpdc_network_designation_agent);
 	mpdc_certificate_root_sign(&spkg->acrt, &spkg->root, spkg->rkp.prikey);
 
@@ -4626,7 +4626,7 @@ static void network_test_device_instantiate(network_test_device_package* spkg)
 	network_test_load_node(&spkg->list, &spkg->ande, &spkg->acrt);
 
 	mpdc_certificate_signature_generate_keypair(&spkg->akp2);
-	mpdc_certificate_expiration_set_days(&exp, 0, 100);
+	mpdc_certificate_expiration_set_days(&exp, 0U, 100U);
 	mpdc_certificate_child_create(&spkg->acrt2, spkg->akp2.pubkey, &exp, "XYZ_AGT2", mpdc_network_designation_agent);
 	mpdc_certificate_root_sign(&spkg->acrt2, &spkg->root, spkg->rkp.prikey);
 	qsc_acp_generate(mfk, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
@@ -4638,7 +4638,7 @@ static void network_test_device_instantiate(network_test_device_package* spkg)
 	network_test_load_node(&spkg->list, &spkg->ande2, &spkg->acrt2);
 
 	mpdc_certificate_signature_generate_keypair(&spkg->akp3);
-	mpdc_certificate_expiration_set_days(&exp, 0, 100);
+	mpdc_certificate_expiration_set_days(&exp, 0U, 100U);
 	mpdc_certificate_child_create(&spkg->acrt3, spkg->akp3.pubkey, &exp, "XYZ_AGT3", mpdc_network_designation_agent);
 	mpdc_certificate_root_sign(&spkg->acrt3, &spkg->root, spkg->rkp.prikey);
 	qsc_acp_generate(mfk, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
@@ -4650,7 +4650,7 @@ static void network_test_device_instantiate(network_test_device_package* spkg)
 	network_test_load_node(&spkg->list, &spkg->ande3, &spkg->acrt3);
 	
 	mpdc_certificate_signature_generate_keypair(&spkg->akp4);
-	mpdc_certificate_expiration_set_days(&exp, 0, 100);
+	mpdc_certificate_expiration_set_days(&exp, 0U, 100U);
 	mpdc_certificate_child_create(&spkg->acrt4, spkg->akp4.pubkey, &exp, "XYZ_AGT4", mpdc_network_designation_agent);
 	mpdc_certificate_root_sign(&spkg->acrt4, &spkg->root, spkg->rkp.prikey);
 	qsc_acp_generate(mfk, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
@@ -4668,7 +4668,7 @@ static bool network_test_announce_test(void)
 	mpdc_child_certificate rcert = { 0 };
 	network_test_device_package spkg = { 0 };
 	mpdc_network_packet reqt = { 0 };
-	uint8_t breqt[NETWORK_ANNOUNCE_REQUEST_PACKET_SIZE] = { 0 };
+	uint8_t breqt[NETWORK_ANNOUNCE_REQUEST_PACKET_SIZE] = { 0U };
 	mpdc_protocol_errors merr;
 
 	network_test_device_instantiate(&spkg);
@@ -4707,9 +4707,9 @@ static bool network_test_converge(void)
 	network_test_device_package spkg = { 0 };
 	mpdc_network_packet reqt = { 0 };
 	mpdc_network_packet resp = { 0 };
-	uint8_t breqt[NETWORK_CONVERGE_REQUEST_PACKET_SIZE] = { 0 };
-	uint8_t bresp[NETWORK_CONVERGE_RESPONSE_PACKET_SIZE] = { 0 };
-	uint8_t snode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0 };
+	uint8_t breqt[NETWORK_CONVERGE_REQUEST_PACKET_SIZE] = { 0U };
+	uint8_t bresp[NETWORK_CONVERGE_RESPONSE_PACKET_SIZE] = { 0U };
+	uint8_t snode[MPDC_NETWORK_TOPOLOGY_NODE_SIZE] = { 0U };
 	mpdc_protocol_errors merr;
 
 	network_test_device_instantiate(&spkg);
@@ -4763,13 +4763,13 @@ static bool network_test_fkey_exchange(void)
 	network_test_device_package spkg = { 0 };
 	mpdc_network_packet reqt = { 0 };
 	mpdc_network_packet resp = { 0 };
-	uint8_t fra[MPDC_CRYPTO_SYMMETRIC_SECRET_SIZE] = { 0 };
-	uint8_t frm[MPDC_CRYPTO_SYMMETRIC_SECRET_SIZE] = { 0 };
-	uint8_t breqt[NETWORK_FRAGMENT_FKEY_REQUEST_PACKET_SIZE] = { 0 };
-	uint8_t bresp[NETWORK_FRAGMENT_FKEY_RESPONSE_PACKET_SIZE] = { 0 };
-	uint8_t mfa[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
-	uint8_t mfm[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
-	uint8_t atok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0 };
+	uint8_t fra[MPDC_CRYPTO_SYMMETRIC_SECRET_SIZE] = { 0U };
+	uint8_t frm[MPDC_CRYPTO_SYMMETRIC_SECRET_SIZE] = { 0U };
+	uint8_t breqt[NETWORK_FRAGMENT_FKEY_REQUEST_PACKET_SIZE] = { 0U };
+	uint8_t bresp[NETWORK_FRAGMENT_FKEY_RESPONSE_PACKET_SIZE] = { 0U };
+	uint8_t mfa[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
+	uint8_t mfm[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
+	uint8_t atok[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0U };
 	mpdc_protocol_errors merr;
 	bool res;
 
@@ -4832,15 +4832,15 @@ static bool network_test_fragment_collection(void)
 	mpdc_network_packet qrsp = { 0 };
 	qsc_keccak_state fkhc = { 0 };
 	qsc_keccak_state fkhs = { 0 };
-	uint8_t bcrqt[NETWORK_FRAGMENT_COLLECTION_REQUEST_PACKET_SIZE] = { 0 };
-	uint8_t bcrsp[NETWORK_FRAGMENT_COLLECTION_RESPONSE_PACKET_SIZE + (NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE * 4)] = { 0 };
-	uint8_t bqrqt[NETWORK_FRAGMENT_QUERY_REQUEST_PACKET_SIZE] = { 0 };
-	uint8_t bqrsp[NETWORK_FRAGMENT_QUERY_RESPONSE_PACKET_SIZE] = { 0 };
-	uint8_t frag[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
-	uint8_t hfkc[MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE] = { 0 };
-	uint8_t hfkm[MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE] = { 0 };
-	uint8_t tokc[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0 };
-	uint8_t tokm[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0 };
+	uint8_t bcrqt[NETWORK_FRAGMENT_COLLECTION_REQUEST_PACKET_SIZE] = { 0U };
+	uint8_t bcrsp[NETWORK_FRAGMENT_COLLECTION_RESPONSE_PACKET_SIZE + (NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE * 4U)] = { 0U };
+	uint8_t bqrqt[NETWORK_FRAGMENT_QUERY_REQUEST_PACKET_SIZE] = { 0U };
+	uint8_t bqrsp[NETWORK_FRAGMENT_QUERY_RESPONSE_PACKET_SIZE] = { 0U };
+	uint8_t frag[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
+	uint8_t hfkc[MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE] = { 0U };
+	uint8_t hfkm[MPDC_CRYPTO_SYMMETRIC_SESSION_KEY_SIZE] = { 0U };
+	uint8_t tokc[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0U };
+	uint8_t tokm[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0U };
 	mpdc_protocol_errors merr;
 
 	crqt.pmessage = bcrqt + MPDC_PACKET_HEADER_SIZE;
@@ -4969,10 +4969,10 @@ static bool network_test_fragment_collection(void)
 static bool network_test_fkey_encryption(void)
 {
 	network_test_device_package spkg = { 0 };
-	uint8_t data[MPDC_PACKET_SUBHEADER_SIZE] = { 0 };
-	uint8_t frags[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
-	uint8_t token[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0 };
-	uint8_t mfka[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
+	uint8_t data[MPDC_PACKET_SUBHEADER_SIZE] = { 0U };
+	uint8_t frags[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
+	uint8_t token[MPDC_CRYPTO_SYMMETRIC_TOKEN_SIZE] = { 0U };
+	uint8_t mfka[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
 	
 	bool res;
 
@@ -4986,10 +4986,10 @@ static bool network_test_fkey_encryption(void)
 	/* agent uses mas shared key */
 	if (qsc_collection_find(&spkg.amfk, mfka, spkg.mnde.serial) == true)
 	{
-		uint8_t ckey[QSC_SHA3_512_HASH_SIZE] = { 0 };
-		uint8_t fragr[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
-		uint8_t mctxt[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE + MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0 };
-		uint8_t mfkm[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
+		uint8_t ckey[QSC_SHA3_512_HASH_SIZE] = { 0U };
+		uint8_t fragr[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
+		uint8_t mctxt[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE + MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0U };
+		uint8_t mfkm[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
 
 		/* generate the fragment encryption key */
 		network_derive_fkey(ckey, mfka, spkg.cnde.chash, spkg.mnde.chash, token);
@@ -5004,7 +5004,7 @@ static bool network_test_fkey_encryption(void)
 		/* mas uses agents shared key */
 		if (qsc_collection_find(&spkg.mmfk, mfkm, spkg.ande.serial) == true)
 		{
-			uint8_t mtag[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0 };
+			uint8_t mtag[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0U };
 
 			/* generate the fragment encryption key */
 			network_derive_fkey(ckey, mfkm, spkg.cnde.chash, spkg.mnde.chash, token);
@@ -5033,8 +5033,8 @@ static bool network_test_incremental_update(void)
 	network_test_device_package spkg = { 0 };
 	mpdc_network_packet reqt = { 0 };
 	mpdc_network_packet resp = { 0 };
-	uint8_t breqt[NETWORK_INCREMENTAL_UPDATE_REQUEST_PACKET_SIZE] = { 0 };
-	uint8_t bresp[NETWORK_INCREMENTAL_UPDATE_RESPONSE_PACKET_SIZE] = { 0 };
+	uint8_t breqt[NETWORK_INCREMENTAL_UPDATE_REQUEST_PACKET_SIZE] = { 0U };
+	uint8_t bresp[NETWORK_INCREMENTAL_UPDATE_RESPONSE_PACKET_SIZE] = { 0U };
 	mpdc_protocol_errors merr;
 
 	network_test_device_instantiate(&spkg);
@@ -5094,8 +5094,8 @@ static bool network_test_join(void)
 	mpdc_network_packet reqt = { 0 };
 	mpdc_network_packet resp = { 0 };
 	mpdc_child_certificate dccp = { 0 };
-	uint8_t breqt[NETWORK_JOIN_REQUEST_PACKET_SIZE] = { 0 };
-	uint8_t bresp[NETWORK_JOIN_RESPONSE_PACKET_SIZE] = { 0 };
+	uint8_t breqt[NETWORK_JOIN_REQUEST_PACKET_SIZE] = { 0U };
+	uint8_t bresp[NETWORK_JOIN_RESPONSE_PACKET_SIZE] = { 0U };
 	mpdc_protocol_errors merr;
 
 	network_test_device_instantiate(&spkg);
@@ -5145,11 +5145,11 @@ static bool network_test_mfk_exchange(void)
 	mpdc_network_packet esta = { 0 };
 	mpdc_network_packet reqt = { 0 };
 	mpdc_network_packet resp = { 0 };
-	uint8_t breqt[NETWORK_MFK_REQUEST_PACKET_SIZE] = { 0 };
-	uint8_t bresp[NETWORK_MFK_RESPONSE_PACKET_SIZE] = { 0 };
-	uint8_t besta[NETWORK_MFK_ESTABLISH_PACKET_SIZE] = { 0 };
-	uint8_t mfa[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
-	uint8_t mfm[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0 };
+	uint8_t breqt[NETWORK_MFK_REQUEST_PACKET_SIZE] = { 0U };
+	uint8_t bresp[NETWORK_MFK_RESPONSE_PACKET_SIZE] = { 0U };
+	uint8_t besta[NETWORK_MFK_ESTABLISH_PACKET_SIZE] = { 0U };
+	uint8_t mfa[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
+	uint8_t mfm[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
 	mpdc_protocol_errors merr;
 	bool res;
 
@@ -5215,8 +5215,8 @@ static bool network_test_register_update(void)
 	mpdc_network_packet reqt = { 0 };
 	mpdc_network_packet resp = { 0 };
 	mpdc_child_certificate dccp = { 0 };
-	uint8_t breqt[NETWORK_JOIN_UPDATE_REQUEST_PACKET_SIZE] = { 0 };
-	uint8_t bresp[NETWORK_JOIN_UPDATE_RESPONSE_PACKET_SIZE + (MPDC_NETWORK_TOPOLOGY_NODE_SIZE * 2) + sizeof(uint32_t)] = { 0 };
+	uint8_t breqt[NETWORK_JOIN_UPDATE_REQUEST_PACKET_SIZE] = { 0U };
+	uint8_t bresp[NETWORK_JOIN_UPDATE_RESPONSE_PACKET_SIZE + (MPDC_NETWORK_TOPOLOGY_NODE_SIZE * 2U) + sizeof(uint32_t)] = { 0U };
 	mpdc_protocol_errors merr;
 
 	network_test_device_instantiate(&spkg);
@@ -5278,8 +5278,8 @@ static bool network_test_remote_signing(void)
 	mpdc_child_certificate rcert = { 0 };
 	mpdc_network_packet reqt = { 0 };
 	mpdc_network_packet resp = { 0 };
-	uint8_t breqt[NETWORK_REMOTE_SIGNING_REQUEST_PACKET_SIZE] = { 0 };
-	uint8_t bresp[NETWORK_REMOTE_SIGNING_RESPONSE_PACKET_SIZE] = { 0 };
+	uint8_t breqt[NETWORK_REMOTE_SIGNING_REQUEST_PACKET_SIZE] = { 0U };
+	uint8_t bresp[NETWORK_REMOTE_SIGNING_RESPONSE_PACKET_SIZE] = { 0U };
 	mpdc_protocol_errors merr;
 
 	network_test_device_instantiate(&spkg);
@@ -5336,9 +5336,9 @@ static bool network_test_topological_query(void)
 	mpdc_network_packet reqt = { 0 };
 	mpdc_network_packet resp = { 0 };
 	mpdc_topology_node_state rnode = { 0 };
-	uint8_t breqt[NETWORK_TOPOLOGY_QUERY_REQUEST_PACKET_SIZE] = { 0 };
-	uint8_t bresp[NETWORK_TOPOLOGY_QUERY_RESPONSE_PACKET_SIZE] = { 0 };
-	uint8_t query[NETWORK_TOPOLOGY_QUERY_SIZE] = { 0 };
+	uint8_t breqt[NETWORK_TOPOLOGY_QUERY_REQUEST_PACKET_SIZE] = { 0U };
+	uint8_t bresp[NETWORK_TOPOLOGY_QUERY_RESPONSE_PACKET_SIZE] = { 0U };
+	uint8_t query[NETWORK_TOPOLOGY_QUERY_SIZE] = { 0U };
 	mpdc_protocol_errors merr;
 
 	reqt.pmessage = breqt + MPDC_PACKET_HEADER_SIZE;
@@ -5386,8 +5386,8 @@ static bool network_test_topological_status(void)
 	network_test_device_package spkg = { 0 };
 	mpdc_network_packet reqt = { 0 };
 	mpdc_network_packet resp = { 0 };
-	uint8_t breqt[NETWORK_TOPOLOGY_STATUS_REQUEST_PACKET_SIZE] = { 0 };
-	uint8_t bresp[NETWORK_TOPOLOGY_STATUS_RESPONSE_PACKET_SIZE] = { 0 };
+	uint8_t breqt[NETWORK_TOPOLOGY_STATUS_REQUEST_PACKET_SIZE] = { 0U };
+	uint8_t bresp[NETWORK_TOPOLOGY_STATUS_RESPONSE_PACKET_SIZE] = { 0U };
 	mpdc_protocol_errors merr;
 
 	network_test_device_instantiate(&spkg);
