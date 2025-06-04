@@ -224,7 +224,7 @@ bool mpdc_crypto_password_minimum_check(const char* password, size_t passlen)
 				}
 			}
 
-			if ((lsp > 0U && hsp > 0U && nsp > 0U) && (lsp + hsp + nsp) >= 8U)
+			if ((lsp > 0 && hsp > 0 && nsp > 0) && (lsp + hsp + nsp) >= 8)
 			{
 				res = true;
 			}
