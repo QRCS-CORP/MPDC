@@ -177,7 +177,7 @@ MPDC uses the QSC cryptographic library. QSC is a standalone, portable, and MISR
 
 Use the Visual Studio solution to create the library and the server andc client projects: Agent, DLA, MAS, RDS, and Client.
 Extract the files, and open the Server or Client project. The MPDC library has a default location in a folder parallel to the Server and Client project folders.  
-The server and client projects additional files folder are set to: **$(SolutionDir)..\MPDC\MPDC** and **$(SolutionDir)..\QSC\QSC**, if this is not the location of the library files, change it by going to server/client project properties **Configuration Properties->C/C++->General->Additional Include Directories** and set the library files location.  
+The server and client projects additional files folder are set to: **$(SolutionDir)MPDC** and **$(SolutionDir)..\QSC\QSC**, if this is not the location of the library files, change it by going to server/client project properties **Configuration Properties->C/C++->General->Additional Include Directories** and set the library files location.  
 Ensure that the **[server/client]->References** property contains a reference to the MPDC library, and that the MPDC library contains a valid reference to the QSC library.  
 QSC supports every AVX instruction family (AVX/AVX2/AVX-512).  
 Set the QSC and MPDC libries and every server/client project to the same AVX family setting in **Configuration Properties->C/C++->All Options->Enable Enhanced Instruction Set**.  
