@@ -29,7 +29,7 @@ This approach means that any attack involving impersonation or man‐in‐the‐
 [MPDC Protocol Specification](https://qrcs-corp.github.io/MPDC/pdf/MDPC_Specification.pdf)  
 [MPDC Summary Document](https://qrcs-corp.github.io/MPDC/pdf/MPDC_Summary.pdf)  
 
-## Architecture Overview
+## Architecture
 
 MPDC-I operates with five key device types, each fulfilling a distinct role within the security ecosystem:
 
