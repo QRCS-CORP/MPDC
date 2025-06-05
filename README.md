@@ -8,9 +8,14 @@ The Multi Party Domain Cryptosystem protocol
 [![CodeQL](https://github.com/QRCS-CORP/MPDC/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/QRCS-CORP/MPDC/actions/workflows/codeql-analysis.yml)
 [![CodeFactor](https://www.codefactor.io/repository/github/qrcs-corp/mpdc/badge)](https://www.codefactor.io/repository/github/qrcs-corp/mpdc)
 [![Platforms](https://img.shields.io/badge/platforms-Linux%20|%20macOS%20|%20Windows-blue)](#)
+[![Security Policy](https://img.shields.io/badge/security-policy-blue)](https://github.com/QRCS-CORP/MPDC/security/policy) 
+[![License: QRCS License](https://img.shields.io/badge/License-QRCS%20License-blue.svg)](https://github.com/QRCS-CORP/HKDS/blob/main/QRCS-PL%20License.txt)
+[![Language](https://img.shields.io/static/v1?label=Language&message=C%2023&color=blue)](https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf)
 [![docs](https://img.shields.io/badge/docs-online-brightgreen)](https://qrcs-corp.github.io/MPDC/)
-[![Security Policy](https://img.shields.io/badge/security-policy-blue)](https://github.com/QRCS-CORP/MPDC/security/policy)  
-
+![GitHub release](https://img.shields.io/github/v/release/QRCS-CORP/MPDC)
+[![GitHub Last Commit](https://img.shields.io/github/last-commit/QRCS-CORP/MPDC.svg)](https://github.com/QRCS-CORP/MPDC/commits/main)
+[![Custom: Standard](https://img.shields.io/static/v1?label=Security%20Standard&message=ISO/IEC%2011770-5&color=blue)](https://www.iso.org/standard/75295.html)
+![Custom: Target](https://img.shields.io/static/v1?label=Target%20Industry&message=Financial/Defense&color=brightgreen)
 
 MPDC-I (Multi Party Domain Cryptosystem - Interior Protocol) is a multi‐party key exchange and network security system. It distributes the security of a key exchange between a server and a client across multiple devices. This design leverages the contribution of network agents—trusted devices that each inject a portion of pseudo‐random material into the key exchange process—ensuring that no single entity controls the entire shared-secret derivation.
 
