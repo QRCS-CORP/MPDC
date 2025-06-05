@@ -15,7 +15,7 @@ The Multi Party Domain Cryptosystem protocol
 ![GitHub release](https://img.shields.io/github/v/release/QRCS-CORP/MPDC)
 [![GitHub Last Commit](https://img.shields.io/github/last-commit/QRCS-CORP/MPDC.svg)](https://github.com/QRCS-CORP/MPDC/commits/main)
 [![Custom: Standard](https://img.shields.io/static/v1?label=Security%20Standard&message=ISO/IEC%2011770-5&color=blue)](https://www.iso.org/standard/75295.html)
-![Custom: Target](https://img.shields.io/static/v1?label=Target%20Industry&message=Financial/Defense&color=brightgreen)
+![Custom: Target](https://img.shields.io/static/v1?label=Target%20Industry&message=Financial&color=brightgreen)
 
 MPDC-I (Multi Party Domain Cryptosystem - Interior Protocol) is a multi‐party key exchange and network security system. It distributes the security of a key exchange between a server and a client across multiple devices. This design leverages the contribution of network agents—trusted devices that each inject a portion of pseudo‐random material into the key exchange process—ensuring that no single entity controls the entire shared-secret derivation.
 
