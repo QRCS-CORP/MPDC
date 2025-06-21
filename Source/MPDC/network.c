@@ -5420,7 +5420,7 @@ static bool network_test_topological_status(void)
 		if (merr == mpdc_protocol_error_none)
 		{
 			/* the client verifies the request from the DLA */
-			merr = network_topological_status_response_packet(&resp, &tsr, &reqt);
+			merr = network_topological_status_response_packet(&resp, &tsr);
 
 			if (merr == mpdc_protocol_error_none)
 			{

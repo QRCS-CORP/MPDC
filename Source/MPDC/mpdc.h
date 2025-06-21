@@ -268,7 +268,7 @@
  */
 #	define MPDC_ASYMMETRIC_VERIFICATION_KEY_SIZE (QSC_DILITHIUM_PUBLICKEY_SIZE)
 
-#	if defined(QSC_DILITHIUM_S1P2544) && defined(QSC_KYBER_S1P1632)
+#	if defined(QSC_DILITHIUM_S1P44) && defined(QSC_KYBER_S1K2P512)
 /*!
  * \def MPDC_CHILD_CERTIFICATE_STRING_SIZE
  * \brief The encoded certificate string length
@@ -294,7 +294,7 @@
  * \brief The verification key size
  */
 #		define MPDC_VERIFICATION_KEY_ENCODING_SIZE 1752U
-#	elif defined(QSC_DILITHIUM_S3P4016) && defined(QSC_KYBER_S3P2400)
+#	elif defined(QSC_DILITHIUM_S3P65) && defined(QSC_KYBER_S3K3P768)
 /*!
  * \def MPDC_CHILD_CERTIFICATE_STRING_SIZE
  * \brief The encoded certificate string length
@@ -320,7 +320,7 @@
  * \brief The verification key size
  */
 #		define MPDC_VERIFICATION_KEY_ENCODING_SIZE 2604
-#	elif defined(QSC_DILITHIUM_S5P4880) && defined(QSC_KYBER_S5P3168)
+#	elif defined(QSC_DILITHIUM_S5P87) && defined(QSC_KYBER_S5K4P1024)
 /*!
  * \def MPDC_CHILD_CERTIFICATE_STRING_SIZE
  * \brief The encoded certificate string length
@@ -346,7 +346,7 @@
  * \brief The verification key size
  */
 #		define MPDC_VERIFICATION_KEY_ENCODING_SIZE 3456U
-#	elif defined(QSC_DILITHIUM_S5P4880) && defined(QSC_KYBER_S6P3936)
+#	elif defined(QSC_DILITHIUM_S5P87) && defined(QSC_KYBER_S6K5P1280)
 /*!
  * \def MPDC_CHILD_CERTIFICATE_STRING_SIZE
  * \brief The encoded certificate string length
@@ -1560,7 +1560,7 @@ static const char MPDC_CONFIG_STRING[MPDC_PROTOCOL_SET_SIZE] = "dilithium-s5_kyb
 static const mpdc_configuration_sets MPDC_CONFIGURATION_SET = mpdc_configuration_set_dilithium5_kyber5_rcs256_shake256;
 #elif defined(MPDC_PARAMATERS_DILITHIUM_KYBER_D5K6)
 static const char MPDC_CONFIG_STRING[MPDC_PROTOCOL_SET_SIZE] = "dilithium-s5_kyber-s6_rcs-512_sha3-512";
-static const mpdc_configuration_sets MPDC_CONFIGURATION_SET = mpdc_configuration_set_dilithium5_kyber6_rcs512_shake512;
+static const mpdc_configuration_sets MPDC_CONFIGURATION_SET = mpdc_configuration_set_dilithium5_kyber6_rcs512_shake256;
 #elif defined(MPDC_PARAMATERS_SPHINCSF_MCELIECE_SF1M1) 
 static const char MPDC_CONFIG_STRING[MPDC_PROTOCOL_SET_SIZE] = "sphincs-1f_mceliece-s1_rcs-256_sha3-256";
 static const mpdc_configuration_sets MPDC_CONFIGURATION_SET = mpdc_configuration_set_sphincsplus1f_mceliece1_rcs256_shake256;

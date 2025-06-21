@@ -137,7 +137,7 @@ static const char MPDC_APPLICATION_MESSAGE_STRINGS[MPDC_APPLICATION_MESSAGE_STRI
 	" - Log file created: ",
 	" - Logging has been disabled on ",
 	" - Logging has been enabled on ",
-	"MPDC version 1.0a, created September 2022.",
+	"MPDC version 1.0.0.0c, created May 2025.",
 	" - The login retries setting was changed to ",
 	" - The session timeout was changed to ",
 	" - Added user configuration: ",
