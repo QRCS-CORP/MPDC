@@ -51,7 +51,7 @@ An end-user network device that initiates secure communication with the MPDC-ena
 Acts as the central application server managing secure communications with Clients.
 
 **Functions:**
-- Generates its own certificate and stores the secret signing key.
+- Generates its own certificate and stores the secret signing key. 
 - Has its certificate signed by the RDS, directly or via the DLA.
 - Validates Client certificates against the RDS root certificate.
 - Communicates with Agents to obtain key fragments.
