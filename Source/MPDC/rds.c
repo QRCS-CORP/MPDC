@@ -1193,7 +1193,6 @@ static void rds_command_execute(const char* command)
 
 		break;
 	}
-	case mpdc_command_action_enable_quit:
 	case mpdc_command_action_enable_show_config:
 	{
 		/* show config */
@@ -1360,6 +1359,7 @@ static void rds_command_execute(const char* command)
 
 		break;
 	}
+	case mpdc_command_action_enable_quit:
 	case mpdc_command_action_user_quit:
 	{
 		m_rds_command_loop_status = mpdc_server_loop_status_stopped;
