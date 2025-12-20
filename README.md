@@ -19,7 +19,7 @@
 
 ## Overview
 
-MPDC-I (Multi Party Domain Cryptosystem - Interior Protocol) is a multi‐party key exchange and network security system. It distributes the security of a key exchange between a server and a client across multiple devices. This design leverages the contribution of network agents—trusted devices that each inject a portion of pseudo‐random material into the key exchange process—ensuring that no single entity controls the entire shared-secret derivation.
+MPDC-I (Multi Party Domain Cryptosystem - Interior Protocol) is a multi‐party key exchange and network security system. It distributes the security of a key exchange between a server and a client across multiple devices. This design leverages the contribution of network agents; trusted devices that each inject a portion of pseudo‐random material into the key exchange process, ensuring that no single entity controls the entire shared-secret derivation.
 
 On an interior network, the server and client establish a shared secret with each authenticated agent using an asymmetric key exchange. The resulting shared-secret, retained for the lifetime of the device's certificate, is used to generate a unique key-stream to encrypt small chunks of pseudo‐random data called "key fragments". These fragments are subsequently combined and hashed to derive the primary session keys that secure the encrypted tunnel between the server and client.
 
