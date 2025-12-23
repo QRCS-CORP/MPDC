@@ -26,8 +26,11 @@ On an interior network, the server and client establish a shared secret with eac
 This approach means that any attack involving impersonation or man‐in‐the‐middle tactics would have to simultaneously compromise multiple, independently authenticated network devices. Unlike other schemes that rely solely on expensive classical asymmetric cryptography, MPDC-I utilizes a hybrid asymmetric/symmetric post‐quantum secure design. This provides not only robust security but also scalability and computational efficiency, making it suitable for wide-scale adoption.
 
 [MPDC Help Documentation](https://qrcs-corp.github.io/MPDC/)  
-[MPDC Protocol Specification](https://qrcs-corp.github.io/MPDC/pdf/MDPC_Specification.pdf)  
-[MPDC Summary Document](https://qrcs-corp.github.io/MPDC/pdf/MPDC_Summary.pdf)  
+[MPDC Summary Document](https://qrcs-corp.github.io/MPDC/pdf/mpdc_summary.pdf)  
+[MPDC Protocol Specification](https://qrcs-corp.github.io/MPDC/pdf/mpdc_specification.pdf)  
+[MPDC Formal Analysis](https://qrcs-corp.github.io/MPDC/pdf/mpdc_formal.pdf)  
+[MPDC Implementation Analysis](https://qrcs-corp.github.io/MPDC/pdf/mpdc_analysis.pdf)  
+[MPDC Integration Guide](https://qrcs-corp.github.io/MPDC/pdf/mpdc_integration.pdf)  
 
 ## Architecture
 
@@ -233,13 +236,13 @@ Sample flag sets and their meanings:
 
 ## License
 
-ACQUISITION INQUIRIES:
-QRCS is currently seeking a corporate acquirer for this technology.
-Parties interested in exclusive licensing or acquisition should contact: contact@qrcscorp.ca   
+INVESTMENT INQUIRIES:
+QRCS is currently seeking a corporate investor for this technology.
+Parties interested in licensing or investment should connect to us at: contact@qrcscorp.ca  
+Visit https://www.qrcscorp.ca for a full inventory of our products and services.  
 
 PATENT NOTICE:
-One or more patent applications (provisional and/or non-provisional) covering aspects of this software have been filed with the United States Patent and 
-Trademark Office (USPTO). Unauthorized use may result in patent infringement liability.  
+One or more patent applications (provisional and/or non-provisional) covering aspects of this software have been filed with the United States Patent and Trademark Office (USPTO). Unauthorized use may result in patent infringement liability.  
 
 QRCS-PL private License. See license file for details.  
 Software is copyrighted and MPDC is patent pending.
