@@ -22,7 +22,7 @@ FetchContent_MakeAvailable(QSC)
 
 # MPDC Static Library
 file(GLOB_RECURSE MPDC_SOURCES "Source/MPDC/*.c")
-file(GLOB_RECURSE MPDC_HEADERS "Source/MPDC/include/*.h")
+file(GLOB_RECURSE MPDC_HEADERS "Source/MPDC/*.h")
 
 add_library(mpdc STATIC ${MPDC_SOURCES} ${MPDC_HEADERS})
 target_include_directories(mpdc PUBLIC "Source/MPDC")
