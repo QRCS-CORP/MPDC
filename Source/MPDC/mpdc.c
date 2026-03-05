@@ -50,30 +50,33 @@ mpdc_protocol_errors mpdc_decrypt_packet(mpdc_connection_state* pcns, uint8_t* m
 	if (pcns != NULL && message != NULL && msglen != NULL && packetin != NULL)
 	{
 		*msglen = 0U;
-		pcns->rxseq += 1U;
 
 		if (mpdc_packet_time_valid(packetin) == true)
 		{
-			if (packetin->sequence == pcns->rxseq)
+			if (packetin->sequence == pcns->rxseq + 1U)
 			{
 				if (pcns->exflag == mpdc_network_flag_tunnel_session_established)
 				{
-					uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0U };
-
-					/* serialize the header and add it to the ciphers associated data */
-					mpdc_packet_header_serialize(packetin, hdr);
-					mpdc_cipher_set_associated(&pcns->rxcpr, hdr, MPDC_PACKET_HEADER_SIZE);
-					*msglen = packetin->msglen - MPDC_CRYPTO_SYMMETRIC_MAC_SIZE;
-
-					/* authenticate then decrypt the data */
-					if (mpdc_cipher_transform(&pcns->rxcpr, message, packetin->pmessage, *msglen) == true)
+					if (packetin->msglen <= MPDC_MESSAGE_MAX_SIZE)
 					{
-						merr = mpdc_protocol_error_none;
-					}
-					else
-					{
-						*msglen = 0U;
-						merr = mpdc_protocol_error_authentication_failure;
+						uint8_t hdr[MPDC_PACKET_HEADER_SIZE] = { 0U };
+
+						/* serialize the header and add it to the ciphers associated data */
+						mpdc_packet_header_serialize(packetin, hdr);
+						mpdc_cipher_set_associated(&pcns->rxcpr, hdr, MPDC_PACKET_HEADER_SIZE);
+						*msglen = packetin->msglen - MPDC_CRYPTO_SYMMETRIC_MAC_SIZE;
+
+						/* authenticate then decrypt the data */
+						if (mpdc_cipher_transform(&pcns->rxcpr, message, packetin->pmessage, *msglen) == true)
+						{
+							pcns->rxseq += 1U;
+							merr = mpdc_protocol_error_none;
+						}
+						else
+						{
+							*msglen = 0U;
+							merr = mpdc_protocol_error_authentication_failure;
+						}
 					}
 				}
 				else
@@ -161,7 +164,7 @@ const char* mpdc_protocol_error_to_string(mpdc_protocol_errors err)
 
 	dsc = NULL;
 
-	if ((uint32_t)err < MPDC_ERROR_STRING_DEPTH)
+	if ((uint8_t)err < MPDC_PROTOCOL_ERROR_STRING_DEPTH)
 	{
 		dsc = MPDC_PROTOCOL_ERROR_STRINGS[(size_t)err];
 	}
@@ -236,10 +239,24 @@ void mpdc_packet_set_utc_time(mpdc_network_packet* packet)
 bool mpdc_packet_time_valid(const mpdc_network_packet* packet)
 {
 	uint64_t ltime;
+	bool res;
 
-	ltime = qsc_timestamp_datetime_utc();
+	res = false;
 
-	return (ltime >= packet->utctime - MPDC_PACKET_TIME_THRESHOLD && ltime <= packet->utctime + MPDC_PACKET_TIME_THRESHOLD);
+	if (packet != NULL)
+	{
+		ltime = qsc_timestamp_datetime_utc();
+
+		/* two-way variance to account for differences in system clocks */
+		if (ltime > 0U && ltime < UINT64_MAX &&
+			UINT64_MAX - packet->utctime >= MPDC_PACKET_TIME_THRESHOLD &&
+			packet->utctime >= MPDC_PACKET_TIME_THRESHOLD)
+		{
+			res = (ltime >= packet->utctime - MPDC_PACKET_TIME_THRESHOLD && ltime <= packet->utctime + MPDC_PACKET_TIME_THRESHOLD);
+		}
+	}
+
+	return res;
 }
 
 size_t mpdc_packet_to_stream(const mpdc_network_packet* packet, uint8_t* pstream)
@@ -274,10 +291,14 @@ size_t mpdc_packet_to_stream(const mpdc_network_packet* packet, uint8_t* pstream
 	return res;
 }
 
-void mpdc_stream_to_packet(const uint8_t* pstream, mpdc_network_packet* packet)
+bool mpdc_stream_to_packet(const uint8_t* pstream, mpdc_network_packet* packet)
 {
 	MPDC_ASSERT(packet != NULL);
 	MPDC_ASSERT(pstream != NULL);
+
+	bool res;
+
+	res = false;
 
 	if (packet != NULL && pstream != NULL)
 	{
@@ -295,8 +316,13 @@ void mpdc_stream_to_packet(const uint8_t* pstream, mpdc_network_packet* packet)
 		if (packet->msglen <= MPDC_MESSAGE_MAX_SIZE)
 		{
 			qsc_memutils_copy(packet->pmessage, pstream + pos, packet->msglen);
+
+			res = (packet->flag <= (uint8_t)mpdc_network_flag_network_remote_signing_response &&
+				packet->msglen <= MPDC_MESSAGE_MAX_SIZE);
 		}
 	}
+
+	return res;
 }
 
 void mpdc_connection_state_dispose(mpdc_connection_state* pcns)

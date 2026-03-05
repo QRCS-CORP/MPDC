@@ -1211,6 +1211,7 @@ static void client_receive_loop(void* ras)
 	size_t plen;
 	mpdc_protocol_errors merr;
 
+	cmsg = NULL;
 	merr = mpdc_protocol_error_none;
 
 	if (ras != NULL)
@@ -1231,11 +1232,14 @@ static void client_receive_loop(void* ras)
 
 				if (pkt.msglen > 0U && pkt.msglen <= MPDC_MESSAGE_MAX_SIZE)
 				{
-					plen = pkt.msglen + MPDC_PACKET_HEADER_SIZE;
-					buff = (uint8_t*)qsc_memutils_realloc(buff, plen);
+					uint8_t* tbuf;
 
-					if (buff != NULL)
+					plen = pkt.msglen + MPDC_PACKET_HEADER_SIZE;
+					tbuf = (uint8_t*)qsc_memutils_realloc(buff, plen);
+
+					if (tbuf != NULL)
 					{
+						buff = tbuf;
 						qsc_memutils_clear(buff, plen);
 						mlen = qsc_socket_receive(&pras->csock, buff, plen, qsc_socket_receive_flag_wait_all);
 					}
@@ -1404,7 +1408,10 @@ static void client_receive_loop(void* ras)
 					else if (pkt.flag == mpdc_network_flag_system_error_condition)
 					{
 						/* log the error condition */
-						cmsg = mpdc_protocol_error_to_string((mpdc_protocol_errors)pkt.pmessage[0U]);
+						if (pkt.pmessage[0] < MPDC_PROTOCOL_ERROR_STRING_DEPTH)
+						{
+							cmsg = mpdc_protocol_error_to_string((mpdc_protocol_errors)pkt.pmessage[0U]);
+						}
 
 						if (cmsg != NULL)
 						{

@@ -284,7 +284,7 @@ static bool server_log_decrypt(mpdc_server_application_state* state)
 
 			flen = qsc_fileutils_get_size(state->logpath);
 
-			if (flen > 0U)
+			if (flen > MPDC_STORAGE_MAC_SIZE)
 			{
 				uint8_t* pdec;
 				uint8_t* penc;
@@ -2152,7 +2152,7 @@ bool mpdc_server_topology_load(mpdc_server_application_state* state)
 
 			flen = qsc_fileutils_get_size(fpath);
 
-			if (flen > 0U)
+			if (flen > MPDC_STORAGE_MAC_SIZE)
 			{
 				uint8_t* pdec;
 				uint8_t* penc;
@@ -2666,7 +2666,7 @@ bool mpdc_server_user_login(mpdc_server_application_state* state)
 				}
 				else
 				{
-					qsc_memutils_clear(cmsg, sizeof(cmsg));
+					qsc_memutils_secure_erase(cmsg, sizeof(cmsg));
 					mpdc_menu_print_predefined_message(mpdc_application_challenge_user_failure, mpdc_console_mode_login_user, state->hostname);
 				}
 			}
@@ -2709,7 +2709,7 @@ bool mpdc_server_user_login(mpdc_server_application_state* state)
 						}
 						else
 						{
-							qsc_memutils_clear(state->kchain, SERVER_KEYCHAIN_DEPTH * SERVER_KEYCHAIN_WIDTH);
+							qsc_memutils_secure_erase(state->kchain, SERVER_KEYCHAIN_DEPTH * SERVER_KEYCHAIN_WIDTH);
 							mpdc_menu_print_predefined_message(mpdc_application_challenge_password_failure, mpdc_console_mode_login_message, state->hostname);
 						}
 					}

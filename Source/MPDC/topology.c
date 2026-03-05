@@ -73,10 +73,13 @@ uint8_t* mpdc_topology_child_add_empty_node(mpdc_topology_list_state* list)
 			list->topology = qsc_memutils_malloc(nctx * MPDC_NETWORK_TOPOLOGY_NODE_SIZE);
 		}
 
-		nptr = (uint8_t*)(list->topology + (list->count * MPDC_NETWORK_TOPOLOGY_NODE_SIZE));
+		if (list->topology != NULL)
+		{
+			nptr = (uint8_t*)(list->topology + (list->count * MPDC_NETWORK_TOPOLOGY_NODE_SIZE));
 
-		qsc_memutils_clear(nptr, MPDC_NETWORK_TOPOLOGY_NODE_SIZE);
-		++list->count;
+			qsc_memutils_clear(nptr, MPDC_NETWORK_TOPOLOGY_NODE_SIZE);
+			++list->count;
+		}
 
 		qsc_async_mutex_unlock_ex(mtx);
 	}
@@ -93,16 +96,10 @@ void mpdc_topology_child_add_item(mpdc_topology_list_state* list, const mpdc_top
 
 	if (list != NULL && node != NULL)
 	{
-		qsc_mutex mtx;
-
-		mtx = qsc_async_mutex_lock_ex();
-
 		mpdc_topology_node_remove_duplicate(list, node->issuer);
 
 		nptr = mpdc_topology_child_add_empty_node(list);
 		mpdc_topology_node_serialize(nptr, node);
-
-		qsc_async_mutex_unlock_ex(mtx);
 	}
 }
 

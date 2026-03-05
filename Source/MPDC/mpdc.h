@@ -1026,7 +1026,7 @@
  * \def MPDC_MESSAGE_MAX_SIZE
  * \brief The maximum message size (max signature + max certificate sizes).
  */
-#define MPDC_MESSAGE_MAX_SIZE 1400000UL
+#define MPDC_MESSAGE_MAX_SIZE 0x10000UL
 
 /*!
  * \def MPDC_MFK_EXPIRATION_PERIOD
@@ -1867,7 +1867,9 @@ MPDC_EXPORT_API size_t mpdc_packet_to_stream(const mpdc_network_packet* packet, 
  *
  * \param pstream [const] The byte stream containing the packet data.
  * \param packet A pointer to the packet structure to populate.
+ *
+ * \return Returns true if the packet was deserialized.
  */
-MPDC_EXPORT_API void mpdc_stream_to_packet(const uint8_t* pstream, mpdc_network_packet* packet);
+MPDC_EXPORT_API bool mpdc_stream_to_packet(const uint8_t* pstream, mpdc_network_packet* packet);
 
 #endif

@@ -1213,109 +1213,116 @@ static mpdc_protocol_errors network_fragment_collection_request_derive(mpdc_netw
 	fcnt = packetin->msglen / NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE;
 	merr = mpdc_protocol_error_none;
 
-	/* initialize the fragment hash */
-	qsc_sha3_initialize(&fkhs);
-
-	/* inject mas-client fragment first */
-	if (qsc_collection_find(state->lmfk, mmfk, state->rnode->serial) == true)
+	if (packetin->msglen % NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE != 0)
 	{
-		uint8_t ckey[QSC_SHA3_512_HASH_SIZE] = { 0U };
-		uint8_t mtag[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0U };
-		uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0U };
+		/* initialize the fragment hash */
+		qsc_sha3_initialize(&fkhs);
 
-		/* derive the client-mas fkey */
-		network_derive_fkey(ckey, mmfk, state->lnode->chash, state->rnode->chash, state->token);
-
-		/* mac the ciphertexts */
-		rtag = packetin->pmessage + (packetin->msglen - MPDC_CRYPTO_SYMMETRIC_HASH_SIZE);
-		network_subheader_serialize(shdr, packetin);
-		network_mac_message(mtag, ckey + MPDC_CRYPTO_SYMMETRIC_KEY_SIZE, packetin->pmessage, packetin->msglen - MPDC_CRYPTO_SYMMETRIC_HASH_SIZE, shdr);
-
-		/* verify the mac, decrypt the fragment key, and add the fragment to the fragment key hash */
-		if (qsc_memutils_are_equal_256(mtag, rtag) == true)
+		/* inject mas-client fragment first */
+		if (qsc_collection_find(state->lmfk, mmfk, state->rnode->serial) == true)
 		{
-			/* decrypt the mas key fragment */
-			qsc_memutils_xor(ckey, packetin->pmessage + MPDC_CERTIFICATE_SERIAL_SIZE, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
-			mpos = NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE;
-			/* add the fragment to the hkey hash */
-			qsc_sha3_update(&fkhs, qsc_keccak_rate_256, ckey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
-			
-			/* decrypt each fragment, and add them to the key hash */
-			for (size_t i = 0U; i < fcnt - 1U; ++i)
+			uint8_t ckey[QSC_SHA3_512_HASH_SIZE] = { 0U };
+			uint8_t mtag[MPDC_CRYPTO_SYMMETRIC_HASH_SIZE] = { 0U };
+			uint8_t shdr[MPDC_PACKET_SUBHEADER_SIZE] = { 0U };
+
+			/* derive the client-mas fkey */
+			network_derive_fkey(ckey, mmfk, state->lnode->chash, state->rnode->chash, state->token);
+
+			/* mac the ciphertexts */
+			rtag = packetin->pmessage + (packetin->msglen - MPDC_CRYPTO_SYMMETRIC_HASH_SIZE);
+			network_subheader_serialize(shdr, packetin);
+			network_mac_message(mtag, ckey + MPDC_CRYPTO_SYMMETRIC_KEY_SIZE, packetin->pmessage, packetin->msglen - MPDC_CRYPTO_SYMMETRIC_HASH_SIZE, shdr);
+
+			/* verify the mac, decrypt the fragment key, and add the fragment to the fragment key hash */
+			if (qsc_memutils_are_equal_256(mtag, rtag) == true)
 			{
-				mpdc_topology_node_state node = { 0 };
+				/* decrypt the mas key fragment */
+				qsc_memutils_xor(ckey, packetin->pmessage + MPDC_CERTIFICATE_SERIAL_SIZE, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
+				mpos = NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE;
+				/* add the fragment to the hkey hash */
+				qsc_sha3_update(&fkhs, qsc_keccak_rate_256, ckey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
 
-				rser = packetin->pmessage + mpos;
-				rcpt = packetin->pmessage + mpos + MPDC_CERTIFICATE_SERIAL_SIZE;
-				mpos += NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE;
-
-				if (mpdc_topology_node_find(state->list, &node, rser) == true)
+				/* decrypt each fragment, and add them to the key hash */
+				for (size_t i = 0U; i < fcnt - 1U; ++i)
 				{
-					uint8_t cmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
+					mpdc_topology_node_state node = { 0 };
 
-					if (qsc_collection_find(state->lmfk, cmfk, node.serial) == true)
+					rser = packetin->pmessage + mpos;
+					rcpt = packetin->pmessage + mpos + MPDC_CERTIFICATE_SERIAL_SIZE;
+					mpos += NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE;
+
+					if (mpdc_topology_node_find(state->list, &node, rser) == true)
 					{
-						qsc_memutils_clear(ckey, sizeof(ckey));
-						/* generate the client-agent fkey */
-						network_derive_fkey(ckey, cmfk, state->lnode->chash, node.chash, state->token);
-						/* decrypt the key fragment */
-						qsc_memutils_xor(ckey, rcpt, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
-						/* update the fragment hash key */
-						qsc_sha3_update(&fkhs, qsc_keccak_rate_256, ckey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
+						uint8_t cmfk[MPDC_CRYPTO_SYMMETRIC_KEY_SIZE] = { 0U };
+
+						if (qsc_collection_find(state->lmfk, cmfk, node.serial) == true)
+						{
+							qsc_memutils_clear(ckey, sizeof(ckey));
+							/* generate the client-agent fkey */
+							network_derive_fkey(ckey, cmfk, state->lnode->chash, node.chash, state->token);
+							/* decrypt the key fragment */
+							qsc_memutils_xor(ckey, rcpt, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
+							/* update the fragment hash key */
+							qsc_sha3_update(&fkhs, qsc_keccak_rate_256, ckey, MPDC_CRYPTO_SYMMETRIC_KEY_SIZE);
+						}
+						else
+						{
+							/* abort; agent portion of exchange has failed */
+							merr = mpdc_protocol_error_key_unrecognized;
+							break;
+						}
 					}
 					else
 					{
 						/* abort; agent portion of exchange has failed */
-						merr = mpdc_protocol_error_key_unrecognized;
+						merr = mpdc_protocol_error_node_not_found;
 						break;
 					}
 				}
-				else
-				{
-					/* abort; agent portion of exchange has failed */
-					merr = mpdc_protocol_error_node_not_found;
-					break;
-				}
+			}
+			else
+			{
+				/* abort; mas portion of exchange has failed */
+				merr = mpdc_protocol_error_authentication_failure;
 			}
 		}
 		else
 		{
 			/* abort; mas portion of exchange has failed */
-			merr = mpdc_protocol_error_authentication_failure;
+			merr = mpdc_protocol_error_key_unrecognized;
 		}
-	}
-	else
-	{
-		/* abort; mas portion of exchange has failed */
-		merr = mpdc_protocol_error_key_unrecognized;
-	}
 
-	if (merr == mpdc_protocol_error_none)
-	{
-#if defined(MPDC_NETWORK_MFK_HASH_CYCLED)
-		/* client cycles mfk for agents and mas here */
-		
-		network_hash_cycle_mfk(state->rnode->serial, state->lmfk);
-		mpos = NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE;
-
-		for (size_t i = 0U; i < fcnt - 1U; ++i)
+		if (merr == mpdc_protocol_error_none)
 		{
-			rser = packetin->pmessage + mpos;
-			mpos += NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE;
-			network_hash_cycle_mfk(rser, state->lmfk);
-		}
+#if defined(MPDC_NETWORK_MFK_HASH_CYCLED)
+			/* client cycles mfk for agents and mas here */
+
+			network_hash_cycle_mfk(state->rnode->serial, state->lmfk);
+			mpos = NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE;
+
+			for (size_t i = 0U; i < fcnt - 1U; ++i)
+			{
+				rser = packetin->pmessage + mpos;
+				mpos += NETWORK_FRAGMENT_QUERY_RESPONSE_SIZE;
+				network_hash_cycle_mfk(rser, state->lmfk);
+			}
 #endif
 
 #if defined(MPDC_EXTENDED_SESSION_SECURITY)
-		/* create the fragment hash key and store in state */
-		qsc_sha3_finalize(&fkhs, qsc_keccak_rate_512, state->hfkey);
+			/* create the fragment hash key and store in state */
+			qsc_sha3_finalize(&fkhs, qsc_keccak_rate_512, state->hfkey);
 #else
-		/* create the fragment hash key and store in state */
-		qsc_sha3_finalize(&fkhs, qsc_keccak_rate_256, state->hfkey);
+			/* create the fragment hash key and store in state */
+			qsc_sha3_finalize(&fkhs, qsc_keccak_rate_256, state->hfkey);
 #endif
-	}
+		}
 
-	qsc_keccak_dispose(&fkhs);
+		qsc_keccak_dispose(&fkhs);
+	}
+	else
+	{
+		merr = mpdc_protocol_error_invalid_request;
+	}
 
 	return merr;
 }
@@ -3042,14 +3049,18 @@ static mpdc_protocol_errors network_register_update_response_packet(mpdc_network
 
 				if (ncnt > 0U)
 				{
+					uint8_t* tbuf;
+
 					mlen = NETWORK_JOIN_UPDATE_RESPONSE_PACKET_SIZE;
 					mlen += (ncnt * MPDC_NETWORK_TOPOLOGY_NODE_SIZE);
 
 					/* resize the buffer to the full update size */
-					buffer = (uint8_t*)qsc_memutils_realloc(buffer, mlen);
+					tbuf = (uint8_t*)qsc_memutils_realloc(buffer, mlen);
 
-					if (buffer != NULL)
+					if (tbuf != NULL)
 					{
+						buffer = tbuf;
+						qsc_memutils_clear(buffer, mlen);
 						mlen -= MPDC_PACKET_HEADER_SIZE;
 						network_header_create(packetout, mpdc_network_flag_register_update_response, NETWORK_JOIN_UPDATE_RESPONSE_SEQUENCE, (uint32_t)mlen);
 						packetout->pmessage = buffer + MPDC_PACKET_HEADER_SIZE;

@@ -485,6 +485,7 @@ static void agent_receive_loop(void* ras)
 	size_t plen;
 	mpdc_protocol_errors merr;
 
+	cmsg = NULL;
 	pras = (agent_receive_state*)ras;
 	merr = mpdc_protocol_error_none;
 
@@ -507,11 +508,14 @@ static void agent_receive_loop(void* ras)
 
 					if (pkt.msglen > 0U && pkt.msglen <= MPDC_MESSAGE_MAX_SIZE)
 					{
-						plen = pkt.msglen + MPDC_PACKET_HEADER_SIZE;
-						buff = (uint8_t*)qsc_memutils_realloc(buff, plen);
+						uint8_t* tbuf;
 
-						if (buff != NULL)
+						plen = pkt.msglen + MPDC_PACKET_HEADER_SIZE;
+						tbuf = (uint8_t*)qsc_memutils_realloc(buff, plen);
+
+						if (tbuf != NULL)
 						{
+							buff = tbuf;
 							qsc_memutils_clear(buff, plen);
 							mlen = qsc_socket_receive(&pras->csock, buff, plen, qsc_socket_receive_flag_wait_all);
 						}
@@ -646,7 +650,10 @@ static void agent_receive_loop(void* ras)
 						else if (pkt.flag == mpdc_network_flag_system_error_condition)
 						{
 							/* log the error condition */
-							cmsg = mpdc_protocol_error_to_string((mpdc_protocol_errors)pkt.pmessage[0]);
+							if (pkt.pmessage[0] < MPDC_PROTOCOL_ERROR_STRING_DEPTH)
+							{
+								cmsg = mpdc_protocol_error_to_string((mpdc_protocol_errors)pkt.pmessage[0]);
+							}
 
 							if (cmsg != NULL)
 							{
@@ -1874,9 +1881,9 @@ static void agent_idle_timer(void)
 
 	while (true)
 	{
-		qsc_mutex mtx = qsc_async_mutex_lock_ex();
-
 		qsc_async_thread_sleep(MMSEC);
+
+		qsc_mutex mtx = qsc_async_mutex_lock_ex();
 
 		if (m_agent_application_state.mode != mpdc_console_mode_user)
 		{
