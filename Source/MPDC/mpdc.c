@@ -78,6 +78,10 @@ mpdc_protocol_errors mpdc_decrypt_packet(mpdc_connection_state* pcns, uint8_t* m
 							merr = mpdc_protocol_error_authentication_failure;
 						}
 					}
+					else
+					{
+						merr = mpdc_protocol_error_receive_failure;
+					}
 				}
 				else
 				{
