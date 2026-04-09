@@ -23,7 +23,7 @@ MPDC-I (Multi Party Domain Cryptosystem - Interior Protocol) is a multi‐party 
 
 On an interior network, the server and client establish a shared secret with each authenticated agent using an asymmetric key exchange. The resulting shared-secret, retained for the lifetime of the device's certificate, is used to generate a unique key-stream to encrypt small chunks of pseudo‐random data called "key fragments". These fragments are subsequently combined and hashed to derive the primary session keys that secure the encrypted tunnel between the server and client.
 
-This approach means that any attack involving impersonation or man‐in‐the‐middle tactics would have to simultaneously compromise multiple, independently authenticated network devices. Unlike other schemes that rely solely on expensive classical asymmetric cryptography, MPDC-I utilizes a hybrid asymmetric/symmetric post‐quantum secure design. This provides not only robust security but also scalability and computational efficiency, making it suitable for wide-scale adoption.
+This approach means that any attack involving impersonation or man‐in‐the‐middle tactics would have to simultaneously compromise multiple, independently authenticated network devices. Unlike other schemes that rely solely on expensive classical asymmetric cryptography, MPDC-I utilizes a hybrid asymmetric/symmetric post‐quantum secure design. This provides not only robust security but also scalability and computational efficiency, making it suitable for wide-scale adoption. 
 
 [MPDC Help Documentation](https://qrcs-corp.github.io/MPDC/)  
 [MPDC Summary Document](https://qrcs-corp.github.io/MPDC/pdf/mpdc_summary.pdf)  
