@@ -66,7 +66,7 @@ static bool agent_certificate_generate(const char* cmsg)
 			res = mpdc_server_root_import_dialogue(&m_agent_application_state);
 		}
 
-		if (res == true && (period >= MPDC_CERTIFICATE_MINIMUM_PERIOD || period <= MPDC_CERTIFICATE_MAXIMUM_PERIOD))
+		if (res == true && (period >= MPDC_CERTIFICATE_MINIMUM_PERIOD && period <= MPDC_CERTIFICATE_MAXIMUM_PERIOD))
 		{
 			char tadd[MPDC_CERTIFICATE_ADDRESS_SIZE] = { 0 };
 

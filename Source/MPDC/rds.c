@@ -77,7 +77,7 @@ static bool rds_certificate_generate_root(const char* sprd)
 		period = qsc_stringutils_string_to_int(sprd);
 		period *= MPDC_PERIOD_DAY_TO_SECONDS;
 
-		if (period >= MPDC_CERTIFICATE_MINIMUM_PERIOD || period <= MPDC_CERTIFICATE_MAXIMUM_PERIOD)
+		if (period >= MPDC_CERTIFICATE_MINIMUM_PERIOD && period <= MPDC_CERTIFICATE_MAXIMUM_PERIOD)
 		{
 			if (qsc_fileutils_exists(fpath) == true)
 			{
